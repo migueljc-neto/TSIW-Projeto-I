@@ -7,9 +7,10 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-400: oklch(70.4% 0.191 22.216);
+    --color-blue-400: oklch(70.7% 0.165 254.624);
+    --spacing: 0.25rem;
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
-    --font-weight-bold: 700;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -169,12 +170,18 @@
   .fixed {
     position: fixed;
   }
+  .mt-300 {
+    margin-top: calc(var(--spacing) * 300);
+  }
   .contents {
     display: contents;
   }
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-blue-400 {
+    color: var(--color-blue-400);
   }
   .text-red-400 {
     color: var(--color-red-400);
