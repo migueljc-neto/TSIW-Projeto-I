@@ -1,0 +1,33 @@
+{
+  "name": "tsiw-projeto-i",
+  "version": "1.0.0",
+  "description": "Trip Planning APP",
+  "keywords": [
+    "trip",
+    "planning",
+    "app",
+    "builder",
+    "multidestin",
+    "holiday"
+  ],
+  "homepage": "https://github.com/migueljc-neto/TSIW-Projeto-I#readme",
+  "bugs": {
+    "url": "https://github.com/migueljc-neto/TSIW-Projeto-I/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/migueljc-neto/TSIW-Projeto-I.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i ./src/style.css -o ./src/tailwind.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.5",
+    "tailwindcss": "^4.1.5"
+  }
+}
