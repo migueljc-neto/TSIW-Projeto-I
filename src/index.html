@@ -10,7 +10,12 @@
     <!--  -->
     <script src="script.js"></script>
   </head>
-  <body class="max-h-screen bg-slate-50 dark:bg-gray-900 dark:text-white">
+  <body
+    class="max-h-screen bg-slate-50 dark:bg-gray-900 dark:text-white"
+    style="
+      background-image: url(./imagens/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg);
+    "
+  >
     <header class="bg-transparent text-white top-0 z-10">
       <section
         class="max-w-[1530px] mx-auto p-4 flex justify-between items-center"
@@ -28,27 +33,46 @@
             alt="Light mode image"
           />
         </div>
-        <div class="hidden sm:flex gap-4">
+        <div class="hidden sm:flex gap-4 text-blue-900">
           <button
-            class="border rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent hover:bg-blue-900"
+            class="group border rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur hover:bg-blue-900 hover:text-white transition"
           >
             <h1 class="font-mono">Passaporte</h1>
-            <img
-              src="./assets/icons/white/wallet.svg"
-              alt="Passport Icon"
-              class="w-4"
-            />
+            <svg
+              class="w-4 stroke-blue-900 group-hover:stroke-white transition"
+              viewBox="0 0 25 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 7.89078L1.50537 22.0498C1.50537 23.6695 2.81835 24.9824 4.43799 24.9824H20.5674C22.187 24.9824 23.5 23.6695 23.5 22.0498V10.3194C23.5 8.96965 22.4059 7.8755 21.0562 7.8755H1.52156C1.51186 7.8755 1.50322 7.88163 1.5 7.89078ZM1.5 7.89078C1.5009 7.61627 18.0013 1.01746 18.0013 1.01746V7.20345M17.6539 16.1654L17.6348 16.1846"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </button>
+
           <button
-            class="border rounded-sm py-2 px-4 cursor-pointer flex gap-4 hover:bg-blue-900"
+            class="group border rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur-sm hover:bg-blue-900 hover:text-white"
           >
-            <h1 class="font-mono">Favoritos</h1>
-            <img
-              src="./assets/icons/white/heart.svg"
-              alt="passaporteIcon"
-              class="w-4"
-            />
+            <h1 class="font-mono">Passaporte</h1>
+            <svg
+              class="w-4 stroke-blue-900 group-hover:stroke-white transition"
+              viewBox="0 0 27 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3.25143 3.57756C4.37321 2.45612 5.89447 1.82613 7.48067 1.82613C9.06686 1.82613 10.5881 2.45612 11.7099 3.57756L13.4626 5.32877L15.2153 3.57756C15.7671 3.00622 16.4272 2.5505 17.157 2.237C17.8868 1.92349 18.6718 1.75847 19.4661 1.75157C20.2604 1.74467 21.0481 1.89602 21.7832 2.1968C22.5184 2.49757 23.1863 2.94175 23.7479 3.50341C24.3096 4.06507 24.7538 4.73297 25.0545 5.46813C25.3553 6.20329 25.5067 6.99099 25.4998 7.78527C25.4929 8.57954 25.3279 9.3645 25.0143 10.0943C24.7008 10.8241 24.2451 11.4842 23.6738 12.036L13.4626 22.2487L3.25143 12.036C2.12999 10.9142 1.5 9.39299 1.5 7.80679C1.5 6.2206 2.12999 4.69934 3.25143 3.57756V3.57756Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
           </button>
+
           <button
             class="border-2 rounded-full px-3 cursor-pointer flex gap-4 dark:hover:bg-blue-900"
           >
@@ -71,5 +95,21 @@
         </button>
       </div>
     </div>
+    <button
+      class="group flex items-center gap-2 p-2 rounded-md border border-gray-300 hover:border-blue-500"
+    >
+      <svg
+        class="w-6 h-6 stroke-gray-400 group-hover:stroke-blue-500 transition duration-200"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M5 13l4 4L19 7" />
+      </svg>
+      <span class="text-gray-700 group-hover:text-blue-500 transition"
+        >Click Me</span
+      >
+    </button>
   </body>
 </html>
