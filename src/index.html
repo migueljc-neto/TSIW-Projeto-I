@@ -74,9 +74,9 @@
             />
           </button>
 
-          <!-- Profile -->
+          <!-- Login -->
           <button
-            id="openModalBtn"
+            id="openLoginModalBtn"
             class="group rounded-full p-3 cursor-pointer bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
           >
             <img
@@ -90,74 +90,154 @@
     </header>
 
     <main>
-      <!-- Modal backdrop -->
-      <div
-        id="loginModal"
-        class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
-      >
-        <!-- Modal box -->
+      <!-- Modal Login -->
+      <section>
         <div
-          id="modalContent"
-          class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          id="loginModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
         >
-          <!-- Close button -->
-          <button
-            id="closeModalBtn"
-            class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+          <!-- Modal box -->
+          <div
+            id="modalContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
           >
-            &times;
-          </button>
-
-          <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">Login</h2>
-
-          <form>
-            <div class="mb-4">
-              <label class="block text-gray-700 mb-2" for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-
-            <div class="mb-6">
-              <label class="block text-gray-700 mb-2" for="password"
-                >Password</label
-              >
-              <input
-                type="password"
-                id="password"
-                class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="********"
-                required
-              />
-            </div>
-
+            <!-- Close button -->
             <button
-              id="loginBtn"
-              type="submit"
-              class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
             >
-              Sign In
+              &times;
             </button>
-          </form>
 
-          <p class="text-sm text-center text-gray-600 mt-4">
-            Don’t have an account?
-            <a id="signUpText" href="#" class="hover:underline">Sign up</a>
-          </p>
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">Login</h2>
+
+            <form>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="loginBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Sign In
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Don’t have an account?
+              <button
+                id="signUpText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="w-auto text-blue-900">
-        <button
-          class="group bg-white border-2 border-blue-900 px-5 py-3 rounded-l-sm hover:shadow-lg cursor-pointer"
+      <!-- Modal Register -->
+      <section>
+        <div
+          id="registerModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
         >
-          <h1>Data</h1>
-        </button>
-      </div>
+          <!-- Modal box -->
+          <div
+            id="modalRegisterContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">
+              Register
+            </h2>
+
+            <form>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email">Nome</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Your name..."
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="registerBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Sign Up
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Already have an account?
+              <a id="signUpText" href="#" class="hover:underline">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
     <script src="./js/modal.js"></script>
   </body>

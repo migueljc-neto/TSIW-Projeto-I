@@ -8,8 +8,6 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-blue-400: oklch(70.7% 0.165 254.624);
-    --color-blue-600: oklch(54.6% 0.245 262.881);
-    --color-blue-700: oklch(48.8% 0.243 264.376);
     --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-slate-50: oklch(98.4% 0.003 247.858);
     --color-gray-500: oklch(55.1% 0.027 264.364);
@@ -322,9 +320,6 @@
       background-color: color-mix(in oklab, var(--color-black) 30%, transparent);
     }
   }
-  .bg-blue-600 {
-    background-color: var(--color-blue-600);
-  }
   .bg-slate-50 {
     background-color: var(--color-slate-50);
   }
@@ -368,9 +363,6 @@
   .text-sm {
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
-  }
-  .text-blue-600 {
-    color: var(--color-blue-600);
   }
   .text-blue-900 {
     color: var(--color-blue-900);
@@ -428,13 +420,6 @@
   .duration-300 {
     --tw-duration: 300ms;
     transition-duration: 300ms;
-  }
-  .hover\:bg-blue-700 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-blue-700);
-      }
-    }
   }
   .hover\:bg-white {
     &:hover {
@@ -511,18 +496,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @font-face {
   font-family: "Typo Hoop";
-  src: url("./assets/fonts/Typo\ Hoop_Regular.otf");
+  src: url("../assets/fonts/Typo\ Hoop_Regular.otf");
 }
 @font-face {
   font-family: "Typo Hoop";
-  src: url("./assets/fonts/Typo\ Hoop_Bold.otf");
+  src: url("../assets/fonts/Typo\ Hoop_Bold.otf");
   font-weight: bold;
 }
 body {
   font-family: "Space Mono", sans-serif;
+  background-image: url("../assets/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg");
 }
 #loginLabel {
   font-family: "Typo Hoop";
+}
+#loginBtn, #registerBtn {
+  background-color: #39578a;
+}
+#loginBtn:hover, #registerBtn:hover {
+  background-color: #6c6ea0;
+}
+#signUpText {
+  color: #39578a;
 }
 @property --tw-scale-x {
   syntax: "*";

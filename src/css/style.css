@@ -21,11 +21,13 @@ body {
   font-family: "Typo Hoop";
 }
 
-#loginBtn {
+#loginBtn,
+#registerBtn {
   background-color: #39578a;
 }
 
-#loginBtn:hover {
+#loginBtn:hover,
+#registerBtn:hover {
   background-color: #6c6ea0;
 }
 
