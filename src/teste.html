@@ -1,294 +1,244 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Document1</title>
+    <title>Compass</title>
+    <link rel="stylesheet" href="./css/style.css" />
     <!-- Tailwind -->
-    <link rel="stylesheet" href="css/tailwind.css" />
-    <script src="js/script.js"></script>
-</head>
-<body class="bg-gray-100 font-sans flex flex-col min-h-full">
-    <div class="container mx-auto p-4 max-w-4xl flex-grow">
-        <!-- Profile Header Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <h1 class="text-2xl font-bold mb-4">Perfil</h1>
-            
-            <!-- Flex container for image + info -->
-            <div class="flex flex-col sm:flex-row gap-6 mb-6">
-                <!-- User Image -->
-                <div class="flex-shrink-0 mx-auto sm:mx-0">
-                    <div class="relative w-32 h-32">
-                        <img class="rounded-full border border-black shadow-sm" src="https://cdn-icons-png.flaticon.com/512/4086/4086679.png" alt="user image" />
-                        <div class="absolute top-0 right-0 h-3 w-3 my-1 border-2 border-white rounded-full bg-green-500"></div>
-                    </div>
-                </div>
-                
-                <!-- User Info -->
-                <div class="flex-grow">
-                    <div class="mb-4">
-                        <label class="block text-gray-700">Nome de utilizador:</label>
-                        <div class="mt-1 p-2 bg-gray-100 rounded border border-black">xxxxxxxxxxxxx</div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700">E-mail:</label>
-                        <div class="mt-1 p-2 bg-gray-100 rounded border border-black">user@example.com</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Stats and Button -->
-            <div class="flex justify-between mb-6">
-                <div>
-                    <p class="text-gray-700">Milhas acumuladas:</p>
-                    <p class="font-bold">xxxxxxxx milhas</p>
-                </div>
-                <div>
-                    <p class="text-gray-700">Viagens compradas:</p>
-                    <p class="font-bold">xx</p>
-                </div>
-            </div>
-            
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border border-black">
-                Editar perfil
+    <link rel="stylesheet" href="./css/tailwind.css" />
+    <!--  -->
+    <script src="script.js"></script>
+  </head>
+  <body class="max-h-screen bg-slate-50 dark:bg-gray-900 dark:text-white">
+    <header class="bg-transparent text-white top-0 z-10">
+      <section
+        class="max-w-[1530px] mx-auto p-4 flex justify-between items-center"
+      >
+        <div id="logo">
+          <img
+            src="./assets/logos/logo-11.png"
+            class="block dark:hidden h-[81px] w-auto"
+            alt="Light mode image"
+          />
+
+          <img
+            src="./assets/logos/logoDarkmode_logotipo darkmode.png"
+            class="hidden dark:block h-[81px] w-auto"
+            alt="Light mode image"
+          />
+        </div>
+
+        <div class="hidden sm:flex gap-4 text-blue-900 p-4">
+          <!-- Passport -->
+          <button
+            class="group rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur hover:bg-white hover:shadow-lg transition"
+          >
+            <h1>Passaporte</h1>
+            <svg
+              class="w-4 stroke-blue-900 transition"
+              viewBox="0 0 25 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 7.89078L1.50537 22.0498C1.50537 23.6695 2.81835 24.9824 4.43799 24.9824H20.5674C22.187 24.9824 23.5 23.6695 23.5 22.0498V10.3194C23.5 8.96965 22.4059 7.8755 21.0562 7.8755H1.52156C1.51186 7.8755 1.50322 7.88163 1.5 7.89078ZM1.5 7.89078C1.5009 7.61627 18.0013 1.01746 18.0013 1.01746V7.20345M17.6539 16.1654L17.6348 16.1846"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <!-- Favorites -->
+          <button
+            class="group rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+          >
+            <h1>Favoritos</h1>
+            <img
+              src="./assets/icons/blue/heart.svg"
+              alt="favoriteIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Scratch-off -->
+          <button
+            class="group rounded-full p-3 cursor-pointer bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+          >
+            <img
+              src="./assets/icons/blue/coins.svg"
+              alt="coinIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Login -->
+          <button
+            id="openLoginModalBtn"
+            class="group rounded-full p-3 cursor-pointer bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+          >
+            <img
+              src="./assets/icons/blue/profile.svg"
+              alt="profileIcon"
+              class="w-4"
+            />
+          </button>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <!-- Modal Login -->
+      <section>
+        <div
+          id="loginModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
             </button>
+
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">Login</h2>
+
+            <form>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="loginBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Sign In
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Don’t have an account?
+              <button
+                id="signUpText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
         </div>
-        
-        <!-- Badges Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <h2 class="text-xl font-bold mb-4">Medalhas</h2>
-            <div class="p-4 bg-gray-100 rounded border border-black">
-                <p>Passaporte</p>
-            </div>
+      </section>
+
+      <!-- Modal Register -->
+      <section>
+        <div
+          id="registerModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalRegisterContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">
+              Register
+            </h2>
+
+            <form>
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email">Nome</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Your name..."
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="registerBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Sign Up
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Already have an account?
+              <a id="signUpText" href="#" class="hover:underline">Sign In</a>
+            </p>
+          </div>
         </div>
-        
-        <!-- Favorite Destinations Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <div class="flex justify-between items-center mb-4 border-b border-black pb-2">
-                <h2 class="text-xl font-bold">Destinos Favoritos</h2>
-                <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
-                    Favoritos
-                </button>
-            </div>
-            
-            <div class="max-w-6xl mx-auto p-4">
-                <!-- Linha 1 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <!-- Tour de France -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://static.ffx.io/images/$zoom_1%2C$multiply_0.6263%2C$ratio_1.777778%2C$width_990%2C$x_10%2C$y_72/t_crop_custom/q_86%2Cf_auto/92d6f38dc7730139079a7301e818b863ad263e17" 
-                                alt="Tour de France" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Tour de France</p>
-                            <p class="text-sm text-gray-600">10/05 - 20/05</p>
-                        </div>
-                    </div>
-                
-                    <!-- Barcelona -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Barcelona" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Barcelona</p>
-                            <p class="text-sm text-gray-600">25/06 - 30/06</p>
-                        </div>
-                    </div>
-                
-                    <!-- Havana -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://images.visitarcuba.org/La-Habana.jpg" 
-                                alt="Havana" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Havana</p>
-                            <p class="text-sm text-gray-600">15/07 - 20/07</p>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Linha 2 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Paris -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://img.static-af.com/transform/45cb9a13-b167-4842-8ea8-05d0cc7a4d04/" 
-                                alt="Paris" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Paris</p>
-                            <p class="text-sm text-gray-600">01/08 - 10/08</p>
-                        </div>
-                    </div>
-                
-                    <!-- Roma -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://inlifehousing.com/wp-content/uploads/2023/06/Roma.jpg" 
-                                alt="Roma" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Roma</p>
-                            <p class="text-sm text-gray-600">15/08 - 25/08</p>
-                        </div>
-                    </div>
-                
-                    <!-- Tóquio -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHKIF24V99CgojnWgA3d3jpkDb77h19H4kdA&s" 
-                                alt="Tóquio" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Tóquio</p>
-                            <p class="text-sm text-gray-600">05/09 - 20/09</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Trips Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <div class="flex justify-between items-center mb-4 border-b border-black pb-2">
-                <h2 class="text-xl font-bold">Viagens</h2>
-                <div class="flex gap-2">
-                    <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
-                        Passados
-                    </button>
-                    <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
-                        Proximas
-                    </button>
-                </div>
-            </div>
-            
-            <div class="max-w-6xl mx-auto p-4">
-                <!-- Linha 1 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <!-- Tour de France -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://static.ffx.io/images/$zoom_1%2C$multiply_0.6263%2C$ratio_1.777778%2C$width_990%2C$x_10%2C$y_72/t_crop_custom/q_86%2Cf_auto/92d6f38dc7730139079a7301e818b863ad263e17" 
-                                alt="Tour de France" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Tour de France</p>
-                            <p class="text-sm text-gray-600">10/05 - 20/05</p>
-                        </div>
-                    </div>
-                
-                    <!-- Barcelona -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Barcelona" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Barcelona</p>
-                            <p class="text-sm text-gray-600">25/06 - 30/06</p>
-                        </div>
-                    </div>
-                
-                    <!-- Havana -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://images.visitarcuba.org/La-Habana.jpg" 
-                                alt="Havana" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Havana</p>
-                            <p class="text-sm text-gray-600">15/07 - 20/07</p>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Linha 2 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Paris -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://img.static-af.com/transform/45cb9a13-b167-4842-8ea8-05d0cc7a4d04/" 
-                                alt="Paris" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Paris</p>
-                            <p class="text-sm text-gray-600">01/08 - 10/08</p>
-                        </div>
-                    </div>
-                
-                    <!-- Roma -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://inlifehousing.com/wp-content/uploads/2023/06/Roma.jpg" 
-                                alt="Roma" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Roma</p>
-                            <p class="text-sm text-gray-600">15/08 - 25/08</p>
-                        </div>
-                    </div>
-                
-                    <!-- Tóquio -->
-                    <div class="flex bg-white rounded-lg shadow-md overflow-hidden border border-black h-24">
-                        <div class="w-2/5">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHKIF24V99CgojnWgA3d3jpkDb77h19H4kdA&s" 
-                                alt="Tóquio" 
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="w-3/5 p-3 flex flex-col justify-center">
-                            <p class="font-bold text-gray-800 truncate">Tóquio</p>
-                            <p class="text-sm text-gray-600">05/09 - 20/09</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- Closing container div -->
-    
-    <!-- Footer Navigation -->
-    <footer class="bg-blue-600 text-white py-6 border-t border-black">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="grid grid-cols-3 gap-4">
-                <div>
-                    <p class="font-bold mb-2"></p>
-                    <ul class="space-y-1">
-                        <li><a href="#" class="text-white hover:text-gray-200">página inicial</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">pacotes</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">promoções</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="font-bold mb-2"></p>
-                    <ul class="space-y-1">
-                        <li><a href="#" class="text-white hover:text-gray-200">perfil</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">passaporte</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">favoritos</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="font-bold mb-2"></p>
-                    <ul class="space-y-1">
-                        <li><a href="#" class="text-white hover:text-gray-200">contacto</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">sobre nós</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
+      </section>
+    </main>
+    <script src="./js/modal.js"></script>
+  </body>
 </html>

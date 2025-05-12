@@ -4,14 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Document1</title>
+    <!-- Google Fonts - Space Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <!-- Tailwind -->
     <link rel="stylesheet" href="css/tailwind.css" />
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+        }
+    </style>
     <script src="js/script.js"></script>
 </head>
-<body class="bg-gray-100 font-sans flex flex-col min-h-full">
+<body class="bg-gray-100 flex flex-col min-h-full">
     <div class="container mx-auto p-4 max-w-4xl flex-grow">
         <!-- Profile Header Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
             <h1 class="text-2xl font-bold mb-4">Perfil</h1>
             
             <!-- Flex container for image + info -->
@@ -52,21 +59,23 @@
             <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border border-black">
                 Editar perfil
             </button>
-        </div>
+        </section>
         
         <!-- Badges Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
             <h2 class="text-xl font-bold mb-4">Medalhas</h2>
             <div class="p-4 bg-gray-100 rounded border border-black">
                 <p>Passaporte</p>
             </div>
-        </div>
+        </section>
         
         <!-- Favorite Destinations Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <div class="flex justify-between items-center mb-4">
+        <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
+            <div class="flex justify-between items-center mb-4 border-b border-black pb-2">
                 <h2 class="text-xl font-bold">Destinos Favoritos</h2>
-                <span class="text-blue-500">Favoritos</span>
+                <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
+                    Favoritos
+                </button>
             </div>
             
             <div class="max-w-6xl mx-auto p-4">
@@ -154,15 +163,19 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         
         <!-- Trips Section -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <div class="flex justify-between items-center mb-4">
+        <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
+            <div class="flex justify-between items-center mb-4 border-b border-black pb-2">
                 <h2 class="text-xl font-bold">Viagens</h2>
-                <div>
-                    <span class="text-blue-500 mr-4">Passados</span>
-                    <span class="text-blue-500">Proximas</span>
+                <div class="flex gap-2">
+                    <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
+                        Passados
+                    </button>
+                    <button class="text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-1 bg-white">
+                        Proximas
+                    </button>
                 </div>
             </div>
             
@@ -251,7 +264,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div> <!-- Closing container div -->
     
     <!-- Footer Navigation -->
