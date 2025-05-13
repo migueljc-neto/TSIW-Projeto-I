@@ -25,7 +25,7 @@
             <div class="flex flex-col sm:flex-row gap-6 mb-6">
                 <!-- User Image -->
                 <div class="flex-shrink-0 mx-auto sm:mx-0">
-                    <div class="relative w-32 h-32">
+                    <div class="relative w-45 h-45">
                         <img class="rounded-full border border-black shadow-sm" src="https://cdn-icons-png.flaticon.com/512/4086/4086679.png" alt="user image" />
                         <div class="absolute top-0 right-0 h-3 w-3 my-1 border-2 border-white rounded-full"></div>
                     </div>
@@ -33,42 +33,55 @@
                 
                 <!-- User Info -->
                 <div class="flex-grow">
-                    <div class="mb-4">
+                    <div>
                         <label class="block text-gray-700">Nome de utilizador:</label>
-                        <div class="mt-1 p-2 bg-gray-100 rounded border border-black">xxxxxxxxxxxxx</div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">E-mail:</label>
-                        <div class="mt-1 p-2 bg-gray-100 rounded border border-black">user@example.com</div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Stats and Button -->
-            <div class="flex justify-between mb-6">
-                <div>
-                    <p class="text-gray-700">Milhas acumuladas:</p>
-                    <p class="font-bold">xxxxxxxx milhas</p>
-                </div>
-                <div>
-                    <p class="text-gray-700">Viagens compradas:</p>
-                    <p class="font-bold">xx</p>
-                </div>
-            </div>
-            
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 border border-black">
-                Editar perfil
-            </button>
+                    <div>
+                        <p class="text-gray-700">Milhas acumuladas:</p>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-gray-700">Viagens compradas:</p>
+                    </div>
+                    <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white mb-4">
+                     Editar perfil
+                    </button>
+                </div>    
         </section>
         
         <!-- Badges Section -->
         <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
-            <h2 class="text-xl font-bold mb-4">Medalhas</h2>
-            
-            <div class="p-4 bg-gray-100 rounded border border-black">
-                <p>Passaporte</p>
+            <!-- Título e botão -->
+            <div class="flex items-center gap-x-2 mb-4">
+              <h1 class="text-xl font-bold">Medalhas</h1>
+              <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">Passaporte</button>
             </div>
+          
+            <!-- Badges com bandeiras -->
+            <div class="flex flex-wrap gap-4">
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/fr.png" alt="França" class="object-contain w-full h-full">
+                </div>
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/es.png" alt="Espanha" class="object-contain w-full h-full">
+                </div>
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/cu.png" alt="Cuba" class="h-full w-full object-cover">
+                </div>
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/ie.png" alt="Irlanda" class="object-contain w-full h-full">
+                </div>
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/tr.png" alt="Turquia" class="object-contain w-full h-full">
+                </div>
+                <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
+                  <img src="assets/flags/br.png" alt="Brasil" class="object-cover w-full h-full">
+                </div>
+              </div>
         </section>
+          
         
         <!-- Favorite Destinations Section -->
         <section class="bg-white rounded-lg shadow p-6 mb-6 border border-black">
