@@ -8,88 +8,80 @@
     <!-- Tailwind -->
     <link rel="stylesheet" href="./css/tailwind.css" />
     <!--  -->
-    <script src="script.js"></script>
   </head>
-  <body class="max-h-screen bg-slate-50 dark:bg-gray-900 dark:text-white">
-    <header class="bg-transparent text-white top-0 z-10">
+  <body
+    class="max-h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
+  >
+    <header class="bg-transparent top-0 z-10">
       <section
         class="max-w-[1530px] mx-auto p-4 flex justify-between items-center"
       >
         <div id="logo">
           <img
             src="./assets/logos/logo-11.png"
-            class="block dark:hidden h-[81px] w-auto"
+            class="block dark:hidden h-[67px] w-auto"
             alt="Light mode image"
           />
 
           <img
             src="./assets/logos/logoDarkmode_logotipo darkmode.png"
             class="hidden dark:block h-[81px] w-auto"
-            alt="Light mode image"
+            alt="Dark mode image"
           />
         </div>
 
-        <div class="hidden sm:flex gap-4 text-blue-900 p-4">
+        <div class="hidden sm:flex gap-4 p-4">
           <!-- Passport -->
           <button
-            class="group rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur hover:bg-white hover:shadow-lg transition"
+            class="group rounded-full border-1 border-white hover:border-blue-500 px-6 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition"
           >
             <h1>Passaporte</h1>
-            <svg
-              class="w-4 stroke-blue-900 transition"
-              viewBox="0 0 25 26"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.5 7.89078L1.50537 22.0498C1.50537 23.6695 2.81835 24.9824 4.43799 24.9824H20.5674C22.187 24.9824 23.5 23.6695 23.5 22.0498V10.3194C23.5 8.96965 22.4059 7.8755 21.0562 7.8755H1.52156C1.51186 7.8755 1.50322 7.88163 1.5 7.89078ZM1.5 7.89078C1.5009 7.61627 18.0013 1.01746 18.0013 1.01746V7.20345M17.6539 16.1654L17.6348 16.1846"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <img
+              src="./assets/icons/white/wallet.svg"
+              alt="walletIcon"
+              class="w-5"
+            />
           </button>
 
           <!-- Favorites -->
           <button
-            class="group rounded-sm py-2 px-4 cursor-pointer flex gap-4 bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+            class="group rounded-full border-1 border-white hover:border-blue-500 px-6 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition"
           >
             <h1>Favoritos</h1>
             <img
-              src="./assets/icons/blue/heart.svg"
-              alt="favoriteIcon"
-              class="w-4"
+              src="./assets/icons/white/heart.svg"
+              alt="heartIcon"
+              class="w-5"
             />
           </button>
 
           <!-- Scratch-off -->
           <button
-            class="group rounded-full p-3 cursor-pointer bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition px-4"
           >
             <img
-              src="./assets/icons/blue/coins.svg"
-              alt="coinIcon"
-              class="w-4"
+              src="./assets/icons/white/coins.svg"
+              alt="coinsIcon"
+              class="w-5"
             />
           </button>
 
           <!-- Login -->
           <button
             id="openLoginModalBtn"
-            class="group rounded-full p-3 cursor-pointer bg-transparent backdrop-blur-sm hover:bg-white hover:shadow-lg transition"
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition p-4"
           >
             <img
-              src="./assets/icons/blue/profile.svg"
+              src="./assets/icons/white/profile.svg"
               alt="profileIcon"
-              class="w-4"
+              class="w-5"
             />
           </button>
         </div>
       </section>
     </header>
 
-    <main>
+    <main class="h-auto">
       <!-- Modal Login -->
       <section>
         <div
@@ -120,7 +112,7 @@
                   type="email"
                   id="email"
                   class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="you@example.com"
+                  placeholder="nome@exemplo.com"
                   required
                 />
               </div>
@@ -143,18 +135,18 @@
                 type="submit"
                 class="w-full text-white py-3 rounded-lg cursor-pointer transition"
               >
-                Sign In
+                Login
               </button>
             </form>
 
             <p class="text-sm text-center text-gray-600 mt-4">
-              Don’t have an account?
+              Não tem uma conta?
               <button
                 id="signUpText"
                 href="#"
                 class="hover:underline cursor-pointer"
               >
-                Sign up
+                Criar Conta
               </button>
             </p>
           </div>
@@ -174,24 +166,24 @@
           >
             <!-- Close button -->
             <button
-              id="closeModalBtn"
+              id="closeRegisterModalBtn"
               class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
             >
               &times;
             </button>
 
-            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">
-              Register
+            <h2 id="registerLabel" class="text-2xl text-gray-800 mb-6">
+              Registo
             </h2>
 
-            <form>
+            <form id="registerForm">
               <div class="mb-4">
                 <label class="block text-gray-700 mb-2" for="email">Nome</label>
                 <input
                   type="text"
-                  id="name"
+                  id="nameRegister"
                   class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="Your name..."
+                  placeholder="O seu nome..."
                   required
                 />
               </div>
@@ -202,9 +194,9 @@
                 >
                 <input
                   type="email"
-                  id="email"
+                  id="emailRegister"
                   class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder="you@example.com"
+                  placeholder="nome@exemplo.com"
                   required
                 />
               </div>
@@ -215,7 +207,19 @@
                 >
                 <input
                   type="password"
-                  id="password"
+                  id="passwordRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Confirmar Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordConfirm"
                   class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   placeholder="********"
                   required
@@ -227,18 +231,78 @@
                 type="submit"
                 class="w-full text-white py-3 rounded-lg cursor-pointer transition"
               >
-                Sign Up
+                Registar
               </button>
             </form>
 
             <p class="text-sm text-center text-gray-600 mt-4">
-              Already have an account?
-              <a id="signUpText" href="#" class="hover:underline">Sign In</a>
+              Já tem uma conta?
+              <button
+                id="signInText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Login
+              </button>
             </p>
           </div>
         </div>
       </section>
     </main>
-    <script src="./js/modal.js"></script>
+    <footer class="w-screen h-fit py-20 bottom-0 fixed">
+      <!-- Flight search Form -->
+      <div
+        class="group hidden sm:flex text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit overflow-visible"
+      >
+        <button
+          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-4 py-3 cursor-pointer transition rounded-l-sm"
+        >
+          <h1>Data</h1>
+          <img
+            src="./assets/icons/blue/calendar.svg"
+            alt="calendarIcon"
+            class="w-4"
+          />
+        </button>
+        <button
+          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+        >
+          <h1>Ponto de Partida</h1>
+          <img src="./assets/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
+        </button>
+        <button
+          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+        >
+          <h1>Turismo</h1>
+          <img
+            src="./assets/icons/blue/turism.svg"
+            alt="turismIcon"
+            class="w-4"
+          />
+        </button>
+        <button
+          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+        >
+          <h1>Passageiros</h1>
+          <img
+            src="./assets/icons/blue/users.svg"
+            alt="passengersIcon"
+            class="w-4"
+          />
+        </button>
+        <button
+          class="group bg-blue-500 hover:outline-white hover:outline-2 px-4 min-w-fit py-3 rounded-r-sm hover:shadow-lg cursor-pointer transition"
+        >
+          <img
+            src="./assets/icons/white/plane.svg"
+            alt="passengersIcon"
+            class="w-4"
+          />
+        </button>
+      </div>
+    </footer>
+    <script src="./js/modal.js" defer></script>
+    <script src="./js/getUsers.js" type="module"></script>
+    <script src="./js/register.js" type="module"></script>
   </body>
 </html>

@@ -1,10 +1,12 @@
 const openLoginModalBtn = document.getElementById("openLoginModalBtn");
 const closeModalBtn = document.getElementById("closeModalBtn");
+const closeRegisterModalBtn = document.getElementById("closeRegisterModalBtn");
 const loginModal = document.getElementById("loginModal");
 const registerModal = document.getElementById("registerModal");
 const modalContent = document.getElementById("modalContent");
 const modalRegisterContent = document.getElementById("modalRegisterContent");
-const openRegisterBtn = document.getElementById("signUpText");
+const reopenRegisterBtn = document.getElementById("signUpText");
+const reopenLoginBtn = document.getElementById("signInText");
 
 /* Login */
 
@@ -18,7 +20,7 @@ openLoginModalBtn.addEventListener("click", () => {
 
 /* Register */
 
-openRegisterBtn.addEventListener("click", () => {
+reopenRegisterBtn.addEventListener("click", () => {
   loginModal.classList.add("hidden");
   registerModal.classList.remove("hidden");
   setTimeout(() => {
@@ -29,9 +31,21 @@ openRegisterBtn.addEventListener("click", () => {
   }, 10);
 });
 
+reopenLoginBtn.addEventListener("click", () => {
+  registerModal.classList.add("hidden");
+  loginModal.classList.remove("hidden");
+  setTimeout(() => {
+    modalRegisterContent.classList.remove("opacity-100", "scale-100");
+    modalRegisterContent.classList.add("opacity-0", "scale-95");
+    modalContent.classList.remove("opacity-0", "scale-95");
+    modalContent.classList.add("opacity-100", "scale-100");
+  }, 10);
+});
+
 /* Both */
 
-closeModalBtn.addEventListener("click", closeModal);
+closeModalBtn.addEventListener("click", closeLoginModal);
+closeRegisterModalBtn.addEventListener("click", closeRegisterModal);
 
 window.addEventListener("click", (e) => {
   if (e.target === loginModal) {

@@ -14,10 +14,11 @@
 
 body {
   font-family: "Space Mono", sans-serif;
-  background-image: url("../assets/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg");
+  /* background-image: url("../assets/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg"); */
 }
 
-#loginLabel {
+#loginLabel,
+#registerLabel {
   font-family: "Typo Hoop";
 }
 
@@ -31,6 +32,7 @@ body {
   background-color: #6c6ea0;
 }
 
-#signUpText {
+#signUpText,
+#signInText {
   color: #39578a;
 }
