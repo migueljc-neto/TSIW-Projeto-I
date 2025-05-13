@@ -7,25 +7,25 @@
     <link rel="stylesheet" href="./css/style.css" />
     <!-- Tailwind -->
     <link rel="stylesheet" href="./css/tailwind.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
     <!--  -->
   </head>
   <body
     class="max-h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
   >
     <header class="bg-transparent top-0 z-10">
-      <section
-        class="max-w-[1530px] mx-auto p-4 flex justify-between items-center"
-      >
+      <section class="max-w-6xl mx-auto p-4 flex justify-between items-center">
         <div id="logo">
           <img
             src="./assets/logos/logo-11.png"
-            class="block dark:hidden h-[67px] w-auto"
+            class="block dark:hidden h-[57px] w-auto mt-8"
             alt="Light mode image"
           />
 
           <img
             src="./assets/logos/logoDarkmode_logotipo darkmode.png"
-            class="hidden dark:block h-[81px] w-auto"
+            class="hidden dark:block h-[57px] w-auto mt-8"
             alt="Dark mode image"
           />
         </div>
@@ -33,13 +33,13 @@
         <div class="hidden sm:flex gap-4 p-4">
           <!-- Passport -->
           <button
-            class="group rounded-full border-1 border-white hover:border-blue-500 px-6 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition"
+            class="group rounded-full border-1 border-white hover:border-blue-500 p-4 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition h-fit"
           >
             <h1>Passaporte</h1>
             <img
               src="./assets/icons/white/wallet.svg"
               alt="walletIcon"
-              class="w-5"
+              class="w-4"
             />
           </button>
 
@@ -51,30 +51,30 @@
             <img
               src="./assets/icons/white/heart.svg"
               alt="heartIcon"
-              class="w-5"
+              class="w-4"
             />
           </button>
 
           <!-- Scratch-off -->
           <button
-            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition px-4"
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition px-5"
           >
             <img
               src="./assets/icons/white/coins.svg"
               alt="coinsIcon"
-              class="w-5"
+              class="w-4"
             />
           </button>
 
           <!-- Login -->
           <button
             id="openLoginModalBtn"
-            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition p-4"
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition p-5"
           >
             <img
               src="./assets/icons/white/profile.svg"
               alt="profileIcon"
-              class="w-5"
+              class="w-4"
             />
           </button>
         </div>
