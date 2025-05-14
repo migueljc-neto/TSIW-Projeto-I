@@ -5,24 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Document1</title>
     <!-- Google Fonts - Space Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel ="stylesheet" href="css/profile.css" />
     <!-- Tailwind -->
     <link rel="stylesheet" href="css/tailwind.css" />
-    <style>
-        body {
-            font-family: 'Space Mono', monospace;
-        }
-    </style>
     <script src="js/script.js"></script>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-full">
     <div class="container mx-auto p-4 max-w-4xl flex-grow">
         <!-- Profile Header Section -->
         <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
-            <h1 class="text-2xl font-bold mb-4">Perfil</h1>
-            
             <!-- Flex container for image + info -->
-            <div class="flex flex-col sm:flex-row gap-6 mb-6">
+            <div class="flex flex-col sm:flex-row gap-6">
                 <!-- User Image -->
                 <div class="flex-shrink-0 mx-auto sm:mx-0">
                     <div class="relative w-45 h-45">
@@ -30,7 +23,6 @@
                         <div class="absolute top-0 right-0 h-3 w-3 my-1 border-2 border-gray-100 rounded-full"></div>
                     </div>
                 </div>
-                
                 <!-- User Info -->
                 <div class="flex-grow">
                     <div>
@@ -46,7 +38,7 @@
                         <p class="text-gray-700">Viagens compradas:</p>
                     </div>
                     <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white mb-4">
-                     Editar perfil
+                        Editar perfil
                     </button>
                 </div>    
         </section>
@@ -55,8 +47,12 @@
         <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
             <!-- Título e botão -->
             <div class="flex items-center gap-x-2 mb-4">
-              <h1 class="text-xl font-bold">Medalhas</h1>
-              <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">Passaporte</button>
+              <h2 class="text-xl font-bold">Medalhas</h2>
+              <button class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">
+                Passaporte
+                <img src="assets/icons/blue/wallet.svg" alt="wallet icon" class="w-5 h-5">
+              </button>
+              
             </div>
           
             <!-- Badges com bandeiras -->
@@ -87,9 +83,11 @@
         <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
             <div class="flex items-center gap-x-2 mb-4">
                 <h2 class="text-xl font-bold">Destinos Favoritos</h2>
-                <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">
-                Favoritos
-                </button>
+                <button class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">
+                    Favoritos
+                    <img src="assets/icons/blue/heart.svg" alt="wallet icon" class="w-5 h-5">
+                  </button>
+                  
             </div>
             
             <div class="max-w-6xl mx-auto p-4">
