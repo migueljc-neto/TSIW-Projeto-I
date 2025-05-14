@@ -19,5 +19,11 @@
     "email": "charlie@teste.com",
     "password": "charlie1234",
     "isAdmin": false
+  },
+  {
+    "name": "teste",
+    "email": "boba@teste.com",
+    "password": "123",
+    "isAdmin": false
   }
 ]
