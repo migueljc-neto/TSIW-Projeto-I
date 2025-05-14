@@ -14,9 +14,9 @@
   <body
     class="max-h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
   >
-    <header class="bg-transparent top-0 z-10 px-20 mt-15">
+    <header class="bg-transparent top-0 z-10">
       <section
-        class="max-w-[1530px] mx-auto gap-50 hidden md:flex justify-between"
+        class="max-w-[1530px] mx-auto gap-50 hidden md:flex justify-between mt-15 px-20"
       >
         <div id="logo">
           <img
@@ -80,6 +80,20 @@
             />
           </button>
         </div>
+      </section>
+      <!-- mobile header -->
+      <section class="w-fill h-fit flex md:hidden justify-start pl-5 pt-5">
+        <img
+          src="./assets/logos/logo-11.png"
+          class="block dark:hidden h-[60px] w-auto mt-8"
+          alt="Light mode image"
+        />
+
+        <img
+          src="./assets/logos/logoDarkmode_logo darkmode.png"
+          class="hidden dark:block h-[100px] w-auto"
+          alt="Dark mode image"
+        />
       </section>
     </header>
 
