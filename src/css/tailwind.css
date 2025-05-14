@@ -467,6 +467,9 @@
   .gap-20 {
     gap: calc(var(--spacing) * 20);
   }
+  .gap-50 {
+    gap: calc(var(--spacing) * 50);
+  }
   .gap-80 {
     gap: calc(var(--spacing) * 80);
   }
@@ -611,6 +614,9 @@
   }
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
+  }
+  .px-20 {
+    padding-inline: calc(var(--spacing) * 20);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
@@ -867,6 +873,11 @@
   .sm\:px-2 {
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 2);
+    }
+  }
+  .md\:flex {
+    @media (width >= 48rem) {
+      display: flex;
     }
   }
   .md\:grid-cols-3 {
