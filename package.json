@@ -27,9 +27,11 @@
     "dev": "npx @tailwindcss/cli -i ./src/css/style.css -o ./src/css/tailwind.css --watch"
   },
   "dependencies": {
+    "@parcel/watcher": "^2.5.1",
     "@tailwindcss/cli": "^4.1.6",
     "@tailwindcss/vite": "^4.1.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "lightningcss": "^1.30.1"
   },
   "devDependencies": {
     "tailwindcss": "^4.1.6"
