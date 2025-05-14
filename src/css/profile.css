@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@font-face {
+  font-family: "Typo Hoop";
+  src: url("../assets/fonts/Typo\ Hoop_Regular.otf");
+}
+
+@font-face {
+  font-family: "Typo Hoop";
+  src: url("../assets/fonts/Typo\ Hoop_Bold.otf");
+  font-weight: bold;
+}
+
+body {
+  font-family: "Space Mono", sans-serif;
+}
+
+button {
+    font-family: 'Space Mono', monospace;
+     border: 1px solid #39578a; 
+     border-radius: 6px;
+     padding: 10px 20px;
+     background-color: white; 
+     color: #39578a; 
+    cursor: pointer;
+}
+      
+  
+button:hover {
+    background-color: #f0f0f0;
+}
+  
+section {
+    border: 1px solid #39578a; 
+    border-radius: 8px; 
+    padding: 16px; 
+ }
+  
+h2 {
+  font-family: 'Typo Hoop', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #111;
+}
+
+footer {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 1rem;
+  background-color: #39578a;
+}
