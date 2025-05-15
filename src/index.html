@@ -296,27 +296,27 @@
           <h1>Ponto de Partida</h1>
           <img src="./assets/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
         </button>
-        <!-- como adaptar o dropdown menu para ter o icon que quero, opção de desenhar o dropdown menu e js para selecionar na dom a div escolhida -->
-        <div
-          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-        >
-          <select class="appearance-none">
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-          </select>
-          <img src="./assets/icons/blue/turism.svg" alt="" class="h-5" />
+        <!-- Turism Type Select -->
+
+        <div class="h-fit w-fit flex flex-col gap-2">
+          <div
+            class="flex justify-center top-21 left-50 items-center h-fit w-fit gap-6 mx-auto border-2 rounded-md bg-white"
+          >
+            <div class="flex px-4 py-2 gap-4 w-auto hover:bg-gray-200">
+              <h1>Religioso</h1>
+            </div>
+          </div>
+          <button
+            class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Turismo</h1>
+            <img
+              src="./assets/icons/blue/turism.svg"
+              alt="turismIcon"
+              class="w-4"
+            />
+          </button>
         </div>
-        <button
-          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-        >
-          <h1>Turismo</h1>
-          <img
-            src="./assets/icons/blue/turism.svg"
-            alt="turismIcon"
-            class="w-4"
-          />
-        </button>
 
         <!-- Nº Passengers -->
         <div class="h-fit flex flex-col gap-2">
@@ -357,6 +357,7 @@
         </button>
       </div>
     </footer>
+
     <script src="./js/modal.js" defer></script>
     <script src="./js/getUsers.js" type="module"></script>
     <script src="./js/register.js" type="module"></script>
