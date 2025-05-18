@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Document1</title>
+    <title>Compass - Profile</title>
     <!-- Google Fonts - Space Mono -->
-    <link rel ="stylesheet" href="css/profile.css" />
+    <link rel="stylesheet" href="../css/profile.css" />
     <!-- Tailwind -->
-    <link rel="stylesheet" href="css/tailwind.css" />
+    <link rel="stylesheet" href="../css/tailwind.css" />
     <script src="js/script.js"></script>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-full">
+    <body class="flex flex-col min-h-full">
+    <div>
     <div class="container mx-auto p-4 max-w-4xl flex-grow">
         <!-- Profile Header Section -->
-        <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="rounded-lg shadow p-6 mb-6 border border-black">
             <!-- Flex container for image + info -->
             <div class="flex flex-col sm:flex-row gap-6">
                 <!-- User Image -->
@@ -26,31 +27,32 @@
                 <!-- User Info -->
                 <div class="flex-grow">
                     <div>
-                        <label class="block text-gray-700">Nome de utilizador:</label>
+                        <label id="userNameLabel" class="block text-gray-700">Nome:</label>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700">E-mail:</label>
+                        <label id="userEmailLabel" class="block text-gray-700">E-mail:</label>
                     </div>
                     <div>
-                        <p class="text-gray-700">Milhas acumuladas:</p>
+                        <p id="userMilesLabel" class="text-gray-700">Milhas acumuladas:</p>
                     </div>
                     <div class="mb-4">
-                        <p class="text-gray-700">Viagens compradas:</p>
+                        <p id="userTripsLabel" class="text-gray-700">Viagens compradas:</p>
                     </div>
                     <button class="text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white mb-4">
                         Editar perfil
                     </button>
                 </div>    
+            </div>
         </section>
         
         <!-- Badges Section -->
-        <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="rounded-lg shadow p-6 mb-6 border border-black">
             <!-- Título e botão -->
             <div class="flex items-center gap-x-2 mb-4">
               <h2 class="text-xl font-bold">Medalhas</h2>
               <button class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">
                 Passaporte
-                <img src="assets/icons/blue/wallet.svg" alt="wallet icon" class="w-5 h-5">
+                <img src="../assets/icons/blue/wallet.svg" alt="wallet icon" class="w-5 h-5">
               </button>
               
             </div>
@@ -58,34 +60,34 @@
             <!-- Badges com bandeiras -->
             <div class="flex flex-wrap gap-4">
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/fr.png" alt="França" class="object-contain w-full h-full">
+                  <img src="../assets/flags/fr.png" alt="França" class="object-contain w-full h-full">
                 </div>
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/es.png" alt="Espanha" class="object-contain w-full h-full">
+                  <img src="../assets/flags/es.png" alt="Espanha" class="object-contain w-full h-full">
                 </div>
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/cu.png" alt="Cuba" class="h-full w-full object-cover">
+                  <img src="../assets/flags/cu.png" alt="Cuba" class="h-full w-full object-cover">
                 </div>
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/ie.png" alt="Irlanda" class="object-contain w-full h-full">
+                  <img src="../assets/flags/ie.png" alt="Irlanda" class="object-contain w-full h-full">
                 </div>
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/tr.png" alt="Turquia" class="object-contain w-full h-full">
+                  <img src="../assets/flags/tr.png" alt="Turquia" class="object-contain w-full h-full">
                 </div>
                 <div class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center">
-                  <img src="assets/flags/br.png" alt="Brasil" class="object-cover w-full h-full">
+                  <img src="../assets/flags/br.png" alt="Brasil" class="object-cover w-full h-full">
                 </div>
               </div>
         </section>
           
         
         <!-- Favorite Destinations Section -->
-        <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="rounded-lg shadow p-6 mb-6 border border-black">
             <div class="flex items-center gap-x-2 mb-4">
                 <h2 class="text-xl font-bold">Destinos Favoritos</h2>
                 <button class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white">
                     Favoritos
-                    <img src="assets/icons/blue/heart.svg" alt="wallet icon" class="w-5 h-5">
+                    <img src="../assets/icons/blue/heart.svg" alt="wallet icon" class="w-5 h-5">
                   </button>
                   
             </div>
@@ -178,7 +180,7 @@
         </section>
         
         <!-- Trips Section -->
-        <section class="bg-gray-100 rounded-lg shadow p-6 mb-6 border border-black">
+        <section class="rounded-lg shadow p-6 mb-6 border border-black">
             <div class="flex items-center gap-x-2 mb-4">
                 <h2 class="text-xl font-bold">Viagens</h2>
                 <div class="flex gap-2">
@@ -306,5 +308,6 @@
             </div>
         </div>
     </footer>
+    <script src="../js/views/profileView.js"></script>
 </body>
 </html>

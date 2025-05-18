@@ -7,12 +7,12 @@ const port = 3000;
 
 app.use(express.static("src"));
 
-// Para aceitar JSON vindo do cliente (fetch POST, etc)
+// Para aceitar JSON vindo do cliente
 app.use(express.json());
 
 const userPath = path.join(__dirname, "src/json/users.json");
 
-// Rota POST para registar novo usuário
+// Rota POST para registar novo user
 app.post("/api/register", (req, res) => {
   const newUser = req.body;
   updateUsers(newUser);
@@ -35,5 +35,5 @@ app.get("/api/users", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`);
+  console.log(`Compass on http://localhost:${port}`);
 });

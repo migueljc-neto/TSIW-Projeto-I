@@ -1,4 +1,4 @@
-import { fetchUsers } from "./getUsers.js";
+import { fetchUsers } from "../models/userModel.js";
 
 const registerForm = document.getElementById("registerForm");
 
