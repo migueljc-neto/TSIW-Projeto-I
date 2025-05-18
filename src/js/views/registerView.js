@@ -1,50 +1,50 @@
-import { fetchUsers } from "../models/userModel.js";
+import * as User from "../models/userModel.js";
+
+User.init();
 
 const registerForm = document.getElementById("registerForm");
 
-registerForm.addEventListener("submit", async (event) => {
+registerForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  let users = (await fetchUsers()) || [];
-
-  console.log(users);
-
-  const name = document.getElementById("nameRegister").value;
-  const email = document.getElementById("emailRegister").value;
+  clearMessages();
+  const name = document.getElementById("nameRegister").value.trim();
+  const email = document.getElementById("emailRegister").value.trim();
   const password = document.getElementById("passwordRegister").value;
   const passwordConfirm = document.getElementById("passwordConfirm").value;
 
   const isAdmin = false;
 
-  const existingError = registerForm.querySelector(".text-red-500");
-  if (existingError) existingError.remove();
+  try {
+    User.add(name, email, password, passwordConfirm);
+    displayMessage("Registo efetuado com sucesso!", "success");
 
-  if (password !== passwordConfirm) {
-    registerForm.insertAdjacentHTML(
-      "beforeend",
-      "<p class='text-red-500 mt-2'>As Passwords não coincidem!</p>"
-    );
-    return;
-  } else if (users.some((user) => user.email === email)) {
-    registerForm.insertAdjacentHTML(
-      "beforeend",
-      "<p class='text-red-500 mt-2'>O email já existe!</p>"
-    );
-    return;
+    registerForm.reset();
+    setTimeout(() => {
+      registerFormClose();
+    }, 1000);
+  } catch (error) {
+    displayMessage(error.message);
   }
-
-  fetch("/api/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, email, password, isAdmin }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Resposta do servidor:", data);
-    })
-    .catch((error) => {
-      console.error("Erro no registo:", error);
-    });
 });
+
+function displayMessage(message, type = "error") {
+  const colorClass = type === "error" ? "text-red-500" : "text-green-500";
+  registerForm.insertAdjacentHTML(
+    "beforeend",
+    `<p class='${colorClass} mt-2'>${message}</p>`
+  );
+}
+
+function clearMessages() {
+  const existing = registerForm.querySelector(".text-red-500, .text-green-500");
+  if (existing) existing.remove();
+}
+
+function registerFormClose() {
+  modalRegisterContent.classList.remove("opacity-100", "scale-100");
+  modalRegisterContent.classList.add("opacity-0", "scale-95");
+  setTimeout(() => {
+    registerModal.classList.add("hidden");
+  }, 300);
+}
