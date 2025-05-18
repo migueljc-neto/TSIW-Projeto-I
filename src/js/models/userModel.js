@@ -42,12 +42,16 @@ export function login(email, password, keepSigned) {
 
 // User Logout
 export function logout() {
-  sessionStorage.removeItem("loggedUser");
+  sessionStorage.removeItem("loggedUser") ||
+    localStorage.removeItem("loggedUser");
 }
 
 // Checks if user is logged in
 export function isLogged() {
-  return sessionStorage.getItem("loggedUser") ? true : false;
+  return (
+    !!sessionStorage.getItem("loggedUser") ||
+    !!localStorage.getItem("loggedUser")
+  );
 }
 
 export function getUserLogged() {

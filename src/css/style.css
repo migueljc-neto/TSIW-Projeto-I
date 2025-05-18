@@ -33,6 +33,11 @@ body {
 }
 
 #signUpText,
-#signInText {
+#signInText,
+#loggedModal {
   color: #39578a;
+}
+
+#loggedModal {
+  border-color: #39578a;
 }

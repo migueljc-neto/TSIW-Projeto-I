@@ -1,21 +1,48 @@
+import * as User from "../models/userModel.js";
+
 const openLoginModalBtn = document.getElementById("openLoginModalBtn");
+
 const closeModalBtn = document.getElementById("closeModalBtn");
 const closeRegisterModalBtn = document.getElementById("closeRegisterModalBtn");
+
 const loginModal = document.getElementById("loginModal");
 const registerModal = document.getElementById("registerModal");
+
 const modalContent = document.getElementById("modalContent");
 const modalRegisterContent = document.getElementById("modalRegisterContent");
+
 const reopenRegisterBtn = document.getElementById("signUpText");
 const reopenLoginBtn = document.getElementById("signInText");
+
+const profileBtn = document.getElementById("profileBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
 /* Login */
 
 openLoginModalBtn.addEventListener("click", () => {
-  loginModal.classList.remove("hidden");
-  setTimeout(() => {
-    modalContent.classList.remove("opacity-0", "scale-95");
-    modalContent.classList.add("opacity-100", "scale-100");
-  }, 10);
+  if (User.isLogged()) {
+    // Toggle loggedModal
+    if (loggedModal.classList.contains("hidden")) {
+      loggedModal.classList.remove("hidden");
+    } else {
+      loggedModal.classList.add("hidden");
+    }
+  } else {
+    loginModal.classList.remove("hidden");
+    setTimeout(() => {
+      modalContent.classList.remove("opacity-0", "scale-95");
+      modalContent.classList.add("opacity-100", "scale-100");
+    }, 10);
+  }
+});
+
+profileBtn.addEventListener("click", () => {
+  location.href = "./html/profile.html";
+});
+
+logoutBtn.addEventListener("click", () => {
+  User.logout();
+  location.reload();
 });
 
 /* Register */

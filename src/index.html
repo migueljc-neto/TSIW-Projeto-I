@@ -81,6 +81,41 @@
           </button>
         </div>
       </section>
+      <section>
+        <div
+          id="loggedModal"
+          class="hidden absolute right-40 w-fit rounded-xl border-2 bg-white shadow-lg text-sm"
+        >
+          <ul class="py-2">
+            <li>
+              <button
+                id="profileBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 hover:bg-gray-300 cursor-pointer"
+              >
+                <span>Perfil</span>
+                <img
+                  src="./assets/icons/blue/profile.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+            <li>
+              <button
+                id="logoutBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 hover:bg-gray-300 cursor-pointer"
+              >
+                <span>Terminar Sessão</span>
+                <img
+                  src="./assets/icons/blue/log-out.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
       <!-- mobile header -->
       <section class="w-fill h-fit flex md:hidden justify-start pl-5 pt-5">
         <img
@@ -329,7 +364,7 @@
     </footer>
     <script src="./js/init.js"></script>
     <script type="module" src="./js/views/loginView.js"></script>
-    <script src="./js/views/modalView.js" defer></script>
+    <script type="module" src="./js/views/modalView.js" defer></script>
     <script type="module" src="./js/models/userModel.js"></script>
     <script type="module" src="./js/views/registerView.js"></script>
   </body>
