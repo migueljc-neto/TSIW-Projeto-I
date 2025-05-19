@@ -16,7 +16,7 @@ export function add(name, email, password, passwordConfirm) {
   }
 
   const id = Date.now();
-  users.push(new User(id, name, email, password));
+  users.push(new User(id, name, email, password, false));
   localStorage.setItem("users", JSON.stringify(users));
 }
 

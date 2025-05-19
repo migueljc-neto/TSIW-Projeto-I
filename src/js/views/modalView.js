@@ -42,7 +42,7 @@ profileBtn.addEventListener("click", () => {
 
 logoutBtn.addEventListener("click", () => {
   User.logout();
-  location.reload();
+  loggedModal.classList.add("hidden");
 });
 
 /* Register */

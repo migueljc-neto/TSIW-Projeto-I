@@ -13,15 +13,13 @@ registerForm.addEventListener("submit", (event) => {
   const password = document.getElementById("passwordRegister").value;
   const passwordConfirm = document.getElementById("passwordConfirm").value;
 
-  const isAdmin = false;
-
   try {
     User.add(name, email, password, passwordConfirm);
     displayMessage("Registo efetuado com sucesso!", "success");
-
     registerForm.reset();
     setTimeout(() => {
       registerFormClose();
+      User.login(email, password, false);
     }, 1000);
   } catch (error) {
     displayMessage(error.message);
