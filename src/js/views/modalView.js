@@ -17,16 +17,34 @@ const reopenLoginBtn = document.getElementById("signInText");
 const profileBtn = document.getElementById("profileBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
+const logoutListSection = document.getElementById("logoutListSection");
+
 /* Login */
 
 openLoginModalBtn.addEventListener("click", () => {
   if (User.isLogged()) {
-    // Toggle loggedModal
-    if (loggedModal.classList.contains("hidden")) {
-      loggedModal.classList.remove("hidden");
-    } else {
-      loggedModal.classList.add("hidden");
+    const adminModalSection = document.getElementById("adminModalSection");
+
+    if (User.isAdmin(User.getUserLogged())) {
+      logoutListSection.classList.remove("last:rounded-b-xl");
+      if (!adminModalSection) {
+        loggedModal.insertAdjacentHTML(
+          "beforeend",
+          `<li id="adminModalSection" class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl">
+            <button id="adminBtn" class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer">
+              <span>Admin</span>
+              <img src="./assets/icons/blue/users.svg" alt="Admin" class="w-4 h-4"/>
+            </button>
+          </li>`
+        );
+      }
+    } else if (adminModalSection) {
+      adminModalSection.remove();
+      logoutListSection.classList.add("last:rounded-b-xl");
     }
+
+    // Toggle modal visibility
+    loggedModal.classList.toggle("hidden");
   } else {
     loginModal.classList.remove("hidden");
     setTimeout(() => {

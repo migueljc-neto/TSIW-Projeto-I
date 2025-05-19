@@ -54,6 +54,12 @@ export function isLogged() {
   );
 }
 
+// Checks if user is Admin
+export function isAdmin(user) {
+  return user.isAdmin;
+}
+
+// Returns the logged user
 export function getUserLogged() {
   let user = sessionStorage.getItem("loggedUser");
   if (!user) {
@@ -71,12 +77,27 @@ class User {
   email = "";
   password = "";
   isAdmin = false;
+  miles = {
+    available: 0,
+    total: 0,
+  };
 
-  constructor(id, name, email, password, isAdmin) {
+  constructor(
+    id,
+    name,
+    email,
+    password,
+    isAdmin,
+    miles = {
+      available: 0,
+      total: 0,
+    }
+  ) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.isAdmin = isAdmin;
+    this.miles = miles;
   }
 }

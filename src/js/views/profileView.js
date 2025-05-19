@@ -7,6 +7,7 @@ const user = User.getUserLogged();
 const userNameLabel = document.getElementById("userNameLabel");
 const userEmailLabel = document.getElementById("userEmailLabel");
 const userMilesLabel = document.getElementById("userMilesLabel");
+const userTotalMilesLabel = document.getElementById("userTotalMilesLabel");
 const userTripsLabel = document.getElementById("userTripsLabel");
 
 window.addEventListener("load", (event) => {
@@ -15,7 +16,12 @@ window.addEventListener("load", (event) => {
   }
 
   document.title = `Compass - ${user.name}`;
-  userNameLabel.insertAdjacentText("beforeend", user.name);
-  userEmailLabel.insertAdjacentText("beforeend", user.email);
+  userNameLabel.insertAdjacentText("beforeend", ` ${user.name}`);
+  userEmailLabel.insertAdjacentText("beforeend", ` ${user.email}`);
+  userMilesLabel.insertAdjacentText("beforeend", ` ${user.miles["available"]}`);
+  userTotalMilesLabel.insertAdjacentText(
+    "beforeend",
+    ` ${user.miles["total"]}`
+  );
   document.body.classList.remove("hidden");
 });
