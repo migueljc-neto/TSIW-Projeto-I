@@ -316,10 +316,10 @@
     <footer class="w-screen h-fit py-20 bottom-0 fixed">
       <!-- Flight search Form -->
       <div
-        class="group hidden md:flex text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit overflow-visible"
+        class="group hidden md:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
       >
         <button
-          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor-pointer transition rounded-l-full"
+          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor-pointer transition rounded-l-full"
         >
           <h1>Data</h1>
           <img
@@ -328,34 +328,104 @@
             class="w-4"
           />
         </button>
+
+        <!-- Ponto de Partida -->
+        <div class="h-fit w-fit flex flex-col gap-2">
+          <div
+            class="flex flex-col h-fit w-fit mx-auto bottom-35 border-2 rounded-md bg-white pt-1"
+          >
+            <input
+              type="text"
+              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1"
+              placeholder="Procurar aeroporto"
+            />
+            <hr class="w-[95%] mx-auto" />
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 1</h1>
+            </div>
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 2</h1>
+            </div>
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 3</h1>
+            </div>
+          </div>
+          <button
+            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Ponto de Partida</h1>
+            <img src="./assets/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
+          </button>
+        </div>
+        <!-- Turism Type Select -->
+        <div class="h-fit w-fit flex flex-col gap-2">
+          <div
+            class="flex flex-col h-fit w-fit mx-auto bottom-35 border-2 rounded-md bg-white"
+          >
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 1</h1>
+            </div>
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 2</h1>
+            </div>
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 3</h1>
+            </div>
+          </div>
+          <button
+            class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Turismo</h1>
+            <img
+              src="./assets/icons/blue/turism.svg"
+              alt="turismIcon"
+              class="w-4"
+            />
+          </button>
+        </div>
+
+        <!-- Nº Passengers -->
+        <div class="h-fit flex flex-col gap-2">
+          <div
+            class="flex justify-center items-center h-12 w-37 gap-6 mx-auto bottom-35 border-2 rounded-md bg-white"
+          >
+            <img
+              src="./assets/icons/blue/minus.svg"
+              alt="minusIcon"
+              class="h-5 cursor-pointer"
+            />
+            <h1 id="nPassengers">01</h1>
+            <img
+              src="./assets/icons/blue/plus.svg"
+              alt="plusIcon"
+              class="h-5 cursor-pointer"
+            />
+          </div>
+          <button
+            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Passageiros</h1>
+            <img
+              src="./assets/icons/blue/users.svg"
+              alt="passengersIcon"
+              class="w-4"
+            />
+          </button>
+        </div>
         <button
-          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-        >
-          <h1>Ponto de Partida</h1>
-          <img src="./assets/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
-        </button>
-        <button
-          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-        >
-          <h1>Turismo</h1>
-          <img
-            src="./assets/icons/blue/turism.svg"
-            alt="turismIcon"
-            class="w-4"
-          />
-        </button>
-        <button
-          class="group flex gap-3 min-w-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-        >
-          <h1>Passageiros</h1>
-          <img
-            src="./assets/icons/blue/users.svg"
-            alt="passengersIcon"
-            class="w-4"
-          />
-        </button>
-        <button
-          class="group bg-blue-500 hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
+          class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
         >
           <img
             src="./assets/icons/white/plane.svg"
