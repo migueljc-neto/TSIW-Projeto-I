@@ -298,25 +298,22 @@
           >
             <input
               type="text"
-              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1"
+              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1 focus:outline-0"
               placeholder="Procurar aeroporto"
             />
             <hr class="w-[95%] mx-auto" />
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 1</h1>
-            </div>
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 2</h1>
-            </div>
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 3</h1>
-            </div>
+            <ul>
+              <li
+                class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+              >
+                <span>option 1</span>
+              </li>
+              <li
+                class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+              >
+                <span>option 1</span>
+              </li>
+            </ul>
           </div>
           <button
             class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
@@ -325,26 +322,24 @@
             <img src="./assets/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
           </button>
         </div>
+
         <!-- Turism Type Select -->
         <div class="h-fit w-fit flex flex-col gap-2">
           <div
-            class="flex flex-col h-fit w-fit mx-auto bottom-35 border-2 rounded-md bg-white"
+            class="flex flex-col max-h-25 h-fit w-fit mx-auto bottom-35 border-2 rounded-md bg-white"
           >
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 1</h1>
-            </div>
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 2</h1>
-            </div>
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <h1>option 3</h1>
-            </div>
+            <ul>
+              <li
+                class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+              >
+                <span>option 1</span>
+              </li>
+              <li
+                class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+              >
+                <span>option 1</span>
+              </li>
+            </ul>
           </div>
           <button
             class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
@@ -359,33 +354,34 @@
         </div>
 
         <!-- Nº Passengers -->
-        <div class="h-fit flex flex-col gap-2">
-          <div
-            class="flex justify-center items-center h-12 w-37 gap-6 mx-auto bottom-35 border-2 rounded-md bg-white"
-          >
-            <img
-              src="./assets/icons/blue/minus.svg"
-              alt="minusIcon"
-              class="h-5 cursor-pointer"
-            />
-            <h1 id="nPassengers">01</h1>
-            <img
-              src="./assets/icons/blue/plus.svg"
-              alt="plusIcon"
-              class="h-5 cursor-pointer"
-            />
+
+        <div
+          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
+        >
+          <div class="flex justify-center items-center h-fit w-fit gap-4">
+            <button class="px-1 cursor-pointer hover:shadow">
+              <img
+                src="./assets/icons/blue/minus.svg"
+                alt="minusIcon"
+                class="h-4"
+              />
+            </button>
+            <h1 id="nPassengers" class="select-none">01</h1>
+            <button class="px-1 py-1 cursor-pointer hover:shadow-lg">
+              <img
+                src="./assets/icons/blue/plus.svg"
+                alt="plusIcon"
+                class="h-4"
+              />
+            </button>
           </div>
-          <button
-            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <h1>Passageiros</h1>
-            <img
-              src="./assets/icons/blue/users.svg"
-              alt="passengersIcon"
-              class="w-4"
-            />
-          </button>
+          <img
+            src="./assets/icons/blue/users.svg"
+            alt="passengersIcon"
+            class="w-4"
+          />
         </div>
+
         <button
           class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
         >
