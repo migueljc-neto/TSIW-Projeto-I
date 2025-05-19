@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../css/profile.css" />
     <!-- Tailwind -->
     <link rel="stylesheet" href="../css/tailwind.css" />
-    <script src="js/script.js"></script>
   </head>
   <body class="flex flex-col min-h-full">
     <div>
@@ -21,8 +20,8 @@
             <div class="flex-shrink-0 mx-auto sm:mx-0">
               <div class="relative w-45 h-45">
                 <img
-                  class="rounded-full border border-black shadow-sm"
-                  src="https://cdn-icons-png.flaticon.com/512/4086/4086679.png"
+                  class="rounded-full border border-black shadow-sm h-full w-full"
+                  src="../assets/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.webp"
                   alt="user image"
                 />
                 <div
@@ -84,62 +83,7 @@
           </div>
 
           <!-- Badges com bandeiras -->
-          <div class="flex flex-wrap gap-4">
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/fr.png"
-                alt="França"
-                class="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/es.png"
-                alt="Espanha"
-                class="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/cu.png"
-                alt="Cuba"
-                class="h-full w-full object-cover"
-              />
-            </div>
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/ie.png"
-                alt="Irlanda"
-                class="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/tr.png"
-                alt="Turquia"
-                class="object-contain w-full h-full"
-              />
-            </div>
-            <div
-              class="w-12 h-12 rounded overflow-hidden border border-black flex items-center justify-center"
-            >
-              <img
-                src="../assets/flags/br.png"
-                alt="Brasil"
-                class="object-cover w-full h-full"
-              />
-            </div>
-          </div>
+          <div id="flagWrapper" class="flex flex-wrap gap-4"></div>
         </section>
 
         <!-- Favorite Destinations Section -->

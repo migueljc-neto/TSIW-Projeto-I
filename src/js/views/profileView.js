@@ -10,6 +10,8 @@ const userMilesLabel = document.getElementById("userMilesLabel");
 const userTotalMilesLabel = document.getElementById("userTotalMilesLabel");
 const userTripsLabel = document.getElementById("userTripsLabel");
 
+const flagWrapper = document.getElementById("flagWrapper");
+
 window.addEventListener("load", (event) => {
   if (user === null) {
     window.location.href = "../index.html";
@@ -23,5 +25,26 @@ window.addEventListener("load", (event) => {
     "beforeend",
     ` ${user.miles["total"]}`
   );
+  userTripsLabel.insertAdjacentText("beforeend", ` ${user.trips}`);
   document.body.classList.remove("hidden");
+  const userBadges = user.badges;
+  let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
+  userBadges.forEach((element) => {
+    flagWrapper.insertAdjacentHTML(
+      "beforeend",
+      `
+<div
+              class="has-tooltip w-12 h-12 rounded overflow-hidden flex items-center justify-center"
+            >
+            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>Visitou ${regionNames.of(
+              element
+            )}</span>
+              <img
+                src="../assets/flags/${element}.svg"
+                alt="${element}"
+                class="object-contain w-full h-full"
+              />
+            </div>`
+    );
+  });
 });

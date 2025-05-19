@@ -16,7 +16,7 @@ export function add(name, email, password, passwordConfirm) {
   }
 
   const id = Date.now();
-  users.push(new User(id, name, email, password, false));
+  users.push(new User(id, name, email, password));
   localStorage.setItem("users", JSON.stringify(users));
 }
 
@@ -77,10 +77,12 @@ class User {
   email = "";
   password = "";
   isAdmin = false;
-  miles = {
-    available: 0,
-    total: 0,
-  };
+  homeAirport = "";
+  miles = { available: 0, total: 0 };
+  trips = 0;
+  badges = [];
+  favorites = [];
+  tripsName = [];
 
   constructor(
     id,
@@ -88,16 +90,23 @@ class User {
     email,
     password,
     isAdmin,
-    miles = {
-      available: 0,
-      total: 0,
-    }
+    homeAirport,
+    miles = { available: 0, total: 0 },
+    trips = 0,
+    badges = [],
+    favorites = [],
+    tripsName = []
   ) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.isAdmin = isAdmin;
+    this.homeAirport = homeAirport;
     this.miles = miles;
+    this.trips = trips;
+    this.badges = badges;
+    this.favorites = favorites;
+    this.tripsName = tripsName;
   }
 }

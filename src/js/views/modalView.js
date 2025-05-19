@@ -37,6 +37,12 @@ openLoginModalBtn.addEventListener("click", () => {
             </button>
           </li>`
         );
+
+        adminBtn = document.getElementById("adminBtn");
+
+        adminBtn.addEventListener("click", () => {
+          location.href = "./html/admin.html";
+        });
       }
     } else if (adminModalSection) {
       adminModalSection.remove();
