@@ -18,6 +18,7 @@ const profileBtn = document.getElementById("profileBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
 const logoutListSection = document.getElementById("logoutListSection");
+const loggedModalList = document.getElementById("loggedModalList");
 
 /* Login */
 
@@ -28,7 +29,7 @@ openLoginModalBtn.addEventListener("click", () => {
     if (User.isAdmin(User.getUserLogged())) {
       logoutListSection.classList.remove("last:rounded-b-xl");
       if (!adminModalSection) {
-        loggedModal.insertAdjacentHTML(
+        loggedModalList.insertAdjacentHTML(
           "beforeend",
           `<li id="adminModalSection" class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl">
             <button id="adminBtn" class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer">
@@ -38,7 +39,7 @@ openLoginModalBtn.addEventListener("click", () => {
           </li>`
         );
 
-        adminBtn = document.getElementById("adminBtn");
+        const adminBtn = document.getElementById("adminBtn");
 
         adminBtn.addEventListener("click", () => {
           location.href = "./html/admin.html";

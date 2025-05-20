@@ -37,7 +37,7 @@ window.addEventListener("load", (event) => {
               class="has-tooltip w-12 h-12 rounded overflow-hidden flex items-center justify-center"
             >
             <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>Visitou ${regionNames.of(
-              element
+              element.toUpperCase()
             )}</span>
               <img
                 src="../assets/flags/${element}.svg"
