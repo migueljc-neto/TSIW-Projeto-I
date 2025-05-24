@@ -71,5 +71,6 @@ function initdata() {
     ];
     console.log("Injecting Data");
     localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("encryptionKey", "FA820ckig`3N+gX1SLnT0Aj_._]J=.o");
   }
 }

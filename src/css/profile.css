@@ -52,7 +52,7 @@ footer {
 .tooltip {
   visibility: hidden;
   position: absolute;
-  transform: translateY(40px);
+  transform: translateY(60px);
 }
 .has-tooltip:hover .tooltip {
   visibility: visible;
