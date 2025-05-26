@@ -374,30 +374,33 @@
         <!-- Nº Passengers -->
         <div class="h-fit flex flex-col gap-2">
           <div
-            class="flex justify-center items-center h-12 w-37 gap-6 mx-auto bottom-35 border-2 rounded-md bg-white"
+            class="group flex gap-5 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
           >
-            <img
-              src="./assets/icons/blue/minus.svg"
-              alt="minusIcon"
-              class="h-5 cursor-pointer"
-            />
-            <h1 id="nPassengers">01</h1>
-            <img
-              src="./assets/icons/blue/plus.svg"
-              alt="plusIcon"
-              class="h-5 cursor-pointer"
-            />
-          </div>
-          <button
-            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <h1>Passageiros</h1>
+            <div
+              class="flex justify-center items-center h-fit w-fit gap-5 mx-auto bottom-35 rounded-md bg-white"
+            >
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./assets/icons/blue/minus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+              <p id="nPassengers">01</p>
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./assets/icons/blue/plus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+            </div>
             <img
               src="./assets/icons/blue/users.svg"
               alt="passengersIcon"
               class="w-4"
             />
-          </button>
+          </div>
         </div>
         <button
           class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
