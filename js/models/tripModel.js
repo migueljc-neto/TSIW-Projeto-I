@@ -1,3 +1,19 @@
+let trips;
+
+// Load trips from localstorage
+export function init() {
+  trips = localStorage.trips ? JSON.parse(localStorage.trips) : [];
+}
+
+export function getAllTrips() {
+  return trips;
+}
+
+export function getTripById(ids) {
+  let trips = getAllTrips();
+  return trips.filter((trip) => ids.includes(trip.id));
+}
+
 class Trip {
   id = null;
   name = "";
@@ -11,8 +27,7 @@ class Trip {
   endDate = "";
   description = "";
   isAvailable = true;
-  legs = [];
-  images = [];
+  flights = [];
 
   constructor(
     id,
@@ -26,8 +41,7 @@ class Trip {
     startDate = "",
     endDate = "",
     description = "",
-    legs = [],
-    images = []
+    flights = []
   ) {
     this.id = id;
     this.name = name;
@@ -40,7 +54,6 @@ class Trip {
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
-    this.legs = legs;
-    this.images = images;
+    this.flights = flights;
   }
 }

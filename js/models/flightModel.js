@@ -1,36 +1,33 @@
-class CustomTrip {
+class Flight {
   id = null;
-  userId = null;
-  name = "";
-  destinations = []; // country names or IDs
-  legs = []; // TripLegs or Flights
-  tourismTypes = [];
-  startDate = "";
-  endDate = "";
-  totalPrice = 0;
-  notes = "";
+  origin = "";
+  destination = "";
+  departureTime = "";
+  arrivalTime = "";
+  price = 0;
+  duration = "";
+  company = "";
+  distance = 0;
 
   constructor(
     id,
-    userId,
-    name,
-    destinations = [],
-    legs = [],
-    tourismTypes = [],
-    startDate = "",
-    endDate = "",
-    totalPrice = 0,
-    notes = ""
+    origin,
+    destination,
+    departureTime,
+    arrivalTime,
+    price = 0,
+    duration = "",
+    company = "",
+    distance = 0
   ) {
     this.id = id;
-    this.userId = userId;
-    this.name = name;
-    this.destinations = destinations;
-    this.legs = legs;
-    this.tourismTypes = tourismTypes;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.totalPrice = totalPrice;
-    this.notes = notes;
+    this.origin = origin;
+    this.destination = destination;
+    this.departureTime = departureTime;
+    this.arrivalTime = arrivalTime;
+    this.price = price;
+    this.duration = duration;
+    this.company = company;
+    this.distance = distance;
   }
 }

@@ -86,7 +86,7 @@ class User {
   trips = 0;
   badges = [];
   favorites = [];
-  tripsName = [];
+  trips = [];
 
   constructor(
     id,
@@ -96,10 +96,9 @@ class User {
     isAdmin,
     homeAirport,
     miles = { available: 0, total: 0 },
-    trips = 0,
     badges = [],
     favorites = [],
-    tripsName = []
+    trips = []
   ) {
     this.id = id;
     this.name = name;
@@ -108,9 +107,8 @@ class User {
     this.isAdmin = isAdmin;
     this.homeAirport = homeAirport;
     this.miles = miles;
-    this.trips = trips;
     this.badges = badges;
     this.favorites = favorites;
-    this.tripsName = tripsName;
+    this.trips = trips;
   }
 }

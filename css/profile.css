@@ -15,17 +15,16 @@ body {
   font-family: "Space Mono", sans-serif;
 }
 
-button {
+.btn-profile {
   font-family: "Space Mono", monospace;
   border: 1px solid #39578a;
   border-radius: 6px;
   padding: 10px 20px;
   background-color: white;
   color: #39578a;
-  cursor: pointer;
 }
 
-button:hover {
+.btn-profile:hover {
   background-color: #f0f0f0;
 }
 
@@ -56,4 +55,8 @@ footer {
 .has-tooltip:hover .tooltip {
   visibility: visible;
   z-index: 100;
+}
+
+.border-color {
+  border-color: #39578a;
 }
