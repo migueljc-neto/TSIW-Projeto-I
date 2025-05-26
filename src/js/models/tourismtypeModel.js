@@ -14,11 +14,9 @@ export function getAll() {
 class TourismType {
   id = null;
   name = "";
-  icon = "";
 
-  constructor(id, name, icon) {
+  constructor(id, name) {
     this.id = id;
     this.name = name;
-    this.icon = icon;
   }
 }
