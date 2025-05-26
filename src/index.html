@@ -366,6 +366,7 @@
         <!-- Turism Type Select -->
         <div class="h-fit w-fit flex flex-col gap-2">
           <div
+            id="tourismFormSection"
             class="flex flex-col h-fit w-fit mx-auto bottom-35 border-2 rounded-md bg-white"
           >
             <div
@@ -435,10 +436,17 @@
         </button>
       </div>
     </footer>
+    <!-- Init.js -->
     <script src="./js/init.js"></script>
-    <script type="module" src="./js/views/loginView.js"></script>
-    <script type="module" src="./js/views/modalView.js" defer></script>
+
+    <!-- Models -->
     <script type="module" src="./js/models/userModel.js"></script>
+    <script type="module" src="./js/models/tourismtypeModel.js"></script>
+
+    <!-- Views -->
+    <script type="module" src="./js/views/loginView.js"></script>
+    <script type="module" src="./js/views/formView.js"></script>
+    <script type="module" src="./js/views/modalView.js" defer></script>
     <script type="module" src="./js/views/registerView.js"></script>
   </body>
 </html>

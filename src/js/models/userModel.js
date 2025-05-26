@@ -110,3 +110,4 @@ class User {
     this.tripsName = tripsName;
   }
 }
+

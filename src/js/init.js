@@ -73,4 +73,31 @@ function initdata() {
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("encryptionKey", "FA820ckig`3N+gX1SLnT0Aj_._]J=.o");
   }
+  // TOURISM TYPE
+  if (!localStorage.tourismTypes) {
+    const tourismTypes = [
+      {
+        id: 1,
+        name: "Aventura",
+        icon: "../assets/icons/blue/type1.svg",
+      },
+      {
+        id: 2,
+        name: "Praia",
+        icon: "../assets/icons/blue/type2.svg",
+      },
+      {
+        id: 3,
+        name: "Religioso",
+        icon: "../assets/icons/blue/type3.svg",
+      },
+      {
+        id: 4,
+        name: "Gastronómico",
+        icon: "../assets/icons/blue/type1.svg",
+      },
+    ];
+    localStorage.setItem("tourismTypes", JSON.stringify(tourismTypes));
+    console.log("Tourism types initialized");
+  }
 }
