@@ -21,4 +21,10 @@ window.addEventListener("load", (event) => {
   });
 
   console.log(tourismTypes);
+
+  new AirDatepicker("#my-datepicker", {
+    language: "en",
+    autoClose: true,
+    dateFormat: "dd-MM-yyyy",
+  });
 });
