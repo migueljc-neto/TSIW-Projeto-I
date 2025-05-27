@@ -5,13 +5,21 @@ export function init() {
   trips = localStorage.trips ? JSON.parse(localStorage.trips) : [];
 }
 
+// Return all trips
 export function getAllTrips() {
   return trips;
 }
 
+// Filter trips by ID
 export function getTripById(ids) {
   let trips = getAllTrips();
   return trips.filter((trip) => ids.includes(trip.id));
+}
+
+// Get all trips that are packs
+export function getAllPacks() {
+  const trips = getAllTrips();
+  return trips.filter((trip) => trip.isPack);
 }
 
 class Trip {
@@ -26,7 +34,7 @@ class Trip {
   startDate = "";
   endDate = "";
   description = "";
-  isAvailable = true;
+  isPack = true;
   flights = [];
 
   constructor(
@@ -41,6 +49,7 @@ class Trip {
     startDate = "",
     endDate = "",
     description = "",
+    isPack = false,
     flights = []
   ) {
     this.id = id;
@@ -54,6 +63,7 @@ class Trip {
     this.startDate = startDate;
     this.endDate = endDate;
     this.description = description;
+    this.isPack = isPack;
     this.flights = flights;
   }
 }

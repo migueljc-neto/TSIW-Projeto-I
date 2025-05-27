@@ -1,3 +1,19 @@
+let flights;
+
+// Load flights from localstorage
+export function init() {
+  flights = localStorage.flights ? JSON.parse(localStorage.flights) : [];
+}
+
+export function getAllFlights() {
+  return flights;
+}
+
+export function getFlightById(ids) {
+  let flights = getAllFlights();
+  return flights.filter((trip) => ids.includes(trip.id));
+}
+
 class Flight {
   id = null;
   origin = "";

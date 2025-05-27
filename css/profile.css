@@ -34,6 +34,20 @@ section {
   padding: 16px;
 }
 
+.header-btn {
+  border-color: #39578a;
+}
+
+.header-btn:hover {
+  border-color: #6c6ea0;
+}
+
+header section {
+  border: 0;
+  border-radius: 0px;
+  padding: 0px;
+}
+
 h2 {
   font-family: "Typo Hoop", sans-serif;
   font-weight: bold;

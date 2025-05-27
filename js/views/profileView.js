@@ -60,14 +60,14 @@ window.addEventListener("load", (event) => {
   userFavorites.forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 
-    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=1`, {
+    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
       headers: {
         Authorization: apiKey,
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        const image = data.photos[0]?.src.medium || "fallback.jpg";
+        const image = data.photos[1]?.src.medium || "fallback.jpg";
 
         favoritesWrapper.insertAdjacentHTML(
           "beforeend",
@@ -98,19 +98,18 @@ window.addEventListener("load", (event) => {
     const userTrips = Trips.getTripById(userTripIds);
 
     userTrips.forEach((trip) => {
+      const query = `${trip.destination} city`;
+
       const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 
-      fetch(
-        `https://api.pexels.com/v1/search?query=${trip.destination}&per_page=1`,
-        {
-          headers: {
-            Authorization: apiKey,
-          },
-        }
-      )
+      fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=2`, {
+        headers: {
+          Authorization: apiKey,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
-          const image = data.photos[0]?.src.medium || "fallback.jpg";
+          const image = data.photos[1]?.src.medium || "fallback.jpg";
 
           tripsWrapper.insertAdjacentHTML(
             "beforeend",

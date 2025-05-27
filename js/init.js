@@ -137,7 +137,7 @@ function initdata() {
         startDate: "2025-06-05",
         endDate: "2025-06-12",
         description: "Descubra as praias e a gastronomia de Barcelona.",
-        isAvailable: true,
+        isPack: true,
         flights: [2],
       },
       {
@@ -152,8 +152,23 @@ function initdata() {
         startDate: "2025-07-01",
         endDate: "2025-07-11",
         description: "Viagem pelas principais cidades americanas.",
-        isAvailable: true,
+        isPack: false,
         flights: [3],
+      },
+      {
+        id: 2,
+        name: "Semana na Suíça",
+        typesOfTourism: [1, 4],
+        origin: "OPO",
+        destination: "ZRH",
+        price: 300,
+        company: "Swiss Air",
+        duration: "7 dias",
+        startDate: "2025-07-01",
+        endDate: "2025-07-11",
+        description: "Descubra as montanhas.",
+        isPack: true,
+        flights: [2],
       },
     ];
     localStorage.setItem("trips", JSON.stringify(trips));

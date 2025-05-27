@@ -3,224 +3,347 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="../img/logos/logoDarkmode_logo darkmode.png"
+      type="image/x-icon"
+    />
     <title>Compass - Profile</title>
-    <!-- Google Fonts - Space Mono -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/profile.css" />
+
     <!-- Tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body class="flex flex-col min-h-full">
-    <div>
-      <div class="container mx-auto p-4 max-w-4xl flex-grow">
-        <!-- Profile Header Section -->
-        <section class="rounded-lg shadow p-6 mb-6 border border-black">
-          <!-- Flex container for image + info -->
-          <div class="flex flex-col sm:flex-row gap-6">
-            <!-- User Image -->
-            <div class="flex-shrink-0 mx-auto sm:mx-0">
-              <div class="relative w-45 h-45">
-                <img
-                  id="profileImg"
-                  class="rounded-full border border-color shadow-sm h-full w-full"
-                  src="../img/avatar1.png"
-                  alt="user image"
-                />
-              </div>
-            </div>
-            <!-- User Info -->
-            <div class="flex-grow">
-              <div>
-                <label id="userNameLabel" class="block text-gray-700"
-                  >Nome:</label
-                >
-              </div>
-              <div class="mb-4">
-                <label id="userEmailLabel" class="block text-gray-700"
-                  >E-mail:</label
-                >
-              </div>
-              <div>
-                <p id="userMilesLabel" class="text-gray-700">
-                  Milhas Disponíveis:
-                </p>
-              </div>
-              <div>
-                <p id="userTotalMilesLabel" class="text-gray-700">
-                  Milhas Viajadas:
-                </p>
-              </div>
-              <div class="mb-4">
-                <p id="userTripsLabel" class="text-gray-700">
-                  Viagens Compradas:
-                </p>
-              </div>
-              <button
-                class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white mb-4"
-              >
-                Editar perfil
-              </button>
-            </div>
-          </div>
-        </section>
+    <header class="">
+      <section
+        class="max-w-[1530px] mx-auto hidden lg:flex justify-between items-center"
+      >
+        <div id="logo">
+          <img
+            src="../img/logos/logo-12.png"
+            class="block dark:hidden h-[60px] w-auto"
+            alt="Light mode image"
+          />
 
-        <!-- Badges Section -->
-        <section class="rounded-lg shadow p-6 mb-6 border border-black">
-          <!-- Título e botão -->
-          <div class="flex items-center gap-x-2 mb-4">
-            <h2 class="text-xl font-bold">Medalhas</h2>
-            <button
-              class="btn-profile cursor-pointer flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
-            >
-              Passaporte
-              <img
-                src="../img/icons/blue/wallet.svg"
-                alt="wallet icon"
-                class="w-5 h-5"
-              />
-            </button>
-          </div>
-
-          <!-- Badges com bandeiras -->
-          <div id="flagWrapper" class="flex flex-wrap gap-4"></div>
-        </section>
-
-        <!-- Favorite Destinations Section -->
-        <section class="rounded-lg shadow p-6 mb-6 border border-black">
-          <div class="flex items-center gap-x-2 mb-4">
-            <h2 class="text-xl font-bold">Destinos Favoritos</h2>
-            <button
-              class="btn-profile cursor-pointer flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
-            >
-              Favoritos
-              <img
-                src="../img/icons/blue/heart.svg"
-                alt="wallet icon"
-                class="w-5 h-5"
-              />
-            </button>
-          </div>
-
-          <div
-            id="favoritesWrapper"
-            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto p-4"
-          ></div>
-        </section>
-
-        <!-- Trips Section -->
-        <section class="rounded-lg shadow p-6 mb-6 border border-black">
-          <div class="flex items-center gap-x-2 mb-4">
-            <h2 class="text-xl font-bold">Viagens</h2>
-            <div class="flex gap-2">
-              <button
-                class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-2 bg-white"
-              >
-                Passados
-              </button>
-              <button
-                class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-2 bg-white"
-              >
-                Próximas
-              </button>
-            </div>
-          </div>
-
-          <div
-            id="tripsWrapper"
-            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto p-4"
-          ></div>
-        </section>
-      </div>
-      <!-- Closing container div -->
-      <script>
-        window.gtranslateSettings = {
-          default_language: "pt",
-          languages: ["en", "es", "fr", "de", "pt"],
-          wrapper_selector: ".gtranslate_wrapper",
-        };
-      </script>
-
-      <!-- Load the GTranslate widget script -->
-      <script
-        src="https://cdn.gtranslate.net/widgets/latest/float.js"
-        defer
-      ></script>
-      <div class="gtranslate_wrapper"></div>
-      <!-- Footer Navigation -->
-      <footer class="bg-blue-900 text-white py-6 border-t border-black">
-        <div class="container mx-auto px-4 max-w-4xl">
-          <div class="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <ul class="space-y-0.5 text-sm">
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >página inicial</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >pacotes</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >promoções</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul class="space-y-0.5 text-sm">
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >perfil</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >passaporte</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >favoritos</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div>
-              <ul class="space-y-0.5 text-sm">
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >contacto</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
-                    >sobre nós</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
+          <img
+            src="../img/logos/logo-12.png"
+            class="hidden dark:block h-[60px] w-auto"
+            alt="Dark mode image"
+          />
         </div>
-      </footer>
-      <script type="module" src="../js/views/profileView.js"></script>
-    </div>
+
+        <div class="flex gap-4">
+          <!-- Passport -->
+          <button
+            class="group rounded-full border-1 header-btn hover:border-white cursor-pointer flex bg-transparent backdrop-blur transition h-fit p-3"
+          >
+            <img
+              src="../img/icons/blue/wallet.svg"
+              alt="walletIcon"
+              class="w-4 h-4"
+            />
+          </button>
+
+          <!-- Favorites -->
+          <button
+            class="group rounded-full border-1 header-btn hover:border-white cursor-pointer flex bg-transparent backdrop-blur transition h-fit p-3"
+          >
+            <img
+              src="../img/icons/blue/heart.svg"
+              alt="heartIcon"
+              class="w-4 h-4"
+            />
+          </button>
+
+          <!-- Login -->
+          <button
+            id="openLoginModalBtn"
+            class="group rounded-full border-1 header-btn hover:border-white cursor-pointer flex bg-transparent backdrop-blur transition h-fit p-3"
+          >
+            <img
+              src="../img/icons/blue/profile.svg"
+              alt="profileIcon"
+              class="w-4 h-4"
+            />
+          </button>
+        </div>
+      </section>
+      <section>
+        <div
+          id="loggedModal"
+          class="hidden absolute right-40 w-fit rounded-xl border-2 bg-white shadow-lg text-sm"
+        >
+          <ul id="loggedModalList">
+            <li class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl">
+              <button
+                id="profileBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
+              >
+                <span>Perfil</span>
+                <img
+                  src="../img/icons/blue/profile.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+            <li
+              id="logoutListSection"
+              class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl"
+            >
+              <button
+                id="logoutBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
+              >
+                <span>Terminar Sessão</span>
+                <img
+                  src="./img/icons/blue/log-out.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <!-- mobile header -->
+      <section class="w-fill h-fit flex md:hidden justify-start pl-5 pt-5">
+        <img
+          src="./img/logos/logo-11.png"
+          class="block dark:hidden h-[60px] w-auto mt-8"
+          alt="Light mode image"
+        />
+
+        <img
+          src="./img/logos/logoDarkmode_logo darkmode.png"
+          class="hidden dark:block h-[100px] w-auto"
+          alt="Dark mode image"
+        />
+      </section>
+    </header>
+    <main>
+      <div>
+        <div class="container mx-auto p-4 max-w-4xl flex-grow">
+          <button
+            onclick="location.href='../index.html'"
+            class="flex mb-3 cursor-pointer items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2"
+          >
+            < Voltar
+          </button>
+          <!-- Profile Header Section -->
+          <section class="rounded-lg shadow p-6 mb-6 border border-black">
+            <!-- Flex container for image + info -->
+            <div class="flex flex-col sm:flex-row gap-6">
+              <!-- User Image -->
+              <div class="flex-shrink-0 mx-auto sm:mx-0">
+                <div class="relative w-45 h-45">
+                  <img
+                    id="profileImg"
+                    class="rounded-full border border-color shadow-sm h-full w-full"
+                    src="../img/avatar1.png"
+                    alt="user image"
+                  />
+                </div>
+              </div>
+              <!-- User Info -->
+              <div class="flex-grow">
+                <div>
+                  <label id="userNameLabel" class="block text-gray-700"
+                    >Nome:</label
+                  >
+                </div>
+                <div class="mb-4">
+                  <label id="userEmailLabel" class="block text-gray-700"
+                    >E-mail:</label
+                  >
+                </div>
+                <div>
+                  <p id="userMilesLabel" class="text-gray-700">
+                    Milhas Disponíveis:
+                  </p>
+                </div>
+                <div>
+                  <p id="userTotalMilesLabel" class="text-gray-700">
+                    Milhas Viajadas:
+                  </p>
+                </div>
+                <div class="mb-4">
+                  <p id="userTripsLabel" class="text-gray-700">
+                    Viagens Compradas:
+                  </p>
+                </div>
+                <button
+                  class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white mb-4"
+                >
+                  Editar perfil
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Badges Section -->
+          <section class="rounded-lg shadow p-6 mb-6 border border-black">
+            <!-- Título e botão -->
+            <div class="flex items-center gap-x-2 mb-4">
+              <h2 class="text-xl font-bold">Medalhas</h2>
+              <button
+                class="btn-profile cursor-pointer flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
+              >
+                Passaporte
+                <img
+                  src="../img/icons/blue/wallet.svg"
+                  alt="wallet icon"
+                  class="w-5 h-5"
+                />
+              </button>
+            </div>
+
+            <!-- Badges com bandeiras -->
+            <div id="flagWrapper" class="flex flex-wrap gap-4"></div>
+          </section>
+
+          <!-- Favorite Destinations Section -->
+          <section class="rounded-lg shadow p-6 mb-6 border border-black">
+            <div class="flex items-center gap-x-2 mb-4">
+              <h2 class="text-xl font-bold">Destinos Favoritos</h2>
+              <button
+                class="btn-profile cursor-pointer flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
+              >
+                Favoritos
+                <img
+                  src="../img/icons/blue/heart.svg"
+                  alt="wallet icon"
+                  class="w-5 h-5"
+                />
+              </button>
+            </div>
+
+            <div
+              id="favoritesWrapper"
+              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto p-4"
+            ></div>
+          </section>
+
+          <!-- Trips Section -->
+          <section class="rounded-lg shadow p-6 mb-6 border border-black">
+            <div class="flex items-center gap-x-2 mb-4">
+              <h2 class="text-xl font-bold">Viagens</h2>
+              <div class="flex gap-2">
+                <button
+                  class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-2 bg-white"
+                >
+                  Passados
+                </button>
+                <button
+                  class="btn-profile cursor-pointer text-blue-500 hover:text-blue-700 border border-black rounded px-3 py-2 bg-white"
+                >
+                  Próximas
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="tripsWrapper"
+              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto p-4"
+            ></div>
+          </section>
+        </div>
+        <!-- Closing container div -->
+        <script>
+          window.gtranslateSettings = {
+            default_language: "pt",
+            languages: ["en", "es", "fr", "de", "pt"],
+            wrapper_selector: ".gtranslate_wrapper",
+          };
+        </script>
+
+        <!-- Load the GTranslate widget script -->
+        <script
+          src="https://cdn.gtranslate.net/widgets/latest/float.js"
+          defer
+        ></script>
+        <div class="gtranslate_wrapper"></div>
+        <!-- Footer Navigation -->
+        <footer class="bg-blue-900 text-white py-6 border-t border-black">
+          <div class="container mx-auto px-4 max-w-4xl">
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <ul class="space-y-0.5 text-sm">
+                  <li>
+                    <a
+                      href="../index.html"
+                      class="text-white cursor-pointer hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >página inicial</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >pacotes</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >promoções</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <ul class="space-y-0.5 text-sm">
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >perfil</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >passaporte</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >favoritos</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <ul class="space-y-0.5 text-sm">
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >contacto</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="text-white hover:text-gray-200 hover:border-b hover:border-black pb-0.5 transition-all"
+                      >sobre nós</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <script type="module" src="../js/views/profileView.js"></script>
+      </div>
+    </main>
   </body>
 </html>

@@ -15,7 +15,6 @@ loginForm.addEventListener("submit", (event) => {
 
     const loginModal = document.getElementById("loginModal");
     loginModal.classList.add("hidden");
-    console.log("Login successful!");
   } catch (e) {
     displayMessage(e.message);
   }

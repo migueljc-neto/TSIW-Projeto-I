@@ -5,6 +5,7 @@ export function init() {
   users = localStorage.users ? JSON.parse(localStorage.users) : [];
 }
 
+// Returns all users
 export function getAllUsers() {
   return users;
 }
