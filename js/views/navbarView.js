@@ -123,88 +123,107 @@ function closeRegisterModal() {
   }, 300);
 }
 
+/* Sidebar */
+
 const sideBar = document.getElementById("sidebar");
+const navButtons = document.getElementById("navButtons");
 const openProfileDropdownBtn = document.getElementById("profileSidebar");
 const openFormDropdownBtn = document.getElementById("formSidebar");
+const sidebarBackdrop = document.getElementById("sidebarBackdrop");
 
-openProfileDropdownBtn.addEventListener("click", function () {
-  sideBar.classList.toggle("translate-x-full");
-  /* console.log("click");
-  if (sideBar.querySelector("#loggedModalList")) {
-    openProfileDropdownBtn.classList.remove("border-r-0");
-    sideBar.innerHTML = "";
+let currentSidebarContent = null;
+
+function openSidebar(contentType) {
+  sidebarBackdrop.classList.remove("hidden");
+  sidebarBackdrop.classList.add("block");
+  sideBar.classList.remove("translate-x-full");
+  navButtons.style.right = "14rem";
+  currentSidebarContent = contentType;
+}
+
+function closeSidebar() {
+  sideBar.classList.add("translate-x-full");
+  navButtons.style.right = "0";
+  currentSidebarContent = null;
+  sideBar.innerHTML = "";
+  openProfileDropdownBtn.classList.remove("border-r-0");
+  openFormDropdownBtn.classList.remove("border-r-0");
+
+  sidebarBackdrop.classList.add("hidden");
+  sidebarBackdrop.classList.remove("block");
+}
+
+function populateProfileContent() {
+  sideBar.innerHTML = `
+    <div id="anchorDiv" class="right-0 transition">
+      <ul id="loggedModalList">
+        <li class="hover:bg-gray-300">
+          <button onclick="location.href='./html/profile.html'" class="flex w-full items-center justify-between px-4 py-2 cursor-pointer">
+            <span class="color-primary">Perfil</span>
+            <img src="./img/icons/blue/profile.svg" alt="Perfil" class="w-4 h-4" />
+          </button>
+        </li>
+        <li id="logoutListSection" class="hover:bg-gray-300">
+          <button id="logoutBtn" class="flex w-full items-center justify-between px-4 py-2 cursor-pointer">
+            <span class="color-primary">Terminar Sessão</span>
+            <img src="./img/icons/blue/log-out.svg" alt="Perfil" class="w-4 h-4" />
+          </button>
+        </li>
+      </ul>
+    </div>
+  `;
+  openProfileDropdownBtn.classList.add("border-r-0!");
+  openFormDropdownBtn.classList.remove("border-r-0!");
+}
+
+function populateFormContent() {
+  sideBar.innerHTML = `
+    <div class="bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
+    <ul>
+      <li class="flex gap-1 p-2">
+        <input
+          datepicker
+          datepicker-autohide
+          id="navbar-datepicker"
+          type="text"
+          placeholder="Selecionar Data"
+          datepicker-format="dd-mm-yyyy"
+          datepicker-orientation="left"
+          class="cursor-pointer"
+        />
+        <img src="./img/icons/blue/calendar.svg" alt="calendarIcon" class="w-4" />
+      </li>
+    </ul>`;
+
+  openFormDropdownBtn.classList.add("border-r-0!");
+  openProfileDropdownBtn.classList.remove("border-r-0!");
+
+  const input = document.getElementById("navbar-datepicker");
+  if (input) {
+    new Datepicker(input);
+  }
+}
+
+openProfileDropdownBtn.addEventListener("click", () => {
+  if (currentSidebarContent === "profile") {
+    closeSidebar();
   } else {
-    openProfileDropdownBtn.classList.add("border-r-0");
-
-    sideBar.innerHTML = `
-      <div id="anchorDiv" class="right-0transition translate-x-full">
-        <ul id="loggedModalList">
-          <li class="hover:bg-gray-300">
-            <button
-            onclick="location.href='./html/profile.html'"
-              id="profileBtn"
-              class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
-            >
-              <span>Perfil</span>
-              <img
-                src="./img/icons/blue/profile.svg"
-                alt="Perfil"
-                class="w-4 h-4"
-              />
-            </button>
-          </li>
-          <li id="logoutListSection" class="hover:bg-gray-300">
-            <button
-              id="logoutBtn"
-              class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
-            >
-              <span>Terminar Sessão</span>
-              <img
-                src="./img/icons/blue/log-out.svg"
-                alt="Perfil"
-                class="w-4 h-4"
-              />
-            </button>
-          </li>
-        </ul>
-      </div>
-    `;
-
-    document.getElementById("anchorDiv").classList.remove("translate-x-full");
-  } */
+    populateProfileContent();
+    openSidebar("profile");
+  }
 });
 
-openFormDropdownBtn.addEventListener("click", function () {
-  if (sideBar.querySelector("#default-datepicker")) {
-    openFormDropdownBtn.classList.remove("border-r-0");
-    sideBar.innerHTML = "";
+openFormDropdownBtn.addEventListener("click", () => {
+  if (currentSidebarContent === "form") {
+    closeSidebar();
   } else {
-    openFormDropdownBtn.classList.add("border-r-0");
+    populateFormContent();
+    openSidebar("form");
+  }
+});
 
-    sideBar.innerHTML = `
-    <div class="bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
-    <ul><li class="flex gap-1 p-2">
-    <input
-            datepicker
-            datepicker-autohide
-            id="navbar-datepicker"
-            type="text"
-            placeholder="Selecionar Data"
-            datepicker-format="dd-mm-yyyy"
-            datepicker-orientation="left"
-            class="cursor-pointer"
-          />
-          <img
-            src="./img/icons/blue/calendar.svg"
-            alt="calendarIcon"
-            class="w-4"
-          />
-        </li>
-        </ul>`;
-
-    const input = document.getElementById("navbar-datepicker");
-    if (input) {
-      new Datepicker(input);
-    }
+sidebarBackdrop.addEventListener("click", () => {
+  if (currentSidebarContent === "form" || currentSidebarContent === "profile") {
+    closeSidebar();
   }
 });
