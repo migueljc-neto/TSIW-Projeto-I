@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@font-face {
+  font-family: "Typo Hoop";
+  src: url("../img/fonts/Typo\ Hoop_Regular.otf");
+}
+
+@font-face {
+  font-family: "Typo Hoop";
+  src: url("../img/fonts/Typo\ Hoop_Bold.otf");
+  font-weight: bold;
+}
+
+html {
+  cursor: url("../img/cursor.svg"), auto;
+}
+
+body {
+  font-family: "Space Mono", sans-serif;
+  /* background-image: url("../img/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg"); */
+}
+
+h1,
+#loginLabel,
+#registerLabel {
+  font-family: "Typo Hoop";
+}
+
+#loginBtn,
+#registerBtn {
+  background-color: #39578a;
+}
+
+#loginBtn:hover,
+#registerBtn:hover {
+  background-color: #6c6ea0;
+}
+
+#signUpText,
+#signInText,
+#loggedModal {
+  color: #39578a;
+}
+
+#loggedModal {
+  border-color: #39578a;
+}
+
+.cursor-pointer {
+  cursor: url("../img/cursor-pointer.svg"), auto;
+}

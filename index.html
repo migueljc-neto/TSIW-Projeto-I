@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./img/logos/logoDarkmode_logo darkmode.png"
+      type="image/x-icon"
+    />
+    <title>Compass - Página Inicial</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body
+    class="max-h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
+  >
+    <header class="bg-transparent top-0 z-10">
+      <section
+        class="max-w-[1530px] mx-auto hidden lg:flex justify-between mt-15 px-20"
+      >
+        <div id="logo">
+          <img
+            src="./img/logos/logo-11.png"
+            class="block dark:hidden h-[60px] w-auto mt-8"
+            alt="Light mode image"
+          />
+
+          <img
+            src="./img/logos/logoDarkmode_logotipo darkmode.png"
+            class="hidden dark:block h-[60px] w-auto"
+            alt="Dark mode image"
+          />
+        </div>
+
+        <div class="flex gap-4">
+          <!-- Passport -->
+          <button
+            class="group rounded-full border-1 border-white hover:border-blue-500 px-4 py-2 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition h-fit"
+          >
+            <h1>Passaporte</h1>
+            <img
+              src="./img/icons/white/wallet.svg"
+              alt="walletIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Favorites -->
+          <button
+            class="group rounded-full border-1 border-white hover:border-blue-500 px-4 py-2 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition h-fit"
+          >
+            <h1>Favoritos</h1>
+            <img
+              src="./img/icons/white/heart.svg"
+              alt="heartIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Scratch-off -->
+          <button
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition h-fit p-3"
+          >
+            <img
+              src="./img/icons/white/coins.svg"
+              alt="coinsIcon"
+              class="w-4 h-4"
+            />
+          </button>
+
+          <!-- Login -->
+          <button
+            id="openLoginModalBtn"
+            class="group rounded-full border-1 border-white hover:border-blue-500 cursor-pointer flex bg-transparent backdrop-blur transition h-fit p-3"
+          >
+            <img
+              src="./img/icons/white/profile.svg"
+              alt="profileIcon"
+              class="w-4 h-4"
+            />
+          </button>
+        </div>
+      </section>
+      <section>
+        <div
+          id="loggedModal"
+          class="hidden absolute right-40 w-fit rounded-xl border-2 bg-white shadow-lg text-sm"
+        >
+          <ul id="loggedModalList">
+            <li class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl">
+              <button
+                id="profileBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
+              >
+                <span>Perfil</span>
+                <img
+                  src="./img/icons/blue/profile.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+            <li
+              id="logoutListSection"
+              class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl"
+            >
+              <button
+                id="logoutBtn"
+                class="flex w-full items-center gap-3 justify-between px-4 py-2 cursor-pointer"
+              >
+                <span>Terminar Sessão</span>
+                <img
+                  src="./img/icons/blue/log-out.svg"
+                  alt="Perfil"
+                  class="w-4 h-4"
+                />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <!-- mobile header -->
+      <section class="w-fill h-fit flex md:hidden justify-start pl-5 pt-5">
+        <img
+          src="./img/logos/logo-11.png"
+          class="block dark:hidden h-[60px] w-auto mt-8"
+          alt="Light mode image"
+        />
+
+        <img
+          src="./img/logos/logoDarkmode_logo darkmode.png"
+          class="hidden dark:block h-[100px] w-auto"
+          alt="Dark mode image"
+        />
+      </section>
+    </header>
+
+    <main class="h-auto">
+      <section class="h-full items-center text-left ml-20">
+        <h1 class="text-6xl">Your Path<br />Our Compass</h1>
+      </section>
+      <!-- Modal Login -->
+      <section>
+        <div
+          id="loginModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">Login</h2>
+
+            <form id="loginForm">
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="emailLogin"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="nome@exemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordLogin"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  type="checkbox"
+                  id="keepSigned"
+                  name="keepSigned"
+                  value="keep"
+                />
+                <label for="keepSigned" class="text-gray-500 text-sm"
+                  >Manter sessão iniciada</label
+                >
+              </div>
+              <button
+                id="loginBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Login
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Não tem uma conta?
+              <button
+                id="signUpText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Criar Conta
+              </button>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal Register -->
+      <section>
+        <div
+          id="registerModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalRegisterContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeRegisterModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="registerLabel" class="text-2xl text-gray-800 mb-6">
+              Registo
+            </h2>
+
+            <form id="registerForm">
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email">Nome</label>
+                <input
+                  type="text"
+                  id="nameRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="O seu nome..."
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="emailRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="nome@exemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Confirmar Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordConfirm"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="registerBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Registar
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Já tem uma conta?
+              <button
+                id="signInText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Login
+              </button>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="w-screen h-fit py-20 bottom-0 fixed">
+      <!-- Flight search Form -->
+      <div
+        class="group hidden md:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
+      >
+        <button
+          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor-pointer transition rounded-l-full"
+        >
+          <h1>Data</h1>
+          <img
+            src="./img/icons/blue/calendar.svg"
+            alt="calendarIcon"
+            class="w-4"
+          />
+        </button>
+
+        <!-- Ponto de Partida -->
+        <div class="h-fit w-fit flex flex-col gap-2 relative">
+          <div
+            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white pt-1 absolute"
+          >
+            <input
+              type="text"
+              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1"
+              placeholder="Procurar aeroporto"
+            />
+            <hr class="w-[95%] mx-auto" />
+            <div
+              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+            >
+              <h1>option 1</h1>
+            </div>
+          </div>
+          <button
+            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Ponto de Partida</h1>
+            <img src="./img/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
+          </button>
+        </div>
+
+        <!-- Turism Type Select -->
+        <div class="h-fit w-fit flex flex-col gap-2 relative">
+          <div
+            id="tourismFormSection"
+            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white absolute text-center"
+          ></div>
+          <button
+            class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Turismo</h1>
+            <img
+              src="./img/icons/blue/turism.svg"
+              alt="turismIcon"
+              class="w-4"
+            />
+          </button>
+        </div>
+
+        <!-- Nº Passengers -->
+        <div class="h-fit flex flex-col gap-2">
+          <div
+            class="flex justify-center items-center h-12 w-37 gap-6 mx-auto bottom-35 border-2 rounded-md bg-white"
+          >
+            <img
+              src="./img/icons/blue/minus.svg"
+              alt="minusIcon"
+              class="h-5 cursor-pointer"
+            />
+            <h1 id="nPassengers">01</h1>
+            <img
+              src="./img/icons/blue/plus.svg"
+              alt="plusIcon"
+              class="h-5 cursor-pointer"
+            />
+          </div>
+          <button
+            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+          >
+            <h1>Passageiros</h1>
+            <img
+              src="./img/icons/blue/users.svg"
+              alt="passengersIcon"
+              class="w-4"
+            />
+          </button>
+        </div>
+        <button
+          class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
+        >
+          <img src="./img/icons/white/plane.svg" alt="planeIcon" class="w-4" />
+        </button>
+      </div>
+    </footer>
+    <!-- Init.js -->
+    <script src="./js/init.js"></script>
+
+    <!-- Models -->
+    <script type="module" src="./js/models/userModel.js"></script>
+    <script type="module" src="./js/models/tourismtypeModel.js"></script>
+
+    <!-- Views -->
+    <script type="module" src="./js/views/AuthView.js"></script>
+    <script type="module" src="./js/views/formView.js"></script>
+    <script type="module" src="./js/views/navbarView.js" defer></script>
+  </body>
+</html>
