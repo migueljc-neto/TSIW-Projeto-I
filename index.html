@@ -13,9 +13,11 @@
     <link rel="stylesheet" href="./css/style.css" />
     <!-- Tailwind CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!--  -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
   </head>
   <body
-    class="max-h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
+    class="h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
   >
     <header class="bg-transparent top-0 z-10">
       <section
@@ -40,7 +42,7 @@
           <button
             class="group rounded-full border-1 border-white hover:border-blue-500 px-4 py-2 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition h-fit"
           >
-            <h1>Passaporte</h1>
+            <p>Passaporte</p>
             <img
               src="./img/icons/white/wallet.svg"
               alt="walletIcon"
@@ -52,7 +54,7 @@
           <button
             class="group rounded-full border-1 border-white hover:border-blue-500 px-4 py-2 cursor-pointer flex items-center justify-center gap-4 bg-transparent backdrop-blur transition h-fit"
           >
-            <h1>Favoritos</h1>
+            <p>Favoritos</p>
             <img
               src="./img/icons/white/heart.svg"
               alt="heartIcon"
@@ -122,8 +124,9 @@
           </ul>
         </div>
       </section>
+
       <!-- mobile header -->
-      <section class="w-fill h-fit flex md:hidden justify-start pl-5 pt-5">
+      <section class="w-fill h-fit flex lg:hidden justify-start pl-5 pt-5">
         <img
           src="./img/logos/logo-11.png"
           class="block dark:hidden h-[60px] w-auto mt-8"
@@ -138,6 +141,34 @@
       </section>
     </header>
 
+    <!-- Sidebar Mobile -->
+    <section
+      class="fixed lg:hidden inset-0 flex items-center justify-center z-50 transition-opacity duration-300 h-fit"
+    >
+      <aside class="flex h-full w-fit fixed top-0 right-0 z-1">
+        <section
+          id="navButtons"
+          class="flex flex-col justify-baseline gap-2 h-fit pt-10"
+        >
+          <button
+            id="profileSidebar"
+            class="bg-white border-1 border-r-0 border-blue-900 p-3 rounded-l-xl cursor-pointer"
+          >
+            <img src="./assets/icons/blue/profile.svg" alt="profileIcon" />
+          </button>
+          <button
+            id="formSidebar"
+            class="bg-white border-1 border-r-0 border-blue-900 p-3 rounded-l-xl cursor-pointer"
+          >
+            <img src="./assets/icons/blue/plane.svg" alt="profileIcon" />
+          </button>
+        </section>
+        <section
+          id="sidebarContent"
+          class="bg-white text-blue-900 w-fit h-full"
+        ></section>
+      </aside>
+    </section>
     <main class="h-auto">
       <section class="h-full items-center text-left ml-20">
         <h1 class="text-6xl">Your Path<br />Our Compass</h1>
@@ -322,12 +353,21 @@
     <footer class="w-screen h-fit py-20 bottom-0 fixed">
       <!-- Flight search Form -->
       <div
-        class="group hidden md:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
+        class="group hidden lg:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
       >
         <button
-          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor-pointer transition rounded-l-full"
+          class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor transition rounded-l-full"
         >
-          <h1>Data</h1>
+          <input
+            datepicker
+            datepicker-autohide
+            id="default-datepicker"
+            type="text"
+            placeholder="Select date"
+            datepicker-format="dd-mm-yyyy"
+            datepicker-orientation="top"
+            class="cursor-pointer"
+          />
           <img
             src="./img/icons/blue/calendar.svg"
             alt="calendarIcon"
@@ -349,7 +389,7 @@
             <div
               class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
             >
-              <h1>option 1</h1>
+              <p>option 1</p>
             </div>
           </div>
           <button
@@ -369,7 +409,7 @@
           <button
             class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
           >
-            <h1>Turismo</h1>
+            <p>Turismo</p>
             <img
               src="./img/icons/blue/turism.svg"
               alt="turismIcon"
@@ -381,30 +421,33 @@
         <!-- Nº Passengers -->
         <div class="h-fit flex flex-col gap-2">
           <div
-            class="flex justify-center items-center h-12 w-37 gap-6 mx-auto bottom-35 border-2 rounded-md bg-white"
+            class="group flex gap-5 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
           >
-            <img
-              src="./img/icons/blue/minus.svg"
-              alt="minusIcon"
-              class="h-5 cursor-pointer"
-            />
-            <h1 id="nPassengers">01</h1>
-            <img
-              src="./img/icons/blue/plus.svg"
-              alt="plusIcon"
-              class="h-5 cursor-pointer"
-            />
-          </div>
-          <button
-            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <h1>Passageiros</h1>
+            <div
+              class="flex justify-center items-center h-fit w-fit gap-5 mx-auto bottom-35 rounded-md bg-white"
+            >
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./assets/icons/blue/minus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+              <p id="nPassengers">01</p>
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./assets/icons/blue/plus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+            </div>
             <img
               src="./img/icons/blue/users.svg"
               alt="passengersIcon"
               class="w-4"
             />
-          </button>
+          </div>
         </div>
         <button
           class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
@@ -423,6 +466,7 @@
     <!-- Views -->
     <script type="module" src="./js/views/AuthView.js"></script>
     <script type="module" src="./js/views/formView.js"></script>
-    <script type="module" src="./js/views/navbarView.js" defer></script>
+    <script type="module" src="./js/views/modalView.js" defer></script>
+    <script type="module" src="./js/views/navbarView.js"></script>
   </body>
 </html>

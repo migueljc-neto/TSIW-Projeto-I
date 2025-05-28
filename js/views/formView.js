@@ -13,12 +13,18 @@ window.addEventListener("load", (event) => {
     tourismFormSection.insertAdjacentHTML(
       "beforeend",
       `<div
-              class="px-2 py-1 flex items-center gap-2 w-full last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
+              class="px-2 py-1 flex items-center gap-2 w-full last:rounded-b-md first:rounded-t-md hover:bg-gray-100 cursor-pointer"
             >
-              <h1>${tourismType.name}</h1>
+            <button>${tourismType.name}</button>
             </div>`
     );
   });
 
   console.log(tourismTypes);
+
+  new AirDatepicker("#my-datepicker", {
+    language: "en",
+    autoClose: true,
+    dateFormat: "dd-MM-yyyy",
+  });
 });
