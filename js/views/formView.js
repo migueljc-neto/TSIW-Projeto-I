@@ -1,4 +1,4 @@
-import * as TourismTypes from "../models/tourismtypeModel.js";
+import * as TourismTypes from "../models/TourismtypeModel.js";
 
 TourismTypes.init();
 
@@ -18,13 +18,5 @@ window.addEventListener("load", (event) => {
             <button>${tourismType.name}</button>
             </div>`
     );
-  });
-
-  console.log(tourismTypes);
-
-  new AirDatepicker("#my-datepicker", {
-    language: "en",
-    autoClose: true,
-    dateFormat: "dd-MM-yyyy",
   });
 });

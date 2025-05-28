@@ -1,4 +1,4 @@
-import * as User from "../models/userModel.js";
+import * as User from "../models/UserModel.js";
 
 const openLoginModalBtn = document.getElementById("openLoginModalBtn");
 
@@ -128,12 +128,7 @@ const openProfileDropdownBtn = document.getElementById("profileSidebar");
 const openFormDropdownBtn = document.getElementById("formSidebar");
 
 openProfileDropdownBtn.addEventListener("click", function () {
-  console.log("click");
   if (sideBar.querySelector("#loggedModalList")) {
-    sideBar.innerHTML = "";
-    console.log("existe");
-  } else {
-    console.log("n existe");
 
     sideBar.innerHTML = `
       <div>

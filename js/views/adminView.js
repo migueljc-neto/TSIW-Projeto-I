@@ -1,7 +1,7 @@
-import * as User from "../models/userModel.js";
-import * as TourismTypes from "../models/tourismtypeModel.js";
-import * as Flights from "../models/flightModel.js";
-import * as Trips from "../models/tripModel.js";
+import * as User from "../models/UserModel.js";
+import * as TourismTypes from "../models/TourismtypeModel.js";
+import * as Flights from "../models/FlightModel.js";
+import * as Trips from "../models/TripModel.js";
 
 User.init();
 TourismTypes.init();
