@@ -130,10 +130,10 @@ const openFormDropdownBtn = document.getElementById("formSidebar");
 openProfileDropdownBtn.addEventListener("click", function () {
   console.log("click");
   if (sideBar.querySelector("#loggedModalList")) {
+    openProfileDropdownBtn.classList.remove("border-r-0");
     sideBar.innerHTML = "";
-    console.log("existe");
   } else {
-    console.log("n existe");
+    openProfileDropdownBtn.classList.add("border-r-0");
 
     sideBar.innerHTML = `
       <div>
@@ -169,4 +169,40 @@ openProfileDropdownBtn.addEventListener("click", function () {
       </div>
     `;
   }
+});
+
+openFormDropdownBtn.addEventListener("click", function () {
+  if (sideBar.querySelector("#default-datepicker")) {
+    openFormDropdownBtn.classList.remove("border-r-0");
+    sideBar.innerHTML = "";
+  } else {
+    openFormDropdownBtn.classList.add("border-r-0");
+
+    sideBar.innerHTML = `
+    <div class="bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
+    <ul>
+    <li class="flex p-4 gap-1"><div><input
+            datepicker
+            datepicker-autohide
+            id="default-datepicker"
+            type="text"
+            placeholder="Selecionar Data"
+            datepicker-format="dd-mm-yyyy"
+            datepicker-orientation="left"
+            class="cursor-pointer"
+          />
+          <img
+            src="./img/icons/blue/calendar.svg"
+            alt="calendarIcon"
+            class="w-4"
+          /></div></li>
+    </ul>
+    `;
+  }
+});
+
+new AirDatepicker("#default-datepicker", {
+  language: "en",
+  autoClose: true,
+  dateFormat: "dd-MM-yyyy",
 });
