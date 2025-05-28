@@ -11,6 +11,7 @@
     <title>Compass - Página Inicial</title>
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
     <!-- Tailwind CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!--  -->
@@ -145,28 +146,56 @@
     <section
       class="fixed lg:hidden inset-0 flex items-center justify-center z-50 transition-opacity duration-300 h-fit"
     >
-      <aside class="flex h-full w-fit fixed top-0 right-0 z-1">
-        <section
-          id="navButtons"
-          class="flex flex-col justify-baseline gap-2 h-fit pt-10"
-        >
-          <button
-            id="profileSidebar"
-            class="bg-white border-1 border-blue-900 p-3 rounded-l-xl cursor-pointer"
+      <aside class="flex h-full w-fit top-0 right-0 z-1">
+        <div class="flex">
+          <section
+            id="navButtons"
+            class="flex flex-col justify-baseline gap-2 h-fit pt-10"
           >
-            <img src="./img/icons/blue/profile.svg" alt="profileIcon" />
-          </button>
-          <button
-            id="formSidebar"
-            class="bg-white border-1 border-blue-900 p-3 rounded-l-xl cursor-pointer"
-          >
-            <img src="./img/icons/blue/plane.svg" alt="profileIcon" />
-          </button>
-        </section>
-        <section
+            <button
+              id="profileSidebar"
+              class="bg-white border-1 border-blue-900 p-3 rounded-l-xl cursor-pointer"
+            >
+              <img src="./img/icons/blue/profile.svg" alt="profileIcon" />
+            </button>
+            <button
+              id="formSidebar"
+              class="bg-white border-1 border-blue-900 p-3 rounded-l-xl cursor-pointer"
+            >
+              <img src="./img/icons/blue/plane.svg" alt="profileIcon" />
+            </button>
+          </section>
+
+          <!-- <section
           id="sidebarContent"
-          class="bg-white text-blue-900 w-fit h-full"
-        ></section>
+          class="bg-white text-blue-900 w-fit h-full transition"
+        ></section> -->
+          <section
+            id="sidebar"
+            class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50"
+          >
+            <div class="p-4 border-b flex justify-between items-center">
+              <h2 class="text-lg font-semibold">Sidebar</h2>
+              <button
+                id="closeSidebar"
+                class="text-gray-600 hover:text-red-500"
+              >
+                &times;
+              </button>
+            </div>
+            <ul class="p-4 space-y-3">
+              <li>
+                <a href="#" class="text-blue-600 hover:underline">Home</a>
+              </li>
+              <li>
+                <a href="#" class="text-blue-600 hover:underline">Profile</a>
+              </li>
+              <li>
+                <a href="#" class="text-blue-600 hover:underline">Settings</a>
+              </li>
+            </ul>
+          </section>
+        </div>
       </aside>
     </section>
     <main class="h-auto">

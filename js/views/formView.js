@@ -19,12 +19,4 @@ window.addEventListener("load", (event) => {
             </div>`
     );
   });
-
-  console.log(tourismTypes);
-
-  new AirDatepicker("#my-datepicker", {
-    language: "en",
-    autoClose: true,
-    dateFormat: "dd-MM-yyyy",
-  });
 });

@@ -123,12 +123,13 @@ function closeRegisterModal() {
   }, 300);
 }
 
-const sideBar = document.getElementById("sidebarContent");
+const sideBar = document.getElementById("sidebar");
 const openProfileDropdownBtn = document.getElementById("profileSidebar");
 const openFormDropdownBtn = document.getElementById("formSidebar");
 
 openProfileDropdownBtn.addEventListener("click", function () {
-  console.log("click");
+  sideBar.classList.toggle("translate-x-full");
+  /* console.log("click");
   if (sideBar.querySelector("#loggedModalList")) {
     openProfileDropdownBtn.classList.remove("border-r-0");
     sideBar.innerHTML = "";
@@ -136,7 +137,7 @@ openProfileDropdownBtn.addEventListener("click", function () {
     openProfileDropdownBtn.classList.add("border-r-0");
 
     sideBar.innerHTML = `
-      <div>
+      <div id="anchorDiv" class="right-0transition translate-x-full">
         <ul id="loggedModalList">
           <li class="hover:bg-gray-300">
             <button
@@ -168,7 +169,9 @@ openProfileDropdownBtn.addEventListener("click", function () {
         </ul>
       </div>
     `;
-  }
+
+    document.getElementById("anchorDiv").classList.remove("translate-x-full");
+  } */
 });
 
 openFormDropdownBtn.addEventListener("click", function () {
@@ -180,11 +183,11 @@ openFormDropdownBtn.addEventListener("click", function () {
 
     sideBar.innerHTML = `
     <div class="bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
-    <ul>
-    <li class="flex p-4 gap-1"><div><input
+    <ul><li class="flex gap-1 p-2">
+    <input
             datepicker
             datepicker-autohide
-            id="default-datepicker"
+            id="navbar-datepicker"
             type="text"
             placeholder="Selecionar Data"
             datepicker-format="dd-mm-yyyy"
@@ -195,14 +198,13 @@ openFormDropdownBtn.addEventListener("click", function () {
             src="./img/icons/blue/calendar.svg"
             alt="calendarIcon"
             class="w-4"
-          /></div></li>
-    </ul>
-    `;
-  }
-});
+          />
+        </li>
+        </ul>`;
 
-new AirDatepicker("#default-datepicker", {
-  language: "en",
-  autoClose: true,
-  dateFormat: "dd-MM-yyyy",
+    const input = document.getElementById("navbar-datepicker");
+    if (input) {
+      new Datepicker(input);
+    }
+  }
 });
