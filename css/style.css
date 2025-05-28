@@ -11,12 +11,8 @@
   font-weight: bold;
 }
 
-<<<<<<< HEAD
-html {
-=======
 html,
 .cursor {
->>>>>>> interface
   cursor: url("../img/cursor.svg"), auto;
 }
 
@@ -43,12 +39,8 @@ h1,
 
 #signUpText,
 #signInText,
-<<<<<<< HEAD
-#loggedModal {
-=======
 #loggedModal,
 .datepicker-cell {
->>>>>>> interface
   color: #39578a;
 }
 
