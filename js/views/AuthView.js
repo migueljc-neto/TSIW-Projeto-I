@@ -20,7 +20,7 @@ loginForm.addEventListener("submit", (event) => {
   }
 });
 
-function displayMessage(message) {
+function displayMessage(message, type = "error") {
   const oldMessage = loginForm.querySelector(".text-red-500");
   if (oldMessage) {
     oldMessage.remove();
@@ -29,6 +29,11 @@ function displayMessage(message) {
   loginForm.insertAdjacentHTML(
     "beforeend",
     `<p class='text-red-500 mt-2'>${message}</p>`
+  );
+  const colorClass = type === "error" ? "text-red-500" : "text-green-500";
+  registerForm.insertAdjacentHTML(
+    "beforeend",
+    `<p class='${colorClass} mt-2'>${message}</p>`
   );
 }
 
@@ -55,14 +60,6 @@ registerForm.addEventListener("submit", (event) => {
     displayMessage(error.message);
   }
 });
-
-function displayMessage(message, type = "error") {
-  const colorClass = type === "error" ? "text-red-500" : "text-green-500";
-  registerForm.insertAdjacentHTML(
-    "beforeend",
-    `<p class='${colorClass} mt-2'>${message}</p>`
-  );
-}
 
 function clearMessages() {
   const existing = registerForm.querySelector(".text-red-500, .text-green-500");

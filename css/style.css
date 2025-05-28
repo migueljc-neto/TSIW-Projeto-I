@@ -11,7 +11,12 @@
   font-weight: bold;
 }
 
+<<<<<<< HEAD
 html {
+=======
+html,
+.cursor {
+>>>>>>> interface
   cursor: url("../img/cursor.svg"), auto;
 }
 
@@ -38,7 +43,12 @@ h1,
 
 #signUpText,
 #signInText,
+<<<<<<< HEAD
 #loggedModal {
+=======
+#loggedModal,
+.datepicker-cell {
+>>>>>>> interface
   color: #39578a;
 }
 
@@ -46,6 +56,48 @@ h1,
   border-color: #39578a;
 }
 
-.cursor-pointer {
-  cursor: url("../img/cursor-pointer.svg"), auto;
+.cursor-pointer,
+.datepicker-controls .next-btn:hover,
+.datepicker-controls .prev-btn:hover {
+  cursor: url("../img/cursor-pointer.svg"), auto !important;
+}
+
+datepicker {
+  background-color: white !important;
+}
+.datepicker-dropdown {
+  background-color: white !important;
+  border: 2px solid #39578a !important;
+  border-radius: 7px;
+}
+
+.datepicker-picker,
+.datepicker-header,
+.datepicker-footer {
+  background-color: white !important;
+}
+.datepicker-cell:not(.disabled):hover {
+  background-color: #f3f4f6 !important;
+  color: #39578a;
+}
+
+.focused {
+  background-color: #39578a !important;
+  color: white;
+}
+
+.datepicker-controls .view-switch {
+  background-color: white;
+  color: #39578a;
+}
+
+.datepicker-controls .next-btn svg,
+.datepicker-controls .prev-btn svg {
+  color: #39578a;
+  cursor: pointer;
+}
+
+.datepicker-controls .next-btn,
+.prev-btn {
+  background-color: white;
 }
