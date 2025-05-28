@@ -146,8 +146,8 @@ function closeSidebar() {
   navButtons.style.right = "0";
   currentSidebarContent = null;
   sideBar.innerHTML = "";
-  openProfileDropdownBtn.classList.remove("border-r-0");
-  openFormDropdownBtn.classList.remove("border-r-0");
+  openProfileDropdownBtn.classList.remove("border-r-0!");
+  openFormDropdownBtn.classList.remove("border-r-0!");
 
   sidebarBackdrop.classList.add("hidden");
   sidebarBackdrop.classList.remove("block");
