@@ -40,7 +40,7 @@ window.addEventListener("load", (event) => {
           <button class="text-blue-500 hover:text-blue-300 rounded-md py-0.5 cursor-pointer edit-btn" data-id="${user.id}">
             Editar
           </button>
-          <button class="text-blue-500 hover:text-blue-300 rounded-md py-0.5 cursor-pointer delete-btn" data-id="${user.id}">
+          <button id="userDeleteBtn" class="text-blue-500 hover:text-blue-300 rounded-md py-0.5 cursor-pointer delete-btn" data-id="${user.id}">
             Apagar
           </button>
         </div>
@@ -48,6 +48,15 @@ window.addEventListener("load", (event) => {
     `;
 
     userTableList.appendChild(row);
+  });
+
+  userTableList.addEventListener("click", (event) => {
+    const deleteBtn = event.target.closest(".delete-btn");
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.id;
+      User.deleteUser(id);
+    }
+    location.reload();
   });
 
   /* Tourism Type */
@@ -69,6 +78,15 @@ window.addEventListener("load", (event) => {
       </td>
     `;
     tourismTypeTableList.appendChild(row);
+  });
+
+  tourismTypeTableList.addEventListener("click", (event) => {
+    const deleteBtn = event.target.closest(".delete-btn");
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.id;
+      TourismTypes.deleteTourismType(id);
+    }
+    location.reload();
   });
 
   /* Flights */
@@ -94,6 +112,15 @@ window.addEventListener("load", (event) => {
       </td>
     `;
     flightTableList.appendChild(row);
+  });
+
+  flightTableList.addEventListener("click", (event) => {
+    const deleteBtn = event.target.closest(".delete-btn");
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.id;
+      Flights.deleteFlight(id);
+    }
+    location.reload();
   });
 
   /* Packs */
@@ -127,6 +154,15 @@ window.addEventListener("load", (event) => {
       </td>
     `;
     packsTableList.appendChild(row);
+  });
+  packsTableList.addEventListener("click", (event) => {
+    const deleteBtn = event.target.closest(".delete-btn");
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.id;
+      Trips.deleteTrip(id);
+      User.deletePack(id);
+    }
+    location.reload();
   });
 });
 

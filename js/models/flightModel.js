@@ -14,6 +14,16 @@ export function getFlightById(ids) {
   return flights.filter((trip) => ids.includes(trip.id));
 }
 
+// Delete Flight type by ID
+export function deleteFlight(id) {
+  const numId = typeof id === "string" ? Number(id) : id;
+
+  const index = flights.findIndex((flight) => flight.id === numId);
+
+  flights.splice(index, 1);
+  localStorage.setItem("flights", JSON.stringify(flights));
+}
+
 class Flight {
   id = null;
   origin = "";

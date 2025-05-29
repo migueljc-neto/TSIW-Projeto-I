@@ -73,6 +73,30 @@ export function getUserLogged() {
   return user ? JSON.parse(user) : null;
 }
 
+// Delete user by ID
+export function deleteUser(id) {
+  const numId = typeof id === "string" ? Number(id) : id;
+
+  const index = users.findIndex((user) => user.id === numId);
+
+  users.splice(index, 1);
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
+// Delete pack from user
+export function deletePack(id) {
+  const packId = typeof id === "string" ? Number(id) : id;
+
+  users.forEach((user) => {
+    for (let i = user.trips.length - 1; i >= 0; i--) {
+      if (user.trips[i].id === packId) {
+        user.trips.splice(i, 1);
+      }
+    }
+  });
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
 /**
  * User class
  */

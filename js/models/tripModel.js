@@ -16,6 +16,16 @@ export function getTripById(ids) {
   return trips.filter((trip) => ids.includes(trip.id));
 }
 
+// Delete tourism type by ID
+export function deleteTrip(id) {
+  const numId = typeof id === "string" ? Number(id) : id;
+
+  const index = trips.findIndex((trip) => trip.id === numId);
+
+  trips.splice(index, 1);
+  localStorage.setItem("trips", JSON.stringify(trips));
+}
+
 // Get all trips that are packs
 export function getAllPacks() {
   const trips = getAllTrips();
@@ -36,6 +46,7 @@ class Trip {
   description = "";
   isPack = true;
   flights = [];
+  poi = [];
 
   constructor(
     id,
@@ -50,7 +61,8 @@ class Trip {
     endDate = "",
     description = "",
     isPack = false,
-    flights = []
+    flights = [],
+    poi = []
   ) {
     this.id = id;
     this.name = name;
@@ -65,5 +77,15 @@ class Trip {
     this.description = description;
     this.isPack = isPack;
     this.flights = flights;
+    this.poi = poi;
+  }
+
+  addPoi(name, lat, long, tourismTypes = []) {
+    this.poi.push({
+      name,
+      lat,
+      long,
+      tourismTypes,
+    });
   }
 }

@@ -93,3 +93,11 @@ datepicker {
 .prev-btn {
   background-color: white;
 }
+
+.border-primary {
+  border-color: #39578a;
+}
+
+.color-primary {
+  color: #39578a;
+}

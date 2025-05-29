@@ -97,16 +97,16 @@ window.addEventListener("load", (event) => {
   if (userTripIds.length > 0) {
     const userTrips = Trips.getTripById(userTripIds);
 
-    userTrips.forEach((trip) => {
+    const fetchPromises = userTrips.map((trip) => {
       const query = `${trip.destination} city`;
-
       const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 
-      fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=2`, {
-        headers: {
-          Authorization: apiKey,
-        },
-      })
+      return fetch(
+        `https://api.pexels.com/v1/search?query=${query}&per_page=2`,
+        {
+          headers: { Authorization: apiKey },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           const image = data.photos[1]?.src.medium || "fallback.jpg";
@@ -118,11 +118,9 @@ window.addEventListener("load", (event) => {
               trip.name
             }</span>
             <div class="w-2/5">
-              <img
-                src="${image}"
-                alt="${trip.name}"
-                class="w-full h-full object-cover"
-              />
+              <img src="${image}" alt="${
+              trip.name
+            }" class="w-full h-full object-cover"/>
             </div>
             <div class="w-3/5 p-3 flex flex-col justify-center">
               <p class="font-bold text-gray-800 truncate">${trip.name}</p>
@@ -132,15 +130,25 @@ window.addEventListener("load", (event) => {
             </div>
           </div></button>`
           );
-        })
-        .catch((err) => {
-          console.error("Error fetching image:", err);
         });
     });
+
+    Promise.all(fetchPromises).then(() => {
+      if (tripsWrapper.innerHTML === "") {
+        tripsWrapper.classList.add("items-center");
+        tripsWrapper.classList.remove("grid");
+        tripsWrapper.insertAdjacentHTML(
+          "beforeend",
+          `<p class="text-gray-600 text-center">Nenhuma viagem associada.</p>`
+        );
+      }
+    });
   } else {
+    tripsWrapper.classList.add("items-center");
+    tripsWrapper.classList.remove("grid");
     tripsWrapper.insertAdjacentHTML(
       "beforeend",
-      `<p class="text-gray-600">Nenhuma viagem associada.</p>`
+      `<p class="text-gray-600 text-center">Nenhuma viagem associada.</p>`
     );
   }
 });
