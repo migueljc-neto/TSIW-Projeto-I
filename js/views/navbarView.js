@@ -182,18 +182,21 @@ function populateProfileContent() {
 
 function populateFormContent() {
   sideBar.innerHTML = `
-    <div class="bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
+    <div class="flex justify-center bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
     <ul>
-      <li class="flex gap-1 p-2">
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <div class="flex gap-3">
+        <p>Selecionar Data</p>
+        <img src="./img/icons/blue/calendar.svg" alt="calendarIcon" class="w-4" />
+      </div>
         <input
         datepicker
         id="navbar-datepicker"
         type="text"
-        placeholder="Selecionar Data"
         datepicker-orientation="left"
         class="cursor-pointer"
+        value = ${today}
         />
-        <img src="./img/icons/blue/calendar.svg" alt="calendarIcon" class="w-4" />
       </li>
     </ul>`;
 
@@ -207,6 +210,7 @@ function populateFormContent() {
     format: "dd-mm-yyyy",
     minDate: today,
   });
+  console.log(document.getElementById("navbar-datepicker").value);
 }
 
 openProfileDropdownBtn.addEventListener("click", () => {
