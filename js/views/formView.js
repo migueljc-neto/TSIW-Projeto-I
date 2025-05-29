@@ -20,6 +20,7 @@ window.addEventListener("load", (event) => {
             type="text"
             placeholder="Select date"
             class="cursor-pointer"
+            
           />
           <img
           src="./img/icons/blue/calendar.svg"

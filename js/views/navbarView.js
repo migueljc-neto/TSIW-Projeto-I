@@ -198,6 +198,54 @@ function populateFormContent() {
         value = ${today}
         />
       </li>
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <div class="flex gap-3">
+        <p>Ponto de Partida</p>
+        <img src="./img/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
+      </div>
+        <input
+        id="aiportInput"
+        placeholder="Selecione aeroporto"
+        />
+      </li>
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <div class="flex gap-3">
+        <p>Turismo</p>
+        <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-4" />
+      </div>
+      <select
+      id="turismInput">
+      <option>option1</option>
+      </select>
+      <li/>
+      
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <div class="flex gap-3">
+        <p>Nº Passageiros</p>
+        <img src="./img/icons/blue/users.svg" alt="passengersIcon" class="w-4" />
+      </div>
+      <div
+              class="flex justify-center items-center h-fit w-fit gap-5 mx-auto rounded-md bg-white"
+            >
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./img/icons/blue/minus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+              <p id="nPassengers">01</p>
+              <button class="p-1 hover:shadow-lg cursor-pointer">
+                <img
+                  src="./img/icons/blue/plus.svg"
+                  alt="minusIcon"
+                  class="h-3 cursor-pointer"
+                />
+              </button>
+            </div>
+      <li/>
+      
+
     </ul>`;
 
   openFormDropdownBtn.classList.add("border-r-0!");
