@@ -20,6 +20,10 @@ const logoutBtn = document.getElementById("logoutBtn");
 const logoutListSection = document.getElementById("logoutListSection");
 const loggedModalList = document.getElementById("loggedModalList");
 
+const today = new Date().toLocaleDateString("pt-PT");
+
+console.log(today);
+
 /* Login */
 
 openLoginModalBtn.addEventListener("click", () => {
@@ -182,14 +186,12 @@ function populateFormContent() {
     <ul>
       <li class="flex gap-1 p-2">
         <input
-          datepicker
-          datepicker-autohide
-          id="navbar-datepicker"
-          type="text"
-          placeholder="Selecionar Data"
-          datepicker-format="dd-mm-yyyy"
-          datepicker-orientation="left"
-          class="cursor-pointer"
+        datepicker
+        id="navbar-datepicker"
+        type="text"
+        placeholder="Selecionar Data"
+        datepicker-orientation="left"
+        class="cursor-pointer"
         />
         <img src="./img/icons/blue/calendar.svg" alt="calendarIcon" class="w-4" />
       </li>
@@ -199,9 +201,12 @@ function populateFormContent() {
   openProfileDropdownBtn.classList.remove("border-r-0!");
 
   const input = document.getElementById("navbar-datepicker");
-  if (input) {
-    new Datepicker(input);
-  }
+
+  new Datepicker(input, {
+    autohide: true,
+    format: "dd-mm-yyyy",
+    minDate: today,
+  });
 }
 
 openProfileDropdownBtn.addEventListener("click", () => {
