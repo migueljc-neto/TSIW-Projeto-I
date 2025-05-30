@@ -19,7 +19,7 @@ window.addEventListener("load", (event) => {
       id="form-datepicker"
       type="text"
       placeholder="Data"
-      class="cursor-pointer w-[6ch]"
+      class="cursor-pointer w-[10ch]"
      />
      <img
       src="./img/icons/blue/calendar.svg"
