@@ -73,6 +73,10 @@ datepicker {
   color: #39578a;
 }
 
+.disabled {
+  color: gray !important;
+}
+
 .focused {
   background-color: #39578a !important;
   color: white;
