@@ -113,3 +113,28 @@ datepicker {
   padding: 10px 20px;
   color: #39578a;
 }
+
+html,
+body,
+.main {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Hide placeholder and input text */
+.hide-text input::placeholder {
+  color: transparent !important;
+}
+
+.hide-text input {
+  color: transparent !important;
+  caret-color: transparent;
+}
+
+/* Hide direct text elements inside buttons (like h1, p), keep images visible */
+.hide-text button > h1,
+.hide-text button > p {
+  display: none;
+}

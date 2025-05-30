@@ -29,14 +29,17 @@ window.addEventListener("load", (event) => {
   userTableList.innerHTML = "";
 
   users.forEach((user) => {
+    let userType = User.isAdmin(user) ? "Admin" : "Normal";
+
     const row = document.createElement("tr");
-    row.className = "border-t py-3";
+    row.className = "border-t";
 
     row.innerHTML = `
-      <td>${user.id}</td>
-      <td>${user.name}</td>
-      <td>${user.email}</td>
-      <td class="text-right">
+      <td >${user.id}</td>
+      <td class="text-center">${user.name}</td>
+      <td class="text-center">${user.email}</td>
+      <td class="text-center">${userType}</td>
+      <td class="text-center">
         <div class="inline-flex gap-4">
           <button class="text-blue-500 hover:text-blue-300 rounded-md py-0.5 cursor-pointer edit-btn" data-id="${user.id}">
             Editar

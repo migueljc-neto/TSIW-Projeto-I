@@ -54,3 +54,49 @@ window.addEventListener("load", (event) => {
     );
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("main > section");
+  const mainForm = document.getElementById("mainForm");
+  const formNavContainer = document.getElementById("formNavContainer");
+  const footer = document.querySelector("footer");
+
+  const tourismText = document.getElementById("tourismText");
+  const originText = document.getElementById("originText");
+
+  const firstSection = sections[0];
+
+  let currentSectionIndex = 0;
+
+  const observerOptions = {
+    root: null,
+    threshold: 0.5,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = Array.from(sections).indexOf(entry.target);
+        currentSectionIndex = index;
+
+        if (currentSectionIndex === 0) {
+          if (!footer.contains(mainForm)) {
+            footer.appendChild(mainForm);
+            tourismText.classList.remove("hidden");
+            originText.classList.remove("hidden");
+          }
+          formNavContainer.classList.add("hidden");
+        } else {
+          if (!formNavContainer.contains(mainForm)) {
+            formNavContainer.appendChild(mainForm);
+            formNavContainer.classList.remove("hidden");
+            tourismText.classList.add("hidden");
+            originText.classList.add("hidden");
+          }
+        }
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach((section) => observer.observe(section));
+});
