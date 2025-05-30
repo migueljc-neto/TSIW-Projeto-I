@@ -14,20 +14,19 @@ window.addEventListener("load", (event) => {
     class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 hover:border- px-6 py-3 cursor transition rounded-l-full"
     >
     <input
-    datepicker
-    datepicker-autohide
-    id="form-datepicker"
-            type="text"
-            placeholder="Select date"
-            class="cursor-pointer"
-            
-          />
-          <img
-          src="./img/icons/blue/calendar.svg"
-          alt="calendarIcon"
-          class="w-4"
-          />
-          </div>`
+      datepicker
+      datepicker-autohide
+      id="form-datepicker"
+      type="text"
+      placeholder="Select date"
+      class="cursor-pointer"
+     />
+     <img
+      src="./img/icons/blue/calendar.svg"
+      alt="calendarIcon"
+      class="w-4"
+     />
+    </div>`
   );
 
   const datePicker = document.getElementById("form-datepicker");

@@ -183,8 +183,8 @@ function populateProfileContent() {
 function populateFormContent() {
   sideBar.innerHTML = `
     <div class="flex justify-center bg-blue-900 w-full h-fit p-2 text-white">Procurar Viagens</div>
-    <ul>
-      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+    <ul class="flex flex-col gap-1">
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900 w-[95%] mx-auto">
       <div class="flex gap-3">
         <p>Selecionar Data</p>
         <img src="./img/icons/blue/calendar.svg" alt="calendarIcon" class="w-4" />
@@ -198,7 +198,7 @@ function populateFormContent() {
         value = ${today}
         />
       </li>
-      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900 w-[95%] mx-auto">
       <div class="flex gap-3">
         <p>Ponto de Partida</p>
         <img src="./img/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
@@ -208,7 +208,7 @@ function populateFormContent() {
         placeholder="Selecione aeroporto"
         />
       </li>
-      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900 w-[95%] mx-auto">
       <div class="flex gap-3">
         <p>Turismo</p>
         <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-4" />
@@ -218,34 +218,24 @@ function populateFormContent() {
       <option>option1</option>
       </select>
       <li/>
-      
-      <li class="flex flex-col p-3 gap-2 border-b-1 border-blue-900 text-blue-900">
+      <li class="flex flex-col p-3 gap-4 border-b-1 border-blue-900 text-blue-900 w-[95%] mx-auto">
       <div class="flex gap-3">
         <p>Nº Passageiros</p>
         <img src="./img/icons/blue/users.svg" alt="passengersIcon" class="w-4" />
-      </div>
-      <div
-              class="flex justify-center items-center h-fit w-fit gap-5 mx-auto rounded-md bg-white"
-            >
-              <button class="p-1 hover:shadow-lg cursor-pointer">
-                <img
-                  src="./img/icons/blue/minus.svg"
-                  alt="minusIcon"
-                  class="h-3 cursor-pointer"
-                />
-              </button>
-              <p id="nPassengers">01</p>
-              <button class="p-1 hover:shadow-lg cursor-pointer">
-                <img
-                  src="./img/icons/blue/plus.svg"
-                  alt="minusIcon"
-                  class="h-3 cursor-pointer"
-                />
-              </button>
-            </div>
+        </div>
+        <div class="flex items-center justify-center">
+         <button type="button" id="decrementBtn" data-input-counter-decrement="counter-input" class="bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg  hover:bg-gray-200 inline-flex items-center justify-center border  rounded-md h-fit w-fit p-1">
+         <img src="./img/icons/blue/minus.svg" alt="minuesIcon" class="w-4" />
+         </button>
+         <input type="text" id="counter-input" data-input-counter class="shrink-0 text-blue-900 border-0 bg-transparent max-w-[2.5rem] text-center" placeholder="" value="1" required />
+         <button type="button" id="decrementBtn" data-input-counter-decrement="counter-input" class="bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg  hover:bg-gray-200 inline-flex items-center justify-center border  rounded-md h-fit w-fit p-1">
+         <img src="./img/icons/blue/plus.svg" alt="plusIcon" class="w-4" />
+          </button>
+        </div>
       <li/>
-      
-
+      <li class="flex w-full justify-content">
+        <button type="submit" class="mx-auto bg-blue-500 px-4 py-2      rounded-sm hover:bg-blue-700">Procurar</button>
+      </li>
     </ul>`;
 
   openFormDropdownBtn.classList.add("border-r-0!");
