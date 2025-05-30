@@ -22,16 +22,18 @@
   >
     <header class="fixed top-0 left-0 w-full bg-transparent z-50">
       <div
-        class="max-w-[1530px] mx-auto flex justify-between items-center px-6 lg:px-20 py-4"
+        class="max-w-[1530px] mx-0 flex lg:mx-auto justify-between items-center py-4 px-6"
       >
         <!-- Logo -->
-        <div id="logo">
+        <div id="logo" class="h-[60px] w-fit hidden lg:block">
           <img
+            id="logoLight"
             src="./img/logos/logo-11.png"
             class="block dark:hidden h-[60px] w-auto"
             alt="Light mode logo"
           />
           <img
+            id="logoDark"
             src="./img/logos/logoDarkmode_logotipo darkmode.png"
             class="hidden dark:block h-[60px] w-auto"
             alt="Dark mode logo"
@@ -42,9 +44,10 @@
         <div class="hidden lg:flex gap-4 items-center">
           <!-- Passport -->
           <button
+            id="passportBtn"
             class="group rounded-full border border-white hover:border-blue-500 px-4 py-2 flex items-center gap-2 backdrop-blur transition"
           >
-            <p>Passaporte</p>
+            <p id="passportText">Passaporte</p>
             <img
               src="./img/icons/white/wallet.svg"
               alt="walletIcon"
@@ -54,9 +57,10 @@
 
           <!-- Favorites -->
           <button
+            id="favoritesBtn"
             class="group rounded-full border border-white hover:border-blue-500 px-4 py-2 flex items-center gap-2 backdrop-blur transition"
           >
-            <p>Favoritos</p>
+            <p id="favoritesText">Favoritos</p>
             <img
               src="./img/icons/white/heart.svg"
               alt="heartIcon"
@@ -89,7 +93,7 @@
         </div>
 
         <!-- Mobile Logo -->
-        <div class="flex lg:hidden items-center">
+        <div class="flex block lg:hidden items-center">
           <img
             src="./img/logos/logo-11.png"
             class="block dark:hidden h-[60px] w-auto"
@@ -183,7 +187,7 @@
       <section
         class="h-screen bg-red-200 snap-start flex flex-col justify-center items-center"
       >
-        <h1 class="text-6xl">Your Path<br />Our Compass</h1>
+        <h1 class="text-6xl">This is the second page!</h1>
       </section>
 
       <!-- Modals -->
@@ -371,48 +375,72 @@
         id="mainForm"
         class="group hidden lg:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
       >
-        <!-- Ponto de Partida -->
-        <div class="h-fit w-fit flex flex-col gap-2 relative">
-          <div
-            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white pt-1 absolute"
+        <!-- Home Airport -->
+        <button
+          id="dropdownTopButton"
+          data-dropdown-toggle="airportDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <input
+            type="text"
+            id="input-group-search"
+            class="w-[10ch]"
+            placeholder="Partida"
+          />
+          <img src="./img/icons/blue/pin.svg" alt="turismIcon" class="w-5" />
+        </button>
+
+        <!-- Airport Selector Dropdown -->
+        <div
+          id="airportDropdown"
+          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+        >
+          <ul
+            id="airportsUl"
+            class="rounded-md"
+            aria-labelledby="dropdownTopButton"
           >
-            <input
-              type="text"
-              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1"
-              placeholder="Procurar aeroporto"
-            />
-            <hr class="w-[95%] mx-auto" />
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <p>option 1</p>
-            </div>
-          </div>
-          <button
-            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <p id="originText">Ponto de Partida</p>
-            <img src="./img/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
-          </button>
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
+                >Dashboard</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
+                >Dashboard</a
+              >
+            </li>
+          </ul>
         </div>
 
-        <!-- Turism Type Select -->
-        <div class="h-fit w-fit flex flex-col gap-2 relative">
-          <div
-            id="tourismFormSection"
-            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white absolute text-center"
-          ></div>
+        <!-- Turism Dropdown -->
+        <button
+          id="dropdownTopButton"
+          data-dropdown-toggle="tourismDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 h-full py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <p id="tourismText">Turismo</p>
+          <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-5" />
+        </button>
 
-          <button
-            class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <p id="tourismText">Turismo</p>
-            <img
-              src="./img/icons/blue/turism.svg"
-              alt="turismIcon"
-              class="w-4"
-            />
-          </button>
+        <!-- Airport Selector Dropdown -->
+        <div
+          id="tourismDropdown"
+          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+        >
+          <ul
+            id="tourismsUl"
+            class="rounded-md"
+            aria-labelledby="dropdownTopButton"
+          ></ul>
         </div>
 
         <!-- Nº Passengers -->
@@ -437,10 +465,10 @@
                 type="text"
                 id="counter-input"
                 data-input-counter
-                class="shrink-0 text-blue-900 border-0 bg-transparent max-w-[2.5rem] text-center"
-                value="1"
-                data-input-counter-min="1"
                 data-input-counter-max="10"
+                data-input-counter-min="1"
+                class="shrink-0 color-primary border-0 bg-transparent max-w-[2.5rem] text-center"
+                value="1"
                 required
               />
               <button

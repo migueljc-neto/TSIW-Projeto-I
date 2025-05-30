@@ -118,7 +118,6 @@ html,
 body,
 .main {
   scroll-snap-type: y mandatory;
-  overflow-y: scroll;
   height: 100%;
   scroll-behavior: smooth;
 }
