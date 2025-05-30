@@ -71,7 +71,7 @@
           <div class="flex items-center gap-x-2 mb-4">
             <h2 class="text-xl font-bold">Medalhas</h2>
             <button
-              class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
+            id="passportButton" class="flex items-center gap-3 text-blue-500 hover:text-blue-700 border border-black rounded-md px-3 py-2 bg-white"
             >
               Passaporte
               <img
@@ -85,6 +85,42 @@
           <!-- Badges com bandeiras -->
           <div id="flagWrapper" class="flex flex-wrap gap-4"></div>
         </section>
+
+
+
+
+
+
+<section id="passportModal" class="backdrop-blur-sm hidden fixed inset-0 z-50 overflow-y-auto">
+ 
+  
+  
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 z-50">
+      <!-- Conteúdo do modal (aumentado e com scroll interno) -->
+      <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full max-h-[80vh] overflow-y-auto">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <!-- Cabeçalho fixo durante scroll -->
+              <div class="flex justify-between items-start sticky top-0 bg-white z-10 pb-4">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">Passport</h3>
+                  <button id="closeModal" class="text-gray-400 hover:text-gray-500">
+                      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                  </button>
+              </div>
+              
+              <!-- Lista de países (scroll interno) -->
+              <div id="allCountries" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 overflow-auto"></div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
 
         <!-- Favorite Destinations Section -->
         <section class="rounded-lg shadow p-6 mb-6 border border-black">
@@ -432,7 +468,9 @@
           </div>
         </div>
       </footer>
+      <script type="module" src="../js/models/userModel.js"></script>
       <script type="module" src="../js/views/profileView.js"></script>
+      <script type="module" src="../js/views/profilePassportView.js"></script>
     </div>
   </body>
 </html>
