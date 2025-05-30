@@ -360,49 +360,79 @@
         id="mainForm"
         class="group hidden lg:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
       >
-        <!-- Ponto de Partida -->
-        <div class="h-fit w-fit flex flex-col gap-2 relative">
-          <div
-            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white pt-1 absolute"
+        <!-- Home Airport -->
+        <button
+          id="dropdownTopButton"
+          data-dropdown-toggle="airportDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <input
+            type="text"
+            id="input-group-search"
+            class="w-full"
+            placeholder="Ponto de partida"
+          />
+          <img src="./img/icons/blue/pin.svg" alt="turismIcon" class="w-5" />
+        </button>
+
+        <!-- Airport Selector Dropdown -->
+        <div
+          id="airportDropdown"
+          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+        >
+          <ul
+            id="airportsUl"
+            class="rounded-md"
+            aria-labelledby="dropdownTopButton"
           >
-            <input
-              type="text"
-              class="w-[95%] mx-auto focus:border-0 mb-1 appearance-none px-1"
-              placeholder="Procurar aeroporto"
-            />
-            <hr class="w-[95%] mx-auto" />
-            <div
-              class="px-2 py-1 last:rounded-b-md first:rounded-t-md hover:bg-gray-100"
-            >
-              <p>option 1</p>
-            </div>
-          </div>
-          <button
-            class="group flex gap-3 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
-          >
-            <h1>Ponto de Partida</h1>
-            <img src="./img/icons/blue/pin.svg" alt="pinIcon" class="w-4" />
-          </button>
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
+                >Dashboard</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
+                >Dashboard</a
+              >
+            </li>
+          </ul>
         </div>
 
-        <!-- Turism Type Select -->
-        <div class="h-fit w-fit flex flex-col gap-2 relative">
-          <div
-            id="tourismFormSection"
-            class="flex flex-col h-fit w-fit mx-auto bottom-15 border-2 rounded-md bg-white absolute text-center"
-          ></div>
+        <!-- Turism Dropdown -->
+        <button
+          id="dropdownTopButton"
+          data-dropdown-toggle="turismDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <p id="turismTypeString">Turismo</p>
+          <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-5" />
+        </button>
 
-          <button
-            class="group relative flex gap-3 w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 cursor-pointer transition"
+        <!-- Airport Selector Dropdown -->
+        <div
+          id="turismDropdown"
+          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+        >
+          <ul
+            id="turismsUl"
+            class="rounded-md"
+            aria-labelledby="dropdownTopButton"
           >
-            >
-            <p>Turismo</p>
-            <img
-              src="./img/icons/blue/turism.svg"
-              alt="turismIcon"
-              class="w-4"
-            />
-          </button>
+            <li>
+              <a
+                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
+                >turismo opt1</a
+              >
+            </li>
+          </ul>
         </div>
 
         <!-- Nº Passengers -->
@@ -410,22 +440,39 @@
           <div
             class="group flex gap-5 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
           >
-            <div
-              class="flex justify-center items-center h-fit w-fit gap-5 mx-auto bottom-35 rounded-md bg-white"
-            >
-              <button class="p-1 hover:shadow-lg cursor-pointer">
+            <div class="flex items-center justify-center">
+              <button
+                type="button"
+                id="decrementBtn"
+                data-input-counter-decrement="counter-input"
+                class="bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg hover:bg-gray-200 inline-flex items-center justify-center rounded-md h-fit w-fit p-1"
+              >
                 <img
                   src="./img/icons/blue/minus.svg"
-                  alt="minusIcon"
-                  class="h-3 cursor-pointer"
+                  alt="minuesIcon"
+                  class="w-4"
                 />
               </button>
-              <p id="nPassengers">01</p>
-              <button class="p-1 hover:shadow-lg cursor-pointer">
+              <input
+                type="text"
+                id="counter-input"
+                data-input-counter
+                data-input-counter-max="10"
+                data-input-counter-min="1"
+                class="shrink-0 text-blue-900 border-0 bg-transparent max-w-[2.5rem] text-center"
+                value="1"
+                required
+              />
+              <button
+                type="button"
+                id="incrementBtn"
+                data-input-counter-increment="counter-input"
+                class="bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg hover:bg-gray-200 inline-flex items-center justify-center rounded-md h-fit w-fit p-1"
+              >
                 <img
                   src="./img/icons/blue/plus.svg"
-                  alt="minusIcon"
-                  class="h-3 cursor-pointer"
+                  alt="plusIcon"
+                  class="w-4"
                 />
               </button>
             </div>
