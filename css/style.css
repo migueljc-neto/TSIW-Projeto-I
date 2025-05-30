@@ -101,3 +101,11 @@ datepicker {
 .color-primary {
   color: #39578a;
 }
+
+.btn-std {
+  font-family: "Space Mono", monospace;
+  border: 1px solid #39578a;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: #39578a;
+}

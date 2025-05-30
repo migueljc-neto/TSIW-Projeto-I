@@ -16,6 +16,7 @@ const flightTableList = document.getElementById("flightTableList");
 const packsTableList = document.getElementById("packsTableList");
 
 window.addEventListener("load", (event) => {
+  document.getElementById("userAddBtn").click();
   const isAdmin = User.isAdmin(User.getUserLogged());
   if (!isAdmin) {
     location.href = "../index.html";
