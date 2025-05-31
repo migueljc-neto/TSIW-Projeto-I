@@ -20,7 +20,23 @@ body {
   background-color: #f3f4f6;
   font-family: "Space Mono", sans-serif;
   background: url("../img/images/bg-1.png") repeat-y;
-  background-position: top;
+  background-position: bottom;
+}
+
+#landingSect {
+  background: url("../img/images/bgsect1.png") no-repeat;
+  background-size: top;
+  background-position: bottom;
+}
+
+#packsOffers {
+  background: url("../img/images/bgsect2.png") no-repeat;
+  background-size: cover;
+}
+
+#contactsSect {
+  background: url("../img/images/bgsect3.png") no-repeat;
+  background-position: bottom;
 }
 
 .cursor-drag {

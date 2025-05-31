@@ -12,3 +12,10 @@
   font-weight: bold;
   color: #fff;
 }
+
+@media only screen and (max-width: 500px) {
+  .swiper {
+    width: 320px;
+    height: 320px;
+  }
+}

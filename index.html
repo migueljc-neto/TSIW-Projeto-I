@@ -214,6 +214,7 @@
 
     <main>
       <section
+        id="landingSect"
         class="h-screen snap-start flex flex-col justify-center items-center"
       >
         <h1 class="text-6xl text-center">Your Path<br />Our Compass</h1>
@@ -224,8 +225,19 @@
         class="h-screen snap-start flex flex-col justify-center items-center"
       >
         <h2 class="text-4xl mb-10 font-title">Packs e Ofertas</h2>
-        <div class="swiper mySwiper z-30">
+        <div class="block sm:hidden swiper mySwiper">
           <div id="swiperPacks" class="swiper-wrapper"></div>
+        </div>
+
+        <!-- Swiper -->
+        <div
+          class="swiper-container hidden sm:block swiper packsDesktop w-full max-w-[1000px] h-fit z-20 relative"
+        >
+          <div id="swiperDesktopWrapper" class="swiper-wrapper">
+            <!-- your slides here -->
+          </div>
+          <div class="swiper-button-prev px-10 lg:px-0 cursor-pointer"></div>
+          <div class="swiper-button-next px-10 lg:px-0 cursor-pointer"></div>
         </div>
       </section>
 
