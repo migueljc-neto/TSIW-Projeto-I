@@ -23,11 +23,11 @@ window.addEventListener("load", async () => {
 
       swiperPacks.insertAdjacentHTML(
         "beforeend",
-        `<div class="swiper-slide relative">
+        `<div class="swiper-slide relative cursor-drag">
             <img src="${image}" alt="${
           pack.name
         }" class="w-full h-auto rounded-t-lg" />
-            <div class="absolute bottom-0 left-0 p-5 w-full h-30 bg-white bg-opacity-80 text-black p-2">
+            <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white bg-opacity-80 text-black p-2">
                 <div class="flex gap-6 items-center font-space font-light mb-3">
                     <p class="text-lg">${pack.name}</p>
                     <p class="text-sm">${formatDateToLabel(
@@ -62,3 +62,15 @@ function formatDateToLabel(dateString) {
     return `${day}/${month}/${year}`;
   }
 }
+
+const testBtn = document.getElementById("testBtn");
+
+testBtn.addEventListener("click", () => {
+  return fetch("https://restcountries.com/v3.1/all")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((datas) => {
+        console.log(`${datas.cca2.toLowerCase()}.svg`);
+      });
+    });
+});

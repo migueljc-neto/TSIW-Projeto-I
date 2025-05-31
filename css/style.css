@@ -17,8 +17,13 @@ html,
 }
 
 body {
+  background-color: #f3f4f6;
   font-family: "Space Mono", sans-serif;
-  /* background-image: url("../img/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg"); */
+  background-position: left;
+}
+
+.cursor-drag {
+  cursor: url("../img/cursor-drag.svg"), auto;
 }
 
 h1,
@@ -27,7 +32,7 @@ h1,
   font-family: "Typo Hoop";
 }
 
-.font-title{
+.font-title {
   font-family: "Typo Hoop";
 }
 
@@ -60,6 +65,7 @@ h1,
 
 datepicker {
   background-color: white !important;
+  color: #39578a;
 }
 .datepicker-dropdown {
   background-color: white !important;
@@ -72,9 +78,24 @@ datepicker {
 .datepicker-footer {
   background-color: white !important;
 }
-.datepicker-cell:not(.disabled):hover {
+.datepicker-cell:hover {
+  background-color: #5d7aaa !important;
+  color: #f3f4f6 !important;
+}
+.disabled:hover {
+  background-color: transparent !important;
+  color: #f3f4f6;
+}
+
+.datepicker-cell {
   background-color: #f3f4f6 !important;
-  color: #39578a;
+  color: #39578a !important;
+}
+
+.selected,
+.focused {
+  background-color: #39578a !important;
+  color: #f3f4f6 !important;
 }
 
 .disabled {
@@ -94,12 +115,40 @@ datepicker {
 .datepicker-controls .next-btn svg,
 .datepicker-controls .prev-btn svg {
   color: #39578a;
-  cursor: pointer;
 }
 
-.datepicker-controls .next-btn,
-.prev-btn {
-  background-color: white;
+.datepicker-controls .next-btn:hover {
+  background-color: #39578a !important;
+  color: white;
+}
+
+.datepicker-controls .next-btn:hover svg {
+  color: white;
+}
+
+.datepicker-controls .prev-btn {
+  background-color: #f3f4f6 !important;
+  color: #39578a;
+}
+
+.datepicker-controls .next-btn {
+  background-color: #f3f4f6 !important;
+  color: #39578a;
+}
+
+.datepicker-controls .prev-btn:hover {
+  background-color: #39578a !important;
+  color: white;
+}
+
+.datepicker-controls button:hover {
+  background-color: #39578a !important;
+  color: white;
+  cursor: url("../img/cursor-pointer.svg"), auto !important;
+}
+
+.datepicker-controls .prev-btn:hover svg {
+  color: white;
 }
 
 .border-primary {
@@ -122,11 +171,11 @@ html,
 body,
 .main {
   scroll-snap-type: y mandatory;
+  scroll-snap-align: start;
   height: 100%;
   scroll-behavior: smooth;
 }
 
-/* Hide placeholder and input text */
 .hide-text input::placeholder {
   color: transparent !important;
 }
@@ -136,7 +185,6 @@ body,
   caret-color: transparent;
 }
 
-/* Hide direct text elements inside buttons (like h1, p), keep images visible */
 .hide-text button > h1,
 .hide-text button > p {
   display: none;

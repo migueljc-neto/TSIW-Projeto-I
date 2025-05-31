@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
     <!-- Tailwind CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!--Flowbite  -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- SwiperJS -->
     <link
       rel="stylesheet"
@@ -134,6 +132,34 @@
                     />
                   </button>
                 </li>
+                <li>
+                  <button
+                    id="packsOffersBtn"
+                    class="flex hover:bg-gray-300 cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                    onclick="location.href='#packsOffers'"
+                  >
+                    <span>Packs e Ofertas</span>
+                    <img
+                      src="./img/icons/blue/coins.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    id="contactsBtn"
+                    class="flex hover:bg-gray-300 cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                    onclick="location.href='#contactsSect'"
+                  >
+                    <span>Contactos</span>
+                    <img
+                      src="./img/icons/blue/phone.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
@@ -190,13 +216,24 @@
       <section
         class="h-screen snap-start flex flex-col justify-center items-center"
       >
-        <h1 class="text-6xl">Your Path<br />Our Compass</h1>
+        <h1 class="text-6xl text-center">Your Path<br />Our Compass</h1>
       </section>
 
       <section
+        id="packsOffers"
         class="h-screen bg-red-200 snap-start flex flex-col justify-center items-center"
       >
         <h2 class="text-4xl mb-10 font-title">Packs e Ofertas</h2>
+        <div class="swiper mySwiper">
+          <div id="swiperPacks" class="swiper-wrapper"></div>
+        </div>
+      </section>
+
+      <section
+        id="contactsSect"
+        class="h-screen bg-green-500 snap-start flex flex-col justify-center items-center"
+      >
+        <h2 class="text-4xl mb-10 font-title">Contactos</h2>
         <div class="swiper mySwiper">
           <div id="swiperPacks" class="swiper-wrapper"></div>
         </div>
@@ -398,8 +435,9 @@
           <input
             type="text"
             id="inputOriginSearch"
-            class="w-[10ch]"
+            class="w-[8ch]"
             placeholder="Partida"
+            autocomplete="off"
           />
           <img src="./img/icons/blue/pin.svg" alt="turismIcon" class="w-5" />
         </button>
@@ -407,7 +445,7 @@
         <!-- Airport Selector Dropdown -->
         <div
           id="airportDropdown"
-          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+          class="z-10 hidden bg-white rounded-md w-fit border-1 border-blue-900"
         >
           <ul
             id="airportsUl"
@@ -418,7 +456,7 @@
 
         <!-- Turism Dropdown -->
         <button
-          id="dropdownTopButton"
+          id="tourismDropdownBtn"
           data-dropdown-toggle="tourismDropdown"
           data-dropdown-placement="top"
           class="bg-white px-5 h-full py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
@@ -428,7 +466,6 @@
           <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-5" />
         </button>
 
-        <!-- Airport Selector Dropdown -->
         <div
           id="tourismDropdown"
           class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
@@ -436,7 +473,7 @@
           <ul
             id="tourismsUl"
             class="rounded-md"
-            aria-labelledby="dropdownTopButton"
+            aria-labelledby="tourismDropdownBtn"
           ></ul>
         </div>
 
@@ -495,20 +532,21 @@
         </button>
       </div>
     </footer>
-    <!-- Init.js -->
+    <!-- Flowbite -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Your initialization script -->
     <script src="./js/init.js"></script>
 
-    <!-- Models -->
+    <!-- Your modules -->
     <script type="module" src="./js/models/UserModel.js"></script>
     <script type="module" src="./js/models/TourismtypeModel.js"></script>
-
-    <!-- Views -->
     <script type="module" src="./js/views/AuthView.js"></script>
     <script type="module" src="./js/views/FormView.js"></script>
     <script type="module" src="./js/views/NavbarView.js"></script>
     <script type="module" src="./js/views/mainView.js"></script>
-
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>

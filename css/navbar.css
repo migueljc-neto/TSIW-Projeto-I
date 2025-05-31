@@ -9,5 +9,10 @@
 
 #profileSidebar,
 #formSidebar {
-  border: 2px solid #39578a;
+  border: 2px, solid, #39578a;
+}
+
+.activeSideBar {
+  border: 2px, solid, #39578a;
+  border-right: 0 !important;
 }
