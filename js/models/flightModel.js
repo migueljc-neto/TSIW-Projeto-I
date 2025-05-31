@@ -24,6 +24,25 @@ export function deleteFlight(id) {
   localStorage.setItem("flights", JSON.stringify(flights));
 }
 
+// Get unique airports from available flights
+export function getAllUniqueOrigins() {
+  const flights = getAllFlights();
+
+  const origins = flights.map((flight) => flight.origin);
+
+  const uniqueOrigins = [...new Set(origins)];
+
+  return uniqueOrigins;
+}
+
+export function getFilteredOrigins(filterText) {
+  let uniqueOrigins = getAllUniqueOrigins();
+
+  return uniqueOrigins.filter((origin) =>
+    origin.toLowerCase().includes(filterText.toLowerCase())
+  );
+}
+
 class Flight {
   id = null;
   origin = "";

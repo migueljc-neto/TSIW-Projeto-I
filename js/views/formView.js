@@ -1,11 +1,14 @@
 import * as TourismTypes from "../models/TourismtypeModel.js";
+import * as Flights from "../models/flightModel.js";
 
 TourismTypes.init();
+Flights.init();
 
 const mainForm = document.getElementById("mainForm");
 const tourismFormSection = document.getElementById("tourismDropdown");
-
+const airportList = document.getElementById("airportsUl");
 const today = new Date().toLocaleDateString("pt-PT");
+const inputOriginSearch = document.getElementById("inputOriginSearch");
 
 window.addEventListener("load", (event) => {
   mainForm.insertAdjacentHTML(
@@ -49,13 +52,37 @@ window.addEventListener("load", (event) => {
       `<li class="list-none">
               <button
               data-value="${tourismType.name}"
-                class="block px-4 py-2 w-full hover:first:rounded-t-md hover:last:rounded-t-md hover:bg-gray-200"
+                class="block px-4 py-2 w-full hover:first:rounded-t-md last:hover:rounded-b-md hover:bg-gray-200"
                 >${tourismType.name}</button
               >
             </li>`
     );
   });
+
+  const origins = Flights.getAllUniqueOrigins();
+  renderOriginList(origins);
+
+  inputOriginSearch.addEventListener("input", () => {
+    const filterText = inputOriginSearch.value;
+    const filteredOrigins = Flights.getFilteredOrigins(filterText);
+    renderOriginList(filteredOrigins);
+  });
 });
+
+function renderOriginList(origins) {
+  airportList.innerHTML = "";
+  origins.forEach((origin) => {
+    airportList.insertAdjacentHTML(
+      "beforeend",
+      `<li>
+        <a
+          href="#"
+          class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-b-md rounded-b-md rounded-t-md bg-gray-100 hover:bg-gray-200"
+        >${origin}</a>
+      </li>`
+    );
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const sections = document.querySelectorAll("main > section");

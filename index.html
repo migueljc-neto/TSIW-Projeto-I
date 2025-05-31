@@ -16,6 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!--Flowbite  -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <!-- SwiperJS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
   </head>
   <body
     class="h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
@@ -191,7 +196,10 @@
       <section
         class="h-screen bg-red-200 snap-start flex flex-col justify-center items-center"
       >
-        <h1 class="text-6xl">This is the second page!</h1>
+        <h2 class="text-4xl mb-10 font-title">Packs e Ofertas</h2>
+        <div class="swiper mySwiper">
+          <div id="swiperPacks" class="swiper-wrapper"></div>
+        </div>
       </section>
 
       <!-- Modals -->
@@ -389,7 +397,7 @@
         >
           <input
             type="text"
-            id="input-group-search"
+            id="inputOriginSearch"
             class="w-[10ch]"
             placeholder="Partida"
           />
@@ -405,22 +413,7 @@
             id="airportsUl"
             class="rounded-md"
             aria-labelledby="dropdownTopButton"
-          >
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
-                >Dashboard</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="block px-4 py-2 hover:first:rounded-t-md hover:last:rounded-t-md bg-gray-100 hover:bg-gray-200"
-                >Dashboard</a
-              >
-            </li>
-          </ul>
+          ></ul>
         </div>
 
         <!-- Turism Dropdown -->
@@ -513,5 +506,9 @@
     <script type="module" src="./js/views/AuthView.js"></script>
     <script type="module" src="./js/views/FormView.js"></script>
     <script type="module" src="./js/views/NavbarView.js"></script>
+    <script type="module" src="./js/views/mainView.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </body>
 </html>
