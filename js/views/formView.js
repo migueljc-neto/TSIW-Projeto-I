@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
             formNavContainer.classList.remove("hidden");
           }
           logoImg.forEach((img) => {
-            img.src = "./img/logos/logo-12.png";
+            img.src = "./img/logos/logoDarkmode_logo darkmode.png";
           });
           new Datepicker(datePicker, {
             autohide: true,

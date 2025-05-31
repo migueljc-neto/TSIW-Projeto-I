@@ -19,7 +19,8 @@ html,
 body {
   background-color: #f3f4f6;
   font-family: "Space Mono", sans-serif;
-  background-position: left;
+  background: url("../img/images/bg-1.png") repeat-y;
+  background-position: top;
 }
 
 .cursor-drag {
