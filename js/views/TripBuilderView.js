@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!sessionStorage.getItem("userQuery")) {
     location.href = "../index.html";
   }
-  const userQuery = sessionStorage.getItem(JSON.stringify("userQuery"));
+  const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
 
   loadMap(userQuery.origin);
 });

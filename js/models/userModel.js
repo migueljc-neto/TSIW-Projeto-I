@@ -51,8 +51,14 @@ export function logout() {
     localStorage.removeItem("loggedUser");
 }
 
-export function getUserBadges(){
-  
+export function setUserQuery(date, origin, typeOfTourism, passengers) {
+  const userQuery = {
+    date: date || "",
+    origin: origin || "",
+    typeOfTourism: typeOfTourism || "",
+    passengers: passengers || 1,
+  };
+  sessionStorage.setItem("userQuery", JSON.stringify(userQuery));
 }
 
 // Checks if user is logged in
