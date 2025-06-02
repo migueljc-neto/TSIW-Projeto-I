@@ -22,9 +22,14 @@ export function getAllFlights() {
   return flights;
 }
 
-export function getFlightById(ids) {
+export function getFlightByTripId(ids) {
   let flights = getAllFlights();
   return flights.filter((trip) => ids.includes(trip.id));
+}
+
+export function getFlightById(id) {
+  const flights = getAllFlights();
+  return flights.find((flight) => flight.id === id);
 }
 
 // Delete Flight type by ID
@@ -59,13 +64,11 @@ export function getFilteredOrigins(filterText) {
 export function getFlightsByOrigin(originGet) {
   const flights = getAllFlights();
 
-  const destins = flights
-    .filter((flight) => flight.origin === originGet)
-    .map((flight) => flight.destination);
+  const filteredFlights = flights.filter(
+    (flight) => flight.origin === originGet
+  );
 
-  const uniqueDestins = [...new Set(destins)];
-
-  return uniqueDestins;
+  return filteredFlights;
 }
 
 class Flight {
