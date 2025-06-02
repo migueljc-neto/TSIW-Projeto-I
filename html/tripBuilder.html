@@ -99,64 +99,36 @@
             id="destinationSortableListView"
             class="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2"
           >
-            <li class="bg-white p-4 rounded">
-              <p id="destination">Value 1</p>
+            <li class="bg-white p-4 rounded" value="value 1">
+              <p id="destination" class="truncate">Value 1</p>
             </li>
-            <li class="bg-white p-4 rounded">
-              <p id="destination">Value 2</p>
+            <li class="bg-white p-4 rounded" value="value 1">
+              <p id="destination" class="truncate">Value 1</p>
             </li>
-            <li class="bg-white p-4 rounded"><p id="destination">Value</p></li>
-            <li class="bg-white p-4 rounded"><p id="destination">Value</p></li>
           </ul>
         </div>
 
         <!-- Trip Destination List -->
         <div class="flex flex-col gap-3 h-full">
-          <ul
-            id="destinationSortableList"
-            class="space-y-2 h-127 border-1 border-gray-200 p-2 rounded-lg overflow-y-auto"
+          <div
+            class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg pointer-events-none"
+            tabindex="1"
           >
-            <li
-              class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg"
-              tabindex="1"
-            >
-              <div class="flex gap-5 inline-flex">
-                <img
-                  src="../img/icons/white/destinationElipse.svg"
-                  alt="startingPoint"
-                />
-                <p id="destinationName" class="truncate">Item 1</p>
-              </div>
-              <div class="flex hide gap-5">
-                <button
-                  id="deleteDestination"
-                  class="cursor-pointer p-2 rounded-lg hover:shadow-lg"
-                >
-                  <img
-                    src="../img/icons/white/trash.svg"
-                    alt="trashIcon"
-                    class="h-5"
-                  />
-                </button>
-                <button
-                  id="dragDestination"
-                  class="cursor-pointer p-2 rounded-lg hover:shadow-lg"
-                >
-                  <img
-                    src="../img/icons/white/menu.svg"
-                    alt="trashIcon"
-                    class="h-5"
-                  />
-                </button>
-              </div>
-            </li>
-          </ul>
-
-          <button
-            class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-center rounded-lg cursor-pointer border border-white"
-          >
-            <img src="../img/icons/white/plus.svg" alt="plusIcon" />
-          </button>
+            <div class="flex gap-5 inline-flex">
+              <img
+                src="../img/icons/white/plane.svg"
+                alt="startingPoint"
+                class="h-5"
+              />
+              <p id="destinationName" class="truncate">Start Point</p>
+            </div>
+          </div>
+          <div class="h-127">
+            <ul
+              id="destinationSortableList"
+              class="space-y-2 max-h-full min-h-full border-1 border-gray-200 p-2 rounded-lg overflow-y-auto"
+            ></ul>
+          </div>
         </div>
         <img
           src="../img/images/360_F_65482539_C0ZozE5gUjCafz7Xq98WB4dW6LAhqKfs.jpg"
