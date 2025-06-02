@@ -1,3 +1,7 @@
+import * as Flight from "../models/flightModel";
+
+Flight.init();
+
 const mapViewBtn = document.getElementById("mapViewBtn");
 const listViewBtn = document.getElementById("listViewBtn");
 
@@ -161,3 +165,7 @@ marker
 `
   )
   .openPopup();
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log(Flight.getFlightsByOrigin("OPO"));
+});

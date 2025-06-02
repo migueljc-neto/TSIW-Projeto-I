@@ -56,6 +56,16 @@ export function getFilteredOrigins(filterText) {
   );
 }
 
+export function getFlightsByOrigin(originGet) {
+  const flights = getAllFlights();
+
+  const destins = flights
+    .filter((flight) => flight.origin == originGet)
+    .map((flight) => flight.destination);
+
+  const uniqueDestins = [...new Set(destins)];
+}
+
 class Flight {
   id = null;
   origin = "";
