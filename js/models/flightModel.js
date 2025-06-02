@@ -66,6 +66,7 @@ class Flight {
   duration = "";
   company = "";
   distance = 0;
+  poi = [];
 
   constructor(
     id,
@@ -76,7 +77,8 @@ class Flight {
     price = 0,
     duration = "",
     company = "",
-    distance = 0
+    distance = 0,
+    poi = []
   ) {
     this.id = id;
     this.origin = origin;
@@ -87,5 +89,14 @@ class Flight {
     this.duration = duration;
     this.company = company;
     this.distance = distance;
+    this.poi = poi;
+  }
+  addPoi(name, lat, long, tourismTypes = []) {
+    this.poi.push({
+      name,
+      lat,
+      long,
+      tourismTypes,
+    });
   }
 }

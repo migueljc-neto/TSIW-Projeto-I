@@ -51,6 +51,10 @@ export function logout() {
     localStorage.removeItem("loggedUser");
 }
 
+export function getUserBadges(){
+  
+}
+
 // Checks if user is logged in
 export function isLogged() {
   return (

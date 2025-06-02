@@ -30,8 +30,6 @@ const contactsBtn = document.getElementById("contactsBtn");
 
 const today = new Date().toLocaleDateString("pt-PT");
 
-console.log(today);
-
 /* --- Shared Logic --- */
 
 function setupLogoutButton(selector) {
