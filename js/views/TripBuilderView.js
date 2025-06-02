@@ -1,4 +1,4 @@
-import * as Flight from "../models/flightModel";
+import * as Flight from "../models/flightModel.js";
 
 Flight.init();
 

@@ -60,16 +60,19 @@ export function getFlightsByOrigin(originGet) {
   const flights = getAllFlights();
 
   const destins = flights
-    .filter((flight) => flight.origin == originGet)
+    .filter((flight) => flight.origin === originGet)
     .map((flight) => flight.destination);
 
   const uniqueDestins = [...new Set(destins)];
+
+  return uniqueDestins;
 }
 
 class Flight {
   id = null;
   origin = "";
   destination = "";
+  destinationName = "";
   departureTime = "";
   arrivalTime = "";
   price = 0;
@@ -77,22 +80,28 @@ class Flight {
   company = "";
   distance = 0;
   poi = [];
+  destinLat = 0;
+  destinLong = 0;
 
   constructor(
     id,
     origin,
     destination,
+    destinationName,
     departureTime,
     arrivalTime,
     price = 0,
     duration = "",
     company = "",
     distance = 0,
-    poi = []
+    poi = [],
+    destinLat,
+    destinLong
   ) {
     this.id = id;
     this.origin = origin;
     this.destination = destination;
+    this.destinationName = destinationName;
     this.departureTime = departureTime;
     this.arrivalTime = arrivalTime;
     this.price = price;
@@ -100,6 +109,8 @@ class Flight {
     this.company = company;
     this.distance = distance;
     this.poi = poi;
+    this.destinLat = destinLat;
+    this.destinLong = destinLong;
   }
   addPoi(name, lat, long, tourismTypes = []) {
     this.poi.push({

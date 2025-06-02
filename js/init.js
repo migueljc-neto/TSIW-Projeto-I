@@ -117,6 +117,28 @@ function initdata() {
         company: "Delta",
         distance: 3983,
       },
+      {
+        id: 4,
+        origin: "OPO",
+        destination: "JFK",
+        departureTime: "2025-07-01T07:00",
+        arrivalTime: "2025-07-01T15:30",
+        price: 350,
+        duration: "5h 30m",
+        company: "United",
+        distance: 3983,
+      },
+      {
+        id: 5,
+        origin: "OPO",
+        destination: "FAO",
+        departureTime: "2025-07-01T07:00",
+        arrivalTime: "2025-07-01T15:30",
+        price: 350,
+        duration: "5h 30m",
+        company: "TAP",
+        distance: 3983,
+      },
     ];
     localStorage.setItem("flights", JSON.stringify(flights));
     console.log("Flights initialized");
