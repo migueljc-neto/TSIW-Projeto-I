@@ -39,8 +39,8 @@ const pathIcon = L.icon({
 });
 const ballIcon = L.icon({
   iconUrl: "/img/icons/other/pathPoint.png",
-  iconSize: [20, 20],
-  iconAnchor: [10, 10],
+  iconSize: [10, 10],
+  iconAnchor: [5, 5],
 });
 
 /* Map and list view toggle */
@@ -189,6 +189,7 @@ const createMap = function (origin) {
   /* origin marker */
   var originMarker = L.marker([origin.originLat, origin.originLong], {
     icon: mapOriginIcon,
+    zIndexOffset: 1000,
   }).addTo(map);
 };
 
@@ -215,6 +216,7 @@ function loadMap(origin) {
     /* populate mapView */
     const marker = L.marker([flight.destinLat, flight.destinLong], {
       icon: mapIcon,
+      zIndexOffset: 900,
     }).addTo(iconGroup);
 
     marker.bindPopup(`
@@ -295,8 +297,8 @@ function mapLine() {
         ],
         {
           color: "red",
-          weight: 4,
-          dashArray: "6, 8",
+          weight: 2,
+          dashArray: "6, 6",
         }
       ).addTo(pathGroup);
     }
