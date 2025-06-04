@@ -88,43 +88,43 @@
         <!-- map view -->
         <div
           id="map"
-          class="h-100 lg:h-150 w-full rounded-lg border-2 border-blue-900"
+          class="h-100 lg:h-full w-full rounded-lg lg:border-2 border-blue-900"
         ></div>
         <!-- list view -->
         <div
           id="mapListView"
-          class="h-100 lg:h-150 w-full rounded-lg border-1 border-white hidden bg-white"
+          class="h-100 lg:h-full w-full rounded-lg border-1 border-blue-900 hidden bg-white overflow-y-auto"
         >
           <ul
             id="destinationSortableListView"
             class="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2"
-          >
-            <li class="bg-white p-4 rounded shadow-lg" value="value 1">
-              <p id="destination" class="truncate">Value 1</p>
-            </li>
-          </ul>
+          ></ul>
         </div>
 
         <!-- Trip Destination List -->
         <div class="flex flex-col gap-3 h-full">
           <div
-            class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg pointer-events-none"
-            tabindex="1"
+            class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center gap-3 rounded-lg"
           >
-            <div class="flex gap-5 inline-flex">
-              <img
-                src="../img/icons/white/plane.svg"
-                alt="startingPoint"
-                class="h-5"
-              />
-              <p id="destinationName" class="truncate">Start Point</p>
-            </div>
+            <img
+              src="../img/icons/white/plane.svg"
+              alt="startingPoint"
+              class="h-5"
+            />
+            <p id="origin">Start Point</p>
           </div>
-          <div class="h-127">
+
+          <div class="h-73">
             <ul
               id="destinationSortableList"
               class="space-y-2 max-h-full min-h-full border-1 border-gray-200 p-2 rounded-lg overflow-y-auto bg-white"
             ></ul>
+          </div>
+          <div
+            id="trashCan"
+            class="h-17 border-1 border-red-600 p-2 rounded-lg bg-white flex justify-center items-center opacity-60"
+          >
+            <img src="../img/icons/other/trashCanRed.png" alt="" class="h-7" />
           </div>
         </div>
         <img
