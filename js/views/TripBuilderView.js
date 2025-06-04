@@ -1,5 +1,5 @@
 import * as Flight from "../models/flightModel.js";
-
+import * as Helper from "../models/ModelHelper.js";
 Flight.init();
 
 /* Map and list view buttons */
@@ -17,8 +17,10 @@ const trashCan = document.getElementById("trashCan");
 
 /* map icons */
 let iconGroup;
-
 let pathGroup;
+
+/* Origin Obj */
+let originObj;
 
 const mapOriginIcon = L.icon({
   iconUrl: "/img/icons/other/compassPin.png",
@@ -167,6 +169,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const createMap = function (origin) {
   var map = L.map("map").setView([origin.originLat, origin.originLong], 5);
+  originObj = Helper.createDestinObj(
+    origin.origin,
+    origin.originLat,
+    origin.originLong
+  );
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 12,
@@ -187,7 +194,6 @@ const createMap = function (origin) {
 
 function loadMap(origin) {
   const flightList = Flight.getFlightsByOrigin(origin);
-  console.log(flightList);
 
   flightList.forEach((element) =>
     console.log(Flight.getFlightById(element.id))
@@ -266,37 +272,75 @@ function addToList(id) {
 
   tripList.insertAdjacentHTML("beforeend", itemHTML);
 
-  console.log(id);
   loadMap(flight.destination);
 }
 
 let oldFlight;
 
 function mapLine() {
+  const createMapPoints = function (obj, index, arrLeng) {
+    if (index != 0) {
+      const pin = index == arrLeng - 1 ? pathIcon : ballIcon;
+      const flightPin = L.marker([obj.lat, obj.long], {
+        icon: pin,
+      }).addTo(pathGroup);
+    }
+  };
+  const createMapLines = function (obj, index, arr) {
+    if (index != 0) {
+      const flightLine = L.polyline(
+        [
+          [obj.lat, obj.long],
+          [arr[index - 1].lat, arr[index - 1].long],
+        ],
+        {
+          color: "red",
+          weight: 4,
+          dashArray: "6, 8",
+        }
+      ).addTo(pathGroup);
+    }
+  };
+
   pathGroup.clearLayers();
 
   let liArray = Array.from(tripList.getElementsByTagName("li"));
+  let pointsObjArray = [];
 
-  liArray.forEach((element, curIndex) => {
-    let flightCords = Flight.getFlightById(
-      parseInt(element.getAttribute("id"))
+  pointsObjArray.push(originObj);
+
+  liArray.forEach((element, index) => {
+    let flight = Flight.getFlightById(parseInt(element.getAttribute("id")));
+
+    const destinObj = Helper.createDestinObj(
+      flight.destination,
+      flight.destinLat,
+      flight.destinLong
     );
 
-    console.log(flightCords.path);
-    /* create elements */
-    const flightLine = L.polyline([flightCords.path[0], flightCords.path[1]], {
-      color: "red",
-      weight: 4,
-      dashArray: "6, 8",
-    }).addTo(pathGroup);
+    pointsObjArray.push(destinObj);
+  });
 
-    const pin = curIndex == liArray.length - 1 ? pathIcon : ballIcon;
-    const flightPin = L.marker(
-      [flightCords.destinLat, flightCords.destinLong],
-      { icon: pin }
-    ).addTo(pathGroup);
-
-    console.log(flightPin);
+  pointsObjArray.forEach((element, idx) => {
+    createMapPoints(element, idx, pointsObjArray.length),
+      createMapLines(element, idx, pointsObjArray);
   });
 }
-/* pathGroup */
+
+const observer = new MutationObserver((mutationsList) => {
+  for (const mutation of mutationsList) {
+    if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+      mapLine();
+      let origin = Array.from(tripList.getElementsByTagName("li"));
+      loadMap(
+        Flight.getFlightById(
+          parseInt(origin[origin.length - 1].getAttribute("id"))
+        ).destination
+      );
+
+      // loadMap(Flight.getFlightById(origin[length - 1].getAttribute("id")));
+    }
+  }
+});
+
+observer.observe(tripList, { childList: true });

@@ -3,3 +3,13 @@ export function getAllCountries() {
     .then((response) => response.json())
     .then((data) => data.map((country) => country.cca2));
 }
+
+export function createDestinObj(destinName, latitude, longitude) {
+  const obj = {
+    objName: destinName,
+    lat: latitude,
+    long: longitude,
+  };
+
+  return obj;
+}
