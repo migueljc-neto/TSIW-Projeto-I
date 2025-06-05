@@ -3,7 +3,7 @@ import * as Trips from "../models/TripModel.js";
 import * as Helper from "../models/ModelHelper.js";
 
 Trips.init();
-
+User.init();
 document.body.classList.add("hidden");
 
 const user = User.getUserLogged();
@@ -18,6 +18,8 @@ const flagWrapper = document.getElementById("flagWrapper");
 const tripsWrapper = document.getElementById("tripsWrapper");
 
 const profileImg = document.getElementById("profileImg");
+
+const profileEditBtn = document.getElementById("profileEditBtn");
 
 window.addEventListener("load", (event) => {
   let avatarInt = Math.floor(Math.random() * 5) + 1;
@@ -161,54 +163,130 @@ const passportBtns = document.querySelectorAll(
 );
 
 passportBtns.forEach((passportBtn) => {
-  passportBtn.addEventListener("click", () => {
-    const user = User.getUserLogged();
-
-    const passportModalGrid = document.getElementById("passportModalGrid");
-    let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
-    passportModalGrid.innerHTML = "";
-
-    let userCountries = [];
-    if (user && user.badges) {
-      userCountries = user.badges;
-      userCountries.forEach((country) => {
-        passportModalGrid.insertAdjacentHTML(
-          "beforeend",
-          `
-          <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
-          <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>${regionNames.of(
-            country.toUpperCase()
-          )}</span>
-            <img 
-              class="w-8 h-8 object-contain transition-all" 
-              src="../img/flags/${country.toLowerCase()}.svg"
-              alt="${country}"
-              title="${country}"
-            >
-          </div>`
-        );
-      });
-    }
-
-    Helper.getAllCountries().then((countries) => {
-      countries.forEach((country) => {
-        if (!userCountries.includes(country.toLowerCase())) {
-          passportModalGrid.insertAdjacentHTML(
-            "beforeend",
-            `<div class="has-tooltip col-span-2 sm:col-span-1 p-1">
-                <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>${regionNames.of(
-                  country.toUpperCase()
-                )}</span>
-              <img 
-                class="w-8 h-8 object-contain grayscale hover:grayscale-0 transition-all" 
-                src="../img/flags/${country.toLowerCase()}.svg"
-                alt="${country}"
-                title="${country}"
-              >
-            </div>`
-          );
-        }
-      });
-    });
+  Helper.getAllCountries().then((data) => {
+    allCountriesData = data;
+    renderPassportGrid();
+    continentFilter.onchange = () => renderPassportGrid(continentFilter.value);
   });
 });
+
+/* Edit User */
+
+const userEditForm = document.getElementById("userEditForm");
+const userEditModal = new Modal(document.getElementById("userEditModal"));
+
+profileEditBtn.addEventListener("click", (event) => {
+  const user = User.getUserLogged();
+  userEditModal.show();
+  if (user) {
+    document.getElementById("editName").value = user.name;
+    document.getElementById("editEmail").value = user.email;
+
+    userEditForm.onsubmit = function (e) {
+      e.preventDefault();
+
+      const updatedUser = {
+        name: document.getElementById("editName").value,
+        email: document.getElementById("editEmail").value,
+        password: user.password,
+        isAdmin: user.isAdmin,
+      };
+
+      try {
+        User.updateUser(user.id, updatedUser);
+        try {
+          User.updateLoggedUser(user.id);
+        } catch (e) {
+          displayMessage(userEditForm, err.message);
+        }
+        location.reload();
+      } catch (err) {
+        displayMessage(userEditForm, err.message);
+      }
+    };
+  }
+});
+
+const continentFilter = document.getElementById("continentFilter");
+
+let allCountriesData;
+
+function renderPassportGrid(continent = "") {
+  const user = User.getUserLogged();
+  const passportModalGrid = document.getElementById("passportModalGrid");
+  let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
+  passportModalGrid.innerHTML = "";
+
+  let userCountries = [];
+  if (user && user.badges) {
+    userCountries = user.badges.map((c) => c.toLowerCase());
+  }
+
+  const filteredCountries = allCountriesData.filter((country) => {
+    const code = country.cca2?.toLowerCase();
+    const countryContinents = country.continents || [];
+    if (!code) return false;
+    if (continent && !countryContinents.includes(continent)) return false;
+    return true;
+  });
+
+  const visited = filteredCountries.filter((country) =>
+    userCountries.includes(country.cca2.toLowerCase())
+  );
+  const notVisited = filteredCountries.filter(
+    (country) => !userCountries.includes(country.cca2.toLowerCase())
+  );
+
+  visited.forEach((country) => {
+    const code = country.cca2.toLowerCase();
+    passportModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
+        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>
+          ${regionNames.of(code.toUpperCase())}
+        </span>
+        <img 
+          class="w-8 h-8 object-contain transition-all" 
+          src="../img/flags/${code}.svg"
+          alt="${code}"
+          title="${code}"
+        >
+      </div>
+      `
+    );
+  });
+
+  notVisited.forEach((country) => {
+    const code = country.cca2.toLowerCase();
+    passportModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
+        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>
+          ${regionNames.of(code.toUpperCase())}
+        </span>
+        <img 
+          class="w-8 h-8 object-contain grayscale hover:grayscale-0 transition-all" 
+          src="../img/flags/${code}.svg"
+          alt="${code}"
+          title="${code}"
+        >
+      </div>
+      `
+    );
+  });
+}
+
+function displayMessage(form, message, type = "error") {
+  const oldMessage = form.querySelector(".text-red-500, .text-green-500");
+  if (oldMessage) {
+    oldMessage.remove();
+  }
+  if (type === "clear" || !message) return;
+  const colorClass = type === "error" ? "text-red-500" : "text-green-500";
+  form.insertAdjacentHTML(
+    "beforeend",
+    `<p class='${colorClass} mt-2'>${message}</p>`
+  );
+}

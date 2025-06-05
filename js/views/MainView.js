@@ -119,58 +119,81 @@ window.addEventListener("load", () => {
 });
 
 const passportBtn = document.getElementById("passportBtn");
+const continentFilter = document.getElementById("continentFilter");
+
+let allCountriesData;
 
 passportBtn.addEventListener("click", () => {
-  const user = User.getUserLogged();
+  Helper.getAllCountries().then((data) => {
+    allCountriesData = data;
+    renderPassportGrid();
+    continentFilter.onchange = () => renderPassportGrid(continentFilter.value);
+  });
+});
 
+function renderPassportGrid(continent = "") {
+  const user = User.getUserLogged();
   const passportModalGrid = document.getElementById("passportModalGrid");
   let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
   passportModalGrid.innerHTML = "";
 
   let userCountries = [];
   if (user && user.badges) {
-    userCountries = user.badges;
-    userCountries.forEach((country) => {
-      passportModalGrid.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
-        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>${regionNames.of(
-          country.toUpperCase()
-        )}</span>
-          <img 
-            class="w-8 h-8 object-contain transition-all" 
-            src="./img/flags/${country.toLowerCase()}.svg"
-            alt="${country}"
-            title="${country}"
-          >
-        </div>`
-      );
-    });
+    userCountries = user.badges.map((c) => c.toLowerCase());
   }
 
-  Helper.getAllCountries().then((countries) => {
-    countries.forEach((country) => {
-      if (!userCountries.includes(country.toLowerCase())) {
-        passportModalGrid.insertAdjacentHTML(
-          "beforeend",
-          `<div class="has-tooltip col-span-2 sm:col-span-1 p-1">
-            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>${regionNames.of(
-              country.toUpperCase()
-            )}</span>
-          <img 
-            class="w-8 h-8 object-contain grayscale hover:grayscale-0 transition-all" 
-            src="./img/flags/${country.toLowerCase()}.svg"
-            alt="${country}"
-            title="${country}"
-          >
-        </div>`
-        );
-      }
-    });
+  const filteredCountries = allCountriesData.filter((country) => {
+    const code = country.cca2?.toLowerCase();
+    const countryContinents = country.continents || [];
+    if (!code) return false;
+    if (continent && !countryContinents.includes(continent)) return false;
+    return true;
   });
-});
 
-document.getElementById("logo").addEventListener("click", () => {
-  location.href = "#landingSect";
-});
+  const visited = filteredCountries.filter((country) =>
+    userCountries.includes(country.cca2.toLowerCase())
+  );
+  const notVisited = filteredCountries.filter(
+    (country) => !userCountries.includes(country.cca2.toLowerCase())
+  );
+
+  visited.forEach((country) => {
+    const code = country.cca2.toLowerCase();
+    passportModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
+        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>
+          ${regionNames.of(code.toUpperCase())}
+        </span>
+        <img 
+          class="w-8 h-8 object-contain transition-all" 
+          src="../img/flags/${code}.svg"
+          alt="${code}"
+          title="${code}"
+        >
+      </div>
+      `
+    );
+  });
+
+  notVisited.forEach((country) => {
+    const code = country.cca2.toLowerCase();
+    passportModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="has-tooltip col-span-2 sm:col-span-1 p-1">
+        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>
+          ${regionNames.of(code.toUpperCase())}
+        </span>
+        <img 
+          class="w-8 h-8 object-contain grayscale hover:grayscale-0 transition-all" 
+          src="../img/flags/${code}.svg"
+          alt="${code}"
+          title="${code}"
+        >
+      </div>
+      `
+    );
+  });
+}
