@@ -66,9 +66,40 @@ listViewBtn.addEventListener("click", function () {
 });
 
 /* sortable js  lists setup */
+new Sortable(destinationList, {
+  group: {
+    name: "Map",
+    put: false,
+    pull: "Trip",
+  },
+  sort: false,
+  dragClass: "destinationGhost",
+  animation: 150,
+
+  onStart: function () {
+    tripList.classList.add(
+      "outline-2",
+      "outline-offset-2",
+      "outline-solid",
+      "outline-blue-500"
+    );
+  },
+
+  onEnd: function () {
+    tripList.classList.remove(
+      "outline-2",
+      "outline-offset-2",
+      "outline-solid",
+      "outline-blue-500"
+    );
+  },
+});
+
 new Sortable(tripList, {
   group: {
-    name: "destinationListGroup",
+    name: "Trip",
+    put: ["Map"],
+    pull: "Trash",
   },
 
   animation: 150,
@@ -120,42 +151,31 @@ new Sortable(tripList, {
               </div>`
         );
       }
+      updateMap();
     });
-    loadMap();
   },
-});
-new Sortable(destinationList, {
-  group: {
-    name: "destinationListGroup",
-    put: "false",
+
+  onSort: function () {
+    updateMap();
   },
-  sort: false,
-  animation: 150,
 
   onStart: function () {
-    tripList.classList.add(
-      "outline-2",
-      "outline-offset-2",
-      "outline-solid",
-      "outline-blue-500"
-    );
+    trashCan.classList.remove("opacity-30");
   },
-
   onEnd: function () {
-    tripList.classList.remove(
-      "outline-2",
-      "outline-offset-2",
-      "outline-solid",
-      "outline-blue-500"
-    );
+    trashCan.classList.add("opacity-30");
   },
 });
-new Sortable(trashCan),
-  {
-    group: {
-      name: "trashCan",
-    },
-  };
+
+new Sortable(trashCan, {
+  group: {
+    name: "Trash",
+    put: ["Trip"],
+  },
+  onAdd: function (event) {
+    event.item.remove();
+  },
+});
 
 /* Map */
 document.addEventListener("DOMContentLoaded", () => {
@@ -165,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
   createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
   loadMap(userQuery.origin);
+  document.getElementById("origin").textContent = userQuery.origin;
 });
 
 const createMap = function (origin) {
@@ -209,7 +230,7 @@ function loadMap(origin) {
     destinationList.insertAdjacentHTML(
       "beforeend",
       `<li id="${flight.id}"class="bg-white p-4 rounded shadow-lg" value="${flight.destinationName}" id="${flight.id}">
-        <p class="truncate">${flight.destinationName}</p>
+        <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
       </li>`
     );
 
@@ -329,20 +350,11 @@ function mapLine() {
   });
 }
 
-const observer = new MutationObserver((mutationsList) => {
-  for (const mutation of mutationsList) {
-    if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-      mapLine();
-      let origin = Array.from(tripList.getElementsByTagName("li"));
-      loadMap(
-        Flight.getFlightById(
-          parseInt(origin[origin.length - 1].getAttribute("id"))
-        ).destination
-      );
-
-      // loadMap(Flight.getFlightById(origin[length - 1].getAttribute("id")));
-    }
-  }
-});
-
-observer.observe(tripList, { childList: true });
+function updateMap() {
+  mapLine();
+  let origin = Array.from(tripList.getElementsByTagName("li"));
+  loadMap(
+    Flight.getFlightById(parseInt(origin[origin.length - 1].getAttribute("id")))
+      .destination
+  );
+}

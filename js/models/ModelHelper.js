@@ -13,3 +13,21 @@ export function createDestinObj(destinName, latitude, longitude) {
 
   return obj;
 }
+
+class Movie {
+  title = "";
+  releaseYear = "";
+  director = "";
+  duration = 0;
+  actors = [];
+  constructor(title, releaseYear, director, duration, actors) {
+    this.title = title;
+    this.releaseYear = releaseYear;
+    this.director = director;
+    this.duration = duration;
+    this.actors = actors;
+  }
+}
+
+const movieObj = new Movie("title", "200", "directorA", 90, ["a", "b"]);
+console.log(movieObj);
