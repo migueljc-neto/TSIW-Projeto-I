@@ -136,8 +136,8 @@ function initdata() {
         poi: [
           {
             name: "Museo del Prado",
-            latitude: 40.4,
-            long: -3.7,
+            latitude: 40.4138,
+            long: -3.6921,
             tourismTypes: [1, 3],
           },
         ],

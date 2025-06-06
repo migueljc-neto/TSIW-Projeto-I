@@ -18,9 +18,15 @@ const trashCan = document.getElementById("trashCan");
 /* map icons */
 let iconGroup;
 let pathGroup;
+let poiGroup;
+let tripPoiGroup;
+let currZoom;
 
 /* Origin Obj */
 let originObj;
+
+/* Map */
+var map;
 
 const mapOriginIcon = L.icon({
   iconUrl: "/img/icons/other/compassPin.png",
@@ -29,8 +35,8 @@ const mapOriginIcon = L.icon({
 });
 const mapIcon = L.icon({
   iconUrl: "/img/icons/other/normalPin.png",
-  iconSize: [16, 25],
-  iconAnchor: [8, 25],
+  iconSize: [20, 30],
+  iconAnchor: [10, 15],
 });
 const pathIcon = L.icon({
   iconUrl: "/img/icons/other/pathLastPoint.png",
@@ -41,6 +47,11 @@ const ballIcon = L.icon({
   iconUrl: "/img/icons/other/pathPoint.png",
   iconSize: [10, 10],
   iconAnchor: [5, 5],
+});
+const poiIcon = L.icon({
+  iconUrl: "/img/icons/other/poiPin.png",
+  iconSize: [10, 15],
+  iconAnchor: [5, 7.5],
 });
 
 /* Map and list view toggle */
@@ -103,6 +114,7 @@ new Sortable(tripList, {
   },
 
   animation: 150,
+  dragClass: "tripGhost",
 
   onAdd: function (cell) {
     requestAnimationFrame(() => {
@@ -174,10 +186,12 @@ new Sortable(trashCan, {
   },
   onAdd: function (event) {
     event.item.remove();
+    updateMap();
   },
+  emptyInsertThreshold: 0,
 });
 
-/* Map */
+/* onLoad */
 document.addEventListener("DOMContentLoaded", () => {
   if (!sessionStorage.getItem("userQuery")) {
     location.href = "../index.html";
@@ -190,11 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const createMap = function (origin) {
   var map = L.map("map").setView([origin.originLat, origin.originLong], 5);
-  originObj = Helper.createDestinObj(
-    origin.origin,
-    origin.originLat,
-    origin.originLong
-  );
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 12,
@@ -203,9 +212,18 @@ const createMap = function (origin) {
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
+  originObj = Helper.createDestinObj(
+    origin.origin,
+    origin.originLat,
+    origin.originLong,
+    origin.poi
+  );
+  console.log(originObj);
+
   /* marker and polygon groups */
   iconGroup = L.layerGroup().addTo(map);
   pathGroup = L.layerGroup().addTo(map);
+  poiGroup = L.layerGroup().addTo(map);
 
   /* origin marker */
   var originMarker = L.marker([origin.originLat, origin.originLong], {
@@ -217,11 +235,12 @@ const createMap = function (origin) {
 function loadMap(origin) {
   const flightList = Flight.getFlightsByOrigin(origin);
 
-  flightList.forEach((element) =>
+  /* flightList.forEach((element) =>
     console.log(Flight.getFlightById(element.id))
   );
-
+ */
   iconGroup.clearLayers();
+  poiGroup.clearLayers();
   destinationList.innerHTML = "";
 
   /* flight loop */
@@ -229,7 +248,7 @@ function loadMap(origin) {
     /* populate listView */
     destinationList.insertAdjacentHTML(
       "beforeend",
-      `<li id="${flight.id}"class="bg-white p-4 rounded shadow-lg" value="${flight.destinationName}" id="${flight.id}">
+      `<li id="${flight.id}"class="bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
         <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
       </li>`
     );
@@ -241,15 +260,15 @@ function loadMap(origin) {
     }).addTo(iconGroup);
 
     marker.bindPopup(`
-        <div class="flex flex-col item-center w-fit ">
-        <p>${flight.destinationName}</p>
-        <button 
-        data-id="${flight.id}" 
-        class="popup-add-btn px-3 py-1 bg-blue-900 text-white rounded">
-        Add to List
-        </button>
-        </div>
-        `);
+      <div class="flex flex-col item-center w-fit ">
+      <p>${flight.destinationName}</p>
+      <button 
+      data-id="${flight.id}" 
+      class="popup-add-btn px-3 py-1 bg-blue-900 text-white rounded">
+      Add to List
+      </button>
+      </div>
+      `);
 
     marker.on("popupopen", () => {
       setTimeout(() => {
@@ -262,6 +281,13 @@ function loadMap(origin) {
         }
       }, 100);
     });
+
+    flight.poi.forEach((poi) => {
+      const poiMarker = L.marker([poi.latitude, poi.long], {
+        icon: poiIcon,
+        zIndexOffset: 200,
+      }).addTo(poiGroup);
+    });
   });
   mapLine();
 }
@@ -270,7 +296,7 @@ function addToList(id) {
   const flight = Flight.getFlightById(id);
 
   const itemHTML = `
-    <li id="${flight.id}" class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg">
+    <li id="${flight.id}" tabindex="1" class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg">
         <div class="flex gap-5 inline-flex">
                 <img
                   src="../img/icons/white/destinationElipse.svg"
@@ -294,7 +320,6 @@ function addToList(id) {
   `;
 
   tripList.insertAdjacentHTML("beforeend", itemHTML);
-
   loadMap(flight.destination);
 }
 
@@ -306,6 +331,16 @@ function mapLine() {
       const pin = index == arrLeng - 1 ? pathIcon : ballIcon;
       const flightPin = L.marker([obj.lat, obj.long], {
         icon: pin,
+        zIndexOffset: 1000,
+      }).addTo(pathGroup);
+    }
+  };
+  const createTripPoi = function (obj, index, arrLeng) {
+    console.log(obj.pois);
+
+    if (index != 0) {
+      const flightPin = L.marker([obj.lat, obj.long], {
+        icon: poiIcon,
       }).addTo(pathGroup);
     }
   };
@@ -332,29 +367,40 @@ function mapLine() {
 
   pointsObjArray.push(originObj);
 
+  /* create destinObj */
   liArray.forEach((element, index) => {
     let flight = Flight.getFlightById(parseInt(element.getAttribute("id")));
+    console.log(flight);
 
     const destinObj = Helper.createDestinObj(
       flight.destination,
       flight.destinLat,
-      flight.destinLong
+      flight.destinLong,
+      flight.poi
     );
+
+    console.log(destinObj);
 
     pointsObjArray.push(destinObj);
   });
 
   pointsObjArray.forEach((element, idx) => {
-    createMapPoints(element, idx, pointsObjArray.length),
-      createMapLines(element, idx, pointsObjArray);
+    createMapPoints(element, idx, pointsObjArray.length);
+    createTripPoi(element, idx, pointsObjArray);
+    createMapLines(element, idx, pointsObjArray);
   });
 }
 
 function updateMap() {
   mapLine();
   let origin = Array.from(tripList.getElementsByTagName("li"));
-  loadMap(
-    Flight.getFlightById(parseInt(origin[origin.length - 1].getAttribute("id")))
-      .destination
-  );
+  if (origin.length == 0) {
+    loadMap(originObj.objName);
+  } else {
+    loadMap(
+      Flight.getFlightById(
+        parseInt(origin[origin.length - 1].getAttribute("id"))
+      ).destination
+    );
+  }
 }
