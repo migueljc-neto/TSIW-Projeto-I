@@ -1,4 +1,4 @@
-import * as User from "../models/UserModel.js";
+import * as User from "../models/userModel.js";
 import * as Trips from "../models/TripModel.js";
 
 Trips.init();

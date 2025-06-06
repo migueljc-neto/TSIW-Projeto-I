@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Select Your Flights</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css" />
     <!-- Flowbite CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
   </head>
@@ -14,12 +15,13 @@
 
     <!-- Flight Option: Madrid to Lille -->
     <div class="mb-4">
+      <img src="../img/icons/blue/plane.svg" alt="plane icon" class="w-5 h-5" />
       <h2 class="text-xl font-semibold mb-2">Madrid to Lille</h2>
       
       <!-- Flowbite Carousel for Date Selection -->
       <div id="default-carousel" class="relative w-full" data-carousel="static">
         <!-- Carousel wrapper -->
-        <div class="relative w-full h-20 flex duration-700 justify-center items-center ease-in-out overflow-x-auto">
+        <div class="relative translate-x-[34%] w-full h-20 flex duration-700 justify-center items-center ease-in-out">
 
             <!-- Item 1 -->
             <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item>
@@ -28,29 +30,30 @@
               <p class="font-bold text-blue-700">€100,00</p>
             </div>
             <!-- Item 2 -->
-            <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item>
+            <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item="active">
               <p class="text-sm">09 Abril</p>
               <p class="text-xs text-gray-500">Quarta-Feira</p>
               <p class="font-bold text-blue-700">€70,00</p>
             </div> 
             <!-- Item 3 (Active) -->
-            <div class="bg-white p-2 rounded border-b-4 border-blue-700 text-center w-[320px] mx-1" data-carousel-item>
+            <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item>
               <p class="text-sm">10 Abril</p>
               <p class="text-xs text-gray-500">Quinta-Feira</p>
               <p class="font-bold text-blue-700">€60,00</p>
             </div>
-            <!-- Item 4 -->
-            <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1 text-gray-300" data-carousel-item>
+             <!-- Item 3 (Active) -->
+             <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item>
               <p class="text-sm">11 Abril</p>
-              <p class="text-xs">Sexta-Feira</p>
-              <p>🚫</p>
+              <p class="text-xs text-gray-500">Sexta-Feira</p>
+              <p class="font-bold text-blue-700">€60,00</p>
             </div>
-            <!-- Item 5 -->
-            <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1 text-gray-300" data-carousel-item>
+             <!-- Item 3 (Active) -->
+             <div class="bg-white p-2 rounded shadow text-center w-[320px] mx-1" data-carousel-item>
               <p class="text-sm">12 Abril</p>
-              <p class="text-xs">Sábado</p>
-              <p>🚫</p>
+              <p class="text-xs text-gray-500">Sábado</p>
+              <p class="font-bold text-blue-700">€60,00</p>
             </div>
+            
           </div>
         <!-- Slider controls -->
         <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-1 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -73,24 +76,35 @@
     </div>
 
     <!-- Flight Card: Madrid to Lille -->
-    <div class="bg-white rounded-xl shadow-md p-4 mb-6 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
+    <div class="bg-white rounded-xl shadow-md p-6 mb-6 flex justify-between items-center">
+      <div class="flex items-center space-x-6">
         <span class="text-orange-600 font-bold text-lg">easyJet</span>
+    
         <div class="text-center">
-          <p class="text-sm font-medium">00:00</p>
+          <p class="text-sm font-bold">00:00</p>
           <p class="text-xs text-gray-500">Madrid</p>
         </div>
-        <span class="text-xl">✈️</span>
+    
+        <div class="flex items-center space-x-2">
+          <div class="w-16 h-px bg-blue-800"></div>
+          <img src="../img/icons/blue/plane.svg" alt="plane icon" class="w-5 h-5" />
+          <div class="w-16 h-px bg-blue-800"></div>
+        </div>
+    
         <div class="text-center">
-          <p class="text-sm font-medium">00:00</p>
+          <p class="text-sm font-bold">00:00</p>
           <p class="text-xs text-gray-500">Lille</p>
         </div>
       </div>
+    
       <div class="flex items-center space-x-4">
-        <p class="text-lg font-bold">€60,00</p>
-        <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-semibold px-4 py-1 rounded">Select</button>
+        <p class="text-xl font-bold text-indigo-700">€60,00</p>
+        <button class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-5 py-2 rounded-lg shadow-sm">
+          Select
+        </button>
       </div>
     </div>
+    
 
     <!-- Footer Controls -->
     <div class="flex justify-between items-center">
@@ -104,10 +118,9 @@
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script>
-      // Initialize carousel with custom options
       document.addEventListener('DOMContentLoaded', function() {
         const carousel = new Flowbite.Carousel(document.getElementById('default-carousel'), {
-          interval: 0, // Disable auto-rotation
+          interval: 0, 
         });
       });
     </script>
