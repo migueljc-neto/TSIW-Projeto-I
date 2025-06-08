@@ -19,3 +19,13 @@ export function formatDateToLabel(dateString) {
     return `${day}/${month}/${year}`;
   }
 }
+
+// Função para formatar hora (ex: "14:30")
+export function formatTime(dateString) {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  return date.toLocaleTimeString("pt-PT", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}

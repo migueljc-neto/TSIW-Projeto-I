@@ -32,6 +32,11 @@ export function getFlightById(id) {
   return flights.find((flight) => flight.id === id);
 }
 
+export function getAllFlightsByLeg(from, to) {
+  const allFlights = getAllFlights();
+  return allFlights.filter((f) => f.origin === from && f.destination === to);
+}
+
 // Delete Flight type by ID
 export function deleteFlight(id) {
   const numId = typeof id === "string" ? Number(id) : id;

@@ -1,4 +1,5 @@
 import * as Flights from "../models/FlightModel.js";
+import * as Helper from "../models/ModelHelper.js";
 
 // Inicializa os dados de voos no localStorage, se necessário
 Flights.init();
@@ -21,7 +22,7 @@ const IATA_CODES = {
   Lufthansa: "LH",
   Ryanair: "FR",
   KLM: "KL",
-  "Swiss Air": "LX", // duplicado porque pode vir de formas diferentes
+  "Swiss Air": "LX",
   "Austrian Airlines": "OS",
   SAS: "SK",
   Norwegian: "DY",
@@ -40,7 +41,6 @@ const IATA_CODES = {
 
 // Quando o DOM estiver pronto, começa a construir a interface
 window.addEventListener("DOMContentLoaded", () => {
-  const allFlights = JSON.parse(localStorage.getItem("flights"));
   const flightSections = [];
 
   // Função auxiliar para obter a data de amanhã (à meia-noite)
@@ -57,9 +57,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const to = destinations[i + 1];
 
     // Filtra os voos que fazem este percurso
-    const flights = allFlights.filter(
-      (f) => f.origin === from && f.destination === to
-    );
+    const flights = Flights.getAllFlightsByLeg(from, to);
 
     if (flights.length === 0) continue;
 
@@ -196,8 +194,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
       // Se já existe seleção na secção anterior, só permite datas pelo menos 1 dia depois
       if (sectionIndex > 0 && selectedFlights[sectionIndex - 1]) {
-        const prevFlight = allFlights.find(
-          (f) => f.id === selectedFlights[sectionIndex - 1]
+        const prevFlight = Flights.getFlightById(
+          selectedFlights[sectionIndex - 1]
         );
         if (prevFlight) {
           const prevDate = new Date(prevFlight.departureTime);
@@ -306,9 +304,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // Função para atualizar as secções seguintes quando se seleciona um voo
 function updateNextSections(selectedIdx) {
-  const allFlights = JSON.parse(localStorage.getItem("flights"));
   const selectedFlight = selectedFlights[selectedIdx]
-    ? allFlights.find((f) => f.id === selectedFlights[selectedIdx])
+    ? Flights.getFlightById(selectedFlights[selectedIdx])
     : null;
 
   if (!selectedFlight) return;
@@ -328,7 +325,7 @@ function updateNextSections(selectedIdx) {
     let keepExisting = false;
 
     if (existingFlightId) {
-      const existingFlight = allFlights.find((f) => f.id === existingFlightId);
+      const existingFlight = Flights.getFlightById(existingFlightId);
       if (existingFlight) {
         existingFlightDate = new Date(existingFlight.departureTime);
         existingFlightDate.setHours(0, 0, 0, 0);
@@ -426,16 +423,6 @@ function updateNextSections(selectedIdx) {
   }
 }
 
-// Função para formatar hora (ex: "14:30")
-function formatTime(dateString) {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  return date.toLocaleTimeString("pt-PT", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 // Mostra os cards dos voos para uma secção e data
 function showFlights(section, flights) {
   const container = section.querySelector(".flight-cards-container");
@@ -446,8 +433,8 @@ function showFlights(section, flights) {
 
   flights.forEach((flight) => {
     const isSelected = selectedId === flight.id;
-    const depTime = formatTime(flight.departureTime);
-    const arrTime = formatTime(flight.arrivalTime);
+    const depTime = Helper.formatTime(flight.departureTime);
+    const arrTime = Helper.formatTime(flight.arrivalTime);
 
     // Usa o código IATA para mostrar o logo da companhia
     const iata = IATA_CODES[flight.company] || flight.company;
@@ -478,7 +465,7 @@ function showFlights(section, flights) {
     <div class="flex flex-col px-4 sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
       <p class="text-lg font-bold text-indigo-700">€${flight.price.toFixed(
         0
-      )}</p>
+      )}/pax</p>
       <button class="${
         isSelected
           ? "bg-gray-500 hover:bg-gray-600"
@@ -622,11 +609,10 @@ function setupCarousel(carousel, closestDate = null) {
 // Calcula o preço total dos voos selecionados
 function calcTotal() {
   totalPrice = 0;
-  const allFlights = JSON.parse(localStorage.getItem("flights"));
 
   Object.values(selectedFlights).forEach((flightId) => {
     if (flightId) {
-      const flight = allFlights.find((f) => f.id === flightId);
+      const flight = Flights.getFlightById(flightId);
       if (flight) {
         totalPrice += flight.price;
       }
