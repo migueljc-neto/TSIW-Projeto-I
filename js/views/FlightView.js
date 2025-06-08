@@ -1,114 +1,161 @@
 import * as Flights from "../models/FlightModel.js";
 
-// Initialize all flights from localStorage
+// Inicializa os dados de voos no localStorage, se necessário
 Flights.init();
 
-const destinations = ["OPO", "LIS", "MAD", "ROM"]; // Example destinations
+// Lista de destinos para o percurso
+const destinations = ["OPO", "LIS", "MAD", "ROM"];
 const flightsSection = document.getElementById("flightsSection");
-let totalPrice = 0;
-let selectedFlights = {}; // Stores selected flights for payment
-let selectedCount = 0; // Number of currently selected flights
-const totalSections = destinations.length - 1; // Number of flight sections (pairs)
+let totalPrice = 0; // Preço total dos voos selecionados
+let selectedFlights = {}; // Guarda o id do voo selecionado em cada secção
+let selectedCount = 0; // Quantos voos já foram selecionados
+const totalSections = destinations.length - 1; // Número de secções
 
+// Mapeamento de nomes de companhias para códigos IATA (para mostrar o logo)
+const IATA_CODES = {
+  TAP: "TP",
+  Vueling: "VY",
+  Iberia: "IB",
+  "Air France": "AF",
+  "British Airways": "BA",
+  Lufthansa: "LH",
+  Ryanair: "FR",
+  KLM: "KL",
+  "Swiss Air": "LX", // duplicado porque pode vir de formas diferentes
+  "Austrian Airlines": "OS",
+  SAS: "SK",
+  Norwegian: "DY",
+  "Aer Lingus": "EI",
+  "Aegean Airlines": "A3",
+  "Turkish Airlines": "TK",
+  "Brussels Airlines": "SN",
+  "Czech Airlines": "OK",
+  Finnair: "AY",
+  "ITA Airways": "AZ",
+  Icelandair: "FI",
+  "Air Europa": "UX",
+  EasyJet: "U2",
+  Delta: "DL",
+};
+
+// Quando o DOM estiver pronto, começa a construir a interface
 window.addEventListener("DOMContentLoaded", () => {
   const allFlights = JSON.parse(localStorage.getItem("flights"));
   const flightSections = [];
 
-  // For each pair of destinations, build the carousel and flight cards
-  for (let index = 0; index < destinations.length - 1; index++) {
-    const origin = destinations[index];
-    const destination = destinations[index + 1];
+  // Função auxiliar para obter a data de amanhã (à meia-noite)
+  function getTomorrow() {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 1);
+    return d;
+  }
 
-    // Filter flights for this origin-destination pair
-    const relevantFlights = allFlights.filter(
-      (flight) => flight.origin === origin && flight.destination === destination
+  // Para cada par de cidades, cria uma secção de voos
+  for (let i = 0; i < destinations.length - 1; i++) {
+    const from = destinations[i];
+    const to = destinations[i + 1];
+
+    // Filtra os voos que fazem este percurso
+    const flights = allFlights.filter(
+      (f) => f.origin === from && f.destination === to
     );
 
-    if (relevantFlights.length === 0) continue;
+    if (flights.length === 0) continue;
 
-    // Group flights by date and find the lowest price for each date
-    const flightsByDate = {};
-    relevantFlights.forEach((flight) => {
-      const departureDate = new Date(flight.departureTime);
-      const dateKey = departureDate.toLocaleDateString("pt-PT", {
+    // Agrupa os voos por data e encontra o mais barato de cada dia
+    const byDate = {};
+    flights.forEach((flight) => {
+      const depDate = new Date(flight.departureTime);
+      const dateKey = depDate.toLocaleDateString("pt-PT", {
         day: "2-digit",
         month: "long",
       });
 
-      if (!flightsByDate[dateKey]) {
-        flightsByDate[dateKey] = {
+      if (!byDate[dateKey]) {
+        byDate[dateKey] = {
           flights: [],
           minPrice: flight.price,
+          dateObj: depDate,
         };
       }
-      flightsByDate[dateKey].flights.push(flight);
-      if (flight.price < flightsByDate[dateKey].minPrice) {
-        flightsByDate[dateKey].minPrice = flight.price;
+      byDate[dateKey].flights.push(flight);
+      if (flight.price < byDate[dateKey].minPrice) {
+        byDate[dateKey].minPrice = flight.price;
       }
     });
 
-    // Sort the dates
-    const sortedDates = Object.keys(flightsByDate).sort((a, b) => {
-      return new Date(a) - new Date(b);
-    });
+    // Só mostra datas a partir de amanhã
+    const tomorrow = getTomorrow();
+    const dates = Object.keys(byDate)
+      .filter((dateStr) => {
+        return byDate[dateStr].dateObj >= tomorrow;
+      })
+      .sort((a, b) => byDate[a].dateObj - byDate[b].dateObj);
 
-    // Divide dates into groups of 3 for the carousel
+    const closestDate = dates[0];
+
+    // Divide as datas em grupos de 3 para o carrossel
     const dateGroups = [];
-    for (let i = 0; i < sortedDates.length; i += 3) {
-      dateGroups.push(sortedDates.slice(i, i + 3));
+    for (let j = 0; j < dates.length; j += 3) {
+      dateGroups.push(dates.slice(j, j + 3));
     }
 
-    // Generate carousel slides (each slide with up to 3 dates)
-    let carouselSlides = "";
-    dateGroups.forEach((dateGroup, groupIndex) => {
-      let carouselItems = "";
+    // Gera o HTML dos slides do carrossel
+    let slides = "";
+    dateGroups.forEach((group, idx) => {
+      let items = "";
 
-      dateGroup.forEach((date) => {
-        // Create carousel items for each date
-        carouselItems += `
-          <div class="bg-white p-2 translate-x-[100%] rounded shadow text-center w-[320px] mx-1 cursor-pointer hover:bg-gray-50 transition-colors" 
-               data-date="${date}">
-            <p class="text-sm">${date}</p>
-            <p class="font-bold text-blue-700">€${flightsByDate[
-              date
-            ].minPrice.toFixed(2)}</p>
-          </div>
-        `;
+      group.forEach((date) => {
+        const dateObj = byDate[date].dateObj;
+        const weekday = dateObj.toLocaleDateString("pt-PT", {
+          weekday: "short",
+        });
+
+        items += `
+    <div class="bg-white p-2 rounded shadow text-center w-[100px] sm:w-[180px] lg:w-[320px] mx-1 cursor-pointer hover:bg-gray-50 transition-colors" 
+         data-date="${date}">
+         <p class="text-sm">${date}</p>
+      <p class="text-xs text-gray-500">${
+        weekday.charAt(0).toUpperCase() + weekday.slice(1)
+      }</p>
+      <p class="font-bold text-blue-700">€${byDate[date].minPrice}</p>
+    </div>
+  `;
       });
 
-      carouselSlides += `
-        <div class="flex duration-700 ease-in-out" ${
-          groupIndex === 0
-            ? 'data-carousel-item="active"'
-            : "data-carousel-item"
+      slides += `
+        <div class="flex duration-700 ease-in-out justify-center" ${
+          idx === 0 ? 'data-carousel-item="active"' : "data-carousel-item"
         }>
-          ${carouselItems}
+          ${items}
         </div>
       `;
     });
 
-    const sectionId = `flight-section-${index}`;
+    const sectionId = `flight-section-${i}`;
     flightSections.push({
       id: sectionId,
-      origin,
-      destination,
-      flightsByDate,
-      sortedDates,
-      defaultFlight: flightsByDate[sortedDates[0]].flights[0],
+      origin: from,
+      destination: to,
+      flightsByDate: byDate,
+      sortedDates: dates,
+      defaultFlight: closestDate ? byDate[closestDate].flights[0] : null,
+      closestDate,
     });
 
-    // Insert the section HTML for this flight pair
+    // Insere o HTML da secção no DOM
     flightsSection.insertAdjacentHTML(
       "beforeend",
-      `<section id="${sectionId}" data-origin="${origin}" data-destination="${destination}" data-index="${index}">
-        <div class="mb-4">
+      `<section id="${sectionId}" class="flex flex-col items-center" data-origin="${from}" data-destination="${to}" data-index="${i}">
+        <div class="mb-4 w-full">
           <img src="../img/icons/blue/plane.svg" alt="plane icon" class="w-5 h-5" />
-          <h2 class="text-xl font-semibold mb-2">${origin} para ${destination}</h2>
+          <h2 class="text-xl font-semibold mb-2">${from} para ${to}</h2>
           
-          <div id="carousel-${index}" class="relative w-full" data-carousel="static">
-            <div class="relative overflow-hidden w-full h-20">
-              <div class="flex duration-700 ease-in-out" data-carousel-inner>
-                ${carouselSlides}
+          <div id="carousel-${i}" class="relative w-full" data-carousel="static">
+            <div class="relative overflow-hidden w-full h-[100px] sm:h-[80px]">
+              <div class="flex duration-700 ease-in-out justify-center" data-carousel-inner>
+                ${slides}
               </div>
             </div>
             
@@ -132,14 +179,14 @@ window.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
 
-        <div class="flight-cards-container mb-6">
-          <!-- All flights for this date will be displayed as cards here -->
+        <div class="flight-cards-container max-h-[600px] max-w-[300px] sm:max-w-full w-full overflow-y-scroll mb-6">
+          <!-- Aqui vão aparecer os cards dos voos -->
         </div>
       </section>`
     );
   }
 
-  // Add event listeners for each carousel item (date)
+  // Adiciona os event listeners para seleção de datas no carrossel
   document.querySelectorAll("[data-date]").forEach((item) => {
     item.addEventListener("click", function () {
       const date = this.getAttribute("data-date");
@@ -147,43 +194,239 @@ window.addEventListener("DOMContentLoaded", () => {
       const sectionIndex = parseInt(section.getAttribute("data-index"));
       const sectionData = flightSections[sectionIndex];
 
-      // Update the displayed flights for the selected date
-      updateFlightCards(section, sectionData.flightsByDate[date].flights);
+      // Se já existe seleção na secção anterior, só permite datas pelo menos 1 dia depois
+      if (sectionIndex > 0 && selectedFlights[sectionIndex - 1]) {
+        const prevFlight = allFlights.find(
+          (f) => f.id === selectedFlights[sectionIndex - 1]
+        );
+        if (prevFlight) {
+          const prevDate = new Date(prevFlight.departureTime);
+          prevDate.setHours(0, 0, 0, 0);
+
+          const clickedDateParts = date.split(" de ");
+          const months = [
+            "janeiro",
+            "fevereiro",
+            "março",
+            "abril",
+            "maio",
+            "junho",
+            "julho",
+            "agosto",
+            "setembro",
+            "outubro",
+            "novembro",
+            "dezembro",
+          ];
+          const day = parseInt(clickedDateParts[0], 10);
+          const month = months.indexOf(clickedDateParts[1]);
+          const year = new Date().getFullYear();
+          const clickedDate = new Date(year, month, day);
+          clickedDate.setHours(0, 0, 0, 0);
+
+          const diffDays = (clickedDate - prevDate) / (1000 * 60 * 60 * 24);
+          if (diffDays < 1) {
+            return; // Não deixa selecionar datas inválidas
+          }
+        }
+      }
+
+      // Remove seleção visual de todas as datas deste carrossel
+      section.querySelectorAll("[data-date]").forEach((el) => {
+        el.classList.remove("border-b-4", "border-blue-600");
+      });
+      // Adiciona seleção visual à data clicada
+      this.classList.add("border-b-4", "border-blue-600");
+
+      // Atualiza os cards dos voos para a data escolhida
+      showFlights(section, sectionData.flightsByDate[date].flights);
     });
   });
 
-  // Initialize the flights for the first date of each section
-  flightSections.forEach((sectionData, index) => {
-    const section = document.getElementById(sectionData.id);
-    const firstDate = sectionData.sortedDates[0];
-    const flightsForFirstDate = sectionData.flightsByDate[firstDate].flights;
-    updateFlightCards(section, flightsForFirstDate);
+  // Inicializa cada secção com a data mais próxima disponível
+  flightSections.forEach((data, idx) => {
+    const section = document.getElementById(data.id);
+    const closest = data.closestDate;
+    if (!closest) return;
 
-    // Initialize the carousel for this section
-    initCarousel(section.querySelector(`#carousel-${index}`));
+    const flights = data.flightsByDate[closest].flights;
+    showFlights(section, flights);
+
+    setupCarousel(section.querySelector(`#carousel-${idx}`), closest);
+
+    // Seleciona visualmente a data mais próxima
+    const carousel = section.querySelector(`#carousel-${idx}`);
+    if (carousel) {
+      const dateItems = carousel.querySelectorAll("[data-date]");
+      dateItems.forEach((el) => {
+        if (el.getAttribute("data-date") === closest) {
+          el.classList.add("border-b-4", "border-blue-600");
+        } else {
+          el.classList.remove("border-b-4", "border-blue-600");
+        }
+      });
+    }
   });
 
-  // Add footer with total price and selection counter
+  // Adiciona o rodapé com o total e o botão de pagamento
   flightsSection.insertAdjacentHTML(
     "beforeend",
-    `<div class="flex justify-between items-center mt-6">
-      <p class="text-xl font-semibold total-price">Valor Total: €0.00</p>
+    `<div class="flex flex-col sm:flex-row justify-end items-center mt-6 gap-4">
+      <p class="text-xl font-semibold total-price">Valor Total: €0</p>
       <div class="flex items-center space-x-4">
         <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
           Cancelar
         </button>
-        <div id="selection-counter">
-          <span id="selected-count">0</span>/${totalSections}
-        </div>
-        <button id="payment-btn" class="bg-transparent border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded">
-          Pagamento
+        <button id="payment-btn" class="bg-transparent border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded flex items-center" disabled>
+          <span>0/${totalSections}</span>
         </button>
       </div>
     </div>`
   );
+
+  // Adiciona o event listener ao botão de pagamento
+  const paymentBtn = document.getElementById("payment-btn");
+  if (paymentBtn) {
+    paymentBtn.addEventListener("click", function () {
+      if (paymentBtn.disabled) return;
+
+      const flightIds = [];
+      for (let i = 0; i < totalSections; i++) {
+        if (selectedFlights[i]) {
+          flightIds.push(selectedFlights[i]);
+        }
+      }
+      console.log("Selected flights:", flightIds);
+    });
+  }
+
+  // Guarda as secções globalmente para outras funções
+  window.flightSections = flightSections;
 });
 
-// Format a date string to HH:mm
+// Função para atualizar as secções seguintes quando se seleciona um voo
+function updateNextSections(selectedIdx) {
+  const allFlights = JSON.parse(localStorage.getItem("flights"));
+  const selectedFlight = selectedFlights[selectedIdx]
+    ? allFlights.find((f) => f.id === selectedFlights[selectedIdx])
+    : null;
+
+  if (!selectedFlight) return;
+
+  const selectedDate = new Date(selectedFlight.departureTime);
+  selectedDate.setHours(0, 0, 0, 0);
+
+  for (let i = selectedIdx + 1; i < totalSections; i++) {
+    const section = document.getElementById(`flight-section-${i}`);
+    if (!section) continue;
+
+    const sectionData = window.flightSections[i];
+    if (!sectionData) continue;
+
+    const existingFlightId = selectedFlights[i];
+    let existingFlightDate = null;
+    let keepExisting = false;
+
+    if (existingFlightId) {
+      const existingFlight = allFlights.find((f) => f.id === existingFlightId);
+      if (existingFlight) {
+        existingFlightDate = new Date(existingFlight.departureTime);
+        existingFlightDate.setHours(0, 0, 0, 0);
+
+        if (existingFlightDate <= selectedDate) {
+          selectedFlights[i] = null;
+          selectedCount--;
+        } else {
+          keepExisting = true;
+        }
+      }
+    }
+
+    // Atualiza a disponibilidade das datas no carrossel
+    const carousel = section.querySelector(`[id^="carousel-"]`);
+    if (carousel) {
+      const dateItems = carousel.querySelectorAll("[data-date]");
+      dateItems.forEach((dateEl) => {
+        const dateStr = dateEl.getAttribute("data-date");
+        const dateObj = sectionData.flightsByDate[dateStr]?.dateObj;
+
+        if (dateObj) {
+          const checkDate = new Date(dateObj);
+          checkDate.setHours(0, 0, 0, 0);
+
+          if (checkDate <= selectedDate) {
+            // Desabilita esta data
+            dateEl.classList.add(
+              "opacity-50",
+              "cursor-not-allowed",
+              "pointer-events-none"
+            );
+            dateEl.classList.remove("hover:bg-gray-50", "cursor-pointer");
+            if (dateEl.classList.contains("border-b-4")) {
+              dateEl.classList.remove("border-b-4", "border-blue-600");
+            }
+          } else {
+            // Habilita esta data
+            dateEl.classList.remove(
+              "opacity-50",
+              "cursor-not-allowed",
+              "pointer-events-none"
+            );
+            dateEl.classList.add("hover:bg-gray-50", "cursor-pointer");
+          }
+        }
+      });
+    }
+
+    if (!keepExisting) {
+      // Procura a primeira data disponível
+      const availableDates = sectionData.sortedDates.filter((dateStr) => {
+        const dateObj = sectionData.flightsByDate[dateStr]?.dateObj;
+        if (!dateObj) return false;
+        const checkDate = new Date(dateObj);
+        checkDate.setHours(0, 0, 0, 0);
+        return checkDate > selectedDate;
+      });
+
+      if (availableDates.length > 0) {
+        const firstAvailable = availableDates[0];
+
+        // Seleciona visualmente a primeira data disponível
+        const carousel = section.querySelector(`[id^="carousel-"]`);
+        if (carousel) {
+          const dateItems = carousel.querySelectorAll("[data-date]");
+          dateItems.forEach((el) => {
+            if (el.getAttribute("data-date") === firstAvailable) {
+              el.classList.add("border-b-4", "border-blue-600");
+            } else {
+              el.classList.remove("border-b-4", "border-blue-600");
+            }
+          });
+        }
+
+        const flights = sectionData.flightsByDate[firstAvailable].flights;
+        showFlights(section, flights);
+      } else {
+        const container = section.querySelector(".flight-cards-container");
+        if (container) {
+          container.innerHTML =
+            "<p class='text-center text-gray-500'>Não há voos disponíveis.</p>";
+        }
+      }
+    } else {
+      // Mantém o voo já selecionado se for válido
+      const currentDate = existingFlightDate.toLocaleDateString("pt-PT", {
+        day: "2-digit",
+        month: "long",
+      });
+
+      const flights = sectionData.flightsByDate[currentDate]?.flights || [];
+      showFlights(section, flights);
+    }
+  }
+}
+
+// Função para formatar hora (ex: "14:30")
 function formatTime(dateString) {
   if (!dateString) return "";
   const date = new Date(dateString);
@@ -193,164 +436,194 @@ function formatTime(dateString) {
   });
 }
 
-// Update the flight cards for the selected date in a section
-function updateFlightCards(section, flights) {
+// Mostra os cards dos voos para uma secção e data
+function showFlights(section, flights) {
   const container = section.querySelector(".flight-cards-container");
   container.innerHTML = "";
 
-  const sectionIndex = parseInt(section.getAttribute("data-index"));
-  const selectedFlightId = selectedFlights[sectionIndex];
+  const sectionIdx = parseInt(section.getAttribute("data-index"));
+  const selectedId = selectedFlights[sectionIdx];
 
   flights.forEach((flight) => {
-    const isSelected = selectedFlightId === flight.id;
-    const departureTime = formatTime(flight.departureTime);
-    const arrivalTime = formatTime(flight.arrivalTime);
+    const isSelected = selectedId === flight.id;
+    const depTime = formatTime(flight.departureTime);
+    const arrTime = formatTime(flight.arrivalTime);
 
-    const flightCardHTML = `
-      <div class="bg-white rounded-xl shadow-md p-6 mb-3 flex justify-between items-center flight-card ${
-        isSelected ? "border-2 border-indigo-500" : ""
-      }" data-flight-id="${flight.id}">
-        <div class="flex items-center space-x-6">
-          <span class="text-orange-600 font-bold text-lg">${
-            flight.company
-          }</span>
+    // Usa o código IATA para mostrar o logo da companhia
+    const iata = IATA_CODES[flight.company] || flight.company;
+    const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
 
-          <div class="text-center">
-            <p class="text-sm font-bold">${departureTime}</p>
-            <p class="text-xs text-gray-500">${flight.origin}</p>
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <div class="w-16 h-px bg-blue-800"></div>
-            <img src="../img/icons/blue/plane.svg" alt="plane icon" class="w-5 h-5" />
-            <div class="w-16 h-px bg-blue-800"></div>
-          </div>
-
-          <div class="text-center">
-            <p class="text-sm font-bold">${arrivalTime}</p>
-            <p class="text-xs text-gray-500">${flight.destination}</p>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-4">
-          <p class="text-xl font-bold text-indigo-700">€${flight.price.toFixed(
-            2
-          )}</p>
-          <button class="${
-            isSelected
-              ? "bg-gray-500 hover:bg-gray-600"
-              : "bg-indigo-500 hover:bg-indigo-600"
-          } text-white font-semibold px-5 py-2 rounded-lg shadow-sm select-flight-btn">
-            ${isSelected ? "Desselecionar" : "Selecionar"}
-          </button>
-        </div>
+    const html = `
+  <div class="bg-white rounded-xl text-center shadow-md p-4 sm:p-6 mb-3 flex flex-col sm:flex-row justify-between items-center flight-card ${
+    isSelected ? "border-2 border-indigo-500" : ""
+  } mx-auto max-w-full" data-flight-id="${flight.id}">
+    <img src="${logoUrl}" alt="${
+      flight.company
+    } Logo" class="w-[70px] h-[28px] object-contain mb-2 sm:mb-0" />
+    <div class="flex items-center space-x-2 sm:space-x-6 mb-4 mb-0">
+      <div class="text-center mx-2">
+        <p class="text-sm font-bold">${depTime}</p>
+        <p class="text-xs text-gray-500">${flight.origin}</p>
       </div>
-    `;
+      <div class="flex items-center space-x-2 my-2 sm:my-0">
+        <div class="w-10 sm:w-16 h-px bg-blue-800"></div>
+        <img src="../img/icons/blue/plane.svg" alt="plane icon" class="w-5 h-5" />
+        <div class="w-10 sm:w-16 h-px bg-blue-800"></div>
+      </div>
+      <div class="text-center mx-2">
+        <p class="text-sm font-bold">${arrTime}</p>
+        <p class="text-xs text-gray-500">${flight.destination}</p>
+      </div>
+    </div>
+    <div class="flex flex-col px-4 sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+      <p class="text-lg font-bold text-indigo-700">€${flight.price.toFixed(
+        0
+      )}</p>
+      <button class="${
+        isSelected
+          ? "bg-gray-500 hover:bg-gray-600"
+          : "bg-indigo-500 hover:bg-indigo-600"
+      } text-white text-sm font-semibold px-3 py-2 rounded-lg shadow-sm select-flight-btn">
+        ${isSelected ? "Selecionado" : "Selecionar"}
+      </button>
+    </div>
+  </div>
+`;
 
-    container.insertAdjacentHTML("beforeend", flightCardHTML);
+    container.insertAdjacentHTML("beforeend", html);
   });
 
-  // Add event listeners to the select/deselect buttons
+  // Adiciona os event listeners aos botões de selecionar voo
   container.querySelectorAll(".select-flight-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
-      const flightCard = this.closest(".flight-card");
-      const flightId = parseInt(flightCard.getAttribute("data-flight-id"));
+      const card = this.closest(".flight-card");
+      const flightId = parseInt(card.getAttribute("data-flight-id"));
       const section = this.closest("section");
-      const sectionIndex = parseInt(section.getAttribute("data-index"));
+      const sectionIdx = parseInt(section.getAttribute("data-index"));
 
-      // If already selected, deselect
-      if (selectedFlights[sectionIndex] === flightId) {
-        selectedFlights[sectionIndex] = null;
-        flightCard.classList.remove("border-2", "border-indigo-500");
+      if (selectedFlights[sectionIdx] === flightId) {
+        // Se já estava selecionado, desmarca
+        selectedFlights[sectionIdx] = null;
+        card.classList.remove("border-2", "border-indigo-500");
         this.textContent = "Selecionar";
         this.classList.remove("bg-gray-500", "hover:bg-gray-600");
         this.classList.add("bg-indigo-500", "hover:bg-indigo-600");
         selectedCount--;
+
+        // Reativa todas as datas das secções seguintes
+        for (let i = sectionIdx + 1; i < totalSections; i++) {
+          const nextSection = document.getElementById(`flight-section-${i}`);
+          if (nextSection) {
+            const carousel = nextSection.querySelector(`[id^="carousel-"]`);
+            if (carousel) {
+              const dateItems = carousel.querySelectorAll("[data-date]");
+              dateItems.forEach((dateEl) => {
+                dateEl.classList.remove(
+                  "opacity-50",
+                  "cursor-not-allowed",
+                  "pointer-events-none"
+                );
+                dateEl.classList.add("hover:bg-gray-50", "cursor-pointer");
+              });
+            }
+          }
+        }
       } else {
-        // Deselect any previously selected flight in this section
-        if (selectedFlights[sectionIndex]) {
-          const prevSelectedCard = container.querySelector(
-            `.flight-card[data-flight-id="${selectedFlights[sectionIndex]}"]`
+        // Se já havia outro selecionado nesta secção, desmarca-o
+        if (selectedFlights[sectionIdx]) {
+          const prevCard = container.querySelector(
+            `.flight-card[data-flight-id="${selectedFlights[sectionIdx]}"]`
           );
-          if (prevSelectedCard) {
-            prevSelectedCard.classList.remove("border-2", "border-indigo-500");
-            const prevBtn =
-              prevSelectedCard.querySelector(".select-flight-btn");
+          if (prevCard) {
+            prevCard.classList.remove("border-2", "border-indigo-500");
+            const prevBtn = prevCard.querySelector(".select-flight-btn");
             prevBtn.textContent = "Selecionar";
             prevBtn.classList.remove("bg-gray-500", "hover:bg-gray-600");
             prevBtn.classList.add("bg-indigo-500", "hover:bg-indigo-600");
           }
         } else {
-          // If there was no flight selected in this section, increment the counter
           selectedCount++;
         }
 
-        // Select the new flight
-        selectedFlights[sectionIndex] = flightId;
-        flightCard.classList.add("border-2", "border-indigo-500");
-        this.textContent = "Desselecionar";
+        // Seleciona o novo voo
+        selectedFlights[sectionIdx] = flightId;
+        card.classList.add("border-2", "border-indigo-500");
+        this.textContent = "Selecionado";
         this.classList.remove("bg-indigo-500", "hover:bg-indigo-600");
         this.classList.add("bg-gray-500", "hover:bg-gray-600");
+
+        // Atualiza as secções seguintes
+        updateNextSections(sectionIdx);
       }
 
-      // Update the selection counter and payment button
-      updateSelectionCounter();
-
-      // Recalculate the total price
-      calculateTotalPrice();
+      updateCounter();
+      calcTotal();
     });
   });
 }
 
-// Custom infinite carousel logic: always show 3 dates, loop infinitely
-function initCarousel(carouselElement) {
-  const inner = carouselElement.querySelector("[data-carousel-inner]");
-  const slides = carouselElement.querySelectorAll("[data-carousel-item]");
-  const prevButton = carouselElement.querySelector("[data-carousel-prev]");
-  const nextButton = carouselElement.querySelector("[data-carousel-next]");
+// Função para configurar o carrossel (navegação entre slides)
+function setupCarousel(carousel, closestDate = null) {
+  const inner = carousel.querySelector("[data-carousel-inner]");
+  const slides = carousel.querySelectorAll("[data-carousel-item]");
+  const prev = carousel.querySelector("[data-carousel-prev]");
+  const next = carousel.querySelector("[data-carousel-next]");
 
-  const visibleItems = 3;
   const totalSlides = slides.length;
-  let currentIndex = 0;
+  let current = 0;
 
-  function updateCarousel() {
-    const slideWidth = carouselElement.offsetWidth;
-    slides.forEach((slide) => {
-      slide.style.width = `${slideWidth}px`;
-      slide.style.flex = `0 0 ${slideWidth}px`;
-    });
+  // Procura o slide que tem a data mais próxima
+  if (closestDate) {
+    setTimeout(() => {
+      let foundIdx = -1;
+      slides.forEach((slide, slideIdx) => {
+        const dateEls = slide.querySelectorAll("[data-date]");
+        dateEls.forEach((dateEl) => {
+          if (dateEl.getAttribute("data-date") === closestDate) {
+            foundIdx = slideIdx;
+          }
+        });
+      });
 
-    // Manage active state: always show 3 slides, wrap around if needed
-    slides.forEach((slide) => slide.removeAttribute("data-carousel-item"));
-    for (let i = 0; i < visibleItems; i++) {
-      let idx = (currentIndex + i) % totalSlides;
-      if (idx < 0) idx += totalSlides;
-      slides[idx].setAttribute("data-carousel-item", "active");
-    }
+      if (foundIdx !== -1 && foundIdx !== current) {
+        current = foundIdx;
+        update();
+      }
+    }, 100);
   }
 
-  prevButton.addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateCarousel();
+  // Atualiza o slide visível
+  function update() {
+    slides.forEach((slide, idx) => {
+      if (idx === current) {
+        slide.setAttribute("data-carousel-item", "active");
+        slide.style.display = "flex";
+      } else {
+        slide.removeAttribute("data-carousel-item");
+        slide.style.display = "none";
+      }
+    });
+  }
+
+  prev.addEventListener("click", () => {
+    current = (current - 1 + totalSlides) % totalSlides;
+    update();
   });
 
-  nextButton.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateCarousel();
+  next.addEventListener("click", () => {
+    current = (current + 1) % totalSlides;
+    update();
   });
 
-  // Responsive: update size on window resize
-  window.addEventListener("resize", updateCarousel);
-
-  updateCarousel();
+  window.addEventListener("resize", update);
+  update();
 }
 
-// Calculate the total price of all selected flights
-function calculateTotalPrice() {
+// Calcula o preço total dos voos selecionados
+function calcTotal() {
   totalPrice = 0;
   const allFlights = JSON.parse(localStorage.getItem("flights"));
 
-  // Sum only the selected flights
   Object.values(selectedFlights).forEach((flightId) => {
     if (flightId) {
       const flight = allFlights.find((f) => f.id === flightId);
@@ -360,73 +633,54 @@ function calculateTotalPrice() {
     }
   });
 
-  updateTotalPriceDisplay();
+  updateTotal();
 }
 
-// Update the total price display in the footer
-function updateTotalPriceDisplay() {
-  const totalPriceElement = document.querySelector(".total-price");
-  if (totalPriceElement) {
-    totalPriceElement.textContent = `Valor Total: €${totalPrice.toFixed(2)}`;
+// Atualiza o texto do preço total no rodapé
+function updateTotal() {
+  const el = document.querySelector(".total-price");
+  if (el) {
+    el.textContent = `Valor Total: €${totalPrice}`;
   }
 }
 
-// Update the selection counter and payment button
-function updateSelectionCounter() {
-  const selectedCountElement = document.getElementById("selected-count");
-  const paymentBtn = document.getElementById("payment-btn");
+// Atualiza o contador de voos selecionados e o botão de pagamento
+function updateCounter() {
+  const btn = document.getElementById("payment-btn");
 
-  if (selectedCountElement) {
-    selectedCountElement.textContent = selectedCount;
-  }
-
-  // Enable or disable the payment button based on selection
-  if (paymentBtn) {
+  if (btn) {
     if (selectedCount === totalSections) {
-      paymentBtn.classList.remove(
+      btn.innerHTML = `<span>Pagamento</span>`;
+      btn.classList.remove(
         "bg-transparent",
         "border-gray-600",
         "cursor-not-allowed",
         "opacity-50",
         "text-gray-600"
       );
-      paymentBtn.classList.add(
+      btn.classList.add(
         "bg-green-500",
         "text-white",
         "hover:bg-green-600",
         "border-green-600"
       );
-      paymentBtn.disabled = false;
+      btn.disabled = false;
     } else {
-      paymentBtn.classList.add(
+      btn.innerHTML = `<span>${selectedCount}/${totalSections}</span>`;
+      btn.classList.add(
         "bg-transparent",
         "border-gray-600",
         "cursor-not-allowed",
         "opacity-50",
         "text-gray-600"
       );
-      paymentBtn.classList.remove(
+      btn.classList.remove(
         "bg-green-500",
         "text-white",
         "hover:bg-green-600",
         "border-green-600"
       );
-      paymentBtn.disabled = true;
+      btn.disabled = true;
     }
   }
 }
-
-// Add event listener for the payment button
-document.addEventListener("click", function (e) {
-  if (e.target && e.target.id === "payment-btn") {
-    // Create a list with the IDs of the selected flights in the original order
-    const flightIds = [];
-    for (let i = 0; i < totalSections; i++) {
-      if (selectedFlights[i]) {
-        flightIds.push(selectedFlights[i]);
-      }
-    }
-
-    console.log("Id's selecionados:", flightIds);
-  }
-});

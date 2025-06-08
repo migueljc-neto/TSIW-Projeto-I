@@ -3,3 +3,12 @@
 body {
   font-family: "Space Mono", sans-serif;
 }
+
+/* Smooth scrolling para mobile */
+[data-carousel-inner] {
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-carousel-item] {
+  height: fit-content;
+}
