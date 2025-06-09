@@ -59,9 +59,9 @@ function populateData() {
     const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
     flightResume.insertAdjacentHTML(
       "beforeend",
-      `<div class="mb-6" id="legCard">
+      `<div class="mb-2" id="legCard">
         <div
-          class="bg-[#3d4c75] flex justify-between text-white px-7 py-7 rounded-lg mb-2"
+          class="bg-[#39578A] flex justify-between text-white px-7 py-7 rounded-lg mb-2"
         >
           <div class="text-xl font-semibold items-center flex gap-5">
             <img
@@ -75,7 +75,7 @@ function populateData() {
           <p>${dateString}</p>
         </div>
         <div class="bg-white rounded-lg shadow-lg text-white rounded-lg">
-          <div class="bg-[#7f7bb7] px-6 py-4 text-white rounded-t-lg">
+          <div class="bg-[#6C6EA0] px-6 py-4 text-white rounded-t-lg">
             <div class="flex justify-between items-center">
               <p class="text-lg">
                 ${flightData.originName}<span class="font-light text-sm"> - ${flightData.duration} - </span>${flightData.destinationName}
@@ -92,22 +92,22 @@ function populateData() {
                   alt=""
                   srcset=""
                 />
-                <p class="flex text-lg text-[#3d4c75]">${flightData.origin}</p>
+                <p class="flex text-lg text-[#39578A]">${flightData.origin}</p>
                 <img src="../img/icons/blue/plane.svg" alt="Flight Icon" />
-                <p class="flex text-lg text-[#3d4c75]">${flightData.destination}</p>
+                <p class="flex text-lg text-[#39578A]">${flightData.destination}</p>
               </div>
-              <p class="text-sm text-[#3d4c75]">${departureDate}</p>
+              <p class="text-sm text-[#39578A]">${departureDate}</p>
             </div>
 
             <div class="py-4 flex flex-col gap-8 relative">
               <div
-                class="items-center flex justify-between text-lg text-[#3d4c75] relative"
+                class="items-center flex justify-between text-lg text-[#39578A] relative"
               >
                 <div class="flex items-center gap-2">
                   <div class="relative">
                     <p class="text-4xl relative z-10 bg-white">•</p>
                     <div
-                      class="absolute top-6 left-1/2 -translate-x-1/2 w-0.5 h-16 z-10 bg-[#3d4c75]"
+                      class="absolute top-6 left-1/2 -translate-x-1/2 w-0.5 h-16 z-10 bg-[#39578A]"
                     ></div>
                   </div>
                   <div>
@@ -121,12 +121,12 @@ function populateData() {
               </div>
 
               <div
-                class="items-center flex justify-between text-lg text-[#3d4c75]"
+                class="items-center flex justify-between text-lg text-[#39578A]"
               >
                 <div class="flex items-center gap-2">
                   <p class="text-4xl relative z-10 bg-white">•</p>
                   <div
-                    class="absolute top-14 transform translate-x-2.5 w-0.5 h-16 z-10 bg-[#3d4c75]"
+                    class="absolute top-14 transform translate-x-2.5 w-0.5 h-16 z-10 bg-[#39578A]"
                   ></div>
                   <div>
                     <p>${flightData.destinationName} (${flightData.destination})</p>
