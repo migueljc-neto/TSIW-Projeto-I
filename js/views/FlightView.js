@@ -6,6 +6,7 @@ Flights.init();
 
 // Lista de destinos para o percurso
 const destinations = ["OPO", "LIS", "MAD", "ROM"];
+const name = "Viagem Europeia";
 const flightsSection = document.getElementById("flightsSection");
 let totalPrice = 0; // Preço total dos voos selecionados
 let selectedFlights = {}; // Guarda o id do voo selecionado em cada secção
@@ -41,6 +42,11 @@ const IATA_CODES = {
 
 // Quando o DOM estiver pronto, começa a construir a interface
 window.addEventListener("DOMContentLoaded", () => {
+  populateView();
+});
+
+function populateView() {
+  document.getElementById("flightName").innerHTML = " - " + name;
   const flightSections = [];
 
   // Função auxiliar para obter a data de amanhã (à meia-noite)
@@ -300,7 +306,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Guarda as secções globalmente para outras funções
   window.flightSections = flightSections;
-});
+}
 
 // Função para atualizar as secções seguintes quando se seleciona um voo
 function updateNextSections(selectedIdx) {
