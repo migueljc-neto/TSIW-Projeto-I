@@ -183,7 +183,7 @@ function populateView() {
           </div>
         </div>
 
-        <div class="flight-cards-container max-h-[600px] max-w-[300px] sm:max-w-full w-full overflow-y-scroll mb-6">
+        <div class="flight-cards-container max-h-[600px] max-w-[300px] sm:max-w-full w-full mb-6">
           <!-- Aqui vão aparecer os cards dos voos -->
         </div>
       </section>`
