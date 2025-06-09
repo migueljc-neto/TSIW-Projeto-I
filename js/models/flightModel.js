@@ -111,6 +111,7 @@ export function getFlightsByOrigin(originGet) {
 class Flight {
   id = null;
   origin = "";
+  originName = "";
   destination = "";
   destinationName = "";
   departureTime = "";
@@ -126,6 +127,7 @@ class Flight {
   constructor(
     id,
     origin,
+    originName,
     destination,
     destinationName,
     departureTime,
@@ -140,6 +142,7 @@ class Flight {
   ) {
     this.id = id;
     this.origin = origin;
+    this.originName = originName;
     this.destination = destination;
     this.destinationName = destinationName;
     this.departureTime = departureTime;

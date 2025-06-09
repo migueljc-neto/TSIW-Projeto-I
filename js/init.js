@@ -87,6 +87,7 @@ function initdata() {
       {
         id: 1,
         origin: "OPO",
+        originName: "Porto",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-01T08:00",
@@ -115,6 +116,7 @@ function initdata() {
       {
         id: 2,
         origin: "OPO",
+        originName: "Porto",
         destination: "BCN",
         destinationName: "Barcelona",
         departureTime: "2025-07-02T09:00",
@@ -143,6 +145,7 @@ function initdata() {
       {
         id: 3,
         origin: "OPO",
+        originName: "Porto",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-03T07:30",
@@ -171,6 +174,7 @@ function initdata() {
       {
         id: 4,
         origin: "OPO",
+        originName: "Porto",
         destination: "CDG",
         destinationName: "Paris",
         departureTime: "2025-07-04T10:00",
@@ -199,6 +203,7 @@ function initdata() {
       {
         id: 5,
         origin: "OPO",
+        originName: "Porto",
         destination: "LHR",
         destinationName: "Londres",
         departureTime: "2025-07-05T11:00",
@@ -217,6 +222,7 @@ function initdata() {
       {
         id: 6,
         origin: "OPO",
+        originName: "Porto",
         destination: "FRA",
         destinationName: "Frankfurt",
         departureTime: "2025-07-06T12:00",
@@ -235,6 +241,7 @@ function initdata() {
       {
         id: 7,
         origin: "OPO",
+        originName: "Porto",
         destination: "MXP",
         destinationName: "Milão",
         departureTime: "2025-07-07T14:00",
@@ -263,6 +270,7 @@ function initdata() {
       {
         id: 8,
         origin: "OPO",
+        originName: "Porto",
         destination: "AMS",
         destinationName: "Amsterdão",
         departureTime: "2025-07-08T07:00",
@@ -286,6 +294,7 @@ function initdata() {
       {
         id: 9,
         origin: "OPO",
+        originName: "Porto",
         destination: "ZRH",
         destinationName: "Zurique",
         departureTime: "2025-07-09T13:00",
@@ -304,6 +313,7 @@ function initdata() {
       {
         id: 10,
         origin: "OPO",
+        originName: "Porto",
         destination: "VIE",
         destinationName: "Viena",
         departureTime: "2025-07-10T06:30",
@@ -332,6 +342,7 @@ function initdata() {
       {
         id: 11,
         origin: "OPO",
+        originName: "Porto",
         destination: "CPH",
         destinationName: "Copenhaga",
         departureTime: "2025-07-11T12:00",
@@ -355,6 +366,7 @@ function initdata() {
       {
         id: 12,
         origin: "OPO",
+        originName: "Porto",
         destination: "OSL",
         destinationName: "Oslo",
         departureTime: "2025-07-12T09:00",
@@ -383,6 +395,7 @@ function initdata() {
       {
         id: 13,
         origin: "OPO",
+        originName: "Porto",
         destination: "DUB",
         destinationName: "Dublin",
         departureTime: "2025-07-13T07:00",
@@ -411,6 +424,7 @@ function initdata() {
       {
         id: 14,
         origin: "OPO",
+        originName: "Porto",
         destination: "ATH",
         destinationName: "Atenas",
         departureTime: "2025-07-14T11:00",
@@ -429,6 +443,7 @@ function initdata() {
       {
         id: 15,
         origin: "OPO",
+        originName: "Porto",
         destination: "IST",
         destinationName: "Istambul",
         departureTime: "2025-07-15T10:00",
@@ -457,6 +472,7 @@ function initdata() {
       {
         id: 16,
         origin: "OPO",
+        originName: "Porto",
         destination: "BRU",
         destinationName: "Bruxelas",
         departureTime: "2025-07-16T08:30",
@@ -475,6 +491,7 @@ function initdata() {
       {
         id: 17,
         origin: "OPO",
+        originName: "Porto",
         destination: "PRG",
         destinationName: "Praga",
         departureTime: "2025-07-17T09:00",
@@ -503,6 +520,7 @@ function initdata() {
       {
         id: 18,
         origin: "OPO",
+        originName: "Porto",
         destination: "HEL",
         destinationName: "Helsínquia",
         departureTime: "2025-07-18T10:00",
@@ -531,6 +549,7 @@ function initdata() {
       {
         id: 19,
         origin: "OPO",
+        originName: "Porto",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-19T13:00",
@@ -554,6 +573,7 @@ function initdata() {
       {
         id: 20,
         origin: "OPO",
+        originName: "Porto",
         destination: "REK",
         destinationName: "Reiquiavique",
         departureTime: "2025-07-20T14:00",
@@ -582,6 +602,7 @@ function initdata() {
       {
         id: 21,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-21T09:00",
@@ -610,6 +631,7 @@ function initdata() {
       {
         id: 22,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-22T12:00",
@@ -633,6 +655,7 @@ function initdata() {
       {
         id: 23,
         origin: "ROM",
+        originName: "Roma",
         destination: "ATH",
         destinationName: "Atenas",
         departureTime: "2025-07-23T15:00",
@@ -651,6 +674,7 @@ function initdata() {
       {
         id: 24,
         origin: "BCN",
+        originName: "Barcelona",
         destination: "CDG",
         destinationName: "Paris",
         departureTime: "2025-07-24T08:30",
@@ -679,6 +703,7 @@ function initdata() {
       {
         id: 25,
         origin: "CDG",
+        originName: "Paris",
         destination: "LHR",
         destinationName: "Londres",
         departureTime: "2025-07-25T14:00",
@@ -697,6 +722,7 @@ function initdata() {
       {
         id: 26,
         origin: "LHR",
+        originName: "Londres",
         destination: "AMS",
         destinationName: "Amsterdão",
         departureTime: "2025-07-26T10:00",
@@ -720,6 +746,7 @@ function initdata() {
       {
         id: 27,
         origin: "AMS",
+        originName: "Amsterdão",
         destination: "FRA",
         destinationName: "Frankfurt",
         departureTime: "2025-07-27T09:00",
@@ -738,6 +765,7 @@ function initdata() {
       {
         id: 28,
         origin: "FRA",
+        originName: "Frankfurt",
         destination: "ZRH",
         destinationName: "Zurique",
         departureTime: "2025-07-28T13:00",
@@ -757,6 +785,7 @@ function initdata() {
       {
         id: 100,
         origin: "OPO",
+        originName: "Porto",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-01T08:00",
@@ -772,6 +801,7 @@ function initdata() {
       {
         id: 101,
         origin: "OPO",
+        originName: "Porto",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-02T14:30",
@@ -787,6 +817,7 @@ function initdata() {
       {
         id: 102,
         origin: "OPO",
+        originName: "Porto",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-03T20:15",
@@ -804,6 +835,7 @@ function initdata() {
       {
         id: 103,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-01T09:30",
@@ -819,6 +851,7 @@ function initdata() {
       {
         id: 104,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-02T07:00",
@@ -834,6 +867,7 @@ function initdata() {
       {
         id: 105,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-03T16:45",
@@ -849,6 +883,7 @@ function initdata() {
       {
         id: 106,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-04T21:00",
@@ -866,6 +901,7 @@ function initdata() {
       {
         id: 107,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-01T06:00",
@@ -881,6 +917,7 @@ function initdata() {
       {
         id: 108,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-02T12:00",
@@ -896,6 +933,7 @@ function initdata() {
       {
         id: 109,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-03T09:30",
@@ -911,6 +949,7 @@ function initdata() {
       {
         id: 110,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-04T18:15",
@@ -926,6 +965,7 @@ function initdata() {
       {
         id: 111,
         origin: "MAD",
+        originName: "Madrid",
         destination: "ROM",
         destinationName: "Roma",
         departureTime: "2025-07-05T15:45",
@@ -943,6 +983,7 @@ function initdata() {
       {
         id: 112,
         origin: "ROM",
+        originName: "Roma",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-06T07:30",
@@ -958,6 +999,7 @@ function initdata() {
       {
         id: 113,
         origin: "ROM",
+        originName: "Roma",
         destination: "MAD",
         destinationName: "Madrid",
         departureTime: "2025-07-07T14:00",
@@ -975,6 +1017,7 @@ function initdata() {
       {
         id: 114,
         origin: "MAD",
+        originName: "Madrid",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-08T08:00",
@@ -990,6 +1033,7 @@ function initdata() {
       {
         id: 115,
         origin: "MAD",
+        originName: "Madrid",
         destination: "LIS",
         destinationName: "Lisboa",
         departureTime: "2025-07-09T19:45",
@@ -1007,6 +1051,7 @@ function initdata() {
       {
         id: 116,
         origin: "LIS",
+        originName: "Lisboa",
         destination: "OPO",
         destinationName: "Porto",
         departureTime: "2025-07-10T10:00",
@@ -1022,6 +1067,7 @@ function initdata() {
       {
         id: 117,
         origin: "OPO",
+        originName: "Porto",
         destination: "LIS",
         destinationName: "Porto",
         departureTime: "2025-07-01T22:30",

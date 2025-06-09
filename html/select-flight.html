@@ -14,7 +14,7 @@
     />
   </head>
   <body>
-    <section class="p-6">
+    <section id="selectFlight" class="hidden p-6">
       <h2 class="text-xl sm:text-3xl font-bold mb-4">
         Seleciona os teus voos!
         <span id="flightName"></span>
@@ -23,10 +23,13 @@
       <section id="flightsSection"></section>
     </section>
 
+    <section id="flightResume" class="w-full max-w-3xl mx-auto pb-10"></section>
+
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
     <!-- Views -->
     <script type="module" src="../js/views/FlightView.js"></script>
+    <script type="module" src="../js/views/ResumeView.js"></script>
   </body>
 </html>
