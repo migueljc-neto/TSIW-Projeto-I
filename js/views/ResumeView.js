@@ -40,7 +40,7 @@ function populateData() {
   // Insere o título do resumo da viagem
   flightResume.insertAdjacentHTML(
     "beforeend",
-    `<h1 class="text-4xl font-semibold text-[#3b3b3b] mb-6">Resumo viagem - ${trip.name}</h1>
+    `<h1 class="text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo viagem - ${trip.name}</h1>
     `
   );
 

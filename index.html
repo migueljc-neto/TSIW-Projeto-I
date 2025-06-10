@@ -1150,28 +1150,33 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- Your initialization script -->
+
+    <!-- Script de inicialização de dados -->
     <script src="./js/init.js"></script>
 
-    <!-- Your modules -->
+    <!-- Models -->
     <script type="module" src="./js/models/UserModel.js"></script>
     <script type="module" src="./js/models/TourismtypeModel.js"></script>
+    <script type="module" src="./js/models/ModelHelper.js"></script>
+
+    <!-- Views -->
     <script type="module" src="./js/views/AuthView.js"></script>
     <script type="module" src="./js/views/FormView.js"></script>
     <script type="module" src="./js/views/NavbarView.js"></script>
     <script type="module" src="./js/views/mainView.js"></script>
-    <script type="module" src="./js/models/ModelHelper.js"></script>
 
+    <!-- Tradutor -->
     <script>
-      var swiper = new Swiper(".mobileFeatures", {
-        pagination: {
-          el: ".swiper-pagination",
-        },
-        autoplay: true,
-        loop: true,
-        spaceBetween: 30,
-        setWrapperSize: true,
-      });
+      window.gtranslateSettings = {
+        default_language: "pt",
+        languages: ["en", "es", "fr", "de", "pt"],
+        wrapper_selector: ".gtranslate_wrapper",
+      };
     </script>
+    <script
+      src="https://cdn.gtranslate.net/widgets/latest/float.js"
+      defer
+    ></script>
+    <div class="gtranslate_wrapper"></div>
   </body>
 </html>

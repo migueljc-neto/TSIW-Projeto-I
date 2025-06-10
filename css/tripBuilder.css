@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url(customui.css);
 
 body {
   font-family: "Space Mono", sans-serif;
@@ -13,8 +14,13 @@ body {
   height: fit-content;
 }
 
+/* Definições de impressão para manter cores */
 * {
   -webkit-print-color-adjust: exact !important; /* Chrome, Safari 6 – 15.3, Edge */
   color-adjust: exact !important; /* Firefox 48 – 96 */
   print-color-adjust: exact !important; /* Firefox 97+, Safari 15.4+ */
+}
+
+label {
+  cursor: url("../img/cursor.svg"), auto;
 }

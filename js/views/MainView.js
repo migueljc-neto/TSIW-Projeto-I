@@ -96,6 +96,16 @@ window.addEventListener("load", () => {
 
   // Só inicializa o Swiper depois de todas as imagens estarem carregadas
   Promise.all(fetchSlides).then(() => {
+    var swiper = new Swiper(".mobileFeatures", {
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      autoplay: true,
+      loop: true,
+      spaceBetween: 30,
+      setWrapperSize: true,
+    });
+
     new Swiper(".mySwiper", {
       effect: "cards",
       grabCursor: true,

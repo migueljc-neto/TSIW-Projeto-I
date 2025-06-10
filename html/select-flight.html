@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
       rel="stylesheet"
     />
   </head>
-  <body class="h-full">
+  <body class="h-screen flex items-center justify-center">
     <section id="selectFlight" class="hidden p-6">
       <h2 class="text-xl sm:text-3xl font-bold mb-4">
         Seleciona os teus voos!
@@ -25,8 +25,130 @@
 
     <section
       id="flightResume"
-      class="w-full max-w-3xl mx-auto pb-[70px]"
+      class="hidden w-full max-w-3xl mx-auto pb-[70px] mt-10"
     ></section>
+
+    <section id="flightPayment" class="w-full max-w-4xl mx-auto">
+      <div class="mx-auto px-6 py-8">
+        <div class="flex flex-col items-left space-y-6 mb-6">
+          <button class="cursor-pointer w-fit">
+            <img src="../img/logos/logo-12.png" alt="Logo" width="70" />
+          </button>
+          <h1 class="text-2xl font-bold text-gray-900">PAGAMENTO</h1>
+        </div>
+
+        <!-- Form Section -->
+        <form class="space-y-6">
+          <div>
+            <label for="nome" class="block text-sm font-medium text-gray-700"
+              >Nome Completo <span class="text-red-500">*</span></label
+            >
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
+          </div>
+
+          <div class="flex flex-col gap-6">
+            <div>
+              <label
+                for="cartao"
+                class="block text-sm font-medium text-gray-700"
+                >Número Cartão <span class="text-red-500">*</span></label
+              >
+              <input
+                type="text"
+                id="cartao"
+                name="cartao"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+                placeholder="1234 5678 9012 3456"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="cvv" class="block text-sm font-medium text-gray-700"
+                  >CVV <span class="text-red-500">*</span></label
+                >
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  placeholder="123"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="validade"
+                  class="block text-sm font-medium text-gray-700"
+                  >Validade Cartão <span class="text-red-500">*</span></label
+                >
+                <input
+                  type="text"
+                  id="validade"
+                  name="validade"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  required
+                  placeholder="MM/AA"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="nif" class="block text-sm font-medium text-gray-700"
+              >NIF</label
+            >
+            <input
+              type="text"
+              id="nif"
+              name="nif"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="milhas"
+              name="milhas"
+              class="h-4 cursor-pointer w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+            />
+            <label for="milhas" class="text-sm text-gray-700"
+              >Aplicar Milhas (230 disponíveis)</label
+            >
+          </div>
+
+          <div class="border-t border-gray-300 pt-4 mt-4">
+            <p class="text-sm text-gray-700">
+              Preço Final: <span class="font-bold">43.20€</span> - Acumula
+              <span class="font-bold">254 milhas</span>
+            </p>
+          </div>
+
+          <div class="mt-8 flex space-x-4">
+            <button
+              type="button"
+              class="w-full cursor-pointer btn-std font-bold border-2 border-[#D12127] text-[#D12127] hover:bg-[#D12127] hover:bg-opacity-10"
+            >
+              CANCELAR
+            </button>
+            <button
+              type="submit"
+              class="w-full cursor-pointer btn-std font-bold border-2"
+            >
+              PAGAR
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
 
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
@@ -34,5 +156,19 @@
     <!-- Views -->
     <script type="module" src="../js/views/FlightView.js"></script>
     <script type="module" src="../js/views/ResumeView.js"></script>
+
+    <!-- Tradutor -->
+    <script>
+      window.gtranslateSettings = {
+        default_language: "pt",
+        languages: ["en", "es", "fr", "de", "pt"],
+        wrapper_selector: ".gtranslate_wrapper",
+      };
+    </script>
+    <script
+      src="https://cdn.gtranslate.net/widgets/latest/float.js"
+      defer
+    ></script>
+    <div class="gtranslate_wrapper"></div>
   </body>
 </html>
