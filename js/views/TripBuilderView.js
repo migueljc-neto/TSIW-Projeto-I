@@ -25,22 +25,38 @@ let poiGroup;
 let tripPoiGroup;
 let currZoom;
 
+/* popup styling */
+const popupContainer = document.getElementsByClassName(
+  ".leaflet-popup-content-wrapper"
+);
+
+console.log(popupContainer);
+
+const user = User.getUserLogged();
+let tourismTypeQuery;
 /* Origin Obj */
 let originObj;
 
 /* Map */
 var map;
 
+/* Map Icons */
 const mapOriginIcon = L.icon({
   iconUrl: "/img/icons/other/compassPin.png",
   iconSize: [32, 50],
   iconAnchor: [16, 50],
 });
-const mapIcon = L.icon({
+const destinIcon = L.icon({
   iconUrl: "/img/icons/other/normalPin.png",
   iconSize: [20, 30],
   iconAnchor: [10, 15],
 });
+const favIcon = L.icon({
+  iconUrl: "/img/icons/other/favIcon.png",
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
+});
+
 const pathIcon = L.icon({
   iconUrl: "/img/icons/other/pathLastPoint.png",
   iconSize: [16, 25],
@@ -63,6 +79,14 @@ mapViewBtn.addEventListener("click", function () {
   if (!mapView) {
     mapCell.classList.toggle("hidden");
     listViewCell.classList.toggle("hidden");
+    mapViewBtn.classList.toggle("bg-blue-100");
+    mapViewBtn.classList.toggle("bg-white");
+    mapViewBtn.classList.toggle("border-3");
+    mapViewBtn.classList.toggle("border-2");
+    listViewBtn.classList.toggle("border-3");
+    listViewBtn.classList.toggle("border-2");
+    listViewBtn.classList.toggle("bg-blue-100");
+    listViewBtn.classList.toggle("bg-white");
     mapView = true;
   }
 });
@@ -71,8 +95,14 @@ listViewBtn.addEventListener("click", function () {
   if (mapView) {
     mapCell.classList.toggle("hidden");
     listViewCell.classList.toggle("hidden");
-    mapViewBtn.classList.toggle("bg-blue-600");
-    listViewBtn.classList.toggle("border-b-0");
+    mapViewBtn.classList.toggle("bg-blue-100");
+    mapViewBtn.classList.toggle("bg-white");
+    mapViewBtn.classList.toggle("border-3");
+    mapViewBtn.classList.toggle("border-2");
+    listViewBtn.classList.toggle("border-3");
+    listViewBtn.classList.toggle("border-2");
+    listViewBtn.classList.toggle("bg-blue-100");
+    listViewBtn.classList.toggle("bg-white");
     mapView = false;
   }
 });
@@ -175,6 +205,7 @@ new Sortable(tripList, {
 
   onStart: function () {
     trashCan.classList.remove("opacity-30");
+    saveTripList();
   },
   onEnd: function () {
     trashCan.classList.add("opacity-30");
@@ -198,12 +229,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!sessionStorage.getItem("userQuery")) {
     location.href = "../index.html";
   }
-  let user = User.getUserLogged();
 
   const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
+  tourismTypeQuery = JSON.parse(localStorage.getItem("tourismTypes")).filter(
+    (type) => type.name === userQuery.typeOfTourism
+  )[0].id;
   createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
-
   loadMap(userQuery.origin);
+
   document.getElementById("origin").textContent = userQuery.origin;
 });
 
@@ -245,81 +278,109 @@ function loadMap(origin) {
 
   /* flight loop */
   flightList.forEach((flight) => {
-    /* populate listView */
-    destinationList.insertAdjacentHTML(
-      "beforeend",
-      `<li id="${flight.id}"class="border-2 border-blue-800 bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
+    let flightTourismType = [];
+    flight.poi.forEach((poi) => flightTourismType.push(...poi.tourismTypes));
+
+    if (flightTourismType.includes(tourismTypeQuery)) {
+      /* populate listView */
+      destinationList.insertAdjacentHTML(
+        "beforeend",
+        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
         <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
       </li>`
-    );
+      );
 
-    /* populate mapView */
-    const marker = L.marker([flight.destinLat, flight.destinLong], {
-      icon: mapIcon,
-      zIndexOffset: 900,
-    }).addTo(iconGroup);
+      /* populate mapView */
+      let pin = user.favorites.includes(flight.destinationName)
+        ? favIcon
+        : destinIcon;
 
-    marker.bindPopup(
-      `
-      <div id="popup" class="flex flex-col item-center w-fit ">
-      <p>${flight.destinationName}</p>
-      <button 
-      data-id="${flight.id}" 
-      class="popup-add-btn px-3 py-1 bg-blue-900 text-white rounded">
-      Adicionar à lista
-      </button>
-      </div>
-      `
-    );
+      const marker = L.marker([flight.destinLat, flight.destinLong], {
+        icon: pin,
+        zIndexOffset: 900,
+      }).addTo(iconGroup);
 
-    marker.on("popupopen", (e) => {
-      setTimeout(() => {
-        const btn = e.popup._contentNode.querySelector(".popup-add-btn");
-
-        btn.addEventListener("click", function (e) {
-          const flightId = parseInt(this.getAttribute("data-id"));
-          addToList(flightId);
+      const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+      fetch(
+        `https://api.pexels.com/v1/search?query=${flight.destinationName}&per_page=2`,
+        {
+          headers: {
+            Authorization: apiKey,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const image =
+            data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+          marker.bindPopup(
+            `
+            <div class="w-fit h-40 bg-[url(${image})] bg-cover bg-bottom rounded-md flex flex-col justify-between">
+              <div class="flex justify-center backdrop-blur-sm h-10">
+               <p class="">${flight.destinationName}</p>
+              </div>
+              
+                <div 
+                  data-id="${flight.id}" 
+                  class="popup-add-btn px-10 py-3 w-40 h-10 bg-blue-600  text-white flex justify-center items-center">
+                  <p class="w-fit fle text-center mb-2">Adicionar à lista</p>
+                </div>
+            `
+          );
         });
-      }, 100);
 
-      /* flight.poi.forEach((poi) => {
+      marker.on("popupopen", (e) => {
+        setTimeout(() => {
+          const btn = e.popup._contentNode.querySelector(".popup-add-btn");
+
+          btn.addEventListener("click", function (e) {
+            const flightId = parseInt(this.getAttribute("data-id"));
+            addToList(flightId);
+          });
+        }, 100);
+
+        /* flight.poi.forEach((poi) => {
       const html = `<img />`;
       const poiMarker = L.marker([poi.latitude, poi.long], {
         icon: poiIcon,
         zIndexOffset: 200,
       }).addTo(poiGroup);
     }); */
-    });
+      });
 
-    marker.on("mouseover", function () {
-      poiCards.innerHTML = "";
-      poiDisplay.textContent = `${flight.destinationName} points of interest`;
+      marker.on("mouseover", function () {
+        poiCards.innerHTML = "";
+        poiDisplay.textContent = `${flight.destinationName} points of interest`;
 
-      flight.poi.forEach((poi) => {
-        const apiKey =
-          "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
-        fetch(`https://api.pexels.com/v1/search?query=${poi.name}&per_page=2`, {
-          headers: {
-            Authorization: apiKey,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            const image =
-              data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+        flight.poi.forEach((poi) => {
+          const apiKey =
+            "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+          fetch(
+            `https://api.pexels.com/v1/search?query=${poi.name}&per_page=2`,
+            {
+              headers: {
+                Authorization: apiKey,
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const image =
+                data.photos[1]?.src.medium || "../img/images/fallback.jpg";
 
-            poiCards.insertAdjacentHTML(
-              "beforeend",
-              ` <div class="group border-2 border-blue-800 bg-[url(${image})] bg-cover w-30 h-30 rounded-lg">
+              poiCards.insertAdjacentHTML(
+                "beforeend",
+                ` <div class="group border-2 border-blue-800 bg-[url(${image})] bg-cover w-30 h-30 rounded-lg">
                   <div class=" hidden group-hover:flex p-2 items-center text-center w-full h-full flex bg-[#6C6EA0] opacity-75 rounded-lg">
                     <span class="text-white">${poi.name}</span>
                   </div>
                 </div>
               `
-            );
-          });
+              );
+            });
+        });
       });
-    });
+    }
     mapLine();
   });
 }
@@ -384,7 +445,7 @@ function mapLine() {
         ],
         {
           color: "red",
-          weight: 2,
+          weight: 1,
           dashArray: "6, 6",
         }
       ).addTo(pathGroup);
@@ -399,7 +460,6 @@ function mapLine() {
   /* create destinObj */
   liArray.forEach((element, index) => {
     let flight = Flight.getFlightById(parseInt(element.getAttribute("id")));
-    console.log(flight);
 
     const destinObj = Helper.createDestinObj(
       flight.destination,
@@ -407,8 +467,6 @@ function mapLine() {
       flight.destinLong,
       flight.poi
     );
-
-    console.log(destinObj);
 
     pointsObjArray.push(destinObj);
   });
@@ -432,3 +490,8 @@ function updateMap() {
     );
   }
 }
+
+const saveTripList = function () {
+  let liArray = Array.from(tripList.getElementsByTagName("li"));
+  console.log(liArray);
+};
