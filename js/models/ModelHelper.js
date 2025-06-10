@@ -64,8 +64,13 @@ export function getIata(company) {
 export function formatDate(isoString) {
   const date = new Date(isoString);
 
-  return new Intl.DateTimeFormat("pt-BR", {
+  return new Intl.DateTimeFormat("pt-PT", {
     day: "numeric",
     month: "long",
   }).format(date);
+}
+
+// Calcula desconto: para cada 100 milhas, desconta 20€ do preço final
+export function calculateDiscount(miles, finalPrice) {
+  return finalPrice - Math.floor(miles / 100) * 20;
 }
