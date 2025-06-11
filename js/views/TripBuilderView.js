@@ -22,18 +22,10 @@ const trashCan = document.getElementById("trashCan");
 let iconGroup;
 let pathGroup;
 let poiGroup;
-let tripPoiGroup;
-let currZoom;
-
-/* popup styling */
-const popupContainer = document.getElementsByClassName(
-  ".leaflet-popup-content-wrapper"
-);
-
-console.log(popupContainer);
 
 const user = User.getUserLogged();
 let tourismTypeQuery;
+let departureDate;
 /* Origin Obj */
 let originObj;
 
@@ -235,6 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
     (type) => type.name === userQuery.typeOfTourism
   )[0].id;
   createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
+  departureDate = Helper.formatDateToYMD(userQuery.date);
+  console.log(departureDate);
+
   loadMap(userQuery.origin);
 
   document.getElementById("origin").textContent = userQuery.origin;
@@ -280,8 +275,18 @@ function loadMap(origin) {
   flightList.forEach((flight) => {
     let flightTourismType = [];
     flight.poi.forEach((poi) => flightTourismType.push(...poi.tourismTypes));
+    let formatedDepartureTime = Date.parse(
+      flight.departureTime.split("T")[0].split("-").join(",")
+    );
 
-    if (flightTourismType.includes(tourismTypeQuery)) {
+    console.log(formatedDepartureTime);
+
+    console.log(1751324400000 > 1749596400000);
+    if (
+      /* flightTourismType.includes(tourismTypeQuery) && */
+
+      departureDate < formatedDepartureTime
+    ) {
       /* populate listView */
       destinationList.insertAdjacentHTML(
         "beforeend",
@@ -315,16 +320,17 @@ function loadMap(origin) {
             data.photos[1]?.src.medium || "../img/images/fallback.jpg";
           marker.bindPopup(
             `
-            <div class="w-fit h-40 bg-[url(${image})] bg-cover bg-bottom rounded-md flex flex-col justify-between">
-              <div class="flex justify-center backdrop-blur-sm h-10">
-               <p class="">${flight.destinationName}</p>
-              </div>
+            <div class="flex justify-center backdrop-blur-sm h-10 rounded-t-lg">
+             <p class="">${flight.destinationName}</p>
+            </div>
+            <div class="w-40 h-30 bg-[url(${image})] bg-cover bg-center flex flex-col justify-between">
               
-                <div 
-                  data-id="${flight.id}" 
-                  class="popup-add-btn px-10 py-3 w-40 h-10 bg-blue-600  text-white flex justify-center items-center">
-                  <p class="w-fit fle text-center mb-2">Adicionar à lista</p>
-                </div>
+              </div>
+              <div 
+                data-id="${flight.id}" 
+                class="popup-add-btn px-10 py-3 w-40 h-10 bg-blue-600  text-white flex justify-center items-center rounded-b-lg">
+                <p class="w-fit fle text-center mb-2">Adicionar à lista</p>
+              </div>
             `
           );
         });

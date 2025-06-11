@@ -32,3 +32,11 @@ class TourismType {
     this.name = name;
   }
 }
+
+export function searchAllTypes(value) {
+  if (value === "Todos") {
+    return true;
+  } else {
+    return false;
+  }
+}

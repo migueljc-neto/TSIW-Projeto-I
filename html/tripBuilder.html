@@ -27,7 +27,7 @@
     <!-- sortableJS -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   </head>
-  <body class="dark:bg-gray-800">
+  <body class="dark:bg-gray-800 bg-none!">
     <header class="top-0 left-0 w-full bg-transparent z-50">
       <div
         class="max-w-[1530px] mx-0 flex lg:mx-auto justify-between items-center py-4 px-6"
@@ -66,21 +66,23 @@
       </div>
     </header>
     <main class="flex flex-col gap-2">
-      <h1 id="pagetitle">Build your Trip</h1>
+      <div class="flex ml-20 items-center gap-7">
+        <h1 id="pagetitle">Build your Trip</h1>
 
-      <div class="ml-40 p-1">
-        <button
-          id="mapViewBtn"
-          class="bg-blue-100 p-2 rounded-lg border-3 border-blue-600 cursor-pointer hover:bg-blue-100"
-        >
-          <img src="../img/icons/blue/map.svg" alt="mapIcon" class="h-4" />
-        </button>
-        <button
-          id="listViewBtn"
-          class="bg-white p-2 rounded-lg border-2 border-blue-600 cursor-pointer hover:bg-blue-100"
-        >
-          <img src="../img/icons/blue/menu.svg" alt="menuIcon" class="h-4" />
-        </button>
+        <div class="p-1">
+          <button
+            id="mapViewBtn"
+            class="bg-blue-100 p-2 rounded-lg border-3 border-blue-600 cursor-pointer hover:bg-blue-100"
+          >
+            <img src="../img/icons/blue/map.svg" alt="mapIcon" class="h-4" />
+          </button>
+          <button
+            id="listViewBtn"
+            class="bg-white p-2 rounded-lg border-2 border-blue-600 cursor-pointer hover:bg-blue-100"
+          >
+            <img src="../img/icons/blue/menu.svg" alt="menuIcon" class="h-4" />
+          </button>
+        </div>
       </div>
 
       <!-- Main Grid -->
