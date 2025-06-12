@@ -1,7 +1,9 @@
 import * as Flight from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
 import * as User from "../models/userModel.js";
+import * as Tourism from "../models/tourismtypeModel.js";
 Flight.init();
+Tourism.init();
 
 /* Map and list view buttons */
 const mapViewBtn = document.getElementById("mapViewBtn");
@@ -17,6 +19,8 @@ const poiDisplay = document.getElementById("poiTitle");
 const tripList = document.getElementById("destinationSortableList");
 const destinationList = document.getElementById("destinationSortableListView");
 const trashCan = document.getElementById("trashCan");
+const clearBtn = document.getElementById("clearListBtn");
+const submitBtn = document.getElementById("submitBtn");
 
 /* map icons */
 let iconGroup;
@@ -24,7 +28,7 @@ let pathGroup;
 let poiGroup;
 
 const user = User.getUserLogged();
-let tourismTypeQuery;
+let tourismTypeId;
 let departureDate;
 /* Origin Obj */
 let originObj;
@@ -48,7 +52,6 @@ const favIcon = L.icon({
   iconSize: [20, 20],
   iconAnchor: [10, 10],
 });
-
 const pathIcon = L.icon({
   iconUrl: "/img/icons/other/pathLastPoint.png",
   iconSize: [16, 25],
@@ -223,12 +226,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
-  tourismTypeQuery = JSON.parse(localStorage.getItem("tourismTypes")).filter(
-    (type) => type.name === userQuery.typeOfTourism
-  )[0].id;
-  createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
   departureDate = Helper.formatDateToYMD(userQuery.date);
-  console.log(departureDate);
+  tourismTypeId = Tourism.getTourismId(userQuery.typeOfTourism);
+  console.log(tourismTypeId);
+
+  createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
 
   loadMap(userQuery.origin);
 
@@ -266,6 +268,8 @@ const createMap = function (origin) {
 function loadMap(origin) {
   const flightList = Flight.getFlightsByOrigin(origin);
 
+  Flight.filterByTourismId(flightList, tourismTypeId);
+
   iconGroup.clearLayers();
   poiGroup.clearLayers();
   pathGroup.clearLayers();
@@ -273,15 +277,10 @@ function loadMap(origin) {
 
   /* flight loop */
   flightList.forEach((flight) => {
-    let flightTourismType = [];
-    flight.poi.forEach((poi) => flightTourismType.push(...poi.tourismTypes));
     let formatedDepartureTime = Date.parse(
       flight.departureTime.split("T")[0].split("-").join(",")
     );
 
-    console.log(formatedDepartureTime);
-
-    console.log(1751324400000 > 1749596400000);
     if (
       /* flightTourismType.includes(tourismTypeQuery) && */
 
@@ -421,6 +420,7 @@ function addToList(id) {
   tripList.insertAdjacentHTML("beforeend", itemHTML);
   loadMap(flight.destination);
   tripList.scrollTop = tripList.scrollHeight;
+  updateMap();
 }
 
 function mapLine() {
@@ -487,8 +487,12 @@ function updateMap() {
   mapLine();
   let origin = Array.from(tripList.getElementsByTagName("li"));
   if (origin.length == 0) {
+    clearBtn.classList.add("disabled");
+    submitBtn.classList.add("disabled");
     loadMap(originObj.objName);
   } else {
+    clearBtn.classList.remove("disabled");
+    submitBtn.classList.remove("disabled");
     loadMap(
       Flight.getFlightById(
         parseInt(origin[origin.length - 1].getAttribute("id"))
@@ -501,3 +505,8 @@ const saveTripList = function () {
   let liArray = Array.from(tripList.getElementsByTagName("li"));
   console.log(liArray);
 };
+
+clearBtn.addEventListener("click", function () {
+  tripList.innerHTML = "";
+  updateMap();
+});

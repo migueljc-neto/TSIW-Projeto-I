@@ -50,10 +50,10 @@ class TourismType {
   }
 }
 
-export function searchAllTypes(value) {
-  if (value === "Todos") {
-    return true;
-  } else {
-    return false;
+export function getTourismId(tourismQuery) {
+  if (tourismQuery === "Todos") {
+    return "todos";
   }
+  let allTourismTypes = getAll();
+  return allTourismTypes.find((type) => type.name === tourismQuery).id;
 }

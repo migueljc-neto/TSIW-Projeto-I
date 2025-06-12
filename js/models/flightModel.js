@@ -109,6 +109,16 @@ export function getFlightsByOrigin(originGet) {
   return filteredFlights;
 }
 
+export function filterByTourismId(flightArray, tourismId) {
+  if (tourismId === "todos") {
+    return flightArray;
+  }
+
+  return flightArray.filter((flight) =>
+    flight.tourismTypes.includes(tourismId)
+  );
+}
+
 class Flight {
   id = null;
   origin = "";

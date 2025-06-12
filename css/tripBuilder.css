@@ -52,3 +52,9 @@ label {
   margin: 0px !important;
   width: auto !important;
 }
+
+.disabled {
+  border-color: gray !important;
+  background-color: white !important;
+  color: gray !important;
+}
