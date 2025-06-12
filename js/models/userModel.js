@@ -181,6 +181,7 @@ class User {
   favorites = [];
   trips = [];
   lastScratch = "";
+  tourismTypes = [];
 
   constructor(
     id,
@@ -193,7 +194,8 @@ class User {
     badges = [],
     favorites = [],
     trips = [],
-    lastScratch
+    lastScratch,
+    tourismTypes = []
   ) {
     this.id = id;
     this.name = name;
@@ -206,5 +208,6 @@ class User {
     this.favorites = favorites;
     this.trips = trips;
     this.lastScratch = lastScratch;
+    this.tourismTypes = tourismTypes;
   }
 }

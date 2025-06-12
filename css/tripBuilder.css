@@ -24,3 +24,31 @@ body {
 label {
   cursor: url("../img/cursor.svg"), auto;
 }
+.destinationGhost {
+  background-color: #6c6ea0;
+}
+
+.tripGhost {
+  transform: scale(0.7) !important;
+}
+
+#destinationSortableList .sortable-placeholder {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0px !important;
+  border-radius: 10px !important;
+  background-color: white !important;
+  font-family: "Space Mono", sans-serif !important;
+  width: fit-content !important;
+}
+
+.leaflet-popup-content {
+  margin: 0px !important;
+  width: auto !important;
+}
