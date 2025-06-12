@@ -18,6 +18,7 @@ function initdata() {
         trips: [1],
         badges: ["us", "fr", "jp", "de"],
         favorites: ["Porto", "Barcelona"],
+        lastScratch: "2025-04-08",
       },
       {
         id: 2,
@@ -33,6 +34,7 @@ function initdata() {
         trips: [2],
         badges: ["br", "pt", "es"],
         favorites: ["Rio Grande do Sul", "Cidade do México", "Roménia"],
+        lastScratch: "2025-06-04",
       },
       {
         id: 3,
@@ -48,6 +50,7 @@ function initdata() {
         trips: [1, 2],
         badges: ["it", "ca", "mx", "nl"],
         favorites: ["Nova Iorque", "Las Vegas"],
+        lastScratch: "2025-06-04",
       },
       {
         id: 4,
@@ -63,6 +66,7 @@ function initdata() {
         trips: [2],
         badges: ["au", "ch", "se"],
         favorites: ["Andorra", "Madrid"],
+        lastScratch: "2025-06-08",
       },
     ];
     console.log("Injecting Data");
@@ -1102,7 +1106,7 @@ function initdata() {
         endDate: "2025-06-12",
         description: "Descubra as praias e a gastronomia de Barcelona.",
         isPack: true,
-        flights: [2],
+        flights: [2, 6, 110],
       },
       {
         id: 2,
@@ -1117,7 +1121,7 @@ function initdata() {
         endDate: "2025-07-11",
         description: "Viagem pelas principais cidades americanas.",
         isPack: false,
-        flights: [3],
+        flights: [3, 117, 120],
       },
       {
         id: 3,
@@ -1132,7 +1136,7 @@ function initdata() {
         endDate: "2025-07-11",
         description: "Descubra as montanhas.",
         isPack: true,
-        flights: [2],
+        flights: [6, 20, 21],
       },
       {
         id: 4,
@@ -1147,7 +1151,7 @@ function initdata() {
         endDate: "2025-07-11",
         description: "Descubra a Islândia.",
         isPack: true,
-        flights: [1],
+        flights: [1, 23, 8],
       },
     ];
     localStorage.setItem("trips", JSON.stringify(trips));

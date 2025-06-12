@@ -98,7 +98,7 @@ function populateData() {
           <div class="bg-[#6C6EA0] px-6 py-4 text-white rounded-t-lg">
             <div class="flex justify-between items-center">
               <p class="text-lg">
-                ${flightData.originName}<span class="font-light text-sm"> - ${flightData.duration} - </span>${flightData.destinationName}
+                ${flightData.originName} - ${flightData.destinationName}<span class="font-light text-sm">: ${flightData.duration}</span>
               </p>
               <p class="text-sm">${departureDate}</p>
             </div>
@@ -106,17 +106,17 @@ function populateData() {
 
           <div class="py-4 px-10">
             <div class="flex justify-between items-center">
-              <div class="flex items-center gap-3">
+            <div class="flex gap-3">
+                <p class="flex text-lg text-[#39578A]">${flightData.origin}</p>
+                <img src="../img/icons/blue/plane.svg" alt="Flight Icon" />
+                <p class="flex text-lg text-[#39578A]">${flightData.destination}</p></div>
+              <div class="fitems-center">
                 <img
                   src="${logoUrl}"
                   alt=""
                   srcset=""
                 />
-                <p class="flex text-lg text-[#39578A]">${flightData.origin}</p>
-                <img src="../img/icons/blue/plane.svg" alt="Flight Icon" />
-                <p class="flex text-lg text-[#39578A]">${flightData.destination}</p>
               </div>
-              <p class="text-sm text-[#39578A]">${departureDate}</p>
             </div>
 
             <div class="py-4 flex flex-col gap-8 relative">
@@ -202,7 +202,7 @@ function populateData() {
     `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
   <div class="flex justify-around">
     <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
-    <button class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Pagar</button>
+    <button class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50">Pagar</button>
   </div>
 </div>`
   );

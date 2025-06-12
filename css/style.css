@@ -2,6 +2,8 @@
 @import url(swiper.css);
 @import url(datepicker.css);
 @import url(customui.css);
+@import url(scratch.css);
+
 @font-face {
   font-family: "Typo Hoop";
   src: url("../img/fonts/Typo\ Hoop_Regular.otf");
@@ -27,13 +29,7 @@ body {
 }
 
 #packsOffers {
-  background: url("../img/images/bgsect2.png") no-repeat;
-  background-size: cover;
-}
-
-#contactsSect {
-  background: url("../img/images/bgsect3.png") no-repeat;
-  background-position: bottom;
+  background-color: rgb(241, 241, 241);
 }
 
 h1,
