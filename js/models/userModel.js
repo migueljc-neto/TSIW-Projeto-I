@@ -29,17 +29,29 @@ export function userHasScratch(userCheck) {
 export function updateUser(id, { name, email, password, isAdmin }) {
   const numId = typeof id === "string" ? Number(id) : id;
   const user = users.find((user) => user.id === numId);
+
+  if (!user) {
+    throw Error("Utilizador não encontrado!");
+  }
+
   if (users.some((user) => user.email === email && user.id !== numId)) {
     throw Error(`Já existe um utilizador com o email "${email}"!`);
   }
+
   user.name = name;
   user.email = email;
-  if (password !== "") {
-    user.password = password;
-  }
   user.isAdmin = isAdmin === true || isAdmin === "true";
 
-  localStorage.setItem("users", JSON.stringify(users));
+  if (password !== "") {
+    return hashPassword(password, "compass").then((hashedPassword) => {
+      user.password = hashedPassword;
+      localStorage.setItem("users", JSON.stringify(users));
+      return user; // Return the updated user
+    });
+  } else {
+    localStorage.setItem("users", JSON.stringify(users));
+    return Promise.resolve(user);
+  }
 }
 
 // Updates the logged user
