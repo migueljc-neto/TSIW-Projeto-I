@@ -189,3 +189,7 @@ export function getTurismTypeId(tourismType) {
     }
   }
 }
+
+export function printValue() {
+  console.log(this.value);
+}

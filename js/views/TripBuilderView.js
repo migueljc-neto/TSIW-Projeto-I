@@ -8,6 +8,8 @@ Tourism.init();
 /* Map and list view buttons */
 const mapViewBtn = document.getElementById("mapViewBtn");
 const listViewBtn = document.getElementById("listViewBtn");
+const priceSlider = document.getElementById("steps-range");
+const maxPrice = document.getElementById("maxPrice");
 
 /* Grid Cells */
 const mapCell = document.getElementById("map");
@@ -21,6 +23,8 @@ const destinationList = document.getElementById("destinationSortableListView");
 const trashCan = document.getElementById("trashCan");
 const clearBtn = document.getElementById("clearListBtn");
 const submitBtn = document.getElementById("submitBtn");
+
+let maxPriceValue;
 
 /* map icons */
 let iconGroup;
@@ -228,7 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
   departureDate = Helper.formatDateToYMD(userQuery.date);
   tourismTypeId = Tourism.getTourismId(userQuery.typeOfTourism);
-  console.log(tourismTypeId);
+  priceSlider.value = 100;
+  maxPrice.textContent = `100 €`;
+  maxPriceValue = 100;
 
   createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
 
@@ -282,9 +288,8 @@ function loadMap(origin) {
     );
 
     if (
-      /* flightTourismType.includes(tourismTypeQuery) && */
-
-      departureDate < formatedDepartureTime
+      departureDate < formatedDepartureTime &&
+      flight.price <= maxPriceValue
     ) {
       /* populate listView */
       destinationList.insertAdjacentHTML(
@@ -508,5 +513,11 @@ const saveTripList = function () {
 
 clearBtn.addEventListener("click", function () {
   tripList.innerHTML = "";
+  updateMap();
+});
+
+priceSlider.addEventListener("input", function () {
+  maxPrice.textContent = `${priceSlider.value} €`;
+  maxPriceValue = parseInt(priceSlider.value);
   updateMap();
 });

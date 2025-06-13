@@ -28,8 +28,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   </head>
   <body class="dark:bg-gray-800! bg-none! px-20">
-    <header class="top-0 w-full bg-transparent z-50">
-      <div class="max-w-[1530px] flex justify-between items-center py-4">
+    <header class="pt-2 top-0 w-full bg-transparent z-50">
+      <div class="max-w-[1530px] flex gap-10 items-center py-4">
         <!-- LightMode Logo -->
         <div id="logo" class="h-[60px] w-fit dark:hidden">
           <img
@@ -51,7 +51,7 @@
           <img
             id="logotypeLight"
             src="../img/logos/logoDarkmode_logotipo darkmode.png"
-            class="hidden lg:block h-[60px] w-auto"
+            class="hidden lg:block h-[60px]"
             alt="Darkmode logotype"
           />
           <img
@@ -61,13 +61,13 @@
             alt="Darkmode logo"
           />
         </div>
+        <h1 id="pagetitle" class="text-4xl dark:text-white">Build your Trip</h1>
       </div>
     </header>
     <main class="flex flex-col gap-2">
-      <div class="flex items-center gap-7 dark:text-white">
-        <h1 id="pagetitle">Build your Trip</h1>
-
-        <div class="p-1">
+      <!-- Search Options -->
+      <div class="flex items-center gap-7 dark:text-white py-1 items-end">
+        <div class="p-1 lg:flex-row flex flex-col gap-1">
           <button
             id="mapViewBtn"
             class="bg-blue-100 p-2 rounded-lg border-3 border-blue-600 cursor-pointer hover:bg-blue-100"
@@ -76,10 +76,34 @@
           </button>
           <button
             id="listViewBtn"
-            class="bg-white p-2 rounded-lg border-2 border-blue-600 cursor-pointer hover:bg-blue-100"
+            class="bg-white p-2 rounded-lg border-blue-600 cursor-pointer hover:bg-blue-100"
           >
             <img src="../img/icons/blue/menu.svg" alt="menuIcon" class="h-4" />
           </button>
+        </div>
+        <div class="relative mb-6">
+          <label
+            for="steps-range"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Preço máximo: <span id="maxPrice"></span>
+          </label>
+          <input
+            id="steps-range"
+            type="range"
+            min="100"
+            max="1000"
+            value="100"
+            step="50"
+            class="w-md h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+          />
+          <span
+            class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
+            >Min (100€)</span
+          >
+          <span
+            class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
+            >Max (1000€)</span
+          >
         </div>
       </div>
 
@@ -95,7 +119,7 @@
         <!-- list view -->
         <div
           id="mapListView"
-          class="h-100 lg:h-full w-full rounded-lg border-1 border-blue-900 hidden bg-white overflow-y-auto"
+          class="h-100 lg:h-150 w-full rounded-lg border-1 border-blue-900 hidden bg-white overflow-y-auto"
         >
           <ul
             id="destinationSortableListView"
@@ -130,7 +154,7 @@
         <!-- Poi Cards -->
         <div id="poiSection" class="hidden lg:flex flex-col h-full gap-2">
           <h2 id="poiTitle" class="flex h-fit w-fit dark:text-white">
-            Hover each pin to see it's Points of Interest
+            Passa o cursor pelos pins para revelar os pontos de interesse
           </h2>
           <div id="poiCards" class="overflow-x-auto flex gap-7">
             <img
@@ -152,11 +176,11 @@
         <div class="w-full h-full flex flex-col p-2 gap-2 dark:text-white">
           <div id="returnTripRadio" class="flex gap-3 w-full">
             <div class="flex items-center gap-2">
-              <label for="return" class="select-none"> Return</label>
+              <label for="return" class="select-none"> Ida e Volta</label>
               <input type="radio" id="return" name="tripRadio" />
             </div>
             <div class="flex items-center gap-2">
-              <label for="oneWay" class="select-none"> One way</label>
+              <label for="oneWay" class="select-none"> Ida</label>
               <input checked type="radio" id="oneWay" name="tripRadio" />
             </div>
           </div>
