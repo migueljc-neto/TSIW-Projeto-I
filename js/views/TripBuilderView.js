@@ -381,8 +381,8 @@ function loadMap(origin) {
               poiCards.insertAdjacentHTML(
                 "beforeend",
                 ` <div class="group border-2 border-blue-800 bg-[url(${image})] bg-cover w-30 h-30 rounded-lg">
-                  <div class=" hidden group-hover:flex p-2 items-center text-center w-full h-full flex bg-[#6C6EA0] opacity-75 rounded-lg">
-                    <span class="text-white">${poi.name}</span>
+                  <div class=" hidden group-hover:flex p-2 justify-center items-center text-center w-full h-full flex bg-[#6C6EA0] opacity-75 rounded-lg">
+                    <span class="text-white flex">${poi.name}</span>
                   </div>
                 </div>
               `
