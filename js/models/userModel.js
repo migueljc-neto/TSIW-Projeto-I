@@ -78,9 +78,22 @@ export function add(name, email, password, passwordConfirm) {
     throw Error(`Já existe um utilizador com o email "${email}"!`);
   }
 
-  const id = Date.now();
-  users.push(new User(id, name, email, password));
-  localStorage.setItem("users", JSON.stringify(users));
+  return hashPassword(password).then((hashedPassword) => {
+    const id = Date.now();
+    users.push(new User(id, name, email, hashedPassword));
+    localStorage.setItem("users", JSON.stringify(users));
+    return true;
+  });
+}
+
+function hashPassword(password, salt = "compass") {
+  const te = new TextEncoder();
+  return window.crypto.subtle
+    .digest("SHA-256", te.encode(password + salt))
+    .then((hashBuffer) => {
+      const hashArray = new Uint8Array(hashBuffer);
+      return btoa(String.fromCharCode(...hashArray));
+    });
 }
 
 // User Login
@@ -91,16 +104,18 @@ export function login(email, password, keepSigned) {
     throw new Error("Não existe nenhum utilizador com o email introduzido!");
   }
 
-  if (user.password !== password) {
-    throw new Error("Password Incorreta!");
-  }
+  return hashPassword(password).then((hashedPassword) => {
+    if (user.password !== hashedPassword) {
+      throw new Error("Password Incorreta!");
+    }
 
-  if (keepSigned) {
-    localStorage.setItem("loggedUser", JSON.stringify(user));
-  } else {
-    sessionStorage.setItem("loggedUser", JSON.stringify(user));
-  }
-  return true;
+    if (keepSigned) {
+      localStorage.setItem("loggedUser", JSON.stringify(user));
+    } else {
+      sessionStorage.setItem("loggedUser", JSON.stringify(user));
+    }
+    return true;
+  });
 }
 
 // User Logout

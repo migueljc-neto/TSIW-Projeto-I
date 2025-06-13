@@ -8,7 +8,7 @@ function initdata() {
         id: 1,
         name: "Alice",
         email: "alice@teste.com",
-        password: "alice1234",
+        password: "Iv2mJg5C99wWDBEFHvktDKSlnqcV8x5ldNtBbkFR/gU=",
         isAdmin: false,
         homeAirport: "OPO",
         miles: {
@@ -24,7 +24,7 @@ function initdata() {
         id: 2,
         name: "Bob",
         email: "bob@teste.com",
-        password: "bob1234",
+        password: "doj2kmjCoFbaRTTgL17Qm6h9BvhI9krOnzlF7O9tRXc=",
         isAdmin: true,
         homeAirport: "LAX",
         miles: {
@@ -40,7 +40,7 @@ function initdata() {
         id: 3,
         name: "Charlie",
         email: "charlie@teste.com",
-        password: "charlie1234",
+        password: "T1seFreOPCHSRHhB/+briZwYHvkvnNuAZzzcnZCUIfM=",
         isAdmin: false,
         homeAirport: "LIS",
         miles: {
@@ -56,7 +56,7 @@ function initdata() {
         id: 4,
         name: "teste",
         email: "boba@teste.com",
-        password: "123",
+        password: "JPjElV6dkZO6hqE9ccWLJqJ1UXqbTl+WjlWH7x9uS9Q=",
         isAdmin: false,
         homeAirport: "SFO",
         miles: {
