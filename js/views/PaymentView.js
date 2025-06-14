@@ -8,7 +8,7 @@ const priceLabel = document.getElementById("priceLabel");
 const milesCheckbox = document.getElementById("milesCheckbox");
 const accumMiles = document.getElementById("accumMiles");
 
-// Inicializa dados do utilizador e obtém o utilizador logado
+// Inicializa dados do utilizador e obtém o utilizador logged
 Users.init();
 const user = Users.getUserLogged();
 

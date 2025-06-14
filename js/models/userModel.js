@@ -1,31 +1,34 @@
+// Variável para armazenar os utilizadores em memória
 let users;
 
-// Load users from localstorage
+// Carrega os utilizadores do localStorage
 export function init() {
   users = localStorage.users ? JSON.parse(localStorage.users) : [];
 }
 
-// Returns all users
+// Devolve todos os utilizadores
 export function getAllUsers() {
   return users;
 }
 
-// Returns user object by id
+// Devolve um utilizador pelo seu ID
 export function getUserById(id) {
   const numId = typeof id === "string" ? Number(id) : id;
   return users.find((user) => user.id === numId) || null;
 }
 
+// Verifica se o utilizador tem direito ao scratch (raspadinha semanal)
 export function userHasScratch(userCheck) {
   if (!userCheck) {
     return false;
   }
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-  return oneWeekAgo.toISOString().split("T")[0] >= userCheck.lastScratch; // YYYY-MM-DD format
+  // Só pode raspar se já passou uma semana desde o último scratch
+  return oneWeekAgo.toISOString().split("T")[0] >= userCheck.lastScratch; // formato YYYY-MM-DD
 }
 
-// Updates a user by id
+// Atualiza um utilizador pelo ID
 export function updateUser(id, { name, email, password, isAdmin }) {
   const numId = typeof id === "string" ? Number(id) : id;
   const user = users.find((user) => user.id === numId);
@@ -34,6 +37,7 @@ export function updateUser(id, { name, email, password, isAdmin }) {
     throw Error("Utilizador não encontrado!");
   }
 
+  // Verifica se já existe outro utilizador com o mesmo email
   if (users.some((user) => user.email === email && user.id !== numId)) {
     throw Error(`Já existe um utilizador com o email "${email}"!`);
   }
@@ -42,11 +46,12 @@ export function updateUser(id, { name, email, password, isAdmin }) {
   user.email = email;
   user.isAdmin = isAdmin === true || isAdmin === "true";
 
+  // Se for fornecida nova password, faz hash e atualiza
   if (password !== "") {
     return hashPassword(password, "compass").then((hashedPassword) => {
       user.password = hashedPassword;
       localStorage.setItem("users", JSON.stringify(users));
-      return user; // Return the updated user
+      return user; // Devolve o utilizador atualizado
     });
   } else {
     localStorage.setItem("users", JSON.stringify(users));
@@ -54,7 +59,7 @@ export function updateUser(id, { name, email, password, isAdmin }) {
   }
 }
 
-// Updates the logged user
+// Atualiza o utilizador autenticado (logged in)
 export function updateLoggedUser(id) {
   const user = users.find((u) => String(u.id) === String(id));
   if (!user) throw Error("Utilizador não encontrado!");
@@ -63,6 +68,7 @@ export function updateLoggedUser(id) {
   sessionStorage.setItem("loggedUser", JSON.stringify(user));
 }
 
+// Atualiza as milhas do utilizador após o scratch
 export function updateScratch(userCheck, milesWon) {
   const user = users.find((u) => String(u.id) === String(userCheck.id));
   const today = new Date();
@@ -80,7 +86,7 @@ export function updateScratch(userCheck, milesWon) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-// Add User
+// Adiciona um novo utilizador
 export function add(name, email, password, passwordConfirm) {
   if (password !== passwordConfirm) {
     throw Error("As Passwords não coincidem!");
@@ -98,6 +104,7 @@ export function add(name, email, password, passwordConfirm) {
   });
 }
 
+// Função para fazer hash da password (segurança)
 function hashPassword(password, salt = "compass") {
   const te = new TextEncoder();
   return window.crypto.subtle
@@ -108,7 +115,7 @@ function hashPassword(password, salt = "compass") {
     });
 }
 
-// User Login
+// Login do utilizador
 export function login(email, password, keepSigned) {
   const user = users.find((user) => user.email === email);
 
@@ -130,12 +137,13 @@ export function login(email, password, keepSigned) {
   });
 }
 
-// User Logout
+// Logout do utilizador
 export function logout() {
   sessionStorage.removeItem("loggedUser") ||
     localStorage.removeItem("loggedUser");
 }
 
+// Guarda a query do utilizador (preferências de pesquisa)
 export function setUserQuery(date, origin, typeOfTourism, passengers) {
   const userQuery = {
     date: date || "",
@@ -146,7 +154,7 @@ export function setUserQuery(date, origin, typeOfTourism, passengers) {
   sessionStorage.setItem("userQuery", JSON.stringify(userQuery));
 }
 
-// Checks if user is logged in
+// Verifica se existe um utilizador autenticado
 export function isLogged() {
   return (
     !!sessionStorage.getItem("loggedUser") ||
@@ -154,12 +162,12 @@ export function isLogged() {
   );
 }
 
-// Checks if user is Admin
+// Verifica se o utilizador é administrador
 export function isAdmin(user) {
   return user.isAdmin;
 }
 
-// Returns the logged user
+// Devolve o utilizador autenticado
 export function getUserLogged() {
   let user = sessionStorage.getItem("loggedUser");
   if (!user) {
@@ -168,7 +176,7 @@ export function getUserLogged() {
   return user ? JSON.parse(user) : null;
 }
 
-// Delete user by ID
+// Apaga um utilizador pelo ID
 export function deleteUser(id) {
   const numId = typeof id === "string" ? Number(id) : id;
 
@@ -178,7 +186,7 @@ export function deleteUser(id) {
   localStorage.setItem("users", JSON.stringify(users));
 }
 
-// Delete pack from user
+// Remove um pack das viagens do utilizador
 export function deletePack(id) {
   const packId = typeof id === "string" ? Number(id) : id;
 
@@ -193,7 +201,7 @@ export function deletePack(id) {
 }
 
 /**
- * User class
+ * Classe User que representa um utilizador
  */
 class User {
   id = null;

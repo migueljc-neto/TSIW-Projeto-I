@@ -1,5 +1,7 @@
+// Variável para armazenar os dados dos países em memória
 let countriesData;
 
+// Vai buscar todos os países à API externa e guarda em memória
 export function getAllCountries() {
   return fetch("https://restcountries.com/v3.1/all?fields=cca2,continents")
     .then((response) => response.json())
@@ -9,6 +11,7 @@ export function getAllCountries() {
     });
 }
 
+// Formata uma data para o formato dd/mm ou dd/mm/aaaa
 export function formatDateToLabel(dateString) {
   const [year, month, day] = dateString.split("-");
   const currentYear = new Date().getFullYear().toString();
@@ -30,8 +33,9 @@ export function formatTime(dateString) {
   });
 }
 
+// Devolve o código IATA da companhia aérea (para mostrar o logo)
 export function getIata(company) {
-  // Mapeamento de nomes de companhias para códigos IATA (para mostrar o logo)
+  // Mapeamento de nomes de companhias para códigos IATA
   const IATA_CODES = {
     TAP: "TP",
     Iberia: "IB",
@@ -54,6 +58,7 @@ export function getIata(company) {
   return IATA_CODES[company] || company;
 }
 
+// Formata uma data ISO para "dia mês" em português
 export function formatDate(isoString) {
   const date = new Date(isoString);
 
@@ -68,7 +73,8 @@ export function calculateDiscount(miles, finalPrice) {
   return finalPrice - Math.floor(miles / 100) * 20;
 }
 
-/* Scratchoff */
+/* Funções para scratchoff (raspadinha) */
+// Cria um evento de rato personalizado
 export function mouseEvent(type, sx, sy, cx, cy) {
   var evt;
   var e = {
@@ -115,6 +121,8 @@ export function mouseEvent(type, sx, sy, cx, cy) {
   }
   return evt;
 }
+
+// Dispara um evento de rato num elemento
 export function dispatchEvent(el, evt) {
   if (el.dispatchEvent) {
     el.dispatchEvent(evt);
@@ -146,11 +154,12 @@ export function fetchAirportName(iataCode) {
       return data.name;
     })
     .catch((error) => {
-      console.error("Error fetching airport info:", error);
+      console.error("Erro ao obter informação do aeroporto:", error);
       return null;
     });
 }
 
+// Cria um objeto de destino com nome, latitude, longitude e POIs
 export function createDestinObj(destinName, latitude, longitude, poi) {
   const obj = {
     objName: destinName,
@@ -162,16 +171,19 @@ export function createDestinObj(destinName, latitude, longitude, poi) {
   return obj;
 }
 
+// Formata uma data para o formato YYYY-MM-DD (útil para comparar datas)
 export function formatDateToYMD(dateString) {
   const [day, month, year] = dateString.split("-");
 
   return Date.parse(`${year},${month},${day}`);
 }
 
+// Formata a data de um voo (função placeholder)
 export function formatFlightTime(dateString) {
   const date = dateString.split("T")[0];
 }
 
+// Carrega as views de destinos e mapa (exemplo de integração com o mapa e lista)
 export function loadViews(flight) {
   /* flight loop */
 
@@ -180,7 +192,7 @@ export function loadViews(flight) {
   );
 
   if (departureDate < formatedDepartureTime) {
-    /* populate listView */
+    /* Adiciona à lista de destinos */
     destinationList.insertAdjacentHTML(
       "beforeend",
       `<li id="${flight.id}"class="border-2 border-blue-800 bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
@@ -188,7 +200,7 @@ export function loadViews(flight) {
         </li>`
     );
 
-    /* populate mapView */
+    /* Adiciona ao mapa */
     let pin = user.favorites.includes(flight.destinationName)
       ? favIcon
       : destinIcon;
@@ -249,7 +261,7 @@ export function loadViews(flight) {
 
     marker.on("mouseover", function () {
       poiCards.innerHTML = "";
-      poiDisplay.textContent = `${flight.destinationName} points of interest`;
+      poiDisplay.textContent = `${flight.destinationName} pontos de interesse`;
 
       flight.poi.forEach((poi) => {
         const apiKey =
@@ -280,6 +292,7 @@ export function loadViews(flight) {
   mapLine();
 }
 
+// Devolve o ID do tipo de turismo a partir do nome
 export function getTurismTypeId(tourismType) {
   let tourismTypesArray = JSON.parse(localStorage.getItem("tourismTypes"));
   for (const [id, type] of Object.entries(tourismTypesArray)) {

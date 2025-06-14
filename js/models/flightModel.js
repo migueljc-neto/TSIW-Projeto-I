@@ -1,37 +1,35 @@
+// Variável para armazenar os voos em memória
 let flights;
 
-// Load flights from localstorage
+// Carrega os voos do localStorage
 export function init() {
   flights = localStorage.flights ? JSON.parse(localStorage.flights) : [];
 }
 
+// Adiciona um novo voo e guarda no localStorage
 export function addFlight(flight) {
   flights.push(flight);
   localStorage.setItem("flights", JSON.stringify(flights));
 }
 
-export function updateFlight(updatedFlight) {
-  const index = flights.findIndex((f) => f.id === updatedFlight.id);
-  if (index > -1) {
-    flights[index] = updatedFlight;
-    localStorage.setItem("flights", JSON.stringify(flights));
-  }
-}
-
+// Devolve todos os voos
 export function getAllFlights() {
   return flights;
 }
 
+// Devolve os voos cujos IDs estão presentes no array fornecido
 export function getFlightByTripId(ids) {
   let flights = getAllFlights();
   return flights.filter((trip) => ids.includes(trip.id));
 }
 
+// Devolve um voo pelo seu ID
 export function getFlightById(id) {
   const flights = getAllFlights();
   return flights.find((flight) => flight.id === id);
 }
 
+// Procura um voo alternativo para uma determinada ligação (escala)
 export function findAlternateLeg(from, to, flightList) {
   const flights = getAllFlights();
 
@@ -48,6 +46,7 @@ export function findAlternateLeg(from, to, flightList) {
       legFlight.departureTime > flight.arrivalTime
   );
   console.log(newFlight);
+
   // Encontra o índice do 'from' na lista de destinos
   const index = flightList.findIndex((destination) => destination === to);
 
@@ -64,12 +63,13 @@ export function findAlternateLeg(from, to, flightList) {
   }
 }
 
+// Devolve todos os voos entre duas cidades específicas
 export function getAllFlightsByLeg(from, to) {
   const allFlights = getAllFlights();
   return allFlights.filter((f) => f.origin === from && f.destination === to);
 }
 
-// Delete Flight type by ID
+// Elimina um voo pelo seu ID
 export function deleteFlight(id) {
   const numId = typeof id === "string" ? Number(id) : id;
 
@@ -79,7 +79,7 @@ export function deleteFlight(id) {
   localStorage.setItem("flights", JSON.stringify(flights));
 }
 
-// Get unique airports from available flights
+// Devolve todos os aeroportos de origem únicos dos voos disponíveis
 export function getAllUniqueOrigins() {
   const flights = getAllFlights();
 
@@ -91,6 +91,7 @@ export function getAllUniqueOrigins() {
   return uniqueOrigins;
 }
 
+// Filtra as origens únicas pelo texto fornecido
 export function getFilteredOrigins(filterText) {
   let uniqueOrigins = getAllUniqueOrigins();
 
@@ -99,6 +100,7 @@ export function getFilteredOrigins(filterText) {
   );
 }
 
+// Devolve todos os voos a partir de uma origem específica
 export function getFlightsByOrigin(originGet) {
   const flights = getAllFlights();
 
@@ -109,6 +111,59 @@ export function getFlightsByOrigin(originGet) {
   return filteredFlights;
 }
 
+// FUNÇÃO DE MODELO: Cria um voo a partir dos dados do formulário
+export function createFlightFromFormData(formData) {
+  const flightData = {
+    id: Date.now(),
+    origin: formData.origin,
+    originName: formData.originName, // Fixed: was missing
+    destination: formData.destination,
+    destinationName: formData.destinationName, // Fixed: was using destinName instead of destinationName
+    departureTime: formData.departureTime,
+    arrivalTime: formData.arrivalTime,
+    price: parseFloat(formData.price) || 0,
+    duration: formData.duration,
+    company: formData.company,
+    distance: parseFloat(formData.distance) || 0,
+    originLat: parseFloat(formData.originLat) || 0,
+    originLong: parseFloat(formData.originLong) || 0,
+    destinLat: parseFloat(formData.destinLat) || 0,
+    destinLong: parseFloat(formData.destinLong) || 0,
+    pois: formData.pois || [],
+    tourismTypes: formData.tourismTypes || [],
+  };
+
+  // Cria uma instância de voo com a ordem correta dos parâmetros
+  const flight = new Flight(
+    flightData.id,
+    flightData.origin,
+    flightData.originName, // nome da origem
+    flightData.destination,
+    flightData.destinationName, // Fixed: was using destinName
+    flightData.departureTime,
+    flightData.arrivalTime,
+    flightData.price,
+    flightData.duration,
+    flightData.company,
+    flightData.distance,
+    flightData.pois, // Fixed: was using poi instead of pois
+    flightData.originLat, // latitude da origem
+    flightData.originLong, // longitude da origem
+    flightData.destinLat, // latitude do destino
+    flightData.destinLong, // longitude do destino
+    flightData.tourismTypes
+  );
+
+  return flight;
+}
+// FUNÇÃO DE MODELO: Guarda o voo criado a partir dos dados do formulário
+export function saveFlightFromData(formData) {
+  const flight = createFlightFromFormData(formData);
+  addFlight(flight); // Garante que esta função existe
+  return flight;
+}
+
+// Classe que representa um voo
 class Flight {
   id = null;
   origin = "";
@@ -122,8 +177,11 @@ class Flight {
   company = "";
   distance = 0;
   poi = [];
+  originLat = 0;
+  originLong = 0;
   destinLat = 0;
   destinLong = 0;
+  tourismTypes = [];
 
   constructor(
     id,
@@ -138,8 +196,11 @@ class Flight {
     company = "",
     distance = 0,
     poi = [],
+    originLat,
+    originLong,
     destinLat,
-    destinLong
+    destinLong,
+    tourismTypes = []
   ) {
     this.id = id;
     this.origin = origin;
@@ -153,15 +214,10 @@ class Flight {
     this.company = company;
     this.distance = distance;
     this.poi = poi;
+    this.originLat = originLat;
+    this.originLong = originLong;
     this.destinLat = destinLat;
     this.destinLong = destinLong;
-  }
-  addPoi(name, lat, long, tourismTypes = []) {
-    this.poi.push({
-      name,
-      lat,
-      long,
-      tourismTypes,
-    });
+    this.tourismTypes = tourismTypes;
   }
 }

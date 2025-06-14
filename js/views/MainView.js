@@ -2,7 +2,6 @@ import * as Trips from "../models/TripModel.js";
 import * as Helper from "../models/modelHelper.js";
 import * as User from "../models/UserModel.js";
 import * as Flights from "../models/flightModel.js";
-import { mouseEvent, dispatchEvent } from "../models/scratchModel.js";
 
 // Inicializa os dados de packs de viagens e utilizadores
 Trips.init();
@@ -12,11 +11,13 @@ const scratchModal = document.getElementById("scratchModal");
 
 // Quando a página carrega, prepara os slides dos packs
 window.addEventListener("load", () => {
+  // Verifica se o utilizador tem direito ao scratch e se está autenticado
   let userHasScratch = User.userHasScratch(User.getUserLogged());
   if (!userHasScratch || !User.isLogged()) {
     scratchModal.classList.add("hidden");
   }
 
+  // Vai buscar todos os packs disponíveis
   const packs = Trips.getAllPacks();
   const swiperPacks = document.getElementById("swiperPacks");
   const swiperDesktop = document.getElementById("swiperDesktopWrapper");
@@ -86,6 +87,7 @@ window.addEventListener("load", () => {
             </div>
           </div>`
         );
+        // Evento para abrir o resumo do pack ao clicar no botão
         document.addEventListener("click", function (event) {
           if (
             event.target.id === "packBtn" ||
@@ -134,6 +136,7 @@ window.addEventListener("load", () => {
 
   // Só inicializa o Swiper depois de todas as imagens estarem carregadas
   Promise.all(fetchSlides).then(() => {
+    // Swiper para mobile
     var swiper = new Swiper(".mobileFeatures", {
       pagination: {
         el: ".swiper-pagination",
@@ -145,6 +148,7 @@ window.addEventListener("load", () => {
       setWrapperSize: true,
     });
 
+    // Swiper para cartões
     new Swiper(".mySwiper", {
       effect: "cards",
       grabCursor: true,
@@ -188,6 +192,7 @@ passportBtn.addEventListener("click", () => {
   Helper.getAllCountries().then((data) => {
     allCountriesData = data;
     renderPassportGrid();
+    // Permite filtrar por continente
     continentFilter.onchange = () => renderPassportGrid(continentFilter.value);
   });
 });
@@ -263,11 +268,14 @@ function renderPassportGrid(continent = "") {
     );
   });
 }
+
+// Botões para aplicar ou cancelar as milhas do scratch
 let applyMilesBtn = document.querySelector("#applyMilesBtn");
 let cancelMilesBtn = document.querySelector("#cancelMilesBtn");
 
 let canApply = false;
 
+// Ao clicar em aplicar, adiciona as milhas ao utilizador e esconde o modal
 applyMilesBtn.addEventListener("click", () => {
   if (canApply) {
     User.updateScratch(User.getUserLogged(), milesWon);
@@ -275,12 +283,14 @@ applyMilesBtn.addEventListener("click", () => {
   }
 });
 
+// Ao clicar em cancelar, esconde o modal
 cancelMilesBtn.addEventListener("click", () => {
   scratchModal.classList.add("hidden");
   console.log("teste");
 });
 
 /* ScratchCard */
+// Gera um número aleatório de milhas ganhas
 let milesWon = Math.floor(Math.random() * 100);
 let wonText;
 if (milesWon > 0) {
@@ -306,6 +316,7 @@ const sc = new ScratchCard(scContainer, {
   },
 });
 
+// Inicializa o scratch card e atualiza percentagem ao raspar
 sc.init().then(() => {
   sc.canvas.addEventListener("scratch.move", () => {
     this.percent = sc.getPercent().toFixed(2);

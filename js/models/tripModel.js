@@ -1,21 +1,23 @@
+// Variável para armazenar as viagens em memória
 let trips;
 
-// Load trips from localstorage
+// Carrega as viagens do localStorage
 export function init() {
   trips = localStorage.trips ? JSON.parse(localStorage.trips) : [];
 }
 
-// Return all trips
+// Devolve todas as viagens
 export function getAllTrips() {
   return trips;
 }
 
+// Devolve todas as viagens que não são pacotes
 export function getAllNonPacks() {
   const trips = getAllTrips();
   return trips.filter((trip) => !trip.isPack);
 }
 
-// Admin set pack and price
+// Função de administração: define uma viagem como pacote e atribui preço
 export function setPackAndPrice(tripId, newPrice) {
   const trip = trips.find((trip) => String(trip.id) === String(tripId));
   if (!trip) {
@@ -27,9 +29,10 @@ export function setPackAndPrice(tripId, newPrice) {
   localStorage.setItem("trips", JSON.stringify(trips));
 }
 
-// Add New Trip
+// Adiciona uma nova viagem
 export function addTrip(flightsArray, name, description = "") {
   let allTourismTypes = [];
+  // Junta todos os tipos de turismo dos voos
   flightsArray.forEach((flight) => {
     if (Array.isArray(flight.tourismTypes)) {
       flight.tourismTypes.forEach((type) => {
@@ -40,25 +43,31 @@ export function addTrip(flightsArray, name, description = "") {
     }
   });
 
+  // Define origem e destino da viagem
   const origin = flightsArray[0].origin;
   const destination = flightsArray[flightsArray.length - 1].destination;
 
+  // Soma o preço total dos voos
   const price = flightsArray.reduce(
     (total, flight) => total + (flight.price || 0),
     0
   );
 
+  // Datas de início e fim da viagem
   const startDate = flightsArray[0].departureTime;
   const endDate = flightsArray[flightsArray.length - 1].arrivalTime;
 
+  // Calcula a duração em dias
   const start = new Date(startDate);
   const end = new Date(endDate);
   const diffTime = end - start;
   const durationDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   const duration = `${durationDays} dias`;
 
+  // Guarda os IDs dos voos da viagem
   const flights = flightsArray.map((flight) => flight.id);
 
+  // Cria nova viagem
   const id = Date.now();
   const newTrip = new Trip(
     id,
@@ -79,25 +88,26 @@ export function addTrip(flightsArray, name, description = "") {
   localStorage.setItem("trips", JSON.stringify(trips));
 }
 
-// Filter trips by ID
+// Filtra viagens por ID (array de IDs)
 export function getTripById(ids) {
   let trips = getAllTrips();
   return trips.filter((trip) => ids.includes(trip.id));
 }
 
+// Define a viagem atual no sessionStorage
 export function setTrip(id) {
   let currentTrip = getSingleTripById(id);
 
   sessionStorage.setItem("currentTrip", JSON.stringify(currentTrip));
 }
 
-// Filter trips by ID
+// Devolve uma viagem pelo ID (pode ser array de IDs)
 export function getSingleTripById(ids) {
   let trips = getAllTrips();
   return trips.find((trip) => ids.includes(trip.id));
 }
 
-// Delete tourism type by ID
+// Remove o estado de pacote de uma viagem pelo ID
 export function deleteTrip(id) {
   const numId = typeof id === "string" ? Number(id) : id;
   const trip = trips.find((trip) => trip.id === numId);
@@ -107,23 +117,20 @@ export function deleteTrip(id) {
   }
 }
 
-// Get all trips that are packs
+// Devolve todas as viagens que são pacotes
 export function getAllPacks() {
   const trips = getAllTrips();
   return trips.filter((trip) => trip.isPack);
 }
 
+// Classe que representa uma viagem
 class Trip {
   id = null;
   name = "";
   typesOfTourism = [];
-  origin = "";
-  destination = "";
   price = 0;
-  duration = "";
   startDate = "";
   endDate = "";
-  description = "";
   isPack = false;
   flights = [];
 
@@ -131,26 +138,18 @@ class Trip {
     id,
     name,
     typesOfTourism = [],
-    origin,
-    destination,
     price = 0,
-    duration = "",
     startDate = "",
     endDate = "",
-    description = "",
     isPack = false,
     flights = []
   ) {
     this.id = id;
     this.name = name;
     this.typesOfTourism = typesOfTourism;
-    this.origin = origin;
-    this.destination = destination;
     this.price = price;
-    this.duration = duration;
     this.startDate = startDate;
     this.endDate = endDate;
-    this.description = description;
     this.isPack = isPack;
     this.flights = flights;
   }

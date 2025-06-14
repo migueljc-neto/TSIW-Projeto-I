@@ -322,6 +322,8 @@ function populateFormContent() {
     type="text"
     placeholder="Ex:'OPO'"
     class="border p-2"
+    maxlength="3"
+    minlength="3"
     autocomplete = "off"
   />
       </li>

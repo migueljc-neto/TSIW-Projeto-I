@@ -2,11 +2,10 @@ import * as Flights from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
 import * as Trips from "../models/tripModel.js";
 
-// Inicializa os voos a partir do localStorage ou fonte de dados
 Flights.init();
 Trips.init();
 
-// Objeto de exemplo de uma viagem (trip)
+// Objeto de exemplo de uma viagem 
 let trip;
 
 // Obter parâmetros no url
@@ -36,7 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // Elemento onde será inserido o resumo dos voos
 const flightResume = document.getElementById("flightResume");
 
-// Função principal para preencher o resumo da viagem - AGORA ASYNC
+// Função principal para preencher o resumo da viagem 
 async function populateData() {
   // Limpa o conteúdo anterior
   flightResume.innerHTML = "";
@@ -47,7 +46,7 @@ async function populateData() {
     `<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo viagem - ${trip.name}</h1>`
   );
 
-  // Processa todos os voos usando for...of para aguardar as promises
+  // Processa todos os voos
   for (let index = 0; index < flightsTrip.length; index++) {
     const flight = flightsTrip[index];
     await processFlightCard(flight, index);
@@ -186,7 +185,6 @@ async function processFlightCard(flight, index) {
     );
   } catch (error) {
     console.error("Erro ao processar voo:", error);
-    // Você pode adicionar um card de erro ou pular este voo
   }
 }
 
