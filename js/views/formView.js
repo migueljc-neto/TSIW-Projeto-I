@@ -153,6 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const footer = document.querySelector("footer");
   const logo = document.getElementById("logo");
   const logoImg = logo.querySelectorAll("img");
+  const mobileLogo = document.getElementById("mobileLogo");
+  const mobileLogoImg = mobileLogo.querySelectorAll("img");
   const tourismText = document.getElementById("tourismText");
   const originText = document.getElementById("originText");
   const header = document.querySelector("header");
@@ -208,7 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
           logoImg.forEach((img) => {
             img.src = "./img/logos/logoDarkmode_logotipo darkmode.png";
           });
-
+          mobileLogoImg.forEach((img) => {
+            img.src = "./img/logos/logoDarkmode_logo darkmode.png";
+          });
           profileIcon.src = "./img/icons/white/profile.svg";
           walletIcon.src = "./img/icons/white/wallet.svg";
           favoritesIcon.src = "./img/icons/white/heart.svg";
@@ -217,7 +221,9 @@ document.addEventListener("DOMContentLoaded", () => {
             logoImg.forEach((img) => {
               img.src = "./img/logos/logo-12.png";
             });
-
+            mobileLogoImg.forEach((img) => {
+              img.src = "./img/logos/logo-12.png";
+            });
             profileIcon.src = "./img/icons/blue/profile.svg";
             walletIcon.src = "./img/icons/blue/wallet.svg";
             favoritesIcon.src = "./img/icons/blue/heart.svg";
@@ -232,7 +238,9 @@ document.addEventListener("DOMContentLoaded", () => {
             logoImg.forEach((img) => {
               img.src = "./img/logos/logoDarkmode_logo darkmode.png";
             });
-
+            mobileLogoImg.forEach((img) => {
+              img.src = "./img/logos/logoDarkmode_logo darkmode.png";
+            });
             profileIcon.src = "./img/icons/white/profile.svg";
             walletIcon.src = "./img/icons/white/wallet.svg";
             favoritesIcon.src = "./img/icons/white/heart.svg";

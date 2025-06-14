@@ -138,6 +138,7 @@ window.addEventListener("load", () => {
       pagination: {
         el: ".swiper-pagination",
       },
+      effect: "coverflow",
       autoplay: true,
       loop: true,
       spaceBetween: 30,
@@ -262,8 +263,8 @@ function renderPassportGrid(continent = "") {
     );
   });
 }
-applyMilesBtn = document.getElementById("applyMilesBtn");
-cancelMilesBtn = document.getElementById("cancelMilesBtn");
+let applyMilesBtn = document.querySelector("#applyMilesBtn");
+let cancelMilesBtn = document.querySelector("#cancelMilesBtn");
 
 let canApply = false;
 
@@ -276,10 +277,17 @@ applyMilesBtn.addEventListener("click", () => {
 
 cancelMilesBtn.addEventListener("click", () => {
   scratchModal.classList.add("hidden");
+  console.log("teste");
 });
 
 /* ScratchCard */
 let milesWon = Math.floor(Math.random() * 100);
+let wonText;
+if (milesWon > 0) {
+  wonText = `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`;
+} else {
+  wonText = `<p class="flex text-black text-xl text-center items-center"><strong>:( Não tiveste prémio</strong></p>`;
+}
 const scContainer = document.getElementById("canvas-test");
 console.log(scContainer);
 console.log(scContainer.offsetWidth);
@@ -290,9 +298,9 @@ const sc = new ScratchCard(scContainer, {
   imageForwardSrc: "../img/images/pattern.png",
   brushSrc: "https://switchy.a.cdnify.io/served/brush.png",
 
-  htmlBackground: `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`,
+  htmlBackground: wonText,
   clearZoneRadius: 20,
-  percentToFinish: 40, // When the percent exceeds 50 on touchend event the callback will be exec.
+  percentToFinish: 30,
   callback: function () {
     canApply = true;
   },

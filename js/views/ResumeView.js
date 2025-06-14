@@ -9,11 +9,11 @@ Trips.init();
 // Objeto de exemplo de uma viagem (trip)
 let trip;
 
-// Get the current URL's query parameters
+// Obter parâmetros no url
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// Only execute if there's an ID in the URL, otherwise use sessionStorage
+// Apenas executar se houver parametro de id
 if (id) {
   trip = Trips.getSingleTripById(id);
 } else {
@@ -36,20 +36,33 @@ window.addEventListener("DOMContentLoaded", () => {
 // Elemento onde será inserido o resumo dos voos
 const flightResume = document.getElementById("flightResume");
 
-// Função principal para preencher o resumo da viagem
-function populateData() {
+// Função principal para preencher o resumo da viagem - AGORA ASYNC
+async function populateData() {
   // Limpa o conteúdo anterior
   flightResume.innerHTML = "";
 
   // Insere o título do resumo da viagem
   flightResume.insertAdjacentHTML(
     "beforeend",
-    `<h1 class="text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo viagem - ${trip.name}</h1>
-    `
+    `<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo viagem - ${trip.name}</h1>`
   );
 
-  // Percorre todos os voos da viagem
-  flightsTrip.forEach((flight, index) => {
+  // Processa todos os voos usando for...of para aguardar as promises
+  for (let index = 0; index < flightsTrip.length; index++) {
+    const flight = flightsTrip[index];
+    await processFlightCard(flight, index);
+  }
+
+  // Mostra o destino final da viagem (último voo)
+  await addFinalDestinationCard();
+
+  // Adiciona os botões
+  addActionButtons();
+}
+
+// Função para processar cada cartão de voo
+async function processFlightCard(flight, index) {
+  try {
     let flightData = Flights.getFlightById(flight); // Dados do voo atual
 
     // Pega o próximo voo, se existir, para calcular a data de chegada
@@ -80,12 +93,15 @@ function populateData() {
     const iata = Helper.getIata(flightData.company);
     const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
 
+    // AGUARDA as promises dos nomes dos aeroportos
+    const [departureName, arrivalName] = await getFlightNames(flightData);
+
     // Insere o cartão do voo no resumo
     flightResume.insertAdjacentHTML(
       "beforeend",
       `<div class="mb-2" id="legCard">
         <div
-          class="bg-[#39578A] flex justify-between text-white px-7 py-7 rounded-lg mb-2"
+          class="bg-[#39578A] flex justify-between text-white items-center px-7 py-7 rounded-lg mb-2"
         >
           <div class="text-xl font-semibold items-center flex gap-5">
             <img
@@ -94,26 +110,26 @@ function populateData() {
               width="15"
               height="10"
             />
-            <p class="text-xl">${flightData.originName}</p>
+            <p class="text-lg md:text-xl">${flightData.originName}</p>
           </div>
-          <p>${dateString}</p>
+          <p class="text-xs sm:text-sm md:text-base">${dateString}</p>
         </div>
         <div class="bg-white rounded-lg shadow-lg text-white rounded-lg">
           <div class="bg-[#6C6EA0] px-6 py-4 text-white rounded-t-lg">
             <div class="flex justify-between items-center">
-              <p class="text-lg">
+              <p class="text-sm md:text-md md:text-lg">
                 ${flightData.originName} - ${flightData.destinationName}<span class="font-light text-sm">: ${flightData.duration}</span>
               </p>
               <p class="text-sm">${departureDate}</p>
             </div>
           </div>
 
-          <div class="py-4 px-10">
+          <div class="py-4 px-3 xs:px-5 sm:px-10">
             <div class="flex justify-between items-center">
             <div class="flex gap-3">
-                <p class="flex text-lg text-[#39578A]">${flightData.origin}</p>
+                <p class="flex text-base md:text-lg text-[#39578A]">${flightData.origin}</p>
                 <img src="../img/icons/blue/plane.svg" alt="Flight Icon" />
-                <p class="flex text-lg text-[#39578A]">${flightData.destination}</p></div>
+                <p class="flex text-base md:text-lg text-[#39578A]">${flightData.destination}</p></div>
               <div class="fitems-center">
                 <img
                   src="${logoUrl}"
@@ -136,13 +152,13 @@ function populateData() {
                     ></div>
                   </div>
                   <div>
-                    <p>${flightData.originName} (${flightData.origin})</p>
-                    <p class="text-sm text-gray-500">
-                      Francisco Sá Carneiro Int Airport
+                    <p class="text-base md:text-lg">${flightData.originName} (${flightData.origin})</p>
+                    <p class="text-xs md:text-sm text-gray-500">
+                      ${departureName}
                     </p>
                   </div>
                 </div>
-                <div><p>${departureTime}h</p></div>
+                <div><p class="text-sm md:text-base">${departureTime}h</p></div>
               </div>
 
               <!-- Destino -->
@@ -152,25 +168,30 @@ function populateData() {
                 <div class="flex items-center gap-2">
                   <p class="text-4xl relative z-10 bg-white">•</p>
                   <div
-                    class="absolute top-14 transform translate-x-2.5 w-0.5 h-16 z-10 bg-[#39578A]"
+                    class="absolute top-14 transform translate-x-2.5 w-0.5 h-14 md:h-16 z-10 bg-[#39578A]"
                   ></div>
                   <div>
-                    <p>${flightData.destinationName} (${flightData.destination})</p>
-                    <p class="text-sm text-gray-500">
-                      Adolfo Suárez Madrid–Barajas Airport
+                    <p class="text-base md:text-lg">${flightData.destinationName} (${flightData.destination})</p>
+                    <p class="text-xs md:text-sm text-gray-500">
+                      ${arrivalName}
                     </p>
                   </div>
                 </div>
-                <div><p>${arrivalTime}h</p></div>
+                <div><p class="text-sm md:text-base">${arrivalTime}h</p></div>
               </div>
             </div>
           </div>
         </div>
       </div>`
     );
-  });
+  } catch (error) {
+    console.error("Erro ao processar voo:", error);
+    // Você pode adicionar um card de erro ou pular este voo
+  }
+}
 
-  // Mostra o destino final da viagem (último voo)
+// Função para adicionar o cartão de destino final
+async function addFinalDestinationCard() {
   const lastFlight = Flights.getFlightById(flightsTrip[flightsTrip.length - 1]);
   const lastDepartureDate = Helper.formatDate(lastFlight.departureTime);
   const lastArrivalDate = Helper.formatDate(lastFlight.arrivalTime);
@@ -199,10 +220,12 @@ function populateData() {
       </div>
     </div>`
   );
+}
 
-  // Show different buttons based on whether ID exists in URL
+// Função para adicionar os botões de ação
+function addActionButtons() {
   if (!id) {
-    // No ID in URL - show both print and pay buttons (sessionStorage scenario)
+    // O URL não tem parametro de id
     flightResume.insertAdjacentHTML(
       "beforeend",
       `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
@@ -213,7 +236,7 @@ function populateData() {
 </div>`
     );
   } else {
-    // ID exists in URL - show only print button
+    // O URL tem parametro de id
     flightResume.insertAdjacentHTML(
       "beforeend",
       `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
@@ -223,4 +246,12 @@ function populateData() {
 </div>`
     );
   }
+}
+
+// Função que retorna ambos os nomes usando Promise.all
+function getFlightNames(flightData) {
+  return Promise.all([
+    Helper.fetchAirportName(flightData.origin),
+    Helper.fetchAirportName(flightData.destination),
+  ]);
 }
