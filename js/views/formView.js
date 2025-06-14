@@ -1,7 +1,7 @@
 import * as TourismTypes from "../models/TourismtypeModel.js";
 import * as Flights from "../models/flightModel.js";
 import * as User from "../models/UserModel.js";
-import * as Helper from "../models/ModelHelper.js"
+import * as Helper from "../models/ModelHelper.js";
 
 // Inicializa os dados de tipos de turismo, voos e utilizadores
 TourismTypes.init();
@@ -176,12 +176,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entry.isIntersecting) {
         const index = Array.from(sections).indexOf(entry.target);
         currentSectionIndex = index;
+        const profileIcon = document.getElementById("profileIcon");
+        const walletIcon = document.getElementById("walletIcon");
+        const favoritesIcon = document.getElementById("favoritesIcon");
         if (currentSectionIndex === 0) {
           // Se está na primeira secção, mete o formulário no footer
           if (!footer.contains(mainForm)) {
             footer.appendChild(mainForm);
           }
-
           formNavContainer.classList.add("hidden");
           passportText.classList.remove("hidden");
           favoritesText.classList.remove("hidden");
@@ -199,15 +201,27 @@ document.addEventListener("DOMContentLoaded", () => {
           logoImg.forEach((img) => {
             img.src = "./img/logos/logoDarkmode_logotipo darkmode.png";
           });
+
+          profileIcon.src = "./img/icons/white/profile.svg";
+          walletIcon.src = "./img/icons/white/wallet.svg";
+          favoritesIcon.src = "./img/icons/white/heart.svg";
         } else {
           if (currentSectionIndex === 1) {
             logoImg.forEach((img) => {
               img.src = "./img/logos/logo-12.png";
             });
+
+            profileIcon.src = "./img/icons/blue/profile.svg";
+            walletIcon.src = "./img/icons/blue/wallet.svg";
+            favoritesIcon.src = "./img/icons/blue/heart.svg";
           } else {
             logoImg.forEach((img) => {
               img.src = "./img/logos/logoDarkmode_logo darkmode.png";
             });
+
+            profileIcon.src = "./img/icons/white/profile.svg";
+            walletIcon.src = "./img/icons/white/wallet.svg";
+            favoritesIcon.src = "./img/icons/white/heart.svg";
           }
           // Nas outras secções, mete o formulário no topo e ajusta o header
           if (!formNavContainer.contains(mainForm)) {
@@ -248,7 +262,6 @@ window.addEventListener("resize", () => {
     formNavContainer.classList.remove("hidden");
   }
 });
-
 
 const searchFlightBtn = document.getElementById("searchFlightBtn");
 

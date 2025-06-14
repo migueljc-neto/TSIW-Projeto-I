@@ -61,6 +61,7 @@
           >
             <p id="passportText">Passaporte</p>
             <img
+              id="walletIcon"
               src="./img/icons/white/wallet.svg"
               alt="walletIcon"
               class="w-4"
@@ -74,6 +75,7 @@
           >
             <p id="favoritesText">Favoritos</p>
             <img
+              id="favoritesIcon"
               src="./img/icons/white/heart.svg"
               alt="heartIcon"
               class="w-4"
@@ -98,6 +100,7 @@
               class="group cursor-pointer rounded-full border border-white hover:border-blue-500 p-3 flex backdrop-blur transition"
             >
               <img
+                id="profileIcon"
                 src="./img/icons/white/profile.svg"
                 alt="profileIcon"
                 class="w-4 h-4"
@@ -972,7 +975,7 @@
       id="passport-modal"
       tabindex="-1"
       aria-hidden="true"
-      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full backdrop-blur-sm h-[calc(100%-1rem)] max-h-full"
     >
       <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
@@ -1051,11 +1054,11 @@
         <!-- Airport Selector Dropdown -->
         <div
           id="airportDropdown"
-          class="z-10 hidden bg-white rounded-md w-fit border-1 border-blue-900"
+          class="hidden bg-white rounded-md w-fit border-1 border-blue-900"
         >
           <ul
             id="airportsUl"
-            class="rounded-md max-h-[180px] overflow-y-auto"
+            class="rounded-md z-10 max-h-[180px] overflow-y-auto"
             aria-labelledby="dropdownTopButton"
           ></ul>
         </div>
