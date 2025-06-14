@@ -24,8 +24,6 @@ const tripsWrapper = document.getElementById("tripsWrapper");
 const profileImg = document.getElementById("profileImg");
 const profileEditBtn = document.getElementById("profileEditBtn");
 
-
-
 // Ao carregar a página, preenche os dados do perfil
 window.addEventListener("load", (event) => {
   // Escolhe um avatar aleatório
@@ -128,22 +126,26 @@ window.addEventListener("load", (event) => {
 
           tripsWrapper.insertAdjacentHTML(
             "beforeend",
-            `<button class="cursor-pointer transition transform hover:-translate-y-1"><div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
-            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${
-              trip.name
-            }</span>
-            <div class="w-2/5">
-              <img src="${image}" alt="${
+            `<button onclick="location.href='./resume.html?id=${
+              trip.id
+            }'" class="cursor-pointer transition transform hover:-translate-y-1">
+    <div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
+      <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${
+        trip.name
+      }</span>
+      <div class="w-2/5">
+        <img src="${image}" alt="${
               trip.name
             }" class="w-full h-full object-cover"/>
-            </div>
-            <div class="w-3/5 p-3 flex flex-col justify-center">
-              <p class="font-bold text-gray-800 truncate">${trip.name}</p>
-              <p class="text-sm text-gray-600">${Helper.formatDateToLabel(
-                trip.startDate
-              )}<br>${Helper.formatDateToLabel(trip.endDate)}</p>
-            </div>
-          </div></button>`
+      </div>
+      <div class="w-3/5 p-3 flex flex-col justify-center">
+        <p class="font-bold text-gray-800 truncate">${trip.name}</p>
+        <p class="text-sm text-gray-600">${Helper.formatDateToLabel(
+          trip.startDate
+        )}<br>${Helper.formatDateToLabel(trip.endDate)}</p>
+      </div>
+    </div>
+  </button>`
           );
         });
     });

@@ -91,6 +91,7 @@ function initdata() {
       {
         id: 1,
         origin: "OPO",
+        originName: "Porto",
         originLat: 41.2,
         originLong: -8.6,
         destination: "LIS",
@@ -120,6 +121,7 @@ function initdata() {
       {
         id: 2,
         origin: "OPO",
+        originName: "Porto",
         originLat: 41.2,
         originLong: -8.6,
         destination: "MAD",
@@ -144,6 +146,7 @@ function initdata() {
       {
         id: 3,
         origin: "LIS",
+        originName: "Lisboa",
         originLat: 38.7,
         originLong: -9.1,
         destination: "BCN",
@@ -168,6 +171,7 @@ function initdata() {
       {
         id: 4,
         origin: "MAD",
+        originName: "Madrid",
         originLat: 40.4,
         originLong: -3.7,
         destination: "BCN",
@@ -192,6 +196,7 @@ function initdata() {
       {
         id: 5,
         origin: "BCN",
+        originName: "Barcelona",
         originLat: 41.4,
         originLong: 2.2,
         destination: "ROM",
@@ -216,6 +221,7 @@ function initdata() {
       {
         id: 6,
         origin: "ROM",
+        originName: "Roma",
         originLat: 41.9,
         originLong: 12.5,
         destination: "ATH",
@@ -240,6 +246,7 @@ function initdata() {
       {
         id: 7,
         origin: "ATH",
+        originName: "Atenas",
         originLat: 37.9,
         originLong: 23.7,
         destination: "IST",
@@ -264,6 +271,7 @@ function initdata() {
       {
         id: 8,
         origin: "OPO",
+        originName: "Porto",
         originLat: 41.2,
         originLong: -8.6,
         destination: "CDG",
@@ -288,6 +296,7 @@ function initdata() {
       {
         id: 9,
         origin: "CDG",
+        originName: "Paris",
         originLat: 48.9,
         originLong: 2.4,
         destination: "LHR",
@@ -312,6 +321,7 @@ function initdata() {
       {
         id: 10,
         origin: "LHR",
+        originName: "Londres",
         originLat: 51.5,
         originLong: -0.1,
         destination: "AMS",
@@ -336,6 +346,7 @@ function initdata() {
       {
         id: 11,
         origin: "AMS",
+        originName: "Amsterdam",
         originLat: 52.4,
         originLong: 4.9,
         destination: "BER",
@@ -360,6 +371,7 @@ function initdata() {
       {
         id: 12,
         origin: "BER",
+        originName: "Berlim",
         originLat: 52.5,
         originLong: 13.4,
         destination: "PRG",
@@ -384,6 +396,7 @@ function initdata() {
       {
         id: 13,
         origin: "PRG",
+        originName: "Praga",
         originLat: 50.1,
         originLong: 14.4,
         destination: "VIE",
@@ -408,6 +421,7 @@ function initdata() {
       {
         id: 14,
         origin: "VIE",
+        originName: "Vienna",
         originLat: 48.2,
         originLong: 16.4,
         destination: "ZRH",
@@ -416,7 +430,7 @@ function initdata() {
         arrivalTime: "2025-07-04T18:30",
         price: 95,
         duration: "1h 30m",
-        company: "SWISS",
+        company: "Swiss",
         distance: 383.0,
         destinLat: 47.4,
         destinLong: 8.5,
@@ -432,6 +446,7 @@ function initdata() {
       {
         id: 15,
         origin: "ZRH",
+        originName: "Zurique",
         originLat: 47.4,
         originLong: 8.5,
         destination: "MUC",
@@ -456,6 +471,7 @@ function initdata() {
       {
         id: 16,
         origin: "MUC",
+        originName: "Munique",
         originLat: 48.1,
         originLong: 11.6,
         destination: "OPO",
@@ -480,6 +496,7 @@ function initdata() {
       {
         id: 17,
         origin: "OPO",
+        originName: "Porto",
         originLat: 41.2,
         originLong: -8.6,
         destination: "FAO",
@@ -504,6 +521,7 @@ function initdata() {
       {
         id: 18,
         origin: "FAO",
+        originName: "Faro",
         originLat: 37.0,
         originLong: -7.9,
         destination: "LIS",
@@ -522,6 +540,7 @@ function initdata() {
       {
         id: 19,
         origin: "LIS",
+        originName: "Lisboa",
         originLat: 38.7,
         originLong: -9.1,
         destination: "DUB",
@@ -546,6 +565,7 @@ function initdata() {
       {
         id: 20,
         origin: "DUB",
+        originName: "Dublin",
         originLat: 53.3,
         originLong: -6.2,
         destination: "OPO",
@@ -577,13 +597,12 @@ function initdata() {
         origin: "OPO",
         destination: "BCN",
         price: 500,
-        company: "TAP",
         duration: "7 dias",
         startDate: "2025-06-05",
         endDate: "2025-06-12",
         description: "Descubra as praias e a gastronomia de Barcelona.",
         isPack: true,
-        flights: [2, 6, 110],
+        flights: [2, 6, 10],
       },
       {
         id: 2,
@@ -592,13 +611,12 @@ function initdata() {
         origin: "LAX",
         destination: "JFK",
         price: 1200,
-        company: "Delta",
         duration: "10 dias",
         startDate: "2025-07-01",
         endDate: "2025-07-11",
         description: "Viagem pelas principais cidades americanas.",
         isPack: false,
-        flights: [3, 117, 120],
+        flights: [3, 5, 7],
       },
       {
         id: 3,
@@ -607,13 +625,12 @@ function initdata() {
         origin: "OPO",
         destination: "ZRH",
         price: 300,
-        company: "Swiss Air",
         duration: "7 dias",
         startDate: "2025-07-01",
         endDate: "2025-07-11",
         description: "Descubra as montanhas.",
         isPack: true,
-        flights: [6, 20, 21],
+        flights: [6, 20, 10],
       },
       {
         id: 4,
@@ -622,13 +639,12 @@ function initdata() {
         origin: "OPO",
         destination: "ICE",
         price: 3200,
-        company: "Icelandair",
         duration: "10 dias",
         startDate: "2025-07-01",
         endDate: "2025-07-11",
         description: "Descubra a Islândia.",
         isPack: true,
-        flights: [1, 23, 8],
+        flights: [1, 20, 9],
       },
     ];
     localStorage.setItem("trips", JSON.stringify(trips));

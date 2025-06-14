@@ -160,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const passportText = header.querySelector("#passportText");
   const favoritesBtn = header.querySelector("#favoritesBtn");
   const passportBtn = header.querySelector("#passportBtn");
+  const openLoginModalBtn = header.querySelector("#openLoginModalBtn");
   const firstSection = sections[0];
 
   let currentSectionIndex = 0;
@@ -191,6 +192,12 @@ document.addEventListener("DOMContentLoaded", () => {
           favoritesBtn.classList.add("px-4", "py-2");
           passportBtn.classList.remove("p-3");
           passportBtn.classList.add("px-4", "py-2");
+          passportBtn.classList.add("border-white");
+          favoritesBtn.classList.add("border-white");
+          openLoginModalBtn.classList.add("border-white");
+          passportBtn.classList.remove("border-[#39578a]");
+          favoritesBtn.classList.remove("border-[#39578a]");
+          openLoginModalBtn.classList.remove("border-[#39578a]");
           new Datepicker(datePicker, {
             autohide: true,
             format: "dd-mm-yyyy",
@@ -214,6 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
             profileIcon.src = "./img/icons/blue/profile.svg";
             walletIcon.src = "./img/icons/blue/wallet.svg";
             favoritesIcon.src = "./img/icons/blue/heart.svg";
+
+            passportBtn.classList.remove("border-white");
+            favoritesBtn.classList.remove("border-white");
+            openLoginModalBtn.classList.remove("border-white");
+            passportBtn.classList.add("border-[#39578a]");
+            favoritesBtn.classList.add("border-[#39578a]");
+            openLoginModalBtn.classList.add("border-[#39578a]");
           } else {
             logoImg.forEach((img) => {
               img.src = "./img/logos/logoDarkmode_logo darkmode.png";
@@ -222,6 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
             profileIcon.src = "./img/icons/white/profile.svg";
             walletIcon.src = "./img/icons/white/wallet.svg";
             favoritesIcon.src = "./img/icons/white/heart.svg";
+
+            passportBtn.classList.add("border-white");
+            favoritesBtn.classList.add("border-white");
+            openLoginModalBtn.classList.add("border-white");
+            passportBtn.classList.remove("border-[#39578a]");
+            favoritesBtn.classList.remove("border-[#39578a]");
+            openLoginModalBtn.classList.remove("border-[#39578a]");
           }
           // Nas outras secções, mete o formulário no topo e ajusta o header
           if (!formNavContainer.contains(mainForm)) {

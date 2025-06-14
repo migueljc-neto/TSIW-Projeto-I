@@ -1,27 +1,31 @@
 import * as Flights from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
+import * as Trips from "../models/tripModel.js";
 
 // Inicializa os voos a partir do localStorage ou fonte de dados
 Flights.init();
+Trips.init();
 
 // Objeto de exemplo de uma viagem (trip)
-let trip = {
-  id: 4,
-  name: "Visita ao Iceberg",
-  typesOfTourism: [1, 4],
-  origin: "OPO",
-  destination: "CDK",
-  price: 3200,
-  company: "Icelandair",
-  duration: "10 dias",
-  startDate: "2025-07-01",
-  endDate: "2025-07-11",
-  description: "Descubra a Islândia.",
-  isPack: true,
-  flights: [114, 116, 20], // IDs dos voos desta viagem
-};
+let trip;
 
-// Array com os IDs dos voos da viagem
+// Get the current URL's query parameters
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// Only execute if there's an ID in the URL, otherwise use sessionStorage
+if (id) {
+  trip = Trips.getSingleTripById(id);
+} else {
+  trip = JSON.parse(sessionStorage.getItem("currentTrip"));
+}
+
+if (!trip) {
+  console.error("No trip data available");
+  window.location.href = "./profile.html";
+}
+
+console.log(trip);
 let flightsTrip = Array.from(trip.flights);
 
 // Quando a página carregar, executa a função para preencher os dados
@@ -196,14 +200,27 @@ function populateData() {
     </div>`
   );
 
-  // Insere os botões fixos no fundo da página para imprimir ou pagar
-  flightResume.insertAdjacentHTML(
-    "beforeend",
-    `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
+  // Show different buttons based on whether ID exists in URL
+  if (!id) {
+    // No ID in URL - show both print and pay buttons (sessionStorage scenario)
+    flightResume.insertAdjacentHTML(
+      "beforeend",
+      `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
   <div class="flex justify-around">
     <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
     <button class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50">Pagar</button>
   </div>
 </div>`
-  );
+    );
+  } else {
+    // ID exists in URL - show only print button
+    flightResume.insertAdjacentHTML(
+      "beforeend",
+      `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
+  <div class="flex justify-around">
+    <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
+  </div>
+</div>`
+    );
+  }
 }

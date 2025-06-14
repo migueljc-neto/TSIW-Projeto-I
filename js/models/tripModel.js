@@ -85,6 +85,18 @@ export function getTripById(ids) {
   return trips.filter((trip) => ids.includes(trip.id));
 }
 
+export function setTrip(id) {
+  let currentTrip = getSingleTripById(id);
+
+  sessionStorage.setItem("currentTrip", JSON.stringify(currentTrip));
+}
+
+// Filter trips by ID
+export function getSingleTripById(ids) {
+  let trips = getAllTrips();
+  return trips.find((trip) => ids.includes(trip.id));
+}
+
 // Delete tourism type by ID
 export function deleteTrip(id) {
   const numId = typeof id === "string" ? Number(id) : id;

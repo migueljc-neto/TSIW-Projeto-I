@@ -38,20 +38,22 @@ window.addEventListener("load", () => {
         // Adiciona o slide ao swiper mobile
         swiperPacks.insertAdjacentHTML(
           "beforeend",
-          `<div class="swiper-slide relative cursor-drag">
-            <img src="${image}" alt="${
-            pack.name
-          }" class="w-full h-auto rounded-t-lg" />
-            <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white color-primary p-2">
-                <div class="flex gap-6 items-center font-space font-light mb-3">
-                    <p class="text-lg">${pack.name}</p>
-                    <p class="text-sm">${Helper.formatDateToLabel(
-                      pack.startDate
-                    )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
-                </div>
-                <div class="color-primary font-light">${pack.price}€</div>
-            </div>
-          </div>`
+          `<div id="packBtn" 
+        data-id="${pack.id}" 
+        class="swiper-slide relative cursor-pointer"
+        role="button" 
+        tabindex="0">
+    <img src="${image}" alt="${pack.name}" class="w-full h-auto rounded-t-lg" />
+    <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white color-primary p-2">
+      <div class="flex gap-6 items-center font-space font-light mb-3">
+        <p class="text-lg">${pack.name}</p>
+        <p class="text-sm">${Helper.formatDateToLabel(
+          pack.startDate
+        )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
+      </div>
+      <div class="color-primary font-light">${pack.price}€</div>
+    </div>
+  </div>`
         );
         // Adiciona o slide ao swiper desktop
         swiperDesktop.insertAdjacentHTML(
@@ -77,11 +79,30 @@ window.addEventListener("load", () => {
               </div>
               <div class="flex justify-between items-center text-primary font-light">
                 <span>${pack.price}€</span>
-                <button class="cursor-pointer btn-std font-bold border-2">Ver Pack</button>
+                <button id="packBtn" data-id=${
+                  pack.id
+                } class="cursor-pointer btn-std font-bold border-2">Ver Pack</button>
               </div>
             </div>
           </div>`
         );
+        document.addEventListener("click", function (event) {
+          if (
+            event.target.id === "packBtn" ||
+            event.target.closest("#packBtn")
+          ) {
+            const packButton =
+              event.target.id === "packBtn"
+                ? event.target
+                : event.target.closest("#packBtn");
+            const packId = packButton.dataset.id;
+
+            if (packId) {
+              Trips.setTrip(packId);
+              location.href = "./html/resume.html";
+            }
+          }
+        });
 
         // Junta todas as cidades de origem e destino dos voos do pack
         let locations = [];
@@ -92,6 +113,12 @@ window.addEventListener("load", () => {
         });
         // Remove duplicados
         locations = [...new Set(locations)];
+
+        // Se houver mais que cinco, adicionar "..." na ultima posição e remover os restantes
+        if (locations.length > 5) {
+          locations = locations.slice(0, 4);
+          locations.push("...");
+        }
 
         // Adiciona as localizações à lista do card
         locations.forEach((location) => {
