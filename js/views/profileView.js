@@ -48,28 +48,82 @@ window.addEventListener("load", (event) => {
   document.body.classList.remove("hidden");
 
   // Mostra as badges (países visitados) do utilizador
-  const userBadges = user.badges;
-  let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
+  renderBadges();
 
-  userBadges.forEach((element) => {
+  // Favoritos
+  renderFavorites();
+
+  renderTrips("all");
+
+  // Seleciona os botões Passados e Próximas
+  const tripsSection = document.querySelector("section:has(#tripsWrapper)");
+  if (tripsSection) {
+    const [pastBtn, nextBtn] = tripsSection.querySelectorAll("button.w-fit");
+
+    if (pastBtn && nextBtn) {
+      pastBtn.addEventListener("click", () => renderTrips("past"));
+      nextBtn.addEventListener("click", () => renderTrips("next"));
+    }
+  }
+});
+
+// Botões para abrir o modal do passaporte
+const passportBtns = document.querySelectorAll(
+  '[data-modal-target="passport-modal"]'
+);
+
+// Botões para abrir o modal de favoritos
+const favoritesBtns = document.querySelectorAll(
+  '[data-modal-target="favorites-modal"]'
+);
+
+// Função para renderizar badges (medalhas de países visitados)
+function renderBadges() {
+  const user = User.getUserLogged();
+  const flagWrapper = document.getElementById("flagWrapper");
+  flagWrapper.innerHTML = "";
+
+  if (!user || !user.badges || user.badges.length === 0) {
+    flagWrapper.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center">
+        <p class="text-gray-600 text-center">Nenhuma medalha de país visitado.</p>
+      </div>`
+    );
+    return;
+  }
+
+  let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
+  user.badges.forEach((element) => {
     flagWrapper.insertAdjacentHTML(
       "beforeend",
       `<div class="has-tooltip w-12 h-12 rounded overflow-hidden flex items-center justify-center">
         <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>${regionNames.of(
           element.toUpperCase()
         )}</span>
-              <img src="../img/flags/${element}.svg" alt="${element}" class="object-contain w-full h-full"/>
-        </div>`
+        <img src="../img/flags/${element}.svg" alt="${element}" class="object-contain w-full h-full"/>
+      </div>`
     );
   });
+}
 
-  /* Favoritos */
-  const userFavorites = user.favorites;
+function renderFavorites() {
+  const user = User.getUserLogged();
+  const favoritesWrapper = document.getElementById("favoritesWrapper");
+  favoritesWrapper.innerHTML = "";
 
-  // Mostra os destinos favoritos do utilizador com imagem da API Pexels
-  userFavorites.forEach((favorite) => {
+  if (!user || !user.favorites || user.favorites.length === 0) {
+    favoritesWrapper.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Nenhum destino favorito.</p>
+      </div>`
+    );
+    return;
+  }
+
+  user.favorites.forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
-
     fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
       headers: {
         Authorization: apiKey,
@@ -79,7 +133,6 @@ window.addEventListener("load", (event) => {
       .then((data) => {
         const image =
           data.photos[1]?.src.medium || "../img/images/fallback.jpg";
-
         favoritesWrapper.insertAdjacentHTML(
           "beforeend",
           `<div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
@@ -101,85 +154,7 @@ window.addEventListener("load", (event) => {
         console.error("Erro ao buscar imagem:", err);
       });
   });
-
-  /* Viagens */
-  const userTripIds = user.trips;
-
-  // Mostra as viagens do utilizador, cada uma com imagem da API Pexels
-  if (userTripIds.length > 0) {
-    const userTrips = Trips.getTripById(userTripIds);
-
-    const fetchPromises = userTrips.map((trip) => {
-      const query = `${trip.destination} city`;
-      const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
-
-      return fetch(
-        `https://api.pexels.com/v1/search?query=${query}&per_page=2`,
-        {
-          headers: { Authorization: apiKey },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const image =
-            data.photos[1]?.src.medium || "../img/images/fallback.jpg";
-
-          tripsWrapper.insertAdjacentHTML(
-            "beforeend",
-            `<button onclick="location.href='./resume.html?id=${
-              trip.id
-            }'" class="cursor-pointer transition transform hover:-translate-y-1">
-    <div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
-      <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${
-        trip.name
-      }</span>
-      <div class="w-2/5">
-        <img src="${image}" alt="${
-              trip.name
-            }" class="w-full h-full object-cover"/>
-      </div>
-      <div class="w-3/5 p-3 flex flex-col justify-center">
-        <p class="font-bold text-gray-800 truncate">${trip.name}</p>
-        <p class="text-sm text-gray-600">${Helper.formatDateToLabel(
-          trip.startDate
-        )}<br>${Helper.formatDateToLabel(trip.endDate)}</p>
-      </div>
-    </div>
-  </button>`
-          );
-        });
-    });
-
-    // Se não houver viagens, mostra mensagem
-    Promise.all(fetchPromises).then(() => {
-      if (tripsWrapper.innerHTML === "") {
-        tripsWrapper.classList.add("items-center");
-        tripsWrapper.classList.remove("grid");
-        tripsWrapper.insertAdjacentHTML(
-          "beforeend",
-          `<p class="text-gray-600 text-center">Nenhuma viagem associada.</p>`
-        );
-      }
-    });
-  } else {
-    tripsWrapper.classList.add("items-center");
-    tripsWrapper.classList.remove("grid");
-    tripsWrapper.insertAdjacentHTML(
-      "beforeend",
-      `<p class="text-gray-600 text-center">Nenhuma viagem associada.</p>`
-    );
-  }
-});
-
-// Botões para abrir o modal do passaporte
-const passportBtns = document.querySelectorAll(
-  '[data-modal-target="passport-modal"]'
-);
-
-// Botões para abrir o modal de favoritos
-const favoritesBtns = document.querySelectorAll(
-  '[data-modal-target="favorites-modal"]'
-);
+}
 
 // Função para renderizar o grid de favoritos no modal
 function renderFavoritesGrid() {
@@ -187,10 +162,18 @@ function renderFavoritesGrid() {
   const favoritesModalGrid = document.getElementById("favoritesModalGrid");
   favoritesModalGrid.innerHTML = "";
 
-  /* Favoritos */
   const userFavorites = user.favorites;
 
-  // Mostra os destinos favoritos do utilizador com imagem da API Pexels
+  if (!userFavorites || userFavorites.length === 0) {
+    favoritesModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Nenhum destino favorito.</p>
+      </div>`
+    );
+    return;
+  }
+
   userFavorites.forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 
@@ -414,4 +397,74 @@ function displayMessage(form, message, type = "error") {
     "beforeend",
     `<p class='${colorClass} mt-2'>${message}</p>`
   );
+}
+// Função para renderizar viagens do utilizador, filtrando por passado/próximo
+function renderTrips(filter = "all") {
+  const user = User.getUserLogged();
+  const tripsWrapper = document.getElementById("tripsWrapper");
+  tripsWrapper.innerHTML = "";
+
+  if (!user || !user.trips || user.trips.length === 0) {
+    tripsWrapper.classList.add("items-center");
+    tripsWrapper.classList.remove("grid");
+    tripsWrapper.insertAdjacentHTML(
+      "beforeend",
+      `<p class="text-gray-600 text-center">Nenhuma viagem associada.</p>`
+    );
+    return;
+  }
+
+  const allTrips = Trips.getTripById(user.trips);
+
+  let filteredTrips = Trips.filteredTrips(allTrips, filter);
+
+  if (filteredTrips.length === 0) {
+    tripsWrapper.classList.add("items-center");
+    tripsWrapper.classList.remove("grid");
+    tripsWrapper.insertAdjacentHTML(
+      "beforeend",
+      `<p class="text-gray-600 text-center">Nenhuma viagem encontrada.</p>`
+    );
+    return;
+  }
+
+  tripsWrapper.classList.remove("items-center");
+  tripsWrapper.classList.add("grid");
+
+  // Renderiza cada viagem
+  filteredTrips.forEach((trip) => {
+    const query = `${trip.destination} city`;
+    const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+    fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=2`, {
+      headers: { Authorization: apiKey },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const image =
+          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+        tripsWrapper.insertAdjacentHTML(
+          "beforeend",
+          `<button onclick="location.href='./resume.html?id=${
+            trip.id
+          }'" class="cursor-pointer transition transform hover:-translate-y-1">
+            <div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
+              <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${
+                trip.name
+              }</span>
+              <div class="w-2/5">
+                <img src="${image}" alt="${
+            trip.name
+          }" class="w-full h-full object-cover"/>
+              </div>
+              <div class="w-3/5 p-3 flex flex-col justify-center">
+                <p class="font-bold text-gray-800 truncate">${trip.name}</p>
+                <p class="text-sm text-gray-600">${Helper.formatDateToLabel(
+                  trip.startDate
+                )}<br>${Helper.formatDateToLabel(trip.endDate)}</p>
+              </div>
+            </div>
+          </button>`
+        );
+      });
+  });
 }

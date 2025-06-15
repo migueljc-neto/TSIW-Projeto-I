@@ -29,6 +29,14 @@ export function setPackAndPrice(tripId, newPrice) {
   localStorage.setItem("trips", JSON.stringify(trips));
 }
 
+export function filteredTrips(userTrips, filter) {
+  const now = new Date();
+  if (filter === "past") {
+    return userTrips.filter((trip) => new Date(trip.startDate) <= now);
+  }
+  return userTrips.filter((trip) => new Date(trip.startDate) >= now);
+}
+
 // Adiciona uma nova viagem
 export function addTrip(flightsArray, name, description = "") {
   let allTourismTypes = [];

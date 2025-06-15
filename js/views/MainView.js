@@ -99,7 +99,9 @@ window.addEventListener("load", () => {
                 ? event.target
                 : event.target.closest("#packBtn");
             const packId = packButton.dataset.id;
-
+            if (!User.isLogged()) {
+              return;
+            }
             if (packId) {
               Trips.setTrip(packId);
               location.href = "./html/resume.html";
@@ -270,23 +272,38 @@ function renderPassportGrid(continent = "") {
   });
 }
 
-// Lida com o modal dos favoritos
-const favoritesBtn = document.getElementById("favoritesBtn");
-// Ao clicar no botão dos favoritos, mostra o grid de favoritos
-favoritesBtn.addEventListener("click", () => {
-  renderFavoritesGrid();
-});
+// Botões para abrir o modal de favoritos
+const favoritesBtns = document.querySelectorAll(
+  '[data-modal-target="favorites-modal"]'
+);
 
-// Renderiza o grid de destinos favoritos do utilizador
+// Função para renderizar o grid de favoritos no modal
 function renderFavoritesGrid() {
   const user = User.getUserLogged();
   const favoritesModalGrid = document.getElementById("favoritesModalGrid");
   favoritesModalGrid.innerHTML = "";
+  if (!user) {
+    favoritesModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Nenhum destino favorito.</br>Faz login ou cria uma conta!</p>
+      </div>`
+    );
+    return;
+  }
 
-  /* Favoritos */
   const userFavorites = user.favorites;
 
-  // Mostra os destinos favoritos do utilizador com imagem da API Pexels
+  if (!userFavorites || userFavorites.length === 0) {
+    favoritesModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Nenhum destino favorito.</p>
+      </div>`
+    );
+    return;
+  }
+
   userFavorites.forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 
@@ -315,7 +332,7 @@ function renderFavoritesGrid() {
               <p class="font-bold text-gray-800">${favorite}</p>
             </div>
             <button 
-              class="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               data-action="remove-favorite"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -331,23 +348,33 @@ function renderFavoritesGrid() {
   });
 }
 
-// Evento para remover um favorito do utilizador ao clicar no botão de remover
-document
-  .getElementById("favoritesModalGrid")
-  .addEventListener("click", function (e) {
-    if (e.target.closest('[data-action="remove-favorite"]')) {
-      const favoriteItem = e.target.closest("[data-favorite]");
-      const destination = favoriteItem.getAttribute("data-favorite");
-
-      // Remove o favorito dos dados do utilizador
-      const user = User.getUserLogged();
-      user.favorites = user.favorites.filter((fav) => fav !== destination);
-      User.updateUserByObject(user);
-
-      // Re-renderiza o grid para mostrar favoritos atualizados
-      renderFavoritesGrid();
-    }
+// Adiciona eventos aos botões de favoritos para abrir o modal e renderizar o grid
+favoritesBtns.forEach((favoritesBtn) => {
+  favoritesBtn.addEventListener("click", () => {
+    renderFavoritesGrid();
   });
+});
+
+// Evento para remover um favorito do utilizador ao clicar no botão de remover
+document.addEventListener("click", function (e) {
+  if (e.target.closest('[data-action="remove-favorite"]')) {
+    const favoriteItem = e.target.closest("[data-favorite]");
+    const destination = favoriteItem.getAttribute("data-favorite");
+
+    // Remove o favorito dos dados do utilizador
+    const currentUser = User.getUserLogged();
+    currentUser.favorites = currentUser.favorites.filter(
+      (fav) => fav !== destination
+    );
+    User.updateUser(currentUser); // Atualiza o utilizador
+
+    // Re-renderiza o grid de favoritos
+    renderFavoritesGrid();
+
+    // Atualiza também a secção principal de favoritos no perfil
+    location.reload();
+  }
+});
 
 // Botões para aplicar ou cancelar as milhas do scratch
 let applyMilesBtn = document.querySelector("#applyMilesBtn");
