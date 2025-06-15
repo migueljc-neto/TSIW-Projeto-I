@@ -35,26 +35,32 @@ export function formatTime(dateString) {
 
 // Devolve o código IATA da companhia aérea (para mostrar o logo)
 export function getIata(company) {
-  // Mapeamento de nomes de companhias para códigos IATA
+  // Mapeamento de nomes de companhias para códigos IATA (para mostrar o logo)
   const IATA_CODES = {
     TAP: "TP",
-    Iberia: "IB",
     Vueling: "VY",
-    Ryanair: "FR",
-    "ITA Airways": "AZ",
-    Aegean: "A3",
-    "Turkish Airlines": "TK",
+    Iberia: "IB",
     "Air France": "AF",
     "British Airways": "BA",
-    KLM: "KL",
-    easyJet: "U2",
-    Eurowings: "EW",
-    "Austrian Airlines": "OS",
-    Swiss: "LX",
     Lufthansa: "LH",
+    Ryanair: "FR",
+    KLM: "KL",
+    "Swiss Air": "LX",
+    "Austrian Airlines": "OS",
+    SAS: "SK",
+    Norwegian: "DY",
     "Aer Lingus": "EI",
+    "Aegean Airlines": "A3",
+    "Turkish Airlines": "TK",
+    "Brussels Airlines": "SN",
+    "Czech Airlines": "OK",
+    Finnair: "AY",
+    "ITA Airways": "AZ",
+    Icelandair: "FI",
+    "Air Europa": "UX",
+    EasyJet: "U2",
+    Delta: "DL",
   };
-
   return IATA_CODES[company] || company;
 }
 

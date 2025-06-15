@@ -5,38 +5,56 @@ import * as Trips from "../models/tripModel.js";
 Flights.init();
 Trips.init();
 
-// Objeto de exemplo de uma viagem 
+// Objeto de exemplo de uma viagem
 let trip;
+let flightsTrip;
 
 // Obter parâmetros no url
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// Apenas executar se houver parametro de id
-if (id) {
-  trip = Trips.getSingleTripById(id);
-} else {
-  trip = JSON.parse(sessionStorage.getItem("currentTrip"));
-}
-
-if (!trip) {
-  console.error("No trip data available");
-  window.location.href = "./profile.html";
-}
-
-console.log(trip);
-let flightsTrip = Array.from(trip.flights);
-
 // Quando a página carregar, executa a função para preencher os dados
 window.addEventListener("DOMContentLoaded", () => {
+  // Apenas executar se houver parametro de id
+  if (id) {
+    trip = Trips.getSingleTripById(id);
+  } else {
+    const currentTripData = sessionStorage.getItem("currentTrip");
+    if (currentTripData) {
+      try {
+        trip = JSON.parse(currentTripData);
+      } catch (error) {
+        console.error("Error parsing currentTrip from sessionStorage:", error);
+        trip = null;
+      }
+    }
+  }
+
+  console.log(trip);
+
+  if (!trip) {
+    console.error("No trip data available");
+    window.location.href = "./profile.html";
+    return;
+  }
+
+  // Only set flightsTrip after confirming trip exists
+  flightsTrip = Array.from(trip.flights);
+
   populateData();
 });
 
 // Elemento onde será inserido o resumo dos voos
 const flightResume = document.getElementById("flightResume");
 
-// Função principal para preencher o resumo da viagem 
+// Função principal para preencher o resumo da viagem
 async function populateData() {
+  // Double-check trip exists (shouldn't be needed but for safety)
+  if (!trip) {
+    console.error("Trip data is not available in populateData");
+    return;
+  }
+
   // Limpa o conteúdo anterior
   flightResume.innerHTML = "";
 
@@ -229,10 +247,15 @@ function addActionButtons() {
       `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
   <div class="flex justify-around">
     <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
-    <button class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50">Pagar</button>
+    <button id="payment-btn" class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50">Pagar</button>
   </div>
 </div>`
     );
+
+    let paymentBtn = document.getElementById("payment-btn");
+    paymentBtn.addEventListener("click", () => {
+      location.href = "./payment.html";
+    });
   } else {
     // O URL tem parametro de id
     flightResume.insertAdjacentHTML(

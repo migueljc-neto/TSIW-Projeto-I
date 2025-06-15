@@ -366,13 +366,10 @@ document.addEventListener("click", function (e) {
     currentUser.favorites = currentUser.favorites.filter(
       (fav) => fav !== destination
     );
-    User.updateUser(currentUser); // Atualiza o utilizador
+    User.updateUserByObject(currentUser); // Atualiza o utilizador
 
     // Re-renderiza o grid de favoritos
     renderFavoritesGrid();
-
-    // Atualiza também a secção principal de favoritos no perfil
-    location.reload();
   }
 });
 

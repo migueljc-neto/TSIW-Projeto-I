@@ -5,7 +5,7 @@ import * as Helper from "../models/ModelHelper.js";
 Flights.init();
 
 // Lista de destinos para o percurso
-const destinations = ["OPO", "LIS", "MAD", "ROM"];
+const destinations = ["OSL", "STO", "CPH"];
 const name = "Viagem Europeia";
 const flightsSection = document.getElementById("flightsSection");
 let totalPrice = 0; // Preço total dos voos selecionados
@@ -281,7 +281,7 @@ function populateView() {
         <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
           Cancelar
         </button>
-        <button id="payment-btn" class="bg-transparent border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded flex items-center" disabled>
+        <button id="resume-btn" class="bg-transparent border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded flex items-center" disabled>
           <span>0/${totalSections}</span>
         </button>
       </div>
@@ -289,10 +289,10 @@ function populateView() {
   );
 
   // Adiciona o event listener ao botão de pagamento
-  const paymentBtn = document.getElementById("payment-btn");
-  if (paymentBtn) {
-    paymentBtn.addEventListener("click", function () {
-      if (paymentBtn.disabled) return;
+  const resumeBtn = document.getElementById("resume-btn");
+  if (resumeBtn) {
+    resumeBtn.addEventListener("click", function () {
+      if (resumeBtn.disabled) return;
 
       const flightIds = [];
       for (let i = 0; i < totalSections; i++) {
@@ -301,6 +301,19 @@ function populateView() {
         }
       }
       console.log("Selected flights:", flightIds);
+      const currentTrip = {
+        name: name, // "Viagem Europeia"
+        flights: flightIds, // Array of selected flight IDs
+      };
+
+      // Store the trip data in sessionStorage
+      sessionStorage.setItem("currentTrip", JSON.stringify(currentTrip));
+
+      const flightResume = document.getElementById("flightResume");
+      const selectFlight = document.getElementById("selectFlight");
+      selectFlight.classList.add("hidden");
+      flightResume.classList.remove("hidden");
+      location.href = "./resume.html";
     });
   }
 
@@ -638,11 +651,11 @@ function updateTotal() {
 
 // Atualiza o contador de voos selecionados e o botão de pagamento
 function updateCounter() {
-  const btn = document.getElementById("payment-btn");
+  const btn = document.getElementById("resume-btn");
 
   if (btn) {
     if (selectedCount === totalSections) {
-      btn.innerHTML = `<span>Pagamento</span>`;
+      btn.innerHTML = `<span>Ver Resumo</span>`;
       btn.classList.remove(
         "bg-transparent",
         "border-gray-600",
