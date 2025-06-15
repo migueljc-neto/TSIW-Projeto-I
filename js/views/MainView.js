@@ -48,10 +48,10 @@ window.addEventListener("load", () => {
     <img src="${image}" alt="${pack.name}" class="w-full h-auto rounded-t-lg" />
     <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white color-primary p-2">
       <div class="flex gap-6 items-center font-space font-light mb-3">
-        <p class="text-lg">${pack.name}</p>
-        <p class="text-sm">${Helper.formatDateToLabel(
+        <p class="text-md sm:text-lg">${pack.name}</p>
+        <p class="text-xs sm:text-sm">${Helper.formatDateToLabel(
           pack.startDate
-        )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
+        )}</br>${Helper.formatDateToLabel(pack.endDate)}</p>
       </div>
       <div class="color-primary font-light">${pack.price}€</div>
     </div>
