@@ -1,3 +1,4 @@
+// Importa os módulos necessários para gerir viagens, utilizadores, voos e helpers
 import * as Trips from "../models/TripModel.js";
 import * as Helper from "../models/modelHelper.js";
 import * as User from "../models/UserModel.js";
@@ -268,6 +269,85 @@ function renderPassportGrid(continent = "") {
     );
   });
 }
+
+// Lida com o modal dos favoritos
+const favoritesBtn = document.getElementById("favoritesBtn");
+// Ao clicar no botão dos favoritos, mostra o grid de favoritos
+favoritesBtn.addEventListener("click", () => {
+  renderFavoritesGrid();
+});
+
+// Renderiza o grid de destinos favoritos do utilizador
+function renderFavoritesGrid() {
+  const user = User.getUserLogged();
+  const favoritesModalGrid = document.getElementById("favoritesModalGrid");
+  favoritesModalGrid.innerHTML = "";
+
+  /* Favoritos */
+  const userFavorites = user.favorites;
+
+  // Mostra os destinos favoritos do utilizador com imagem da API Pexels
+  userFavorites.forEach((favorite) => {
+    const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+
+    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
+      headers: {
+        Authorization: apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const image =
+          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+
+        favoritesModalGrid.insertAdjacentHTML(
+          "beforeend",
+          `<div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24 relative group" data-favorite="${favorite}">
+            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${favorite}</span>
+            <div class="w-2/5">
+              <img
+                src="${image}"
+                alt="${favorite}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <p class="font-bold text-gray-800">${favorite}</p>
+            </div>
+            <button 
+              class="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              data-action="remove-favorite"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>`
+        );
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar imagem:", err);
+      });
+  });
+}
+
+// Evento para remover um favorito do utilizador ao clicar no botão de remover
+document
+  .getElementById("favoritesModalGrid")
+  .addEventListener("click", function (e) {
+    if (e.target.closest('[data-action="remove-favorite"]')) {
+      const favoriteItem = e.target.closest("[data-favorite]");
+      const destination = favoriteItem.getAttribute("data-favorite");
+
+      // Remove o favorito dos dados do utilizador
+      const user = User.getUserLogged();
+      user.favorites = user.favorites.filter((fav) => fav !== destination);
+      User.updateUserByObject(user);
+
+      // Re-renderiza o grid para mostrar favoritos atualizados
+      renderFavoritesGrid();
+    }
+  });
 
 // Botões para aplicar ou cancelar as milhas do scratch
 let applyMilesBtn = document.querySelector("#applyMilesBtn");

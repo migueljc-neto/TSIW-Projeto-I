@@ -44,7 +44,7 @@ export function updateUser(id, { name, email, password, isAdmin }) {
 
   user.name = name;
   user.email = email;
-  user.isAdmin = isAdmin === true || isAdmin === "true";
+  user.isAdmin = isAdmin === true;
 
   // Se for fornecida nova password, faz hash e atualiza
   if (password !== "") {
@@ -66,6 +66,26 @@ export function updateLoggedUser(id) {
 
   localStorage.setItem("loggedUser", JSON.stringify(user));
   sessionStorage.setItem("loggedUser", JSON.stringify(user));
+}
+
+// Atualiza um utilizador por objeto
+export function updateUserByObject(userToUpdate) {
+  const userIndex = users.findIndex((user) => user.id === userToUpdate.id);
+
+  if (userIndex === -1) {
+    throw Error("Utilizador não encontrado!");
+  }
+
+  // Atualiza o utilizador no array
+  users[userIndex] = { ...users[userIndex], ...userToUpdate };
+
+  // Guarda no localStorage
+  localStorage.setItem("users", JSON.stringify(users));
+
+  // Atualiza também o utilizador logado se for o mesmo
+  updateLoggedUser(userToUpdate.id);
+
+  return users[userIndex];
 }
 
 // Atualiza as milhas do utilizador após o scratch

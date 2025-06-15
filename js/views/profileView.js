@@ -24,7 +24,7 @@ const tripsWrapper = document.getElementById("tripsWrapper");
 const profileImg = document.getElementById("profileImg");
 const profileEditBtn = document.getElementById("profileEditBtn");
 
-// Ao carregar a página, preenche os dados do perfil
+// Ao carregar a página, preenche os dados do perfil do utilizador
 window.addEventListener("load", (event) => {
   // Escolhe um avatar aleatório
   let avatarInt = Math.floor(Math.random() * 5) + 1;
@@ -176,6 +176,93 @@ const passportBtns = document.querySelectorAll(
   '[data-modal-target="passport-modal"]'
 );
 
+// Botões para abrir o modal de favoritos
+const favoritesBtns = document.querySelectorAll(
+  '[data-modal-target="favorites-modal"]'
+);
+
+// Função para renderizar o grid de favoritos no modal
+function renderFavoritesGrid() {
+  const user = User.getUserLogged();
+  const favoritesModalGrid = document.getElementById("favoritesModalGrid");
+  favoritesModalGrid.innerHTML = "";
+
+  /* Favoritos */
+  const userFavorites = user.favorites;
+
+  // Mostra os destinos favoritos do utilizador com imagem da API Pexels
+  userFavorites.forEach((favorite) => {
+    const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+
+    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
+      headers: {
+        Authorization: apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const image =
+          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+
+        favoritesModalGrid.insertAdjacentHTML(
+          "beforeend",
+          `<div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24 relative group" data-favorite="${favorite}">
+            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${favorite}</span>
+            <div class="w-2/5">
+              <img
+                src="${image}"
+                alt="${favorite}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <p class="font-bold text-gray-800">${favorite}</p>
+            </div>
+            <button 
+              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              data-action="remove-favorite"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>`
+        );
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar imagem:", err);
+      });
+  });
+}
+
+// Adiciona eventos aos botões de favoritos para abrir o modal e renderizar o grid
+favoritesBtns.forEach((favoritesBtn) => {
+  favoritesBtn.addEventListener("click", () => {
+    renderFavoritesGrid();
+  });
+});
+
+// Evento para remover um favorito do utilizador ao clicar no botão de remover
+document.addEventListener("click", function (e) {
+  if (e.target.closest('[data-action="remove-favorite"]')) {
+    const favoriteItem = e.target.closest("[data-favorite]");
+    const destination = favoriteItem.getAttribute("data-favorite");
+
+    // Remove o favorito dos dados do utilizador
+    const currentUser = User.getUserLogged();
+    currentUser.favorites = currentUser.favorites.filter(
+      (fav) => fav !== destination
+    );
+    User.updateUser(currentUser); // Atualiza o utilizador
+
+    // Re-renderiza o grid de favoritos
+    renderFavoritesGrid();
+
+    // Atualiza também a secção principal de favoritos no perfil
+    location.reload();
+  }
+});
+
 // Ao clicar, mostra o grid de países visitados e não visitados
 passportBtns.forEach((passportBtn) => {
   Helper.getAllCountries().then((data) => {
@@ -206,6 +293,7 @@ const userEditModal = new Modal(document.getElementById("userEditModal"), {
   },
 });
 
+// Ao clicar no botão de editar perfil, mostra o modal e preenche os campos
 profileEditBtn.addEventListener("click", (event) => {
   const user = User.getUserLogged();
   userEditModal.show();
