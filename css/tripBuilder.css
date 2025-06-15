@@ -26,6 +26,7 @@ label {
 }
 .destinationGhost {
   background-color: #6c6ea0;
+  transform: scale(0.7) !important;
 }
 
 .tripGhost {

@@ -27,7 +27,7 @@
     <!-- sortableJS -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   </head>
-  <body class="dark:bg-gray-800! bg-none! px-20">
+  <body class="dark:bg-gray-800! bg-none! px-10 minw-[450px]">
     <header class="pt-2 top-0 w-full bg-transparent z-50">
       <div class="max-w-[1530px] flex gap-10 items-center py-4">
         <!-- LightMode Logo -->
@@ -66,8 +66,8 @@
     </header>
     <main class="flex flex-col gap-2">
       <!-- Search Options -->
-      <div class="flex items-center gap-7 dark:text-white py-1 items-end">
-        <div class="p-1 lg:flex-row flex flex-col gap-1">
+      <div class="flex gap-7 dark:text-white py-1 items-center">
+        <div class="p-1 lg:flex-row flex gap-2 min-w-fit">
           <button
             id="mapViewBtn"
             class="bg-blue-100 p-2 rounded-lg border-3 border-blue-600 cursor-pointer hover:bg-blue-100"
@@ -81,7 +81,7 @@
             <img src="../img/icons/blue/menu.svg" alt="menuIcon" class="h-4" />
           </button>
         </div>
-        <div class="relative mb-6">
+        <div class="relative flex-col">
           <label
             for="steps-range"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -94,17 +94,18 @@
             max="1000"
             value="100"
             step="50"
-            class="w-md h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+            class="min-w-60 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
           />
           <span
-            class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
+            class="hidden lg:flex text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
             >Min (100€)</span
           >
           <span
-            class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
+            class="hidden lg:flex text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
             >Max (1000€)</span
           >
         </div>
+        <input type="text" class="border-1 border-blue-600 h-10 p-2" />
       </div>
 
       <!-- Main Grid -->
@@ -114,12 +115,12 @@
         <!-- map view -->
         <div
           id="map"
-          class="h-100 lg:h-150 w-full rounded-lg lg:border-2 border-blue-900"
+          class="h-75 lg:h-100 w-full rounded-lg lg:border-2 border-blue-900 overflow-show"
         ></div>
         <!-- list view -->
         <div
           id="mapListView"
-          class="h-100 lg:h-150 w-full rounded-lg border-1 border-blue-900 hidden bg-white overflow-y-auto"
+          class="h-75 lg:h-100 w-full rounded-lg border-1 border-blue-900 hidden bg-white overflow-y-auto"
         >
           <ul
             id="destinationSortableListView"
@@ -128,28 +129,31 @@
         </div>
 
         <!-- Trip Destination List -->
-        <div class="flex flex-col gap-3 h-full">
+        <div class="flex flex-col gap-3 max-h-100">
           <div
-            class="pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-10 lg:h-20 w-full flex items-center gap-3 rounded-lg"
+            class="px-5 py-2 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-10 lg:h-20 w-full flex items-center justify-between gap-3 rounded-lg"
           >
-            <img
-              src="../img/icons/white/plane.svg"
-              alt="startingPoint"
-              class="h-5"
-            />
-            <p id="origin">Start Point</p>
+            <div class="flex gap-3">
+              <img
+                src="../img/icons/white/plane.svg"
+                alt="startingPoint"
+                class="h-5"
+              />
+              <p id="origin">Start Point</p>
+            </div>
+            <img src="/img/icons/white/arrow.svg" alt="arrowIcon" />
           </div>
-
-          <div class="h-40 lg:h-full">
+          <div class="flex flex-row lg:flex-col w-full gap-2">
             <ul
               id="destinationSortableList"
-              class="space-y-2 max-h-full min-h-full border-1 border-blue-200 p-2 rounded-lg overflow-y-auto bg-white"
+              class="flex flex-row lg:flex-col h-20 max-h-20 lg:h-70 lg:max-h-70 w-full border-1 border-blue-200 p-2 rounded-lg overflow-y-auto bg-white gap-2"
             ></ul>
+
+            <div
+              id="trashCan"
+              class="lg:w-full lg:h-10 w-20 h-20 border-1 border-red-600 p-2 rounded-lg bg-white flex justify-center items-center bg-[url(../img/icons/other/trashCanRed.png)] opacity-30 bg-no-repeat bg-center"
+            ></div>
           </div>
-          <div
-            id="trashCan"
-            class="h-10 border-1 border-red-600 p-2 rounded-lg bg-white flex justify-center items-center bg-[url(../img/icons/other/trashCanRed.png)] opacity-30 bg-no-repeat bg-center"
-          ></div>
         </div>
         <!-- Poi Cards -->
         <div id="poiSection" class="hidden lg:flex flex-col h-full gap-2">
@@ -173,19 +177,20 @@
         </div>
 
         <!-- Submit Panel -->
-        <div class="w-full h-full flex flex-col p-2 gap-2 dark:text-white">
-          <div id="returnTripRadio" class="flex gap-3 w-full">
-            <div class="flex items-center gap-2">
-              <label for="return" class="select-none"> Ida e Volta</label>
-              <input type="radio" id="return" name="tripRadio" />
+        <div class="w-full h-full flex flex-col p-2 gap-4 dark:text-white">
+          <div class="flex flex-row lg:flex-col gap-10 lg:gap-5">
+            <div id="returnTripRadio" class="flex gap-3 w-fit">
+              <div class="flex items-center gap-2">
+                <label for="return" class="select-none"> Ida e Volta</label>
+                <input type="radio" id="return" name="tripRadio" />
+              </div>
+              <div class="flex items-center gap-2">
+                <label for="oneWay" class="select-none"> Ida</label>
+                <input checked type="radio" id="oneWay" name="tripRadio" />
+              </div>
             </div>
-            <div class="flex items-center gap-2">
-              <label for="oneWay" class="select-none"> Ida</label>
-              <input checked type="radio" id="oneWay" name="tripRadio" />
-            </div>
+            <p>Milhas: <span id="miles">****</span> mi</p>
           </div>
-          <p>Nº de Milhas: <span id="miles">****</span> mls</p>
-
           <div class="flex gap-3 my-auto">
             <button
               id="clearListBtn"

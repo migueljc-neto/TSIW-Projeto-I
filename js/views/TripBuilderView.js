@@ -39,6 +39,7 @@ let originObj;
 
 /* Map */
 var map;
+let testPin;
 
 /* Map Icons */
 const mapOriginIcon = L.icon({
@@ -154,42 +155,47 @@ new Sortable(tripList, {
 
       if (item && item.classList) {
         item.removeChild(child);
-        item.setAttribute("tabindex", "1");
-        item.classList.remove("bg-white", "p-4", "rounded");
+        item.classList.remove("bg-white", "px-4", "rounded", "h-fit", "py-2");
         item.classList.add(
-          "pr-10",
-          "pl-5",
+          "px-2",
+          "py-2",
           "bg-[#39578A]",
-          "focus:bg-[#6C6EA0]",
           "text-white",
-          "h-20",
-          "w-full",
+          "lg:pl-5",
+          "lg:pr-10",
+          "lg:h-20",
+          "lg:min-h-20",
+          "lg:w-full",
+          "h-full",
+          "w-25",
+          "min-w-25",
           "flex",
           "items-center",
-          "justify-between",
+          "lg:justify-between",
+          "justify-center",
           "rounded-lg"
         );
 
         item.insertAdjacentHTML(
           "afterbegin",
-          ` <div class="flex gap-5 inline-flex">
+          ` <div class="flex gap-5 inline-flex w-fit">
                 <img
                   src="../img/icons/white/destinationElipse.svg"
                   alt="startingPoint"
+                  class="hidden lg:flex"
                 />
                 <p id="destinationName" class="truncate">${itemValue}</p>
               </div>
-              <div class="flex hide gap-5">
+              
                 <div
                   id="drag"
-                  class="cursor-pointer"
+                  class="cursor-pointer hidden lg:flex"
                 >
                   <img
                     src="../img/icons/white/menu.svg"
                     alt="trashIcon"
                     class="h-5"
                   />
-                </div>
               </div>`
         );
       }
@@ -241,10 +247,15 @@ document.addEventListener("DOMContentLoaded", () => {
   loadMap(userQuery.origin);
 
   document.getElementById("origin").textContent = userQuery.origin;
+
+  testPin = L.marker([40, 0], {
+    icon: ballIcon,
+    zIndexOffset: 1000,
+  }).addTo(pathGroup);
 });
 
 const createMap = function (origin) {
-  var map = L.map("map").setView([origin.originLat, origin.originLong], 5);
+  map = L.map("map").setView([origin.originLat, origin.originLong], 5);
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 12,
@@ -269,6 +280,13 @@ const createMap = function (origin) {
     icon: mapOriginIcon,
     zIndexOffset: 1000,
   }).addTo(map);
+
+  map.addEventListener("move", function () {
+    console.log("moving");
+
+    console.log(map.getBounds().contains(testPin.getLatLng()));
+    console.log(map.getBounds());
+  });
 };
 
 function loadMap(origin) {
@@ -294,7 +312,7 @@ function loadMap(origin) {
       /* populate listView */
       destinationList.insertAdjacentHTML(
         "beforeend",
-        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
+        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white px-4 py-2 rounded shadow-lg h-fit" value="${flight.destinationName}" id="${flight.id}">
         <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
       </li>`
       );
@@ -399,18 +417,19 @@ function addToList(id) {
   const flight = Flight.getFlightById(id);
 
   const itemHTML = `
-    <li id="${flight.id}" tabindex="1" class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg">
+    <li id="${flight.id}" tabindex="1" class="px-2 py-2 lg:pr-10 lg:pl-5 bg-[#39578A]  text-white lg:h-20 lg:min-h-20 lg:w-full h-full w-25 min-w-25 flex items-center lg:justify-between justify-center rounded-lg">
         <div class="flex gap-5 inline-flex">
                 <img
                   src="../img/icons/white/destinationElipse.svg"
                   alt="startingPoint"
+                  class="hidden lg:flex"
                 />
                 <p id="destinationName" class="truncate">${flight.destinationName}</p>
               </div>
               <div class="flex hide gap-5">
                 <div
                   id="drag"
-                  class="cursor-pointer"
+                  class="cursor-pointer hidden lg:flex"
                 >
                   <img
                     src="../img/icons/white/menu.svg"
@@ -425,6 +444,7 @@ function addToList(id) {
   tripList.insertAdjacentHTML("beforeend", itemHTML);
   loadMap(flight.destination);
   tripList.scrollTop = tripList.scrollHeight;
+  tripList.scrollTop = tripList.scrollWidth;
   updateMap();
 }
 
@@ -438,6 +458,7 @@ function mapLine() {
       }).addTo(pathGroup);
     }
   };
+
   const createTripPoi = function (obj, index, arrLeng) {
     console.log(obj.pois);
 
@@ -447,6 +468,7 @@ function mapLine() {
       }).addTo(pathGroup);
     }
   };
+
   const createMapLines = function (obj, index, arr) {
     if (index != 0) {
       const flightLine = L.polyline(
@@ -490,6 +512,7 @@ function mapLine() {
 
 function updateMap() {
   mapLine();
+
   let origin = Array.from(tripList.getElementsByTagName("li"));
   if (origin.length == 0) {
     clearBtn.classList.add("disabled");
