@@ -26,6 +26,7 @@ label {
 }
 .destinationGhost {
   background-color: #6c6ea0;
+  transform: scale(0.7) !important;
 }
 
 .tripGhost {
@@ -51,4 +52,10 @@ label {
 .leaflet-popup-content {
   margin: 0px !important;
   width: auto !important;
+}
+
+.disabled {
+  border-color: gray !important;
+  background-color: white !important;
+  color: gray !important;
 }

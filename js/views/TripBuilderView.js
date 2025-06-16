@@ -1,11 +1,15 @@
 import * as Flight from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
 import * as User from "../models/userModel.js";
+import * as Tourism from "../models/tourismtypeModel.js";
 Flight.init();
+Tourism.init();
 
 /* Map and list view buttons */
 const mapViewBtn = document.getElementById("mapViewBtn");
 const listViewBtn = document.getElementById("listViewBtn");
+const priceSlider = document.getElementById("steps-range");
+const maxPrice = document.getElementById("maxPrice");
 
 /* Grid Cells */
 const mapCell = document.getElementById("map");
@@ -17,6 +21,10 @@ const poiDisplay = document.getElementById("poiTitle");
 const tripList = document.getElementById("destinationSortableList");
 const destinationList = document.getElementById("destinationSortableListView");
 const trashCan = document.getElementById("trashCan");
+const clearBtn = document.getElementById("clearListBtn");
+const submitBtn = document.getElementById("submitBtn");
+
+let maxPriceValue;
 
 /* map icons */
 let iconGroup;
@@ -24,7 +32,7 @@ let pathGroup;
 let poiGroup;
 
 const user = User.getUserLogged();
-let tourismTypeQuery;
+let tourismTypeId;
 let departureDate;
 /* Origin Obj */
 let originObj;
@@ -48,7 +56,6 @@ const favIcon = L.icon({
   iconSize: [20, 20],
   iconAnchor: [10, 10],
 });
-
 const pathIcon = L.icon({
   iconUrl: "/img/icons/other/pathLastPoint.png",
   iconSize: [16, 25],
@@ -147,42 +154,47 @@ new Sortable(tripList, {
 
       if (item && item.classList) {
         item.removeChild(child);
-        item.setAttribute("tabindex", "1");
-        item.classList.remove("bg-white", "p-4", "rounded");
+        item.classList.remove("bg-white", "px-4", "rounded", "h-fit", "py-2");
         item.classList.add(
-          "pr-10",
-          "pl-5",
+          "px-2",
+          "py-2",
           "bg-[#39578A]",
-          "focus:bg-[#6C6EA0]",
           "text-white",
-          "h-20",
-          "w-full",
+          "lg:pl-5",
+          "lg:pr-10",
+          "lg:h-20",
+          "lg:min-h-20",
+          "lg:w-full",
+          "h-full",
+          "w-25",
+          "min-w-25",
           "flex",
           "items-center",
-          "justify-between",
+          "lg:justify-between",
+          "justify-center",
           "rounded-lg"
         );
 
         item.insertAdjacentHTML(
           "afterbegin",
-          ` <div class="flex gap-5 inline-flex">
+          ` <div class="flex gap-5 inline-flex w-fit">
                 <img
                   src="../img/icons/white/destinationElipse.svg"
                   alt="startingPoint"
+                  class="hidden lg:flex"
                 />
                 <p id="destinationName" class="truncate">${itemValue}</p>
               </div>
-              <div class="flex hide gap-5">
+              
                 <div
                   id="drag"
-                  class="cursor-pointer"
+                  class="cursor-pointer hidden lg:flex"
                 >
                   <img
                     src="../img/icons/white/menu.svg"
                     alt="trashIcon"
                     class="h-5"
                   />
-                </div>
               </div>`
         );
       }
@@ -223,12 +235,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
-  tourismTypeQuery = JSON.parse(localStorage.getItem("tourismTypes")).filter(
-    (type) => type.name === userQuery.typeOfTourism
-  )[0].id;
-  createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
   departureDate = Helper.formatDateToYMD(userQuery.date);
-  console.log(departureDate);
+  tourismTypeId = Tourism.getTourismId(userQuery.typeOfTourism);
+  priceSlider.value = 100;
+  maxPrice.textContent = `100 €`;
+  maxPriceValue = 100;
+
+  createMap(Flight.getFlightsByOrigin(userQuery.origin)[0]);
 
   loadMap(userQuery.origin);
 
@@ -236,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const createMap = function (origin) {
-  var map = L.map("map").setView([origin.originLat, origin.originLong], 5);
+  map = L.map("map").setView([origin.originLat, origin.originLong], 5);
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 12,
@@ -261,10 +274,14 @@ const createMap = function (origin) {
     icon: mapOriginIcon,
     zIndexOffset: 1000,
   }).addTo(map);
+
+  map.addEventListener("move", function () {});
 };
 
 function loadMap(origin) {
   const flightList = Flight.getFlightsByOrigin(origin);
+
+  Flight.filterByTourismId(flightList, tourismTypeId);
 
   iconGroup.clearLayers();
   poiGroup.clearLayers();
@@ -273,24 +290,18 @@ function loadMap(origin) {
 
   /* flight loop */
   flightList.forEach((flight) => {
-    let flightTourismType = [];
-    flight.poi.forEach((poi) => flightTourismType.push(...poi.tourismTypes));
     let formatedDepartureTime = Date.parse(
       flight.departureTime.split("T")[0].split("-").join(",")
     );
 
-    console.log(formatedDepartureTime);
-
-    console.log(1751324400000 > 1749596400000);
     if (
-      /* flightTourismType.includes(tourismTypeQuery) && */
-
-      departureDate < formatedDepartureTime
+      departureDate < formatedDepartureTime &&
+      flight.price <= maxPriceValue
     ) {
       /* populate listView */
       destinationList.insertAdjacentHTML(
         "beforeend",
-        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white p-4 rounded shadow-lg last" value="${flight.destinationName}" id="${flight.id}">
+        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white px-4 py-2 rounded shadow-lg h-fit" value="${flight.destinationName}" id="${flight.id}">
         <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
       </li>`
       );
@@ -377,8 +388,8 @@ function loadMap(origin) {
               poiCards.insertAdjacentHTML(
                 "beforeend",
                 ` <div class="group border-2 border-blue-800 bg-[url(${image})] bg-cover w-30 h-30 rounded-lg">
-                  <div class=" hidden group-hover:flex p-2 items-center text-center w-full h-full flex bg-[#6C6EA0] opacity-75 rounded-lg">
-                    <span class="text-white">${poi.name}</span>
+                  <div class=" hidden group-hover:flex p-2 justify-center items-center text-center w-full h-full flex bg-[#6C6EA0] opacity-75 rounded-lg">
+                    <span class="text-white flex">${poi.name}</span>
                   </div>
                 </div>
               `
@@ -395,18 +406,19 @@ function addToList(id) {
   const flight = Flight.getFlightById(id);
 
   const itemHTML = `
-    <li id="${flight.id}" tabindex="1" class="pr-10 pl-5 bg-[#39578A] focus:bg-[#6C6EA0] text-white h-20 w-full flex items-center justify-between rounded-lg">
+    <li id="${flight.id}" tabindex="1" class="px-2 py-2 lg:pr-10 lg:pl-5 bg-[#39578A]  text-white lg:h-20 lg:min-h-20 lg:w-full h-full w-25 min-w-25 flex items-center lg:justify-between justify-center rounded-lg">
         <div class="flex gap-5 inline-flex">
                 <img
                   src="../img/icons/white/destinationElipse.svg"
                   alt="startingPoint"
+                  class="hidden lg:flex"
                 />
                 <p id="destinationName" class="truncate">${flight.destinationName}</p>
               </div>
               <div class="flex hide gap-5">
                 <div
                   id="drag"
-                  class="cursor-pointer"
+                  class="cursor-pointer hidden lg:flex"
                 >
                   <img
                     src="../img/icons/white/menu.svg"
@@ -421,6 +433,8 @@ function addToList(id) {
   tripList.insertAdjacentHTML("beforeend", itemHTML);
   loadMap(flight.destination);
   tripList.scrollTop = tripList.scrollHeight;
+  tripList.scrollTop = tripList.scrollWidth;
+  updateMap();
 }
 
 function mapLine() {
@@ -433,6 +447,7 @@ function mapLine() {
       }).addTo(pathGroup);
     }
   };
+
   const createTripPoi = function (obj, index, arrLeng) {
     console.log(obj.pois);
 
@@ -442,6 +457,7 @@ function mapLine() {
       }).addTo(pathGroup);
     }
   };
+
   const createMapLines = function (obj, index, arr) {
     if (index != 0) {
       const flightLine = L.polyline(
@@ -485,10 +501,15 @@ function mapLine() {
 
 function updateMap() {
   mapLine();
+
   let origin = Array.from(tripList.getElementsByTagName("li"));
   if (origin.length == 0) {
+    clearBtn.classList.add("disabled");
+    submitBtn.classList.add("disabled");
     loadMap(originObj.objName);
   } else {
+    clearBtn.classList.remove("disabled");
+    submitBtn.classList.remove("disabled");
     loadMap(
       Flight.getFlightById(
         parseInt(origin[origin.length - 1].getAttribute("id"))
@@ -501,3 +522,14 @@ const saveTripList = function () {
   let liArray = Array.from(tripList.getElementsByTagName("li"));
   console.log(liArray);
 };
+
+clearBtn.addEventListener("click", function () {
+  tripList.innerHTML = "";
+  updateMap();
+});
+
+priceSlider.addEventListener("input", function () {
+  maxPrice.textContent = `${priceSlider.value} €`;
+  maxPriceValue = parseInt(priceSlider.value);
+  updateMap();
+});

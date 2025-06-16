@@ -43,6 +43,23 @@ export function deleteTourismType(id) {
   localStorage.setItem("tourismTypes", JSON.stringify(tourismTypes));
 }
 
+// Função para pesquisa de tipos de turismo (exemplo: retorna true se for "Todos")
+export function searchAllTypes(value) {
+  if (value === "Todos") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function getTourismId(tourismQuery) {
+  if (tourismQuery === "Todos") {
+    return "todos";
+  }
+  let allTourismTypes = getAll();
+  return allTourismTypes.find((type) => type.name === tourismQuery).id;
+}
+
 // Classe que representa um tipo de turismo
 class TourismType {
   id = null;
@@ -51,14 +68,5 @@ class TourismType {
   constructor(id, name) {
     this.id = id;
     this.name = name;
-  }
-}
-
-// Função para pesquisa de tipos de turismo (exemplo: retorna true se for "Todos")
-export function searchAllTypes(value) {
-  if (value === "Todos") {
-    return true;
-  } else {
-    return false;
   }
 }

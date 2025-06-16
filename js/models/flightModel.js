@@ -216,6 +216,16 @@ export function saveFlightFromData(formData) {
 }
 
 // Classe que representa um voo
+export function filterByTourismId(flightArray, tourismId) {
+  if (tourismId === "todos") {
+    return flightArray;
+  }
+
+  return flightArray.filter((flight) =>
+    flight.tourismTypes.includes(tourismId)
+  );
+}
+
 class Flight {
   id = null;
   origin = "";

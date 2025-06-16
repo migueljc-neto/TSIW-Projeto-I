@@ -309,3 +309,7 @@ export function getTurismTypeId(tourismType) {
     }
   }
 }
+
+export function focusPoi() {
+  console.log(poi.name);
+}
