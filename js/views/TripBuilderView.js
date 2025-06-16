@@ -311,7 +311,7 @@ function loadMap(origin) {
         ? favIcon
         : destinIcon;
 
-      const marker = L.marker([flight.destinLat, flight.destinLong], {
+      const marker = L.marker([flight.destinationLat, flight.destinationLong], {
         icon: pin,
         zIndexOffset: 900,
       }).addTo(iconGroup);
@@ -485,8 +485,8 @@ function mapLine() {
 
     const destinObj = Helper.createDestinObj(
       flight.destination,
-      flight.destinLat,
-      flight.destinLong,
+      flight.destinationLat,
+      flight.destinationLong,
       flight.poi
     );
 
