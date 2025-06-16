@@ -39,7 +39,6 @@ let originObj;
 
 /* Map */
 var map;
-let testPin;
 
 /* Map Icons */
 const mapOriginIcon = L.icon({
@@ -247,11 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadMap(userQuery.origin);
 
   document.getElementById("origin").textContent = userQuery.origin;
-
-  testPin = L.marker([40, 0], {
-    icon: ballIcon,
-    zIndexOffset: 1000,
-  }).addTo(pathGroup);
 });
 
 const createMap = function (origin) {
@@ -281,12 +275,7 @@ const createMap = function (origin) {
     zIndexOffset: 1000,
   }).addTo(map);
 
-  map.addEventListener("move", function () {
-    console.log("moving");
-
-    console.log(map.getBounds().contains(testPin.getLatLng()));
-    console.log(map.getBounds());
-  });
+  map.addEventListener("move", function () {});
 };
 
 function loadMap(origin) {
