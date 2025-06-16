@@ -177,11 +177,16 @@ export function createDestinObj(destinName, latitude, longitude, poi) {
   return obj;
 }
 
-// Formata uma data para o formato YYYY-MM-DD (útil para comparar datas)
+// Formata uma data para o formato YYYY-MM-DD
 export function formatDateToYMD(dateString) {
-  const [day, month, year] = dateString.split("-");
-
-  return Date.parse(`${year},${month},${day}`);
+  if (dateString.includes("T") || dateString.match(/^\d{4}-\d{2}-\d{2}/)) {
+    const dateOnly = dateString.split("T")[0];
+    const [year, month, day] = dateOnly.split("-");
+    return Date.parse(`${year},${month},${day}`);
+  } else {
+    const [day, month, year] = dateString.split("-");
+    return Date.parse(`${year},${month},${day}`);
+  }
 }
 
 // Formata a data de um voo (função placeholder)
@@ -211,7 +216,7 @@ export function loadViews(flight) {
       ? favIcon
       : destinIcon;
 
-    const marker = L.marker([flight.destinLat, flight.destinLong], {
+    const marker = L.marker([flight.destinationLat, flight.destinationLong], {
       icon: pin,
       zIndexOffset: 900,
     }).addTo(iconGroup);

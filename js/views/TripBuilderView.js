@@ -502,19 +502,25 @@ function mapLine() {
 function updateMap() {
   mapLine();
 
-  let origin = Array.from(tripList.getElementsByTagName("li"));
-  if (origin.length == 0) {
+  let tripItems = Array.from(tripList.getElementsByTagName("li"));
+  
+  if (tripItems.length == 0) {
+    // Reset to original departure date when no destinations are selected
+    const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
+    departureDate = Helper.formatDateToYMD(userQuery.date);
+    
     clearBtn.classList.add("disabled");
     submitBtn.classList.add("disabled");
     loadMap(originObj.objName);
   } else {
+    // Update departure date to the arrival time of the last destination
+    const lastFlightId = parseInt(tripItems[tripItems.length - 1].getAttribute("id"));
+    const lastFlight = Flight.getFlightById(lastFlightId);
+    departureDate = Helper.formatDateToYMD(lastFlight.arrivalTime);
+    
     clearBtn.classList.remove("disabled");
     submitBtn.classList.remove("disabled");
-    loadMap(
-      Flight.getFlightById(
-        parseInt(origin[origin.length - 1].getAttribute("id"))
-      ).destination
-    );
+    loadMap(lastFlight.destination);
   }
 }
 
