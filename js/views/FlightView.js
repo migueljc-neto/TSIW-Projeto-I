@@ -191,6 +191,7 @@ function populateView() {
   }
 
   // Adiciona os event listeners para seleção de datas no carrossel
+
   document.querySelectorAll("[data-date]").forEach((item) => {
     item.addEventListener("click", function () {
       const date = this.getAttribute("data-date");
@@ -292,6 +293,7 @@ function populateView() {
   const resumeBtn = document.getElementById("resume-btn");
   if (resumeBtn) {
     resumeBtn.addEventListener("click", function () {
+      let finalPrice = totalPrice;
       if (resumeBtn.disabled) return;
 
       const flightIds = [];
@@ -302,17 +304,13 @@ function populateView() {
       }
       console.log("Selected flights:", flightIds);
       const currentTrip = {
-        name: name, // "Viagem Europeia"
-        flights: flightIds, // Array of selected flight IDs
+        name: name,
+        flights: flightIds,
+        price: finalPrice,
       };
 
       // Store the trip data in sessionStorage
       sessionStorage.setItem("currentTrip", JSON.stringify(currentTrip));
-
-      const flightResume = document.getElementById("flightResume");
-      const selectFlight = document.getElementById("selectFlight");
-      selectFlight.classList.add("hidden");
-      flightResume.classList.remove("hidden");
       location.href = "./resume.html";
     });
   }

@@ -68,7 +68,7 @@ export function updateLoggedUser(id) {
   sessionStorage.setItem("loggedUser", JSON.stringify(user));
 }
 
-// Atualiza um utilizador por objeto
+// Atualiza um utilizador por objeto (útil para alterações diretas)
 export function updateUserByObject(userToUpdate) {
   const userIndex = users.findIndex((user) => user.id === userToUpdate.id);
 
@@ -91,19 +91,34 @@ export function updateUserByObject(userToUpdate) {
 // Atualiza as milhas do utilizador após o scratch
 export function updateScratch(userCheck, milesWon) {
   const user = users.find((u) => String(u.id) === String(userCheck.id));
+  if (!user) {
+    throw Error("Utilizador não encontrado!");
+  }
+
   const today = new Date();
-  today.setDate(today.getDate());
   user.lastScratch = today.toISOString().split("T")[0];
 
-  user.miles["available"] += milesWon;
-  user.miles["total"] += milesWon;
-
-  if (localStorage.getItem("loggedUser")) {
-    localStorage.setItem("loggedUser", JSON.stringify(user));
-  } else {
-    sessionStorage.setItem("loggedUser", JSON.stringify(user));
+  // Inicializa o objeto de milhas se não existir
+  if (!user.miles) {
+    user.miles = { available: 0, total: 0 };
   }
+
+  user.miles.available += milesWon;
+  user.miles.total += milesWon;
+
+  // Guarda no localStorage
   localStorage.setItem("users", JSON.stringify(users));
+
+  // Atualiza o utilizador autenticado se for o mesmo
+  const loggedUser = getUserLogged();
+  if (loggedUser && loggedUser.id === user.id) {
+    if (localStorage.getItem("loggedUser")) {
+      localStorage.setItem("loggedUser", JSON.stringify(user));
+    }
+    if (sessionStorage.getItem("loggedUser")) {
+      sessionStorage.setItem("loggedUser", JSON.stringify(user));
+    }
+  }
 }
 
 // Adiciona um novo utilizador
@@ -159,8 +174,8 @@ export function login(email, password, keepSigned) {
 
 // Logout do utilizador
 export function logout() {
-  sessionStorage.removeItem("loggedUser") ||
-    localStorage.removeItem("loggedUser");
+  sessionStorage.removeItem("loggedUser");
+  localStorage.removeItem("loggedUser");
 }
 
 // Guarda a query do utilizador (preferências de pesquisa)
@@ -199,11 +214,12 @@ export function getUserLogged() {
 // Apaga um utilizador pelo ID
 export function deleteUser(id) {
   const numId = typeof id === "string" ? Number(id) : id;
-
   const index = users.findIndex((user) => user.id === numId);
 
-  users.splice(index, 1);
-  localStorage.setItem("users", JSON.stringify(users));
+  if (index !== -1) {
+    users.splice(index, 1);
+    localStorage.setItem("users", JSON.stringify(users));
+  }
 }
 
 // Remove um pack das viagens do utilizador
@@ -211,45 +227,112 @@ export function deletePack(id) {
   const packId = typeof id === "string" ? Number(id) : id;
 
   users.forEach((user) => {
-    for (let i = user.trips.length - 1; i >= 0; i--) {
-      if (user.trips[i].id === packId) {
-        user.trips.splice(i, 1);
+    if (user.trips && Array.isArray(user.trips)) {
+      for (let i = user.trips.length - 1; i >= 0; i--) {
+        if (user.trips[i].id === packId) {
+          user.trips.splice(i, 1);
+        }
       }
     }
   });
   localStorage.setItem("users", JSON.stringify(users));
 }
 
+// Atualiza as milhas do utilizador (usadas e ganhas)
+export function updateUserMiles(userId, milesUsed, milesEarned = 0) {
+  const user = getUserById(userId); // Usa getUserById para obter o utilizador
+
+  if (!user) {
+    throw new Error("Utilizador não encontrado");
+  }
+
+  // Inicializa o objeto de milhas se não existir
+  if (!user.miles) {
+    user.miles = { available: 0, total: 0 };
+  }
+
+  // Atualiza as milhas
+  user.miles.available = user.miles.available - milesUsed + milesEarned;
+  user.miles.total = user.miles.total + milesEarned;
+
+  // Garante que as milhas disponíveis não ficam negativas
+  if (user.miles.available < 0) {
+    user.miles.available = 0;
+  }
+
+  // Guarda o array atualizado no localStorage
+  localStorage.setItem("users", JSON.stringify(users));
+
+  // Atualiza o utilizador autenticado se for o mesmo
+  const loggedUser = getUserLogged();
+  if (loggedUser && loggedUser.id === userId) {
+    loggedUser.miles = user.miles;
+    if (localStorage.getItem("loggedUser")) {
+      localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+    }
+    if (sessionStorage.getItem("loggedUser")) {
+      sessionStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+    }
+  }
+
+  console.log(
+    `Milhas atualizadas para utilizador ${userId}: -${milesUsed} usadas, +${milesEarned} ganhas`
+  );
+
+  return user.miles;
+}
+
+// Adiciona uma viagem ao utilizador
+export function addTripToUser(userId, tripId) {
+  const user = getUserById(userId);
+
+  if (user) {
+    // Inicializa o array de viagens se não existir
+    if (!user.trips) {
+      user.trips = [];
+    }
+
+    // Adiciona o ID da viagem se ainda não existir
+    if (!user.trips.includes(tripId)) {
+      user.trips.push(tripId);
+      localStorage.setItem("users", JSON.stringify(users));
+      console.log(`Trip ${tripId} added to user ${userId}`);
+
+      // Atualiza o utilizador autenticado se for o mesmo
+      const loggedUser = getUserLogged();
+      if (loggedUser && loggedUser.id === userId) {
+        updateLoggedUser(userId);
+      }
+    }
+  }
+}
+
+// Guarda o array de utilizadores no localStorage
+export function saveUsers(updatedUsers) {
+  try {
+    users = updatedUsers; // Atualiza a variável global users
+    localStorage.setItem("users", JSON.stringify(users));
+  } catch (error) {
+    console.error("Erro ao guardar utilizadores no localStorage:", error);
+  }
+}
+
 /**
  * Classe User que representa um utilizador
  */
 class User {
-  id = null;
-  name = "";
-  email = "";
-  password = "";
-  isAdmin = false;
-  homeAirport = "";
-  miles = { available: 0, total: 0 };
-  trips = 0;
-  badges = [];
-  favorites = [];
-  trips = [];
-  lastScratch = "";
-  tourismTypes = [];
-
   constructor(
     id,
     name,
     email,
     password,
-    isAdmin,
-    homeAirport,
+    isAdmin = false,
+    homeAirport = "",
     miles = { available: 0, total: 0 },
     badges = [],
     favorites = [],
     trips = [],
-    lastScratch,
+    lastScratch = "",
     tourismTypes = []
   ) {
     this.id = id;

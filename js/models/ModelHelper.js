@@ -74,9 +74,9 @@ export function formatDate(isoString) {
   }).format(date);
 }
 
-// Calcula desconto: para cada 100 milhas, desconta 20€ do preço final
+// Calcula desconto: para cada 100 milhas, desconta 5€ do preço final
 export function calculateDiscount(miles, finalPrice) {
-  return finalPrice - Math.floor(miles / 100) * 20;
+  return finalPrice - Math.floor(miles / 100) * 5;
 }
 
 /* Funções para scratchoff (raspadinha) */

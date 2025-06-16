@@ -100,6 +100,57 @@ export function getFilteredOrigins(filterText) {
   );
 }
 
+// Extrai dados de viagem a partir de um array de IDs de voos
+export function extractTripDataFromFlights(flightIds) {
+  // Obtém os objetos de voo a partir dos IDs
+  const flightsArray = getFlightsByIds(flightIds);
+
+  if (flightsArray.length === 0) {
+    throw new Error("Nenhum voo encontrado");
+  }
+
+  // Ordena os voos por data de partida
+  flightsArray.sort(
+    (a, b) => new Date(a.departureTime) - new Date(b.departureTime)
+  );
+
+  // Extrai todos os tipos de turismo únicos dos voos
+  let allTourismTypes = [];
+  flightsArray.forEach((flight) => {
+    if (Array.isArray(flight.tourismTypes)) {
+      flight.tourismTypes.forEach((typeId) => {
+        if (!allTourismTypes.includes(typeId)) {
+          allTourismTypes.push(typeId);
+        }
+      });
+    }
+  });
+
+  // Obtém as datas de início e fim (apenas a data, sem hora)
+  const startDate = flightsArray[0].departureTime.split("T")[0];
+  const endDate =
+    flightsArray[flightsArray.length - 1].arrivalTime.split("T")[0];
+
+  // Gera um ID único
+  const id = Date.now();
+
+  return {
+    id,
+    typesOfTourism: allTourismTypes,
+    startDate,
+    endDate,
+  };
+}
+
+// Importa o próprio modelo de voos para funções auxiliares
+import * as Flights from "./flightModel.js";
+
+// Função auxiliar para obter voos por IDs
+export function getFlightsByIds(flightIds) {
+  const allFlights = Flights.getAllFlights();
+  return allFlights.filter((flight) => flightIds.includes(flight.id));
+}
+
 // Devolve todos os voos a partir de uma origem específica
 export function getFlightsByOrigin(originGet) {
   const flights = getAllFlights();
@@ -116,9 +167,9 @@ export function createFlightFromFormData(formData) {
   const flightData = {
     id: Date.now(),
     origin: formData.origin,
-    originName: formData.originName, // Fixed: was missing
+    originName: formData.originName, // Corrigido: estava em falta
     destination: formData.destination,
-    destinationName: formData.destinationName, // Fixed: was using destinName instead of destinationName
+    destinationName: formData.destinationName, // Corrigido: estava errado
     departureTime: formData.departureTime,
     arrivalTime: formData.arrivalTime,
     price: parseFloat(formData.price) || 0,
@@ -137,29 +188,30 @@ export function createFlightFromFormData(formData) {
   const flight = new Flight(
     flightData.id,
     flightData.origin,
-    flightData.originName, // nome da origem
+    flightData.originName,
     flightData.destination,
-    flightData.destinationName, // Fixed: was using destinName
+    flightData.destinationName,
     flightData.departureTime,
     flightData.arrivalTime,
     flightData.price,
     flightData.duration,
     flightData.company,
     flightData.distance,
-    flightData.pois, // Fixed: was using poi instead of pois
-    flightData.originLat, // latitude da origem
-    flightData.originLong, // longitude da origem
-    flightData.destinLat, // latitude do destino
-    flightData.destinLong, // longitude do destino
+    flightData.pois,
+    flightData.originLat,
+    flightData.originLong,
+    flightData.destinLat,
+    flightData.destinLong,
     flightData.tourismTypes
   );
 
   return flight;
 }
+
 // FUNÇÃO DE MODELO: Guarda o voo criado a partir dos dados do formulário
 export function saveFlightFromData(formData) {
   const flight = createFlightFromFormData(formData);
-  addFlight(flight); // Garante que esta função existe
+  addFlight(flight);
   return flight;
 }
 

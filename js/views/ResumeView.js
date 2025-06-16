@@ -246,8 +246,8 @@ function addActionButtons() {
       "beforeend",
       `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
   <div class="flex justify-around">
-    <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
-    <button id="payment-btn" class="border-2 border-blue-900 text-blue-900 px-4 py-2 rounded hover:bg-red-50">Pagar</button>
+    <button class="w-fit cursor-pointer btn-std font-bold border-2 border-[#D12127] text-[#D12127] hover:bg-[#D12127] hover:bg-opacity-10" onClick="window.print()">Imprimir</button>
+    <button id="payment-btn" class="w-fit cursor-pointer btn-std font-bold border-2 hover:bg-opacity-10">Pagar</button>
   </div>
 </div>`
     );
@@ -262,7 +262,7 @@ function addActionButtons() {
       "beforeend",
       `<div class="fixed print:hidden bottom-0 left-0 right-0 z-20 py-2 border-t-2 bg-white w-full mx-auto text-center">
   <div class="flex justify-around">
-    <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50" onClick="window.print()">Imprimir</button>
+    <button class="w-fit cursor-pointer btn-std font-bold border-2 border-[#D12127] text-[#D12127] hover:bg-[#D12127] hover:bg-opacity-10" onClick="window.print()">Imprimir</button>
   </div>
 </div>`
     );

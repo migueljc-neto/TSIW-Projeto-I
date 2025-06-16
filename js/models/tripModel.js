@@ -29,71 +29,15 @@ export function setPackAndPrice(tripId, newPrice) {
   localStorage.setItem("trips", JSON.stringify(trips));
 }
 
+// Filtra viagens do utilizador por "passadas" ou "próximas"
 export function filteredTrips(userTrips, filter) {
   const now = new Date();
   if (filter === "past") {
+    // Viagens cujo início já passou
     return userTrips.filter((trip) => new Date(trip.startDate) <= now);
   }
+  // Viagens cujo início é hoje ou no futuro
   return userTrips.filter((trip) => new Date(trip.startDate) >= now);
-}
-
-// Adiciona uma nova viagem
-export function addTrip(flightsArray, name, description = "") {
-  let allTourismTypes = [];
-  // Junta todos os tipos de turismo dos voos
-  flightsArray.forEach((flight) => {
-    if (Array.isArray(flight.tourismTypes)) {
-      flight.tourismTypes.forEach((type) => {
-        if (!allTourismTypes.includes(type)) {
-          allTourismTypes.push(type);
-        }
-      });
-    }
-  });
-
-  // Define origem e destino da viagem
-  const origin = flightsArray[0].origin;
-  const destination = flightsArray[flightsArray.length - 1].destination;
-
-  // Soma o preço total dos voos
-  const price = flightsArray.reduce(
-    (total, flight) => total + (flight.price || 0),
-    0
-  );
-
-  // Datas de início e fim da viagem
-  const startDate = flightsArray[0].departureTime;
-  const endDate = flightsArray[flightsArray.length - 1].arrivalTime;
-
-  // Calcula a duração em dias
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  const diffTime = end - start;
-  const durationDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  const duration = `${durationDays} dias`;
-
-  // Guarda os IDs dos voos da viagem
-  const flights = flightsArray.map((flight) => flight.id);
-
-  // Cria nova viagem
-  const id = Date.now();
-  const newTrip = new Trip(
-    id,
-    name,
-    allTourismTypes,
-    origin,
-    destination,
-    price,
-    duration,
-    startDate,
-    endDate,
-    description,
-    false,
-    flights
-  );
-
-  trips.push(newTrip);
-  localStorage.setItem("trips", JSON.stringify(trips));
 }
 
 // Filtra viagens por ID (array de IDs)
@@ -129,6 +73,90 @@ export function deleteTrip(id) {
 export function getAllPacks() {
   const trips = getAllTrips();
   return trips.filter((trip) => trip.isPack);
+}
+
+// Adiciona uma nova viagem
+export function addTrip(flightObjects, flightsTrip, tripName) {
+  try {
+    // Validação dos dados de entrada
+    if (
+      !flightObjects ||
+      !Array.isArray(flightObjects) ||
+      flightObjects.length === 0
+    ) {
+      throw new Error("Flight objects array is required and cannot be empty");
+    }
+
+    if (!tripName || typeof tripName !== "string") {
+      throw new Error("Trip name is required and must be a string");
+    }
+
+    // Ordena os voos por data de partida
+    const sortedFlights = [...flightObjects].sort(
+      (a, b) => new Date(a.departureTime) - new Date(b.departureTime)
+    );
+
+    // Extrai todos os tipos de turismo únicos dos voos
+    let allTourismTypes = [];
+    sortedFlights.forEach((flight) => {
+      if (Array.isArray(flight.tourismTypes)) {
+        flight.tourismTypes.forEach((typeId) => {
+          if (!allTourismTypes.includes(typeId)) {
+            allTourismTypes.push(typeId);
+          }
+        });
+      }
+    });
+
+    // Obtém as datas de início e fim (apenas a data, sem hora)
+    const startDate = sortedFlights[0].departureTime.split("T")[0];
+    const endDate =
+      sortedFlights[sortedFlights.length - 1].arrivalTime.split("T")[0];
+
+    // Calcula o preço total somando o preço de todos os voos
+    const totalPrice = flightObjects.reduce((total, flight) => {
+      return total + (flight.price || 0);
+    }, 0);
+
+    // Gera um ID único para a viagem
+    const tripId = Date.now();
+
+    // Cria o novo objeto Trip
+    const newTrip = new Trip(
+      tripId,
+      tripName,
+      allTourismTypes,
+      totalPrice,
+      startDate,
+      endDate,
+      false,
+      flightsTrip
+    );
+
+    // Vai buscar as viagens atuais do storage
+    let trips = getAllTrips();
+
+    // Adiciona a nova viagem ao array
+    trips.push(newTrip);
+
+    // Guarda o array atualizado no storage
+    saveTrips(trips);
+
+    console.log("Trip added successfully:", newTrip);
+    return newTrip;
+  } catch (error) {
+    console.error("Error in addTrip:", error);
+    throw error;
+  }
+}
+
+// Guarda as viagens no localStorage
+export function saveTrips(trips) {
+  try {
+    localStorage.setItem("trips", JSON.stringify(trips));
+  } catch (error) {
+    console.error("Error saving trips to localStorage:", error);
+  }
 }
 
 // Classe que representa uma viagem
