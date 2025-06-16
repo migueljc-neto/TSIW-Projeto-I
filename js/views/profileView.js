@@ -397,6 +397,7 @@ function displayMessage(form, message, type = "error") {
     `<p class='${colorClass} mt-2'>${message}</p>`
   );
 }
+
 // Função para renderizar viagens do utilizador, filtrando por passado/próximo
 function renderTrips(filter = "all") {
   const user = User.getUserLogged();
@@ -432,15 +433,18 @@ function renderTrips(filter = "all") {
 
   // Renderiza cada viagem
   filteredTrips.forEach((trip) => {
-    const query = `${trip.destination} city`;
+    const query = `${trip.name}`;
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
-    fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=2`, {
+    fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=1`, {
       headers: { Authorization: apiKey },
     })
       .then((response) => response.json())
       .then((data) => {
-        const image =
-          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+        let image = "../img/images/fallback.jpg";
+        if (data.photos && data.photos.length > 0) {
+          image = data.photos[0].src.medium;
+        }
+
         tripsWrapper.insertAdjacentHTML(
           "beforeend",
           `<button onclick="location.href='./resume.html?id=${
@@ -454,6 +458,32 @@ function renderTrips(filter = "all") {
                 <img src="${image}" alt="${
             trip.name
           }" class="w-full h-full object-cover"/>
+              </div>
+              <div class="w-3/5 p-3 flex flex-col justify-center">
+                <p class="font-bold text-gray-800 truncate">${trip.name}</p>
+                <p class="text-sm text-gray-600">${Helper.formatDateToLabel(
+                  trip.startDate
+                )}<br>${Helper.formatDateToLabel(trip.endDate)}</p>
+              </div>
+            </div>
+          </button>`
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+        tripsWrapper.insertAdjacentHTML(
+          "beforeend",
+          `<button onclick="location.href='./resume.html?id=${
+            trip.id
+          }'" class="cursor-pointer transition transform hover:-translate-y-1">
+            <div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24">
+              <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${
+                trip.name
+              }</span>
+              <div class="w-2/5">
+                <img src="../img/images/fallback.jpg" alt="${
+                  trip.name
+                }" class="w-full h-full object-cover"/>
               </div>
               <div class="w-3/5 p-3 flex flex-col justify-center">
                 <p class="font-bold text-gray-800 truncate">${trip.name}</p>

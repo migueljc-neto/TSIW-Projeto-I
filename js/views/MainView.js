@@ -1,4 +1,3 @@
-// Importa os módulos necessários para gerir viagens, utilizadores, voos e helpers
 import * as Trips from "../models/TripModel.js";
 import * as Helper from "../models/modelHelper.js";
 import * as User from "../models/UserModel.js";
@@ -12,13 +11,11 @@ const scratchModal = document.getElementById("scratchModal");
 
 // Quando a página carrega, prepara os slides dos packs
 window.addEventListener("load", () => {
-  // Verifica se o utilizador tem direito ao scratch e se está autenticado
   let userHasScratch = User.userHasScratch(User.getUserLogged());
   if (!userHasScratch || !User.isLogged()) {
     scratchModal.classList.add("hidden");
   }
 
-  // Vai buscar todos os packs disponíveis
   const packs = Trips.getAllPacks();
   const swiperPacks = document.getElementById("swiperPacks");
   const swiperDesktop = document.getElementById("swiperDesktopWrapper");
@@ -48,10 +45,10 @@ window.addEventListener("load", () => {
     <img src="${image}" alt="${pack.name}" class="w-full h-auto rounded-t-lg" />
     <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white color-primary p-2">
       <div class="flex gap-6 items-center font-space font-light mb-3">
-        <p class="text-md sm:text-lg">${pack.name}</p>
-        <p class="text-xs sm:text-sm">${Helper.formatDateToLabel(
+        <p class="text-lg">${pack.name}</p>
+        <p class="text-sm">${Helper.formatDateToLabel(
           pack.startDate
-        )}</br>${Helper.formatDateToLabel(pack.endDate)}</p>
+        )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
       </div>
       <div class="color-primary font-light">${pack.price}€</div>
     </div>
@@ -88,7 +85,6 @@ window.addEventListener("load", () => {
             </div>
           </div>`
         );
-        // Evento para abrir o resumo do pack ao clicar no botão
         document.addEventListener("click", function (event) {
           if (
             event.target.id === "packBtn" ||
@@ -99,9 +95,7 @@ window.addEventListener("load", () => {
                 ? event.target
                 : event.target.closest("#packBtn");
             const packId = packButton.dataset.id;
-            if (!User.isLogged()) {
-              return;
-            }
+
             if (packId) {
               Trips.setTrip(packId);
               location.href = "./html/resume.html";
@@ -139,19 +133,16 @@ window.addEventListener("load", () => {
 
   // Só inicializa o Swiper depois de todas as imagens estarem carregadas
   Promise.all(fetchSlides).then(() => {
-    // Swiper para mobile
     var swiper = new Swiper(".mobileFeatures", {
       pagination: {
         el: ".swiper-pagination",
       },
-      effect: "coverflow",
       autoplay: true,
       loop: true,
       spaceBetween: 30,
       setWrapperSize: true,
     });
 
-    // Swiper para cartões
     new Swiper(".mySwiper", {
       effect: "cards",
       grabCursor: true,
@@ -184,6 +175,92 @@ window.addEventListener("load", () => {
   });
 });
 
+// Função para renderizar o grid de favoritos no modal
+function renderFavoritesGrid() {
+  const user = User.getUserLogged();
+  const favoritesModalGrid = document.getElementById("favoritesModalGrid");
+  favoritesModalGrid.innerHTML = "";
+
+  const userFavorites = user.favorites;
+
+  if (!userFavorites || userFavorites.length === 0) {
+    favoritesModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Nenhum destino favorito.</p>
+      </div>`
+    );
+    return;
+  }
+
+  userFavorites.forEach((favorite) => {
+    const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
+
+    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
+      headers: {
+        Authorization: apiKey,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const image =
+          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
+
+        favoritesModalGrid.insertAdjacentHTML(
+          "beforeend",
+          `<div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24 relative group" data-favorite="${favorite}">
+            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${favorite}</span>
+            <div class="w-2/5">
+              <img
+                src="${image}"
+                alt="${favorite}"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="w-3/5 p-3 flex flex-col justify-center">
+              <p class="font-bold text-gray-800">${favorite}</p>
+            </div>
+            <button 
+              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              data-action="remove-favorite"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>`
+        );
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar imagem:", err);
+      });
+  });
+}
+// Evento para remover um favorito do utilizador ao clicar no botão de remover
+document.addEventListener("click", function (e) {
+  if (e.target.closest('[data-action="remove-favorite"]')) {
+    const favoriteItem = e.target.closest("[data-favorite]");
+    const destination = favoriteItem.getAttribute("data-favorite");
+
+    // Remove o favorito dos dados do utilizador
+    const currentUser = User.getUserLogged();
+    currentUser.favorites = currentUser.favorites.filter(
+      (fav) => fav !== destination
+    );
+    User.updateUserByObject(currentUser); // Atualiza o utilizador
+
+    // Re-renderiza o grid de favoritos
+    renderFavoritesGrid();
+
+    renderFavorites();
+  }
+});
+const favoritesBtn = document.querySelector("#favoritesBtn");
+
+favoritesBtn.addEventListener("click", () => {
+  renderFavoritesGrid();
+});
+
 // Lida com o modal do passaporte (badges de países visitados)
 const passportBtn = document.getElementById("passportBtn");
 const continentFilter = document.getElementById("continentFilter");
@@ -195,7 +272,6 @@ passportBtn.addEventListener("click", () => {
   Helper.getAllCountries().then((data) => {
     allCountriesData = data;
     renderPassportGrid();
-    // Permite filtrar por continente
     continentFilter.onchange = () => renderPassportGrid(continentFilter.value);
   });
 });
@@ -271,115 +347,11 @@ function renderPassportGrid(continent = "") {
     );
   });
 }
-
-// Botões para abrir o modal de favoritos
-const favoritesBtns = document.querySelectorAll(
-  '[data-modal-target="favorites-modal"]'
-);
-
-// Função para renderizar o grid de favoritos no modal
-function renderFavoritesGrid() {
-  const user = User.getUserLogged();
-  const favoritesModalGrid = document.getElementById("favoritesModalGrid");
-  favoritesModalGrid.innerHTML = "";
-  if (!user) {
-    favoritesModalGrid.insertAdjacentHTML(
-      "beforeend",
-      `<div class="w-full flex justify-center items-center col-span-full">
-        <p class="text-gray-600 text-center">Nenhum destino favorito.</br>Faz login ou cria uma conta!</p>
-      </div>`
-    );
-    return;
-  }
-
-  const userFavorites = user.favorites;
-
-  if (!userFavorites || userFavorites.length === 0) {
-    favoritesModalGrid.insertAdjacentHTML(
-      "beforeend",
-      `<div class="w-full flex justify-center items-center col-span-full">
-        <p class="text-gray-600 text-center">Nenhum destino favorito.</p>
-      </div>`
-    );
-    return;
-  }
-
-  userFavorites.forEach((favorite) => {
-    const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
-
-    fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
-      headers: {
-        Authorization: apiKey,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const image =
-          data.photos[1]?.src.medium || "../img/images/fallback.jpg";
-
-        favoritesModalGrid.insertAdjacentHTML(
-          "beforeend",
-          `<div class="has-tooltip flex bg-white rounded-lg shadow-md overflow-hidden h-24 relative group" data-favorite="${favorite}">
-            <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black mt-10'>${favorite}</span>
-            <div class="w-2/5">
-              <img
-                src="${image}"
-                alt="${favorite}"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <div class="w-3/5 p-3 flex flex-col justify-center">
-              <p class="font-bold text-gray-800">${favorite}</p>
-            </div>
-            <button 
-              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              data-action="remove-favorite"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>`
-        );
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar imagem:", err);
-      });
-  });
-}
-
-// Adiciona eventos aos botões de favoritos para abrir o modal e renderizar o grid
-favoritesBtns.forEach((favoritesBtn) => {
-  favoritesBtn.addEventListener("click", () => {
-    renderFavoritesGrid();
-  });
-});
-
-// Evento para remover um favorito do utilizador ao clicar no botão de remover
-document.addEventListener("click", function (e) {
-  if (e.target.closest('[data-action="remove-favorite"]')) {
-    const favoriteItem = e.target.closest("[data-favorite]");
-    const destination = favoriteItem.getAttribute("data-favorite");
-
-    // Remove o favorito dos dados do utilizador
-    const currentUser = User.getUserLogged();
-    currentUser.favorites = currentUser.favorites.filter(
-      (fav) => fav !== destination
-    );
-    User.updateUserByObject(currentUser); // Atualiza o utilizador
-
-    // Re-renderiza o grid de favoritos
-    renderFavoritesGrid();
-  }
-});
-
-// Botões para aplicar ou cancelar as milhas do scratch
-let applyMilesBtn = document.querySelector("#applyMilesBtn");
-let cancelMilesBtn = document.querySelector("#cancelMilesBtn");
+applyMilesBtn = document.getElementById("applyMilesBtn");
+cancelMilesBtn = document.getElementById("cancelMilesBtn");
 
 let canApply = false;
 
-// Ao clicar em aplicar, adiciona as milhas ao utilizador e esconde o modal
 applyMilesBtn.addEventListener("click", () => {
   if (canApply) {
     User.updateScratch(User.getUserLogged(), milesWon);
@@ -387,21 +359,12 @@ applyMilesBtn.addEventListener("click", () => {
   }
 });
 
-// Ao clicar em cancelar, esconde o modal
 cancelMilesBtn.addEventListener("click", () => {
   scratchModal.classList.add("hidden");
-  console.log("teste");
 });
 
 /* ScratchCard */
-// Gera um número aleatório de milhas ganhas
 let milesWon = Math.floor(Math.random() * 100);
-let wonText;
-if (milesWon > 0) {
-  wonText = `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`;
-} else {
-  wonText = `<p class="flex text-black text-xl text-center items-center"><strong>:( Não tiveste prémio</strong></p>`;
-}
 const scContainer = document.getElementById("canvas-test");
 console.log(scContainer);
 console.log(scContainer.offsetWidth);
@@ -412,15 +375,14 @@ const sc = new ScratchCard(scContainer, {
   imageForwardSrc: "../img/images/pattern.png",
   brushSrc: "https://switchy.a.cdnify.io/served/brush.png",
 
-  htmlBackground: wonText,
+  htmlBackground: `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`,
   clearZoneRadius: 20,
-  percentToFinish: 30,
+  percentToFinish: 40, // When the percent exceeds 50 on touchend event the callback will be exec.
   callback: function () {
     canApply = true;
   },
 });
 
-// Inicializa o scratch card e atualiza percentagem ao raspar
 sc.init().then(() => {
   sc.canvas.addEventListener("scratch.move", () => {
     this.percent = sc.getPercent().toFixed(2);

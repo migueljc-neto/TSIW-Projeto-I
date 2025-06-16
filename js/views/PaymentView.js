@@ -66,7 +66,7 @@ flightsTrip = Array.from(trip.flights);
 
 /* MOCK DATA */
 let finalPrice = trip.price;
-let acummulatingMiles = 642;
+let acummulatingMiles = 900;
 let tripName = trip.name;
 
 // Quando a página carrega, preenche os dados de pagamento e configurações iniciais
@@ -178,6 +178,9 @@ form.addEventListener("submit", (e) => {
 
   console.log("Dados do pagamento:", paymentData);
 
+  // Calcula milhas a serem descontadas
+  let milesToDraw = milesCheckbox.checked ? user.miles.available : 0;
+
   // Se não existir parâmetro id, significa que é uma nova viagem a ser criada
   if (!id) {
     try {
@@ -187,26 +190,23 @@ form.addEventListener("submit", (e) => {
         throw new Error("Voos não encontrados");
       }
 
-      // Cria a viagem com os objetos de voo (não IDs)
+      // Cria a viagem com os objetos de voo
       const newTrip = Trips.addTrip(flightObjects, flightsTrip, tripName);
 
       console.log("Nova viagem criada:", newTrip);
       Users.addTripToUser(user.id, newTrip.id);
 
-      // Atualiza as milhas se foram usadas
-      if (milesCheckbox.checked && user.miles.available > 0) {
-        Users.updateUserMiles(user.id, user.miles.available, acummulatingMiles);
-      }
+      // Atualiza as milhas
+      Users.updateUserMiles(user.id, milesToDraw, acummulatingMiles);
     } catch (error) {
       console.error("Erro ao criar viagem:", error);
       alert("Erro ao processar a viagem. Tente novamente.");
       return;
     }
   } else {
-    // Se já existe id, apenas atualiza as milhas se necessário
-    if (milesCheckbox.checked && user.miles.available > 0) {
-      Users.updateUserMiles(user.id, user.miles.available, acummulatingMiles);
-    }
+    // Para viagem existente, apenas atualiza as milhas
+    Users.updateUserMiles(user.id, milesToDraw, acummulatingMiles);
+    Users.addTripToUser(user.id, trip.id);
   }
 
   alert("Pagamento processado com sucesso!");

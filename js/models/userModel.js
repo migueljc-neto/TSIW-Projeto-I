@@ -239,16 +239,11 @@ export function deletePack(id) {
 }
 
 // Atualiza as milhas do utilizador (usadas e ganhas)
-export function updateUserMiles(userId, milesUsed, milesEarned = 0) {
+export function updateUserMiles(userId, milesUsed, milesEarned) {
   const user = getUserById(userId); // Usa getUserById para obter o utilizador
 
   if (!user) {
     throw new Error("Utilizador não encontrado");
-  }
-
-  // Inicializa o objeto de milhas se não existir
-  if (!user.miles) {
-    user.miles = { available: 0, total: 0 };
   }
 
   // Atualiza as milhas
@@ -256,7 +251,7 @@ export function updateUserMiles(userId, milesUsed, milesEarned = 0) {
   user.miles.total = user.miles.total + milesEarned;
 
   // Garante que as milhas disponíveis não ficam negativas
-  if (user.miles.available < 0) {
+  if (user.miles.available <= 0) {
     user.miles.available = 0;
   }
 
@@ -266,7 +261,8 @@ export function updateUserMiles(userId, milesUsed, milesEarned = 0) {
   // Atualiza o utilizador autenticado se for o mesmo
   const loggedUser = getUserLogged();
   if (loggedUser && loggedUser.id === userId) {
-    loggedUser.miles = user.miles;
+    loggedUser.miles.available = user.miles.available;
+    loggedUser.miles.total = user.miles.total;
     if (localStorage.getItem("loggedUser")) {
       localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
     }
@@ -287,22 +283,13 @@ export function addTripToUser(userId, tripId) {
   const user = getUserById(userId);
 
   if (user) {
-    // Inicializa o array de viagens se não existir
-    if (!user.trips) {
-      user.trips = [];
-    }
-
     // Adiciona o ID da viagem se ainda não existir
     if (!user.trips.includes(tripId)) {
       user.trips.push(tripId);
       localStorage.setItem("users", JSON.stringify(users));
       console.log(`Trip ${tripId} added to user ${userId}`);
 
-      // Atualiza o utilizador autenticado se for o mesmo
-      const loggedUser = getUserLogged();
-      if (loggedUser && loggedUser.id === userId) {
-        updateLoggedUser(userId);
-      }
+      updateLoggedUser(userId);
     }
   }
 }
@@ -321,19 +308,32 @@ export function saveUsers(updatedUsers) {
  * Classe User que representa um utilizador
  */
 class User {
+  id = 0;
+  name = "";
+  email = "";
+  password = "";
+  isAdmin = false;
+  homeAirport = "";
+  miles = { available: 0, total: 0 };
+  badges = [];
+  favorites = [];
+  trips = [];
+  lastScratch = "";
+  tourismTypes = [];
+
   constructor(
     id,
     name,
     email,
     password,
-    isAdmin = false,
-    homeAirport = "",
-    miles = { available: 0, total: 0 },
-    badges = [],
-    favorites = [],
-    trips = [],
-    lastScratch = "",
-    tourismTypes = []
+    isAdmin,
+    homeAirport,
+    miles,
+    badges,
+    favorites,
+    trips,
+    lastScratch,
+    tourismTypes
   ) {
     this.id = id;
     this.name = name;
