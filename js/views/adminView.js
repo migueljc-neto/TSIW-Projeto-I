@@ -547,7 +547,7 @@ if (addPoiBtn && poiWrapper) {
 
     poiWrapper.insertAdjacentHTML(
       "beforeend",
-      `<div class="flex gap-4 mb-4 p-4 border border-gray-300 rounded-lg" data-poi-container>
+      `<div class="block sm:flex gap-4 mb-4 p-4 border border-gray-300 rounded-lg" data-poi-container>
         <div class="flex-1">
           <label for="poiName${poiCount}" class="block mb-2 text-sm font-medium dark:text-white">
             Nome do POI
@@ -721,13 +721,13 @@ function validateFormData(formData) {
   const lat2 = parseFloat(formData.destinLat);
   const long2 = parseFloat(formData.destinLong);
 
-  if (isNaN(lat1) || lat1 < -90 || lat1 > 90)
+  if (lat1 < -90 || lat1 > 90)
     errors.push("Latitude de origem inválida (-90 a 90)");
-  if (isNaN(long1) || long1 < -180 || long1 > 180)
+  if (long1 < -180 || long1 > 180)
     errors.push("Longitude de origem inválida (-180 a 180)");
-  if (isNaN(lat2) || lat2 < -90 || lat2 > 90)
+  if (lat2 < -90 || lat2 > 90)
     errors.push("Latitude de destino inválida (-90 a 90)");
-  if (isNaN(long2) || long2 < -180 || long2 > 180)
+  if (long2 < -180 || long2 > 180)
     errors.push("Longitude de destino inválida (-180 a 180)");
 
   // Validação das coordenadas dos POIs
@@ -736,13 +736,13 @@ function validateFormData(formData) {
       const poiLat = parseFloat(poi.lat);
       const poiLong = parseFloat(poi.long);
 
-      if (isNaN(poiLat) || poiLat < -90 || poiLat > 90) {
+      if (poiLat < -90 || poiLat > 90) {
         errors.push(`POI ${index + 1}: Latitude inválida (-90 a 90)`);
       }
-      if (isNaN(poiLong) || poiLong < -180 || poiLong > 180) {
+      if (poiLong < -180 || poiLong > 180) {
         errors.push(`POI ${index + 1}: Longitude inválida (-180 a 180)`);
       }
-      if (!poi.name || poi.name.trim() === "") {
+      if (poi.name.trim() === "") {
         errors.push(`POI ${index + 1}: Nome é obrigatório`);
       }
     });
@@ -762,6 +762,7 @@ function resetFormAndCloseModal() {
   // Dá reset ao formulário
   if (flightForm) {
     flightForm.reset();
+    location.reload();
     // Limpa os POIs
     if (poiWrapper) {
       poiWrapper.innerHTML = "";

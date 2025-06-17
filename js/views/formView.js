@@ -308,6 +308,9 @@ function sendFormQuery(platform) {
   const passengerCounter = document.getElementById("counter-input");
   const passengersCount = passengerCounter.value;
 
+  if (!selectedDate || !origin) {
+    return;
+  }
   const typeOfTourism = tourismText.innerHTML;
   User.setUserQuery(selectedDate, origin, typeOfTourism, passengersCount);
   location.href = "./html/tripBuilder.html";

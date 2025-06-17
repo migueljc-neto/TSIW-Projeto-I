@@ -69,7 +69,7 @@ flightsTrip = Array.from(trip.flights);
 
 /* MOCK DATA */
 let finalPrice = trip.price;
-let acummulatingMiles = 900;
+let acummulatingMiles = trip.miles;
 let tripName = trip.name;
 
 // Quando a página carrega, preenche os dados de pagamento e configurações iniciais
@@ -217,6 +217,6 @@ form.addEventListener("submit", (e) => {
 
   alert("Pagamento processado com sucesso!");
   /* Previne que o utilizador volte a comprar */
-  sessionStorage.removeItem("currentTrip");
+  Helper.clearSessionstorage();
   window.location.href = "./profile.html";
 });

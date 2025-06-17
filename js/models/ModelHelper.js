@@ -74,9 +74,15 @@ export function formatDate(isoString) {
   }).format(date);
 }
 
-// Calcula desconto: para cada 100 milhas, desconta 5€ do preço final
+// Calcula desconto: para cada 200 milhas, desconta 5€ do preço final
 export function calculateDiscount(miles, finalPrice) {
-  return finalPrice - Math.floor(miles / 100) * 5;
+  return finalPrice - Math.floor(miles / 200) * 5;
+}
+
+export function clearSessionstorage() {
+  sessionStorage.removeItem("currentTrip");
+  sessionStorage.removeItem("tripData");
+  sessionStorage.removeItem("userQuery");
 }
 
 /* Funções para scratchoff (raspadinha) */
@@ -309,7 +315,7 @@ export function calculateDuration(duration) {
   return `${hours}h${minutes}m`;
 }
 
-export function setFlightData(tripName, flightArray, originName) {
+export function setFlightData(tripName, flightArray, originName, milesValue) {
   let flightTexts = flightArray.map((li) => li.textContent.trim());
 
   flightTexts.unshift(originName);
@@ -317,6 +323,7 @@ export function setFlightData(tripName, flightArray, originName) {
   const tripData = {
     name: tripName,
     destinations: flightTexts,
+    miles: milesValue,
   };
 
   sessionStorage.setItem("tripData", JSON.stringify(tripData));

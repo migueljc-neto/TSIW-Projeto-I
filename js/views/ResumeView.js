@@ -62,9 +62,9 @@ async function populateData() {
   // Insere o título do resumo da viagem
   flightResume.insertAdjacentHTML(
     "beforeend",
-    `<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo viagem - ${trip.name}</h1>`
+    `<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo da Viagem - ${trip.name}</h1>`
   );
-
+  document.title = `${trip.name} - Resumo`;
   // Processa todos os voos
   for (let index = 0; index < flightsTrip.length; index++) {
     const flight = flightsTrip[index];
@@ -235,6 +235,9 @@ async function addFinalDestinationCard() {
         </div>
         <p>${lastDateString}</p>
       </div>
+    </div>
+    <div>
+    <p class="mt-3 font-bold text-base">Preço: ${trip.price}€</p>
     </div>`
   );
 }

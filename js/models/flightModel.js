@@ -194,9 +194,9 @@ export function calculateDurationInMinutes(departureTime, arrivalTime) {
 export function createFlightFromFormData(formData) {
   const flightData = {
     id: Date.now(),
-    origin: formData.origin,
+    origin: formData.origin.toUpperCase(),
     originName: formData.originName,
-    destination: formData.destination,
+    destination: formData.destination.toUpperCase(),
     destinationName: formData.destinationName,
     departureTime: formData.departureTime,
     arrivalTime: formData.arrivalTime,
@@ -210,7 +210,7 @@ export function createFlightFromFormData(formData) {
     destinationLong: parseFloat(formData.destinLong) || 0,
     pois: formData.pois || [],
     tourismTypes: formData.tourismTypes || [],
-    badge: formData.badge,
+    badge: formData.badge.toLowerCase(),
   };
 
   // Cria uma instância de voo com a ordem correta dos parâmetros

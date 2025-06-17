@@ -12,33 +12,8 @@ let totalPrice = 0; // Preço total dos voos selecionados
 let selectedFlights = {}; // Guarda o id do voo selecionado em cada secção
 let selectedCount = 0; // Quantos voos já foram selecionados
 let totalSections;
-
-// Mapeamento de nomes de companhias para códigos IATA (para mostrar o logo)
-const IATA_CODES = {
-  TAP: "TP",
-  Vueling: "VY",
-  Iberia: "IB",
-  "Air France": "AF",
-  "British Airways": "BA",
-  Lufthansa: "LH",
-  Ryanair: "FR",
-  KLM: "KL",
-  "Swiss Air": "LX",
-  "Austrian Airlines": "OS",
-  SAS: "SK",
-  Norwegian: "DY",
-  "Aer Lingus": "EI",
-  "Aegean Airlines": "A3",
-  "Turkish Airlines": "TK",
-  "Brussels Airlines": "SN",
-  "Czech Airlines": "OK",
-  Finnair: "AY",
-  "ITA Airways": "AZ",
-  Icelandair: "FI",
-  "Air Europa": "UX",
-  EasyJet: "U2",
-  Delta: "DL",
-};
+let userQuery;
+let miles;
 
 // Quando o DOM estiver pronto, começa a construir a interface
 window.addEventListener("DOMContentLoaded", () => {
@@ -46,10 +21,13 @@ window.addEventListener("DOMContentLoaded", () => {
     location.href = "../index.html";
     return;
   }
+  userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
   let trip = JSON.parse(sessionStorage.getItem("tripData"));
   destinations = trip.destinations;
   name = trip.name;
+  miles = trip.miles;
   totalSections = destinations.length - 1;
+  document.title = `${trip.name} - Seleção de Voos`;
   populateView();
 });
 
@@ -316,6 +294,7 @@ function populateView() {
         name: name,
         flights: flightIds,
         price: finalPrice,
+        miles: miles,
       };
 
       // Store the trip data in sessionStorage
@@ -463,7 +442,7 @@ function showFlights(section, flights) {
     const arrTime = Helper.formatTime(flight.arrivalTime);
 
     // Usa o código IATA para mostrar o logo da companhia
-    const iata = IATA_CODES[flight.company] || flight.company;
+    const iata = Helper.getIata(flight.company) || flight.company;
     const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
 
     const html = `
@@ -640,7 +619,7 @@ function calcTotal() {
     if (flightId) {
       const flight = Flights.getFlightById(flightId);
       if (flight) {
-        totalPrice += flight.price;
+        totalPrice += flight.price * parseInt(userQuery.passengers);
       }
     }
   });

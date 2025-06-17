@@ -578,6 +578,11 @@ submitBtn.addEventListener("click", () => {
     return;
   }
   let flightArray = Array.from(tripList.getElementsByTagName("li"));
-  Helper.setFlightData(tripName.value, flightArray, originName);
+  Helper.setFlightData(
+    tripName.value,
+    flightArray,
+    originName,
+    parseInt(milesText.innerText)
+  );
   location.href = "./select-flight.html";
 });
