@@ -294,6 +294,23 @@ export function addTripToUser(userId, tripId) {
   }
 }
 
+export function addBadgestoUser(userId, flightBadges) {
+  const user = getUserById(userId);
+
+  if (user) {
+    // Adiciona o badge
+    flightBadges.forEach((badge) => {
+      if (!user.badges.includes(badge)) {
+        user.badges.push(badge);
+        localStorage.setItem("users", JSON.stringify(users));
+        console.log(`Badge ${badge} added to user ${userId}`);
+
+        updateLoggedUser(userId);
+      }
+    });
+  }
+}
+
 // Guarda o array de utilizadores no localStorage
 export function saveUsers(updatedUsers) {
   try {

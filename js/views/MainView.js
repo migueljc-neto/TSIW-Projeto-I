@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
     scratchModal.classList.add("hidden");
   }
 
-  const packs = Trips.getAllPacks();
+  const packs = Trips.getFilteredPacks();
   const swiperPacks = document.getElementById("swiperPacks");
   const swiperDesktop = document.getElementById("swiperDesktopWrapper");
   const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";

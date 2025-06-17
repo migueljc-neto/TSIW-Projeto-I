@@ -106,6 +106,7 @@ function initdata() {
         distance: 313,
         tourismTypes: [1, 2],
         poi: [],
+        badge: "pt",
       },
       {
         id: 2,
@@ -125,6 +126,7 @@ function initdata() {
         distance: 438,
         tourismTypes: [1, 3],
         poi: [],
+        badge: "es",
       },
       {
         id: 3,
@@ -144,6 +146,7 @@ function initdata() {
         distance: 1006,
         tourismTypes: [2, 3],
         poi: [],
+        badge: "pt",
       },
       {
         id: 4,
@@ -163,6 +166,7 @@ function initdata() {
         distance: 1052,
         tourismTypes: [1, 4],
         poi: [],
+        badge: "fr",
       },
       {
         id: 5,
@@ -182,6 +186,7 @@ function initdata() {
         distance: 859,
         tourismTypes: [2, 5],
         poi: [],
+        badge: "es",
       },
       {
         id: 6,
@@ -201,6 +206,7 @@ function initdata() {
         distance: 1050,
         tourismTypes: [2, 6],
         poi: [],
+        badge: "it",
       },
       {
         id: 7,
@@ -220,6 +226,7 @@ function initdata() {
         distance: 563,
         tourismTypes: [6, 7],
         poi: [],
+        badge: "tr",
       },
 
       {
@@ -240,6 +247,7 @@ function initdata() {
         distance: 344,
         tourismTypes: [4, 5],
         poi: [],
+        badge: "gb",
       },
       {
         id: 9,
@@ -259,6 +267,7 @@ function initdata() {
         distance: 1313,
         tourismTypes: [1, 2],
         poi: [],
+        badge: "pt",
       },
       {
         id: 10,
@@ -278,6 +287,7 @@ function initdata() {
         distance: 1196,
         tourismTypes: [8],
         poi: [],
+        badge: "pt",
       },
       {
         id: 11,
@@ -303,6 +313,7 @@ function initdata() {
           },
         ],
         tourismTypes: [1, 5],
+        badge: "nl",
       },
       {
         id: 12,
@@ -328,6 +339,7 @@ function initdata() {
           },
         ],
         tourismTypes: [1, 3],
+        badge: "cz",
       },
       {
         id: 13,
@@ -353,6 +365,7 @@ function initdata() {
           },
         ],
         tourismTypes: [3, 4],
+        badge: "it",
       },
 
       {
@@ -379,6 +392,7 @@ function initdata() {
           },
         ],
         tourismTypes: [4, 7],
+        badge: "ch",
       },
       {
         id: 15,
@@ -404,6 +418,7 @@ function initdata() {
           },
         ],
         tourismTypes: [1, 4],
+        badge: "de",
       },
       {
         id: 16,
@@ -429,6 +444,7 @@ function initdata() {
           },
         ],
         tourismTypes: [3],
+        badge: "pt",
       },
       {
         id: 17,
@@ -454,6 +470,7 @@ function initdata() {
           },
         ],
         tourismTypes: [2, 8],
+        badge: "pt",
       },
       {
         id: 18,
@@ -473,6 +490,7 @@ function initdata() {
         distance: 173,
         poi: [],
         tourismTypes: [],
+        badge: "pt",
       },
       {
         id: 19,
@@ -498,6 +516,7 @@ function initdata() {
           },
         ],
         tourismTypes: [1, 3],
+        badge: "IE",
       },
       {
         id: 20,
@@ -517,6 +536,7 @@ function initdata() {
         distance: 1135,
         poi: [],
         tourismTypes: [1],
+        badge: "pt",
       },
       {
         id: 21,
@@ -536,6 +556,7 @@ function initdata() {
         distance: 1600,
         tourismTypes: [1, 4],
         poi: [],
+        badge: "nl",
       },
       {
         id: 22,
@@ -555,6 +576,7 @@ function initdata() {
         distance: 960,
         tourismTypes: [1, 7],
         poi: [],
+        badge: "no",
       },
       {
         id: 23,
@@ -574,6 +596,7 @@ function initdata() {
         distance: 780,
         tourismTypes: [6, 7],
         poi: [],
+        badge: "fi",
       },
       {
         id: 24,
@@ -593,6 +616,7 @@ function initdata() {
         distance: 2850,
         tourismTypes: [4],
         poi: [],
+        badge: "fi",
       },
       {
         id: 25,
@@ -612,6 +636,7 @@ function initdata() {
         distance: 1450,
         tourismTypes: [4, 6],
         poi: [],
+        badge: "it",
       },
       {
         id: 26,
@@ -637,6 +662,7 @@ function initdata() {
             long: 12.3,
           },
         ],
+        badge: "it",
       },
       {
         id: 27,
@@ -656,6 +682,7 @@ function initdata() {
         distance: 205,
         tourismTypes: [5, 6],
         poi: [],
+        badge: "it",
       },
       {
         id: 28,
@@ -675,6 +702,7 @@ function initdata() {
         distance: 295,
         tourismTypes: [2, 4],
         poi: [],
+        badge: "it",
       },
       {
         id: 29,
@@ -694,6 +722,7 @@ function initdata() {
         distance: 305,
         tourismTypes: [2, 4],
         poi: [],
+        badge: "it",
       },
       {
         id: 30,
@@ -713,6 +742,7 @@ function initdata() {
         distance: 1380,
         tourismTypes: [],
         poi: [],
+        badge: "pt",
       },
       {
         id: 31,
@@ -732,6 +762,7 @@ function initdata() {
         distance: 2100,
         tourismTypes: [1, 5],
         poi: [],
+        badge: "pl",
       },
       {
         id: 32,
@@ -751,6 +782,7 @@ function initdata() {
         distance: 395,
         tourismTypes: [3, 4],
         poi: [],
+        badge: "hu",
       },
       {
         id: 33,
@@ -770,6 +802,7 @@ function initdata() {
         distance: 395,
         tourismTypes: [5, 6],
         poi: [],
+        badge: "ro",
       },
       {
         id: 34,
@@ -789,6 +822,7 @@ function initdata() {
         distance: 180,
         tourismTypes: [3, 5],
         poi: [],
+        badge: "hu",
       },
       {
         id: 35,
@@ -808,6 +842,7 @@ function initdata() {
         distance: 1750,
         tourismTypes: [],
         poi: [],
+        badge: "pt",
       },
       {
         id: 36,
@@ -827,6 +862,7 @@ function initdata() {
         distance: 305,
         tourismTypes: [6, 7],
         poi: [],
+        badge: "se",
       },
       {
         id: 37,
@@ -846,6 +882,7 @@ function initdata() {
         distance: 330,
         tourismTypes: [4, 6],
         poi: [],
+        badge: "dk",
       },
     ];
 

@@ -162,14 +162,24 @@ export function getFlightsByOrigin(originGet) {
   return filteredFlights;
 }
 
+export function getFlightBadges(flightObjects) {
+  let badges = [];
+
+  flightObjects.forEach((flight) => {
+    badges.push(flight.badge);
+  });
+
+  return [...new Set(badges)];
+}
+
 // FUNÇÃO DE MODELO: Cria um voo a partir dos dados do formulário
 export function createFlightFromFormData(formData) {
   const flightData = {
     id: Date.now(),
     origin: formData.origin,
-    originName: formData.originName, // Corrigido: estava em falta
+    originName: formData.originName,
     destination: formData.destination,
-    destinationName: formData.destinationName, // Corrigido: estava errado
+    destinationName: formData.destinationName,
     departureTime: formData.departureTime,
     arrivalTime: formData.arrivalTime,
     price: parseFloat(formData.price) || 0,
@@ -182,6 +192,7 @@ export function createFlightFromFormData(formData) {
     destinLong: parseFloat(formData.destinLong) || 0,
     pois: formData.pois || [],
     tourismTypes: formData.tourismTypes || [],
+    badge: formData.badge,
   };
 
   // Cria uma instância de voo com a ordem correta dos parâmetros
@@ -202,7 +213,8 @@ export function createFlightFromFormData(formData) {
     flightData.originLong,
     flightData.destinLat,
     flightData.destinLong,
-    flightData.tourismTypes
+    flightData.tourismTypes,
+    flightData.badge
   );
 
   return flight;
@@ -220,7 +232,6 @@ export function filterByTourismId(flightArray, tourismId) {
   if (tourismId === "todos") {
     return flightArray;
   }
-
   return flightArray.filter((flight) =>
     flight.tourismTypes.includes(tourismId)
   );
@@ -244,7 +255,7 @@ class Flight {
   destinLat = 0;
   destinLong = 0;
   tourismTypes = [];
-
+  badge = "";
   constructor(
     id,
     origin,
@@ -262,7 +273,8 @@ class Flight {
     originLong,
     destinLat,
     destinLong,
-    tourismTypes = []
+    tourismTypes = [],
+    badge
   ) {
     this.id = id;
     this.origin = origin;
@@ -281,5 +293,6 @@ class Flight {
     this.destinLat = destinLat;
     this.destinLong = destinLong;
     this.tourismTypes = tourismTypes;
+    this.badge = badge;
   }
 }

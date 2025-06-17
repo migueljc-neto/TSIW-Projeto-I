@@ -75,6 +75,14 @@ export function getAllPacks() {
   return trips.filter((trip) => trip.isPack);
 }
 
+export function getFilteredPacks() {
+  const packs = getAllPacks();
+
+  return packs.filter(
+    (pack) => pack.startDate > new Date().toISOString().split("T")[0]
+  );
+}
+
 // Adiciona uma nova viagem
 export function addTrip(flightObjects, flightsTrip, tripName) {
   try {

@@ -625,6 +625,7 @@ function extractFormData() {
     destinLong: document.getElementById("destLong").value,
     tourismTypes: getTourismTypesFromForm(),
     pois: getPoisFromForm(),
+    badge: document.getElementById("badge").value,
   };
 
   return formData;

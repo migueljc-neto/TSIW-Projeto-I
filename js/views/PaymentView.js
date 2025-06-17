@@ -27,7 +27,7 @@ const user = Users.getUserLogged();
 // Verifica se o utilizador está autenticado
 if (!user) {
   console.error("User not logged in");
-  window.location.href = "./login.html";
+  window.location.href = "../index.html";
   // Termina a execução do script
   throw new Error("User not authenticated");
 }
@@ -185,6 +185,9 @@ form.addEventListener("submit", (e) => {
   if (!id) {
     try {
       const flightObjects = Flights.getFlightsByIds(flightsTrip);
+      const flightBadges = Flights.getFlightBadges(flightObjects);
+
+      Users.addBadgestoUser(user.id, flightBadges);
 
       if (flightObjects.length === 0) {
         throw new Error("Voos não encontrados");

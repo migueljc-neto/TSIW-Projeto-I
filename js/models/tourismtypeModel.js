@@ -53,7 +53,7 @@ export function searchAllTypes(value) {
 }
 
 export function getTourismId(tourismQuery) {
-  if (tourismQuery === "Todos") {
+  if (tourismQuery === "Todos" || tourismQuery === "Turismo") {
     return "todos";
   }
   let allTourismTypes = getAll();
