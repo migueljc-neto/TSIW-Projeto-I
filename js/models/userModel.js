@@ -155,12 +155,12 @@ export function login(email, password, keepSigned) {
   const user = users.find((user) => user.email === email);
 
   if (!user) {
-    throw new Error("Não existe nenhum utilizador com o email introduzido!");
+    throw Error("Não existe nenhum utilizador com o email introduzido!");
   }
 
   return hashPassword(password).then((hashedPassword) => {
     if (user.password !== hashedPassword) {
-      throw new Error("Password Incorreta!");
+      throw Error("Password Incorreta!");
     }
 
     if (keepSigned) {

@@ -19,6 +19,9 @@ const priceLabel = document.getElementById("priceLabel");
 const milesCheckbox = document.getElementById("milesCheckbox");
 const accumMiles = document.getElementById("accumMiles");
 const form = document.querySelector("form");
+const cancelBtn = document.getElementById("cancelBtn");
+
+cancelBtn.addEventListener("click", () => (location.href = "./resume.html"));
 
 // Inicializa dados do utilizador e obtém o utilizador autenticado
 Users.init();
@@ -182,7 +185,7 @@ form.addEventListener("submit", (e) => {
   let milesToDraw = milesCheckbox.checked ? user.miles.available : 0;
 
   // Se não existir parâmetro id, significa que é uma nova viagem a ser criada
-  if (!id) {
+  if (!trip.id) {
     try {
       const flightObjects = Flights.getFlightsByIds(flightsTrip);
       const flightBadges = Flights.getFlightBadges(flightObjects);
@@ -213,5 +216,7 @@ form.addEventListener("submit", (e) => {
   }
 
   alert("Pagamento processado com sucesso!");
+  /* Previne que o utilizador volte a comprar */
+  sessionStorage.removeItem("currentTrip");
   window.location.href = "./profile.html";
 });

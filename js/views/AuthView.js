@@ -9,21 +9,22 @@ const loginForm = document.getElementById("loginForm");
 // Evento de submissão do formulário de login
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault(); // Impede o comportamento padrão do formulário
-  try {
-    // Tenta autenticar o utilizador com os dados introduzidos
-    User.login(
-      document.getElementById("emailLogin").value,
-      document.getElementById("passwordLogin").value,
-      document.getElementById("keepSigned").checked
-    );
 
-    // Se o login for bem-sucedido, esconde o modal de login
-    const loginModal = document.getElementById("loginModal");
-    loginModal.classList.add("hidden");
-  } catch (e) {
-    // Se houver erro, mostra a mensagem de erro no formulário
-    displayMessage(e.message);
-  }
+  // Now handle the Promise correctly
+  User.login(
+    document.getElementById("emailLogin").value,
+    document.getElementById("passwordLogin").value,
+    document.getElementById("keepSigned").checked
+  )
+    .then(() => {
+      // Se o login for bem-sucedido, esconde o modal de login
+      const loginModal = document.getElementById("loginModal");
+      loginModal.classList.add("hidden");
+    })
+    .catch((error) => {
+      // Se houver erro, mostra a mensagem de erro no formulário
+      displayMessage(error.message);
+    });
 });
 
 // Função para mostrar mensagens de erro ou sucesso nos formulários
@@ -67,7 +68,15 @@ registerForm.addEventListener("submit", (event) => {
     registerForm.reset();
     setTimeout(() => {
       registerFormClose();
-      User.login(email, password, false);
+      // Also fix the auto-login after registration
+      User.login(email, password, false)
+        .then(() => {
+          // Login successful after registration
+          console.log("Auto-login successful");
+        })
+        .catch((error) => {
+          console.error("Auto-login failed:", error);
+        });
     }, 1000);
   } catch (error) {
     // Mostra mensagem de erro se falhar o registo
@@ -83,6 +92,11 @@ function clearMessages() {
 
 // Função para fechar o modal de registo com animação
 function registerFormClose() {
+  const modalRegisterContent = document.querySelector(
+    "#registerModal .modal-content"
+  ); // Adjust selector as needed
+  const registerModal = document.getElementById("registerModal");
+
   modalRegisterContent.classList.remove("opacity-100", "scale-100");
   modalRegisterContent.classList.add("opacity-0", "scale-95");
   setTimeout(() => {

@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
     scratchModal.classList.add("hidden");
   }
 
-  const packs = Trips.getFilteredPacks();
+  const packs = Trips.getFilteredPacks(User.getUserLogged());
   const swiperPacks = document.getElementById("swiperPacks");
   const swiperDesktop = document.getElementById("swiperDesktopWrapper");
   const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
@@ -347,8 +347,8 @@ function renderPassportGrid(continent = "") {
     );
   });
 }
-applyMilesBtn = document.getElementById("applyMilesBtn");
-cancelMilesBtn = document.getElementById("cancelMilesBtn");
+let applyMilesBtn = document.getElementById("applyMilesBtn");
+let cancelMilesBtn = document.getElementById("cancelMilesBtn");
 
 let canApply = false;
 
@@ -377,7 +377,7 @@ const sc = new ScratchCard(scContainer, {
 
   htmlBackground: `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`,
   clearZoneRadius: 20,
-  percentToFinish: 40, // When the percent exceeds 50 on touchend event the callback will be exec.
+  percentToFinish: 40, // When the percent exceeds 40 on touchend event the callback will be exec.
   callback: function () {
     canApply = true;
   },

@@ -94,7 +94,7 @@ function renderBadges() {
   }
 
   let regionNames = new Intl.DisplayNames(["pt"], { type: "region" });
-  user.badges.forEach((element) => {
+  user.badges.slice(0, 12).forEach((element) => {
     flagWrapper.insertAdjacentHTML(
       "beforeend",
       `<div class="has-tooltip w-12 h-12 rounded overflow-hidden flex items-center justify-center">
@@ -122,7 +122,7 @@ function renderFavorites() {
     return;
   }
 
-  user.favorites.forEach((favorite) => {
+  user.favorites.slice(0, 4).forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
     fetch(`https://api.pexels.com/v1/search?query=${favorite}&per_page=2`, {
       headers: {
@@ -173,7 +173,6 @@ function renderFavoritesGrid() {
     );
     return;
   }
-
   userFavorites.forEach((favorite) => {
     const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
 

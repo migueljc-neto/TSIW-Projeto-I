@@ -75,10 +75,22 @@ export function getAllPacks() {
   return trips.filter((trip) => trip.isPack);
 }
 
-export function getFilteredPacks() {
+export function getFilteredPacks(user) {
   const packs = getAllPacks();
+  let filteredPacks;
 
-  return packs.filter(
+  if (user) {
+    filteredPacks = []; // Initialize as empty array
+    packs.forEach((pack) => {
+      if (!user.trips.includes(pack.id)) {
+        filteredPacks.push(pack); // Push the full pack object, not just the ID
+      }
+    });
+  } else {
+    filteredPacks = packs;
+  }
+  console.log(packs, filteredPacks);
+  return filteredPacks.filter(
     (pack) => pack.startDate > new Date().toISOString().split("T")[0]
   );
 }
