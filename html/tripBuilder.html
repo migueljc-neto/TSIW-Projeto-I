@@ -6,7 +6,6 @@
     <title>Compass - Construtor de Viagens</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/tripBuilder.css" />
-    <link rel="stylesheet" href="../css/style.css" />
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -29,7 +28,7 @@
   </head>
   <body class="dark:bg-gray-800! bg-none! px-10 minw-[450px]">
     <header class="pt-2 top-0 w-full bg-transparent z-50">
-      <div class="max-w-[1530px] flex gap-10 items-center py-4">
+      <div class="max-w-[1530px] flex gap-2 md:gap-10 items-center py-4">
         <!-- LightMode Logo -->
         <div id="logo" class="h-[60px] w-fit dark:hidden">
           <img
@@ -83,40 +82,44 @@
             <img src="../img/icons/blue/menu.svg" alt="menuIcon" class="h-4" />
           </button>
         </div>
-        <div class="relative flex-col lg:mb-6 w-full md:w-fit lg:w-fit">
-          <label
-            for="steps-range"
-            class="block text-sm font-medium text-gray-900 dark:text-white"
-            >Preço máximo: <span id="maxPrice"></span>
-          </label>
+        <div
+          class="block space-y-3 md:space-y-0 justify-start items-center md:flex md:gap-5 w-full"
+        >
+          <div class="relative flex-col lg:mb-6 w-full md:w-fit lg:w-fit">
+            <label
+              for="steps-range"
+              class="block text-sm font-medium text-gray-900 dark:text-white"
+              >Preço máximo: <span id="maxPrice"></span>
+            </label>
+            <input
+              id="steps-range"
+              type="range"
+              min="100"
+              max="1000"
+              value="100"
+              step="50"
+              class="w-full md:w-70 lg:w-70 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+            />
+            <span
+              class="hidden lg:flex text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
+              >Min (100€)</span
+            >
+            <span
+              class="hidden lg:flex text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
+              >Max (1000€)</span
+            >
+          </div>
           <input
-            id="steps-range"
-            type="range"
-            min="100"
-            max="1000"
-            value="100"
-            step="50"
-            class="w-full md:w-70 lg:w-70 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+            id="tripName"
+            type="text"
+            required
+            minlength="5"
+            maxlength="20"
+            class="flex lg:flex border-red-600 outline-offset-1 focus:invalid:outline-1 focus:invalid:outline-red-100 focus:outline-0 valid:border-green-600 border-1 h-10 w-full max-w-80 p-2 rounded-lg appearance-none"
+            placeholder="Editar nome da viagem"
+            required
           />
-          <span
-            class="hidden lg:flex text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
-            >Min (100€)</span
-          >
-          <span
-            class="hidden lg:flex text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
-            >Max (1000€)</span
-          >
         </div>
-        <input
-          id="tripName"
-          type="text"
-          required
-          minlength="5"
-          maxlength="20"
-          class="hidden md:flex lg:flex border-red-600 outline-offset-1 focus:invalid:outline-1 focus:invalid:outline-red-100 focus:outline-0 valid:border-green-600 border-1 h-10 w-80 p-2 rounded-lg appearance-none"
-          placeholder="Editar nome da viagem"
-          required
-        />
       </div>
 
       <!-- Main Grid -->
@@ -200,7 +203,7 @@
                 <input checked type="radio" id="oneWay" name="tripRadio" />
               </div>
             </div>
-            <p>Milhas: <span id="miles">****</span></p>
+            <p>Milhas: <span id="miles"></span></p>
           </div>
           <div class="flex gap-3 my-auto">
             <button
