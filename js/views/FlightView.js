@@ -1,17 +1,17 @@
 import * as Flights from "../models/FlightModel.js";
 import * as Helper from "../models/ModelHelper.js";
-
+import * as Users from "../models/userModel.js";
 // Inicializa os dados de voos no localStorage, se necessário
 Flights.init();
 
 // Lista de destinos para o percurso
-const destinations = ["OSL", "STO", "CPH"];
-const name = "Viagem Europeia";
+let destinations;
+let name;
 const flightsSection = document.getElementById("flightsSection");
 let totalPrice = 0; // Preço total dos voos selecionados
 let selectedFlights = {}; // Guarda o id do voo selecionado em cada secção
 let selectedCount = 0; // Quantos voos já foram selecionados
-const totalSections = destinations.length - 1; // Número de secções
+let totalSections;
 
 // Mapeamento de nomes de companhias para códigos IATA (para mostrar o logo)
 const IATA_CODES = {
@@ -42,6 +42,14 @@ const IATA_CODES = {
 
 // Quando o DOM estiver pronto, começa a construir a interface
 window.addEventListener("DOMContentLoaded", () => {
+  if (!sessionStorage.getItem("tripData") || !Users.isLogged()) {
+    location.href = "../index.html";
+    return;
+  }
+  let trip = JSON.parse(sessionStorage.getItem("tripData"));
+  destinations = trip.destinations;
+  name = trip.name;
+  totalSections = destinations.length - 1;
   populateView();
 });
 
@@ -279,10 +287,11 @@ function populateView() {
     `<div class="flex flex-col sm:flex-row justify-end items-center mt-6 gap-4">
       <p class="text-xl font-semibold total-price">Valor Total: €0</p>
       <div class="flex items-center space-x-4">
-        <button class="border-2 border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
+        <button class="w-fit cursor-pointer btn-std font-bold border-2 border-[#D12127] text-[#D12127] hover:bg-[#D12127] hover:bg-opacity-10">
           Cancelar
         </button>
-        <button id="resume-btn" class="bg-transparent border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded flex items-center" disabled>
+        <button id="resume-btn" class="w-fit btn-std font-bold border-2 border-gray-600 cursor-not-allowed opacity-50 text-gray-600 px-4 py-2 rounded flex items-center" disabled>
+
           <span>0/${totalSections}</span>
         </button>
       </div>
@@ -660,12 +669,6 @@ function updateCounter() {
         "cursor-not-allowed",
         "opacity-50",
         "text-gray-600"
-      );
-      btn.classList.add(
-        "bg-green-500",
-        "text-white",
-        "hover:bg-green-600",
-        "border-green-600"
       );
       btn.disabled = false;
     } else {

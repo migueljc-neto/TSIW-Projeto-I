@@ -61,7 +61,9 @@
             alt="Darkmode logo"
           />
         </div>
-        <h1 id="pagetitle" class="text-4xl dark:text-white">Build your Trip</h1>
+        <h1 id="pagetitle" class="text-4xl dark:text-white">
+          Cria a tua viagem
+        </h1>
       </div>
     </header>
     <main class="flex flex-col gap-2">
@@ -113,6 +115,7 @@
           maxlength="20"
           class="hidden md:flex lg:flex border-red-600 outline-offset-1 focus:invalid:outline-1 focus:invalid:outline-red-100 focus:outline-0 valid:border-green-600 border-1 h-10 w-80 p-2 rounded-lg appearance-none"
           placeholder="Editar nome da viagem"
+          required
         />
       </div>
 
@@ -197,18 +200,18 @@
                 <input checked type="radio" id="oneWay" name="tripRadio" />
               </div>
             </div>
-            <p>Milhas: <span id="miles">****</span> mi</p>
+            <p>Milhas: <span id="miles">****</span></p>
           </div>
           <div class="flex gap-3 my-auto">
             <button
               id="clearListBtn"
-              class="disabled border-2 rounded-lg bg-white text-red-600 px-2 py-1 hover:bg-red-100"
+              class="disabled cursor-not-allowed border-2 rounded-lg bg-white text-red-600 px-2 py-1 hover:bg-red-100"
             >
               Limpar lista
             </button>
             <button
               id="submitBtn"
-              class="disabled w-full h-15 border-2 border-blue-600 rounded-lg text-blue-600 px-2 bg-blue-100 hover:bg-blue-600 hover:text-white"
+              class="disabled cursor-not-allowed w-full h-15 border-2 border-blue-600 rounded-lg text-blue-600 px-2 bg-blue-100 hover:bg-blue-600 hover:text-white"
             >
               Selecionar Voos
             </button>
@@ -216,8 +219,24 @@
         </div>
       </div>
     </main>
-    <footer></footer>
+    <!-- Model -->
     <script type="module" src="../js/models/flightModel.js"></script>
+
+    <!-- View -->
     <script type="module" src="../js/views/TripBuilderView.js"></script>
+
+    <!-- Tradutor -->
+    <script>
+      window.gtranslateSettings = {
+        default_language: "pt",
+        languages: ["en", "es", "fr", "de", "pt"],
+        wrapper_selector: ".gtranslate_wrapper",
+      };
+    </script>
+    <script
+      src="https://cdn.gtranslate.net/widgets/latest/float.js"
+      defer
+    ></script>
+    <div class="print:hidden gtranslate_wrapper"></div>
   </body>
 </html>

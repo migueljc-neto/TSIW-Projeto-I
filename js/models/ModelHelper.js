@@ -303,6 +303,25 @@ export function loadViews(flight) {
   mapLine();
 }
 
+export function calculateDuration(duration) {
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  return `${hours}h${minutes}m`;
+}
+
+export function setFlightData(tripName, flightArray, originName) {
+  let flightTexts = flightArray.map((li) => li.textContent.trim());
+
+  flightTexts.unshift(originName);
+
+  const tripData = {
+    name: tripName,
+    destinations: flightTexts,
+  };
+
+  sessionStorage.setItem("tripData", JSON.stringify(tripData));
+}
+
 // Devolve o ID do tipo de turismo a partir do nome
 export function getTurismTypeId(tourismType) {
   let tourismTypesArray = JSON.parse(localStorage.getItem("tourismTypes"));

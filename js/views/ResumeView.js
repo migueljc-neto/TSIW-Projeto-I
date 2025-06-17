@@ -9,12 +9,13 @@ Trips.init();
 let trip;
 let flightsTrip;
 
-// Obter parâmetros no url
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+let id = params.get("id");
 
 // Quando a página carregar, executa a função para preencher os dados
 window.addEventListener("DOMContentLoaded", () => {
+  id = id ? parseInt(id, 10) : null;
+  console.log(id);
   // Apenas executar se houver parametro de id
   if (id) {
     trip = Trips.getSingleTripById(id);
@@ -112,7 +113,7 @@ async function processFlightCard(flight, index) {
 
     // AGUARDA as promises dos nomes dos aeroportos
     const [departureName, arrivalName] = await getFlightNames(flightData);
-
+    let duration = Helper.calculateDuration(flightData.duration);
     // Insere o cartão do voo no resumo
     flightResume.insertAdjacentHTML(
       "beforeend",
@@ -135,7 +136,7 @@ async function processFlightCard(flight, index) {
           <div class="bg-[#6C6EA0] px-6 py-4 text-white rounded-t-lg">
             <div class="flex justify-between items-center">
               <p class="text-sm md:text-md md:text-lg">
-                ${flightData.originName} - ${flightData.destinationName}<span class="font-light text-sm">: ${flightData.duration}</span>
+                ${flightData.originName} - ${flightData.destinationName}<span class="font-light text-sm">: ${duration}</span>
               </p>
               <p class="text-sm">${departureDate}</p>
             </div>

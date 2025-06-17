@@ -184,6 +184,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const favoritesIcon = document.getElementById("favoritesIcon");
         if (currentSectionIndex === 0) {
           // Se está na primeira secção, mete o formulário no footer
+          new Datepicker(datePicker, {
+            autohide: true,
+            format: "dd-mm-yyyy",
+            minDate: today,
+            orientation: "top",
+            autoSelectToday: 1,
+          });
           if (!footer.contains(mainForm)) {
             footer.appendChild(mainForm);
           }
@@ -200,13 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
           passportBtn.classList.remove("border-[#39578a]");
           favoritesBtn.classList.remove("border-[#39578a]");
           openLoginModalBtn.classList.remove("border-[#39578a]");
-          new Datepicker(datePicker, {
-            autohide: true,
-            format: "dd-mm-yyyy",
-            minDate: today,
-            orientation: "top",
-            autoSelectToday: 1,
-          });
+
           logoImg.forEach((img) => {
             img.src = "./img/logos/logoDarkmode_logotipo darkmode.png";
           });

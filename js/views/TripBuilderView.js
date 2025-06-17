@@ -24,6 +24,11 @@ const trashCan = document.getElementById("trashCan");
 const clearBtn = document.getElementById("clearListBtn");
 const submitBtn = document.getElementById("submitBtn");
 
+/* Texto milhas */
+const milesText = document.getElementById("miles");
+
+const tripName = document.getElementById("tripName");
+
 let maxPriceValue;
 
 /* map icons */
@@ -36,6 +41,7 @@ let tourismTypeId;
 let departureDate;
 /* Origin Obj */
 let originObj;
+let originName;
 
 /* Map */
 var map;
@@ -245,6 +251,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadMap(userQuery.origin);
 
+  originName = Flight.getOriginName(userQuery.origin);
+
   document.getElementById("origin").textContent = userQuery.origin;
 });
 
@@ -280,8 +288,10 @@ const createMap = function (origin) {
 
 function loadMap(origin) {
   const flightList = Flight.getFlightsByOrigin(origin);
-
+  const miles = calculateActiveTripMiles();
   Flight.filterByTourismId(flightList, tourismTypeId);
+
+  milesText.textContent = `${miles}`;
 
   iconGroup.clearLayers();
   poiGroup.clearLayers();
@@ -367,7 +377,7 @@ function loadMap(origin) {
 
       marker.on("mouseover", function () {
         poiCards.innerHTML = "";
-        poiDisplay.textContent = `${flight.destinationName} points of interest`;
+        poiDisplay.textContent = `${flight.destinationName} - Pontos de Interesse`;
 
         flight.poi.forEach((poi) => {
           const apiKey =
@@ -499,27 +509,40 @@ function mapLine() {
   });
 }
 
+function calculateActiveTripMiles() {
+  let tripItems = Array.from(tripList.getElementsByTagName("li"));
+
+  let totalMiles = Flight.calculateMiles(tripItems);
+  console.log(totalMiles);
+  return totalMiles;
+}
+
 function updateMap() {
   mapLine();
 
   let tripItems = Array.from(tripList.getElementsByTagName("li"));
-  
+  console.log(tripItems);
+  const activeTripMiles = calculateActiveTripMiles();
+  milesText.textContent = activeTripMiles > 0 ? `${activeTripMiles}` : `0`;
+
   if (tripItems.length == 0) {
-    // Reset to original departure date when no destinations are selected
     const userQuery = JSON.parse(sessionStorage.getItem("userQuery"));
     departureDate = Helper.formatDateToYMD(userQuery.date);
-    
-    clearBtn.classList.add("disabled");
-    submitBtn.classList.add("disabled");
+
+    clearBtn.classList.add("disabled", "cursor-not-allowed");
+    submitBtn.classList.add("disabled", "cursor-not-allowed");
     loadMap(originObj.objName);
   } else {
-    // Update departure date to the arrival time of the last destination
-    const lastFlightId = parseInt(tripItems[tripItems.length - 1].getAttribute("id"));
+    const lastFlightId = parseInt(
+      tripItems[tripItems.length - 1].getAttribute("id")
+    );
     const lastFlight = Flight.getFlightById(lastFlightId);
     departureDate = Helper.formatDateToYMD(lastFlight.arrivalTime);
-    
-    clearBtn.classList.remove("disabled");
-    submitBtn.classList.remove("disabled");
+
+    clearBtn.classList.remove("disabled", "cursor-not-allowed");
+    submitBtn.classList.remove("disabled", "cursor-not-allowed");
+    clearBtn.classList.add("cursor-pointer");
+    submitBtn.classList.add("cursor-pointer");
     loadMap(lastFlight.destination);
   }
 }
@@ -538,4 +561,23 @@ priceSlider.addEventListener("input", function () {
   maxPrice.textContent = `${priceSlider.value} €`;
   maxPriceValue = parseInt(priceSlider.value);
   updateMap();
+});
+
+tripName.addEventListener("click", () => {
+  if (tripName.classList.contains("border-4")) {
+    tripName.classList.remove("border-4");
+  }
+});
+
+submitBtn.addEventListener("click", () => {
+  if (submitBtn.classList.contains("disabled")) {
+    return;
+  }
+  if (!tripName.validity.valid || tripName.value.length < 5) {
+    tripName.classList.add("border-4");
+    return;
+  }
+  let flightArray = Array.from(tripList.getElementsByTagName("li"));
+  Helper.setFlightData(tripName.value, flightArray, originName);
+  location.href = "./select-flight.html";
 });

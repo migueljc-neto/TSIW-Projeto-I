@@ -17,6 +17,12 @@ export function getAllFlights() {
   return flights;
 }
 
+export function getOriginName(originCode) {
+  let flights = getAllFlights();
+  let flight = flights.find((f) => f.origin === originCode);
+  return flight ? flight.originName : null;
+}
+
 // Devolve os voos cujos IDs estão presentes no array fornecido
 export function getFlightByTripId(ids) {
   let flights = getAllFlights();
@@ -66,7 +72,9 @@ export function findAlternateLeg(from, to, flightList) {
 // Devolve todos os voos entre duas cidades específicas
 export function getAllFlightsByLeg(from, to) {
   const allFlights = getAllFlights();
-  return allFlights.filter((f) => f.origin === from && f.destination === to);
+  return allFlights.filter(
+    (f) => f.originName === from && f.destinationName === to
+  );
 }
 
 // Elimina um voo pelo seu ID
@@ -172,6 +180,16 @@ export function getFlightBadges(flightObjects) {
   return [...new Set(badges)];
 }
 
+export function calculateDurationInMinutes(departureTime, arrivalTime) {
+  const departure = new Date(departureTime);
+  const arrival = new Date(arrivalTime);
+
+  // Calcula a diferença em milissegundos e converte para minutos
+  const durationMs = arrival.getTime() - departure.getTime();
+  const durationMinutes = Math.round(durationMs / (1000 * 60));
+
+  return durationMinutes;
+}
 // FUNÇÃO DE MODELO: Cria um voo a partir dos dados do formulário
 export function createFlightFromFormData(formData) {
   const flightData = {
@@ -188,8 +206,8 @@ export function createFlightFromFormData(formData) {
     distance: parseFloat(formData.distance) || 0,
     originLat: parseFloat(formData.originLat) || 0,
     originLong: parseFloat(formData.originLong) || 0,
-    destinLat: parseFloat(formData.destinLat) || 0,
-    destinLong: parseFloat(formData.destinLong) || 0,
+    destinationLat: parseFloat(formData.destinLat) || 0,
+    destinationLong: parseFloat(formData.destinLong) || 0,
     pois: formData.pois || [],
     tourismTypes: formData.tourismTypes || [],
     badge: formData.badge,
@@ -211,13 +229,33 @@ export function createFlightFromFormData(formData) {
     flightData.pois,
     flightData.originLat,
     flightData.originLong,
-    flightData.destinLat,
-    flightData.destinLong,
+    flightData.destinationLat,
+    flightData.destinationLong,
     flightData.tourismTypes,
     flightData.badge
   );
 
   return flight;
+}
+
+export function calculateMiles(tripList) {
+  let totalMiles = 0;
+
+  if (tripList.length === 0) {
+    return 0;
+  }
+
+  // Sum up the distance property from each flight in the trip
+  tripList.forEach((element) => {
+    let flightId = parseInt(element.getAttribute("id"));
+    let flight = getFlightById(flightId);
+
+    if (flight && flight.distance) {
+      totalMiles += flight.distance;
+    }
+  });
+
+  return totalMiles;
 }
 
 // FUNÇÃO DE MODELO: Guarda o voo criado a partir dos dados do formulário
@@ -252,8 +290,8 @@ class Flight {
   poi = [];
   originLat = 0;
   originLong = 0;
-  destinLat = 0;
-  destinLong = 0;
+  destinationLat = 0;
+  destinationLong = 0;
   tourismTypes = [];
   badge = "";
   constructor(
@@ -271,8 +309,8 @@ class Flight {
     poi = [],
     originLat,
     originLong,
-    destinLat,
-    destinLong,
+    destinationLat,
+    destinationLong,
     tourismTypes = [],
     badge
   ) {
@@ -290,8 +328,8 @@ class Flight {
     this.poi = poi;
     this.originLat = originLat;
     this.originLong = originLong;
-    this.destinLat = destinLat;
-    this.destinLong = destinLong;
+    this.destinationLat = destinationLat;
+    this.destinationLong = destinationLong;
     this.tourismTypes = tourismTypes;
     this.badge = badge;
   }

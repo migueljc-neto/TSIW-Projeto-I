@@ -616,7 +616,10 @@ function extractFormData() {
     departureTime: document.getElementById("departureTime").value,
     arrivalTime: document.getElementById("arrivalTime").value,
     price: document.getElementById("price").value,
-    duration: document.getElementById("duration").value,
+    duration: Flights.calculateDurationInMinutes(
+      document.getElementById("departureTime").value,
+      document.getElementById("arrivalTime").value
+    ),
     company: document.getElementById("company").value,
     distance: document.getElementById("distance").value,
     originLat: document.getElementById("originLat").value,

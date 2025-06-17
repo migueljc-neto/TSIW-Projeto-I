@@ -54,9 +54,9 @@ export function setTrip(id) {
 }
 
 // Devolve uma viagem pelo ID (pode ser array de IDs)
-export function getSingleTripById(ids) {
+export function getSingleTripById(id) {
   let trips = getAllTrips();
-  return trips.find((trip) => ids.includes(trip.id));
+  return trips.find((trip) => id == trip.id);
 }
 
 // Remove o estado de pacote de uma viagem pelo ID
