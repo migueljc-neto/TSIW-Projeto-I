@@ -44,6 +44,8 @@ let departureDate;
 let originObj;
 let originName;
 
+let oldTrip;
+
 /* Map */
 var map;
 
@@ -216,16 +218,119 @@ new Sortable(tripList, {
 
   onStart: function () {
     trashCan.classList.remove("opacity-30");
+    oldTrip = Array.from(tripList.childNodes).map((node) =>
+      node.cloneNode(true)
+    );
+    console.log(oldTrip);
     saveTripList();
   },
   onEnd: function (evt) {
-    var itemEl = evt.item; // dragged HTMLElement
     trashCan.classList.add("opacity-30");
-    console.log(tripList, originObj.objName);
-    console.log(evt.to, evt.from);
-    Flight.findAlternateLeg(originObj.objName, originObj.objName, tripList);
+    let tripStrings = Array.from(tripList.getElementsByTagName("li")).map(
+      (item) =>
+        item.getAttribute("value") ||
+        item.querySelector("#destinationName")?.textContent ||
+        item.textContent.trim()
+    );
+    tripStrings.unshift(originName);
+    simulateFlights(tripStrings);
   },
 });
+
+function simulateFlights(tripStrings) {
+  console.log("Full trip itinerary:", tripStrings);
+
+  // Primeiro, valida se todos os segmentos têm voos disponíveis
+  for (let i = 0; i < tripStrings.length - 1; i++) {
+    const currentLocation = tripStrings[i];
+    const nextLocation = tripStrings[i + 1];
+
+    console.log(`A verificar voos de ${currentLocation} para ${nextLocation}`);
+    const flightsForLeg = Flight.getAllFlightsByLeg(
+      currentLocation,
+      nextLocation
+    );
+
+    if (flightsForLeg.length === 0) {
+      console.log(
+        `Sem voos diretos de ${currentLocation} para ${nextLocation}`
+      );
+      console.log(`A procurar rota alternativa...`);
+
+      let newFlights = Flight.findAlternateLeg(
+        currentLocation,
+        nextLocation,
+        tripStrings
+      );
+
+      if (newFlights && newFlights.length > 0) {
+        console.log("Rota alternativa encontrada:", newFlights);
+        // Chama recursivamente com a nova rota (inclui pontos de ligação)
+        return simulateFlights(newFlights);
+      } else {
+        console.log(
+          "Nenhuma rota alternativa encontrada - a repor viagem anterior"
+        );
+        restoreOldTrip();
+        return false; // Indica falha
+      }
+    } else {
+      console.log(
+        `Encontrados ${flightsForLeg.length} voos para este segmento:`,
+        flightsForLeg
+      );
+    }
+  }
+
+  // Se chegou aqui, todos os segmentos têm voos disponíveis
+  console.log("Todos os voos validados - a atualizar lista de viagem");
+
+  // Limpa a lista atual
+  tripList.innerHTML = "";
+
+  // Constrói a lista de viagem com os voos reais
+  for (let i = 0; i < tripStrings.length - 1; i++) {
+    const from = tripStrings[i];
+    const to = tripStrings[i + 1];
+    const flight = Flight.getAllFlightsByLeg(from, to)[0]; // Primeiro voo disponível
+
+    if (flight) {
+      tripList.insertAdjacentHTML(
+        "beforeend",
+        `<li id="${flight.id}" tabindex="1" class="px-2 py-2 lg:pr-10 lg:pl-5 bg-[#39578A] text-white lg:h-20 lg:min-h-20 lg:w-full h-full w-25 min-w-25 flex items-center lg:justify-between justify-center rounded-lg">
+          <div class="flex gap-5 inline-flex">
+            <img src="../img/icons/white/destinationElipse.svg" alt="startingPoint" class="hidden lg:flex">
+            <p id="destinationName" class="truncate">${flight.destinationName}</p>
+          </div>
+          <div class="flex hide gap-5">
+            <div id="drag" class="cursor-pointer hidden lg:flex">
+              <img src="../img/icons/white/menu.svg" alt="trashIcon" class="h-5">
+            </div>
+          </div>
+        </li>`
+      );
+    }
+  }
+
+  // Atualiza o mapa com a nova rota
+  updateMap();
+  console.log("Viagem atualizada com sucesso com todos os voos!");
+  return true; // Indica sucesso
+}
+
+// Função auxiliar para repor a viagem anterior se a validação falhar
+function restoreOldTrip() {
+  if (oldTrip && oldTrip.length > 0) {
+    tripList.innerHTML = "";
+    oldTrip.forEach((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        tripList.appendChild(node);
+      }
+    });
+    updateMap();
+    console.log("Configuração anterior da viagem reposta");
+  }
+}
 
 new Sortable(trashCan, {
   group: {
@@ -233,8 +338,18 @@ new Sortable(trashCan, {
     put: ["Trip"],
   },
   onAdd: function (event) {
+    oldTrip = Array.from(tripList.childNodes).map((node) =>
+      node.cloneNode(true)
+    );
     event.item.remove();
-    updateMap();
+    let tripStrings = Array.from(tripList.getElementsByTagName("li")).map(
+      (item) =>
+        item.getAttribute("value") ||
+        item.querySelector("#destinationName")?.textContent ||
+        item.textContent.trim()
+    );
+    tripStrings.unshift(originName);
+    simulateFlights(tripStrings);
   },
   emptyInsertThreshold: 0,
 });

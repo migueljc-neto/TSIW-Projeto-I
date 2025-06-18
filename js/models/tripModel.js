@@ -17,6 +17,36 @@ export function getAllNonPacks() {
   return trips.filter((trip) => !trip.isPack);
 }
 
+export function saveReview(id, newReview) {
+  try {
+    // Convert id to number if it's a string
+    const tripId = typeof id === "string" ? Number(id) : id;
+
+    // Find the trip by ID
+    const trip = trips.find((trip) => trip.id === tripId);
+
+    if (!trip) {
+      throw new Error(`Trip with ID ${id} not found`);
+    }
+
+    if (!trip.reviews) {
+      trip.reviews = [];
+    }
+
+    // Add the new review to the trip
+    trip.reviews.push(newReview);
+
+    // Save the updated trips array to localStorage
+    saveTrips(trips);
+
+    console.log(`Review added successfully to trip ${tripId}:`, newReview);
+    return newReview;
+  } catch (error) {
+    console.error("Error saving review:", error);
+    throw error;
+  }
+}
+
 // Função de administração: define uma viagem como pacote e atribui preço
 export function setPackAndPrice(tripId, newPrice) {
   const trip = trips.find((trip) => String(trip.id) === String(tripId));
@@ -191,6 +221,7 @@ class Trip {
   isPack = false;
   flights = [];
   miles = 0;
+  reviews = [];
 
   constructor(
     id,
@@ -201,7 +232,8 @@ class Trip {
     endDate = "",
     isPack = false,
     flights = [],
-    miles
+    miles,
+    reviews
   ) {
     this.id = id;
     this.name = name;
@@ -212,5 +244,6 @@ class Trip {
     this.isPack = isPack;
     this.flights = flights;
     this.miles = miles;
+    this.reviews = reviews;
   }
 }

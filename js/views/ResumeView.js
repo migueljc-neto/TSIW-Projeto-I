@@ -275,6 +275,14 @@ function addActionButtons() {
 </div>`
     );
   }
+
+  if (trip.reviews) {
+    flightResume.insertAdjacentHTML(
+      "beforeend",
+      `<h3 class="text-xl mt-10 mb-4 font-bold">Reviews</h3><div id="reviewSection"></div>`
+    );
+    renderReviews();
+  }
 }
 
 // Função que retorna ambos os nomes usando Promise.all
@@ -283,4 +291,198 @@ function getFlightNames(flightData) {
     Helper.fetchAirportName(flightData.origin),
     Helper.fetchAirportName(flightData.destination),
   ]);
+}
+
+function renderReviews() {
+  let reviewSection = document.getElementById("reviewSection");
+
+  if (id) {
+    reviewSection.innerHTML = "";
+    reviewSection.insertAdjacentHTML(
+      "beforeend",
+      `<form id="reviewForm" class="mb-4">
+        <div class="flex flex-col space-y-5 mb-6">
+          <label for="reviewInput">Deixa a tua avaliação</label>
+          <textarea id="reviewInput" class="p-3 rounded-xl" name="reviewText" required placeholder="Escreve a tua opinião aqui..."></textarea>
+          
+          <!-- Star Rating Input -->
+          <div class="flex flex-col space-y-2">
+            <label>Classificação</label>
+            <div class="flex space-x-1">
+              ${[1, 2, 3, 4, 5]
+                .map(
+                  (star) =>
+                    `<button type="button" class="star-btn text-2xl text-gray-300 hover:text-yellow-400 transition-colors" data-rating="${star}">★</button>`
+                )
+                .join("")}
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0">
+            <span id="ratingError" class="text-red-500 text-sm hidden">Por favor, seleciona uma classificação</span>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn-std">Enviar</button>
+        </div>
+      </form>`
+    );
+
+    // Add star rating functionality
+    const starButtons = document.querySelectorAll(".star-btn");
+    const ratingInput = document.getElementById("rating");
+
+    starButtons.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        const rating = index + 1;
+        ratingInput.value = rating;
+
+        // Update star display
+        starButtons.forEach((s, i) => {
+          if (i < rating) {
+            s.classList.remove("text-gray-300");
+            s.classList.add("text-yellow-400");
+          } else {
+            s.classList.remove("text-yellow-400");
+            s.classList.add("text-gray-300");
+          }
+        });
+      });
+
+      // Hover effect
+      star.addEventListener("mouseenter", () => {
+        const rating = index + 1;
+        starButtons.forEach((s, i) => {
+          if (i < rating) {
+            s.classList.remove("text-gray-300");
+            s.classList.add("text-yellow-400");
+          } else {
+            s.classList.remove("text-yellow-400");
+            s.classList.add("text-gray-300");
+          }
+        });
+      });
+    });
+
+    // Reset to selected rating on mouse leave
+    const starContainer = document.querySelector(".flex.space-x-1");
+    starContainer.addEventListener("mouseleave", () => {
+      const currentRating = parseInt(ratingInput.value);
+      starButtons.forEach((s, i) => {
+        if (i < currentRating) {
+          s.classList.remove("text-gray-300");
+          s.classList.add("text-yellow-400");
+        } else {
+          s.classList.remove("text-yellow-400");
+          s.classList.add("text-gray-300");
+        }
+      });
+    });
+
+    // Handle form submission
+    const reviewForm = document.getElementById("reviewForm");
+    reviewForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const reviewText = document.getElementById("reviewInput").value.trim();
+      const rating = parseInt(document.getElementById("rating").value);
+      const ratingError = document.getElementById("ratingError");
+
+      // Validation
+      if (!reviewText) {
+        alert("Por favor, escreve uma avaliação");
+        return;
+      }
+
+      if (rating === 0) {
+        ratingError.classList.remove("hidden");
+        return;
+      } else {
+        ratingError.classList.add("hidden");
+      }
+
+      try {
+        // Create review object
+        const newReview = {
+          name: Users.getUserLogged().name,
+          message: reviewText,
+          rating: rating,
+        };
+
+        // Save the review
+        Trips.saveReview(id, newReview);
+
+        // Update the trip object with the latest data to reflect the new review
+        trip = Trips.getSingleTripById(id);
+
+        // Reset form
+        reviewForm.reset();
+        document.getElementById("rating").value = "0";
+        starButtons.forEach((s) => {
+          s.classList.remove("text-yellow-400");
+          s.classList.add("text-gray-300");
+        });
+
+        alert("Avaliação enviada com sucesso!");
+
+        // Re-render the reviews section
+        renderReviews();
+      } catch (error) {
+        console.error("Error saving review:", error);
+        alert("Erro ao enviar avaliação. Tenta novamente.");
+      }
+    });
+  }
+
+  // Function to generate star display
+  function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    let stars = "";
+
+    // Full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars += '<span class="text-yellow-400">★</span>';
+    }
+
+    // Half star
+    if (hasHalfStar) {
+      stars += '<span class="text-yellow-400">☆</span>';
+    }
+
+    // Empty stars
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+      stars += '<span class="text-gray-300">★</span>';
+    }
+
+    return stars;
+  }
+
+  // Add existing reviews container if there are reviews
+  if (trip.reviews && trip.reviews.length > 0) {
+    reviewSection.insertAdjacentHTML(
+      "beforeend",
+      `<div id="existingReviews" class="mt-6"></div>`
+    );
+
+    const existingReviewsContainer = document.getElementById("existingReviews");
+
+    // Display existing reviews with star ratings
+    trip.reviews.forEach((review) => {
+      existingReviewsContainer.insertAdjacentHTML(
+        "beforeend",
+        `<div class="mb-6">
+          <p class="font-semibold">${review.name}</p>
+          <div class="flex gap-x-5 p-6 bg-blue-200 rounded-xl justify-between items-start">
+            <p class="flex-1">${review.message}</p>
+            <div class="flex flex-col items-end">
+              <div class="flex text-lg mb-1">
+                ${generateStars(review.rating)}
+              </div>
+              <p class="text-sm text-gray-600">${review.rating}/5</p>
+            </div>
+          </div>
+        </div>`
+      );
+    });
+  }
 }

@@ -35,50 +35,51 @@ export function getFlightById(id) {
   return flights.find((flight) => flight.id === id);
 }
 
-// Procura um voo alternativo para uma determinada ligação (escala)
-export function findAlternateLeg(from, to, tripList) {
-  let flightList = Array.from(tripList.getElementsByTagName("li"));
+export function findAlternateLeg(from, to, flightList) {
   const flights = getAllFlights();
 
   if (flightList.length === 0) {
-    return 0;
+    return [];
   }
 
-  let flight;
-  // Sum up the distance property from each flight in the trip
-  flightList.forEach((element) => {
-    let flightId = parseInt(element.getAttribute("id"));
-    flight = getFlightById(flightId);
-  });
-
-  // Encontra o voo de escala (legFlight) que termina em 'to'
-  let legFlight = flights.find((flight) => flight.destination === to);
-
-  console.log(legFlight);
-
-  // Encontra o voo alternativo que parte de 'from' e chega ao ponto de partida do legFlight
-  let newFlight = flights.find(
-    (flight) =>
-      flight.destination == legFlight.origin &&
-      flight.origin == from &&
-      legFlight.departureTime > flight.arrivalTime
+  // Encontra todos os voos que terminam no destino desejado (to)
+  const possibleLegFlights = flights.filter(
+    (flight) => flight.destinationName === to
   );
-  console.log(newFlight);
 
-  // Encontra o índice do 'from' na lista de destinos
-  const index = flightList.findIndex((destination) => destination === to);
-
-  // Só faz a alteração se o índice for válido e o destino seguinte for 'to'
-  if (index !== -1) {
-    const array1 = flightList.slice(0, index);
-    const array2 = flightList.slice(index, flightList.length);
-
-    array2.unshift(newFlight.destination);
-
-    let newArray = array1.concat(array2);
-    console.log(newArray);
-    return newArray;
+  if (possibleLegFlights.length === 0) {
+    return [];
   }
+
+  // Para cada possível voo de ligação, tenta encontrar um voo que conecte a origem (from)
+  for (const legFlight of possibleLegFlights) {
+    const connectingFlights = flights.filter(
+      (flight) =>
+        flight.destinationName === legFlight.originName &&
+        flight.originName === from &&
+        new Date(legFlight.departureTime) > new Date(flight.arrivalTime)
+    );
+
+    if (connectingFlights.length > 0) {
+      // Encontrou uma conexão válida
+      const index = flightList.findIndex((destination) => destination === to);
+
+      if (index !== -1) {
+        // Divide a lista e insere o ponto de conexão
+        const array1 = flightList.slice(0, index);
+        const array2 = flightList.slice(index);
+
+        // Insere o ponto de conexão (origem do voo de ligação)
+        array1.push(legFlight.originName);
+
+        // Combina os arrays e devolve a lista completa
+        return array1.concat(array2);
+      }
+    }
+  }
+
+  // Se nenhuma conexão foi encontrada
+  return [];
 }
 
 // Devolve todos os voos entre duas cidades específicas
