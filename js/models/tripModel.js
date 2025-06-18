@@ -96,7 +96,7 @@ export function getFilteredPacks(user) {
 }
 
 // Adiciona uma nova viagem
-export function addTrip(flightObjects, flightsTrip, tripName) {
+export function addTrip(flightObjects, flightsTrip, tripName, miles) {
   try {
     // Validação dos dados de entrada
     if (
@@ -150,7 +150,8 @@ export function addTrip(flightObjects, flightsTrip, tripName) {
       startDate,
       endDate,
       false,
-      flightsTrip
+      flightsTrip,
+      miles
     );
 
     // Vai buscar as viagens atuais do storage
@@ -189,6 +190,7 @@ class Trip {
   endDate = "";
   isPack = false;
   flights = [];
+  miles = 0;
 
   constructor(
     id,
@@ -198,7 +200,8 @@ class Trip {
     startDate = "",
     endDate = "",
     isPack = false,
-    flights = []
+    flights = [],
+    miles
   ) {
     this.id = id;
     this.name = name;
@@ -208,5 +211,6 @@ class Trip {
     this.endDate = endDate;
     this.isPack = isPack;
     this.flights = flights;
+    this.miles = miles;
   }
 }

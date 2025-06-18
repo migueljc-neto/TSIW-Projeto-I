@@ -197,7 +197,12 @@ form.addEventListener("submit", (e) => {
       }
 
       // Cria a viagem com os objetos de voo
-      const newTrip = Trips.addTrip(flightObjects, flightsTrip, tripName);
+      const newTrip = Trips.addTrip(
+        flightObjects,
+        flightsTrip,
+        tripName,
+        accumMiles
+      );
 
       console.log("Nova viagem criada:", newTrip);
       Users.addTripToUser(user.id, newTrip.id);

@@ -87,7 +87,7 @@ function renderBadges() {
     flagWrapper.insertAdjacentHTML(
       "beforeend",
       `<div class="w-full flex justify-center">
-        <p class="text-gray-600 text-center">Nenhuma medalha de país visitado.</p>
+        <p class="text-gray-600 text-center">Nenhum país visitado.</p>
       </div>`
     );
     return;

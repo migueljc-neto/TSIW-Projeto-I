@@ -902,6 +902,7 @@ function initdata() {
         endDate: "2025-07-12",
         isPack: true,
         flights: [1, 3, 5, 6, 7], // OPO→LIS→BCN→ROM→ATH→IST
+        miles: 4320,
       },
       {
         id: 2,
@@ -912,6 +913,7 @@ function initdata() {
         endDate: "2025-07-10",
         isPack: true,
         flights: [8, 9, 10, 11, 12, 13], // OPO→CDG→LHR→AMS→BER→PRG→VIE
+        miles: 5430,
       },
       {
         id: 3,
@@ -922,6 +924,7 @@ function initdata() {
         endDate: "2025-07-08",
         isPack: false,
         flights: [14, 15, 16],
+        miles: 2310,
       },
       {
         id: 4,
@@ -932,6 +935,7 @@ function initdata() {
         endDate: "2025-07-08",
         isPack: true,
         flights: [17, 18],
+        miles: 300,
       },
       {
         id: 5,
@@ -942,6 +946,7 @@ function initdata() {
         endDate: "2025-07-08",
         isPack: true,
         flights: [19, 20],
+        miles: 900,
       },
       {
         id: 6,
@@ -952,6 +957,7 @@ function initdata() {
         endDate: "2025-07-03",
         isPack: false,
         flights: [2, 4],
+        miles: 700,
       },
       {
         id: 7,
@@ -962,6 +968,7 @@ function initdata() {
         endDate: "2025-07-05",
         isPack: true,
         flights: [5, 6, 7], // BCN→ROM→ATH→IST
+        miles: 1540,
       },
       {
         id: 8,
@@ -972,6 +979,7 @@ function initdata() {
         endDate: "2025-07-06",
         isPack: true,
         flights: [9, 10, 11],
+        miles: 1675,
       },
     ];
 
