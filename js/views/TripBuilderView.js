@@ -272,6 +272,11 @@ function simulateFlights(tripStrings) {
           "Nenhuma rota alternativa encontrada - a repor viagem anterior"
         );
         restoreOldTrip();
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Não foram encontrados voos de ligação :/",
+        });
         return false; // Indica falha
       }
     } else {

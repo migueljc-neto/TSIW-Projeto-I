@@ -216,7 +216,11 @@ form.addEventListener("submit", (e) => {
       Users.updateUserMiles(user.id, milesToDraw, acummulatingMiles);
     } catch (error) {
       console.error("Erro ao criar viagem:", error);
-      alert("Erro ao processar a viagem. Tente novamente.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Erro ao processar :/",
+      });
       return;
     }
   } else {
@@ -225,8 +229,24 @@ form.addEventListener("submit", (e) => {
     Users.addTripToUser(user.id, trip.id);
   }
 
-  alert("Pagamento processado com sucesso!");
-  /* Previne que o utilizador volte a comprar */
-  Helper.clearSessionstorage();
-  window.location.href = "./profile.html";
+  let timerInterval;
+  Swal.fire({
+    title: "Pagamento Realizado com Sucesso",
+    icon: "suceess",
+    html: "O teu pagamento foi realizado com sucesso.<br/>Não te esqueças de deixar a tua avaliação na página da tua nova viagem.<br/>Obrigado por comprares connosco. Aproveita a tua viagem.",
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+    willClose: () => {
+      clearInterval(timerInterval);
+      Helper.clearSessionstorage();
+      window.location.href = "./profile.html";
+    },
+  });
 });

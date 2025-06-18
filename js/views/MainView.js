@@ -6,7 +6,7 @@ import * as Flights from "../models/flightModel.js";
 // Inicializa os dados de packs de viagens e utilizadores
 Trips.init();
 User.init();
-
+let timerInterval;
 const scratchModal = document.getElementById("scratchModal");
 
 // Quando a página carrega, prepara os slides dos packs
@@ -120,10 +120,31 @@ window.addEventListener("load", () => {
                 ? event.target
                 : event.target.closest("#packBtn");
             const packId = packButton.dataset.id;
-
-            if (packId) {
+            if (packId && User.isLogged()) {
               Trips.setTrip(packId);
               location.href = "./html/resume.html";
+            } else {
+              Swal.fire({
+                title: "Sem sessão iniciada",
+                icon: "error",
+                html: "Para veres ou comprares este pack, faz login ou cria uma conta.",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading();
+                  const timer = Swal.getPopup().querySelector("b");
+                  timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                  }, 100);
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                },
+              }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log("I was closed by the timer");
+                }
+              });
             }
           }
         });
@@ -447,4 +468,31 @@ sc.init().then(() => {
   sc.canvas.addEventListener("scratch.move", () => {
     this.percent = sc.getPercent().toFixed(2);
   });
+});
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  Swal.fire({
+    title: "Mensagem Enviada",
+
+    icon: "success",
+    html: "A tua mensagem foi recebida pela nossa equipa.<br/>Por favor aguarda pacientemente a tua resposta.<br/>Verifica a tua caixa de spam.",
+    showClass: {
+      popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `,
+    },
+    hideClass: {
+      popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `,
+    },
+  }).then(() => contactForm.reset());
 });

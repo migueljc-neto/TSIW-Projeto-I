@@ -297,7 +297,28 @@ const searchFlightBtn = document.getElementById("searchFlightBtn");
 
 // Só permite pesquisar voos se o utilizador estiver autenticado
 searchFlightBtn.addEventListener("click", () => {
-  User.isLogged() ? sendFormQuery() : false;
+  if (User.isLogged()) {
+    sendFormQuery();
+  } else {
+    let timerInterval;
+    Swal.fire({
+      title: "Sem sessão iniciada",
+      icon: "error",
+      html: "Para começares a construir a tua viagem, faz login ou cria uma conta.",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup().querySelector("b");
+        timerInterval = setInterval(() => {
+          timer.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
+  }
 });
 
 // Envia os dados do formulário para a próxima página
