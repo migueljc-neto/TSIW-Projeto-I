@@ -462,7 +462,7 @@ function renderReviews() {
         "beforeend",
         `<div class="mb-6">
           <p class="font-semibold">${review.name}</p>
-          <div class="flex gap-x-5 p-6 bg-blue-200 rounded-xl justify-between items-start">
+          <div class="flex gap-x-5 p-6 bg-gray-100 rounded-xl justify-between items-start">
             <p class="flex-1">${review.message}</p>
             <div class="flex flex-col items-end">
               <div class="flex text-lg mb-1">
