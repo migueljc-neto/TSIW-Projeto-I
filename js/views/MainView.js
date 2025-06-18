@@ -198,8 +198,19 @@ window.addEventListener("load", () => {
 
 // Função para renderizar o grid de favoritos no modal
 function renderFavoritesGrid() {
-  const user = User.getUserLogged();
   const favoritesModalGrid = document.getElementById("favoritesModalGrid");
+  if (!User.isLogged()) {
+    favoritesModalGrid.innerHTML = "";
+    favoritesModalGrid.insertAdjacentHTML(
+      "beforeend",
+      `<div class="w-full flex justify-center items-center col-span-full">
+        <p class="text-gray-600 text-center">Faz login ou cria uma conta e começa a juntar favoritos.</p>
+      </div>`
+    );
+    return;
+  }
+
+  const user = User.getUserLogged();
   favoritesModalGrid.innerHTML = "";
 
   const userFavorites = user.favorites;

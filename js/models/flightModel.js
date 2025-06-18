@@ -36,8 +36,20 @@ export function getFlightById(id) {
 }
 
 // Procura um voo alternativo para uma determinada ligação (escala)
-export function findAlternateLeg(from, to, flightList) {
+export function findAlternateLeg(from, to, tripList) {
+  let flightList = Array.from(tripList.getElementsByTagName("li"));
   const flights = getAllFlights();
+
+  if (flightList.length === 0) {
+    return 0;
+  }
+
+  let flight;
+  // Sum up the distance property from each flight in the trip
+  flightList.forEach((element) => {
+    let flightId = parseInt(element.getAttribute("id"));
+    flight = getFlightById(flightId);
+  });
 
   // Encontra o voo de escala (legFlight) que termina em 'to'
   let legFlight = flights.find((flight) => flight.destination === to);

@@ -218,8 +218,12 @@ new Sortable(tripList, {
     trashCan.classList.remove("opacity-30");
     saveTripList();
   },
-  onEnd: function () {
+  onEnd: function (evt) {
+    var itemEl = evt.item; // dragged HTMLElement
     trashCan.classList.add("opacity-30");
+    console.log(tripList, originObj.objName);
+    console.log(evt.to, evt.from);
+    Flight.findAlternateLeg(originObj.objName, originObj.objName, tripList);
   },
 });
 

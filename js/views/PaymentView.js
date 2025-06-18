@@ -84,11 +84,16 @@ window.addEventListener("DOMContentLoaded", () => {
 function populatePayment() {
   if (user && user.miles && user.miles.available !== undefined) {
     milesLabel.innerText = `Aplicar Milhas (${user.miles["available"]} disponíveis)`;
+
     checkValue();
   } else {
     console.error("User miles data not available");
     milesLabel.innerText = "Aplicar Milhas (0 disponíveis)";
   }
+  milesLabel.insertAdjacentHTML(
+    "beforeend",
+    `<span class="text-blue-600"> **</span>`
+  );
 }
 
 // Atualiza o preço exibido na tela
