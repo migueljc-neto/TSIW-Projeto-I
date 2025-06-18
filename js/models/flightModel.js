@@ -99,6 +99,16 @@ export function getAllUniqueOrigins() {
   return uniqueOrigins;
 }
 
+export function getAllUniqueDestins() {
+  const flights = getAllFlights();
+
+  const destins = flights.map((flight) => flight.destination);
+
+  const uniqueDestins = [...new Set(destins)];
+
+  return uniqueDestins;
+}
+
 // Filtra as origens únicas pelo texto fornecido
 export function getFilteredOrigins(filterText) {
   let uniqueOrigins = getAllUniqueOrigins();

@@ -415,9 +415,6 @@ function loadMap(origin) {
 
 function addToList(id) {
   const flight = Flight.getFlightById(id);
-  let favoriteSrc = user.favorites.includes(flight.destinationName)
-    ? "../img/icons/white/heart.svg"
-    : "../img/icons/white/wallet.svg";
   const itemHTML = `
     <li id="${flight.id}" tabindex="1" class="px-2 py-2 lg:pr-10 lg:pl-5 bg-[#39578A]  text-white lg:h-20 lg:min-h-20 lg:w-full h-full w-25 min-w-25 flex items-center lg:justify-between justify-center rounded-lg">
         <div class="flex gap-5 inline-flex">
@@ -429,16 +426,7 @@ function addToList(id) {
                 <p id="destinationName" class="truncate">${flight.destinationName}</p>
               </div>
               <div class="flex hide gap-5">
-              <div
-                  id="favoriteBtn"
-                  class="cursor-pointer hidden lg:flex"
-                >
-                  <img
-                    src=${favoriteSrc}
-                    alt="trashIcon"
-                    class="h-5"
-                  />
-                </div>
+              
                 <div
                   id="drag"
                   class="cursor-pointer hidden lg:flex"
@@ -454,16 +442,6 @@ function addToList(id) {
   `;
 
   tripList.insertAdjacentHTML("beforeend", itemHTML);
-  let favoriteBtn = document.getElementById("favoriteBtn");
-  favoriteBtn.addEventListener("click", () => {
-    if (user.favorites.includes(flight.destinationName)) {
-      User.removeFavorite(flight.destinationName);
-      favoriteBtn.classList.add("hidden");
-    } else {
-      User.addFavorite(flight.destinationName);
-    }
-    updateMap();
-  });
 
   loadMap(flight.destination);
   tripList.scrollTop = tripList.scrollHeight;

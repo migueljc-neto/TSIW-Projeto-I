@@ -20,6 +20,7 @@ loginForm.addEventListener("submit", (event) => {
       // Se o login for bem-sucedido, esconde o modal de login
       const loginModal = document.getElementById("loginModal");
       loginModal.classList.add("hidden");
+      location.reload();
     })
     .catch((error) => {
       // Se houver erro, mostra a mensagem de erro no formulário
@@ -92,9 +93,7 @@ function clearMessages() {
 
 // Função para fechar o modal de registo com animação
 function registerFormClose() {
-  const modalRegisterContent = document.querySelector(
-    "#registerModal .modal-content"
-  ); // Adjust selector as needed
+  const modalRegisterContent = document.querySelector("#modalRegisterContent");
   const registerModal = document.getElementById("registerModal");
 
   modalRegisterContent.classList.remove("opacity-100", "scale-100");
@@ -102,4 +101,5 @@ function registerFormClose() {
   setTimeout(() => {
     registerModal.classList.add("hidden");
   }, 300);
+  location.reload();
 }

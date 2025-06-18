@@ -1,7 +1,7 @@
 import * as Flights from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
 import * as Trips from "../models/tripModel.js";
-
+import * as Users from "../models/userModel.js";
 Flights.init();
 Trips.init();
 
@@ -14,6 +14,10 @@ let id = params.get("id");
 
 // Quando a página carregar, executa a função para preencher os dados
 window.addEventListener("DOMContentLoaded", () => {
+  if (!Users.isLogged()) {
+    location.href = "../index.html";
+    return;
+  }
   id = id ? parseInt(id, 10) : null;
   console.log(id);
   // Apenas executar se houver parametro de id

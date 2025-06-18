@@ -11,6 +11,26 @@ const scratchModal = document.getElementById("scratchModal");
 
 // Quando a página carrega, prepara os slides dos packs
 window.addEventListener("load", () => {
+  const today = new Date().toLocaleDateString("pt-PT");
+  const datePicker = document.getElementById("form-datepicker");
+  new Datepicker(datePicker, {
+    autohide: true,
+    format: "dd-mm-yyyy",
+    minDate: today,
+    orientation: "top",
+    autoSelectToday: 1,
+  });
+
+  const soldTrips = document.getElementById("soldTrips");
+  const soldFlights = document.getElementById("soldFlights");
+  const activeUsers = document.getElementById("activeUsers");
+
+  activeUsers.innerText = `${User.getAllUsers().length}+`;
+
+  soldTrips.innerText = `${User.getSoldTrips().length}+`;
+
+  soldFlights.innerText = `${Flights.getAllUniqueDestins().length}+`;
+
   let userHasScratch = User.userHasScratch(User.getUserLogged());
   if (!userHasScratch || !User.isLogged()) {
     scratchModal.classList.add("hidden");
@@ -377,7 +397,7 @@ const sc = new ScratchCard(scContainer, {
 
   htmlBackground: `<p class="flex text-black text-xl text-center items-center"><strong>Ganhaste ${milesWon} milhas!</strong></p>`,
   clearZoneRadius: 20,
-  percentToFinish: 40, // When the percent exceeds 40 on touchend event the callback will be exec.
+  percentToFinish: 30, // When the percent exceeds 40 on touchend event the callback will be exec.
   callback: function () {
     canApply = true;
   },

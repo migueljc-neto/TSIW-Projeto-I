@@ -133,7 +133,9 @@ export function add(name, email, password, passwordConfirm) {
 
   return hashPassword(password).then((hashedPassword) => {
     const id = Date.now();
-    users.push(new User(id, name, email, hashedPassword));
+    users.push(
+      new User(id, name, email, hashedPassword, false, "", 0, [], [], [], "")
+    );
     localStorage.setItem("users", JSON.stringify(users));
     return true;
   });
@@ -304,6 +306,17 @@ export function removeFavorite(destination) {
   console.log(currentUser.favorites);
 }
 
+export function getSoldTrips() {
+  let users = getAllUsers();
+  let tripsArray = [];
+  users.forEach((user) => {
+    console.log(user.trips);
+    tripsArray.push(user.trips.length);
+  });
+
+  return tripsArray;
+}
+
 export function addFavorite(destination) {
   let currentUser = getUserLogged();
   console.log(currentUser.favorites);
@@ -354,7 +367,6 @@ class User {
   favorites = [];
   trips = [];
   lastScratch = "";
-  tourismTypes = [];
 
   constructor(
     id,
@@ -367,8 +379,7 @@ class User {
     badges,
     favorites,
     trips,
-    lastScratch,
-    tourismTypes
+    lastScratch
   ) {
     this.id = id;
     this.name = name;
@@ -381,6 +392,5 @@ class User {
     this.favorites = favorites;
     this.trips = trips;
     this.lastScratch = lastScratch;
-    this.tourismTypes = tourismTypes;
   }
 }
