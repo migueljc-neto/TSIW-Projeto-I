@@ -972,7 +972,7 @@ function initdata() {
       },
       {
         id: 8,
-        name: "Norte Europeu Express",
+        name: "Norte Europeu",
         typesOfTourism: [1, 3],
         price: 295,
         startDate: "2025-07-03",
