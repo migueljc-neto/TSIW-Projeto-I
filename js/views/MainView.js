@@ -71,8 +71,9 @@ window.addEventListener("load", () => {
         <p class="text-sm">${Helper.formatDateToLabel(
           pack.startDate
         )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
-        <p>${rating}</p>
+        
       </div>
+      <p>${rating}</p>
       <div class="color-primary font-light">${pack.price}€</div>
     </div>
   </div>`
