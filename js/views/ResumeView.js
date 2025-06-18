@@ -1,51 +1,59 @@
+// Importa os módulos necessários
 import * as Flights from "../models/flightModel.js";
 import * as Helper from "../models/ModelHelper.js";
 import * as Trips from "../models/tripModel.js";
 import * as Users from "../models/userModel.js";
+
+// Inicializa os dados de voos e viagens
 Flights.init();
 Trips.init();
 
-// Objeto de exemplo de uma viagem
+// Variáveis para guardar a viagem e os voos associados
 let trip;
 let flightsTrip;
 
+// Obtém o parâmetro id da viagem da URL
 const params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
 // Quando a página carregar, executa a função para preencher os dados
 window.addEventListener("DOMContentLoaded", () => {
+  // Se o utilizador não estiver autenticado, redireciona para o index
   if (!Users.isLogged()) {
     location.href = "../index.html";
     return;
   }
   id = id ? parseInt(id, 10) : null;
-  console.log(id);
-  // Apenas executar se houver parametro de id
+  // Apenas executa se houver parâmetro de id
   if (id) {
     trip = Trips.getSingleTripById(id);
   } else {
+    // Se não houver id, tenta obter do sessionStorage
     const currentTripData = sessionStorage.getItem("currentTrip");
     if (currentTripData) {
       try {
         trip = JSON.parse(currentTripData);
       } catch (error) {
-        console.error("Error parsing currentTrip from sessionStorage:", error);
+        console.error(
+          "Erro ao converter currentTrip do sessionStorage:",
+          error
+        );
         trip = null;
       }
     }
   }
 
-  console.log(trip);
-
   if (!trip) {
-    console.error("No trip data available");
+    // Se não houver dados da viagem, redireciona para o perfil
+    console.error("Sem dados da viagem");
     window.location.href = "./profile.html";
     return;
   }
 
-  // Only set flightsTrip after confirming trip exists
+  // Só define flightsTrip depois de confirmar que trip existe
   flightsTrip = Array.from(trip.flights);
 
+  // Preenche os dados do resumo
   populateData();
 });
 
@@ -54,9 +62,8 @@ const flightResume = document.getElementById("flightResume");
 
 // Função principal para preencher o resumo da viagem
 async function populateData() {
-  // Double-check trip exists (shouldn't be needed but for safety)
   if (!trip) {
-    console.error("Trip data is not available in populateData");
+    console.error("Dados da viagem não disponíveis em populateData");
     return;
   }
 
@@ -69,7 +76,8 @@ async function populateData() {
     `<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#3b3b3b] mb-10">Resumo da Viagem - ${trip.name}</h1>`
   );
   document.title = `${trip.name} - Resumo`;
-  // Processa todos os voos
+
+  // Processa todos os voos da viagem
   for (let index = 0; index < flightsTrip.length; index++) {
     const flight = flightsTrip[index];
     await processFlightCard(flight, index);
@@ -78,7 +86,7 @@ async function populateData() {
   // Mostra o destino final da viagem (último voo)
   await addFinalDestinationCard();
 
-  // Adiciona os botões
+  // Adiciona os botões de ação (imprimir, pagar)
   addActionButtons();
 }
 
@@ -115,9 +123,10 @@ async function processFlightCard(flight, index) {
     const iata = Helper.getIata(flightData.company);
     const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
 
-    // AGUARDA as promises dos nomes dos aeroportos
+    // Aguarda os nomes dos aeroportos (origem e destino)
     const [departureName, arrivalName] = await getFlightNames(flightData);
     let duration = Helper.calculateDuration(flightData.duration);
+
     // Insere o cartão do voo no resumo
     flightResume.insertAdjacentHTML(
       "beforeend",
@@ -246,7 +255,7 @@ async function addFinalDestinationCard() {
   );
 }
 
-// Função para adicionar os botões de ação
+// Função para adicionar os botões de ação (imprimir, pagar)
 function addActionButtons() {
   if (!id) {
     // O URL não tem parametro de id
@@ -276,7 +285,8 @@ function addActionButtons() {
     );
   }
 
-  if (trip.reviews) {
+  // Se a viagem tem reviews e é um pack, mostra secção de reviews
+  if (trip.reviews && trip.isPack) {
     flightResume.insertAdjacentHTML(
       "beforeend",
       `<h3 class="text-xl mt-10 mb-4 font-bold">Reviews</h3><div id="reviewSection"></div>`
@@ -285,7 +295,7 @@ function addActionButtons() {
   }
 }
 
-// Função que retorna ambos os nomes usando Promise.all
+// Função que retorna ambos os nomes dos aeroportos usando Promise.all
 function getFlightNames(flightData) {
   return Promise.all([
     Helper.fetchAirportName(flightData.origin),
@@ -293,6 +303,7 @@ function getFlightNames(flightData) {
   ]);
 }
 
+// Função para renderizar as reviews
 function renderReviews() {
   let reviewSection = document.getElementById("reviewSection");
 
@@ -326,7 +337,7 @@ function renderReviews() {
       </form>`
     );
 
-    // Add star rating functionality
+    // Lógica das estrelas de avaliação
     const starButtons = document.querySelectorAll(".star-btn");
     const ratingInput = document.getElementById("rating");
 
@@ -335,7 +346,6 @@ function renderReviews() {
         const rating = index + 1;
         ratingInput.value = rating;
 
-        // Update star display
         starButtons.forEach((s, i) => {
           if (i < rating) {
             s.classList.remove("text-gray-300");
@@ -347,7 +357,6 @@ function renderReviews() {
         });
       });
 
-      // Hover effect
       star.addEventListener("mouseenter", () => {
         const rating = index + 1;
         starButtons.forEach((s, i) => {
@@ -362,7 +371,6 @@ function renderReviews() {
       });
     });
 
-    // Reset to selected rating on mouse leave
     const starContainer = document.querySelector(".flex.space-x-1");
     starContainer.addEventListener("mouseleave", () => {
       const currentRating = parseInt(ratingInput.value);
@@ -377,7 +385,7 @@ function renderReviews() {
       });
     });
 
-    // Handle form submission
+    // Submissão do formulário de review
     const reviewForm = document.getElementById("reviewForm");
     reviewForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -386,12 +394,6 @@ function renderReviews() {
       const rating = parseInt(document.getElementById("rating").value);
       const ratingError = document.getElementById("ratingError");
 
-      // Validation
-      if (!reviewText) {
-        alert("Por favor, escreve uma avaliação");
-        return;
-      }
-
       if (rating === 0) {
         ratingError.classList.remove("hidden");
         return;
@@ -399,56 +401,44 @@ function renderReviews() {
         ratingError.classList.add("hidden");
       }
 
-      try {
-        // Create review object
-        const newReview = {
-          name: Users.getUserLogged().name,
-          message: reviewText,
-          rating: rating,
-        };
+      const newReview = {
+        name: Users.getUserLogged().name,
+        message: reviewText,
+        rating: rating,
+      };
 
-        // Save the review
-        Trips.saveReview(id, newReview);
+      Trips.saveReview(id, newReview);
 
-        // Update the trip object with the latest data to reflect the new review
-        trip = Trips.getSingleTripById(id);
+      trip = Trips.getSingleTripById(id);
 
-        // Reset form
-        reviewForm.reset();
-        document.getElementById("rating").value = "0";
-        starButtons.forEach((s) => {
-          s.classList.remove("text-yellow-400");
-          s.classList.add("text-gray-300");
-        });
+      reviewForm.reset();
+      document.getElementById("rating").value = "0";
+      starButtons.forEach((s) => {
+        s.classList.remove("text-yellow-400");
+        s.classList.add("text-gray-300");
+      });
 
-        alert("Avaliação enviada com sucesso!");
-
-        // Re-render the reviews section
-        renderReviews();
-      } catch (error) {
-        console.error("Error saving review:", error);
-        alert("Erro ao enviar avaliação. Tenta novamente.");
-      }
+      renderReviews();
     });
   }
 
-  // Function to generate star display
+  // Função para gerar estrelas de avaliação
   function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     let stars = "";
 
-    // Full stars
+    // Estrelas cheias
     for (let i = 0; i < fullStars; i++) {
       stars += '<span class="text-yellow-400">★</span>';
     }
 
-    // Half star
+    // Meia estrela
     if (hasHalfStar) {
       stars += '<span class="text-yellow-400">☆</span>';
     }
 
-    // Empty stars
+    // Estrelas vazias
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars += '<span class="text-gray-300">★</span>';
@@ -457,7 +447,7 @@ function renderReviews() {
     return stars;
   }
 
-  // Add existing reviews container if there are reviews
+  // Mostra reviews existentes, se houver
   if (trip.reviews && trip.reviews.length > 0) {
     reviewSection.insertAdjacentHTML(
       "beforeend",
@@ -466,7 +456,7 @@ function renderReviews() {
 
     const existingReviewsContainer = document.getElementById("existingReviews");
 
-    // Display existing reviews with star ratings
+    // Mostra cada review com estrelas
     trip.reviews.forEach((review) => {
       existingReviewsContainer.insertAdjacentHTML(
         "beforeend",

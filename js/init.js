@@ -942,6 +942,10 @@ function initdata() {
         isPack: true,
         flights: [1, 3, 5, 6, 7], // OPO→LIS→BCN→ROM→ATH→IST
         miles: 4320,
+        reviews: [
+          { name: "Ana", message: "Adorei a viagem! Recomendo!", rating: 5 },
+          { name: "José", message: "Gostei! :(", rating: 4 },
+        ],
       },
       {
         id: 2,
@@ -953,6 +957,10 @@ function initdata() {
         isPack: true,
         flights: [8, 9, 10, 11, 12, 13], // OPO→CDG→LHR→AMS→BER→PRG→VIE
         miles: 5430,
+        reviews: [
+          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
+          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+        ],
       },
       {
         id: 3,
@@ -964,6 +972,7 @@ function initdata() {
         isPack: false,
         flights: [14, 15, 16],
         miles: 2310,
+        reviews: [],
       },
       {
         id: 4,
@@ -975,6 +984,10 @@ function initdata() {
         isPack: true,
         flights: [17, 18],
         miles: 300,
+        reviews: [
+          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
+          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+        ],
       },
       {
         id: 5,
@@ -986,6 +999,10 @@ function initdata() {
         isPack: true,
         flights: [19, 20],
         miles: 900,
+        reviews: [
+          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
+          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+        ],
       },
       {
         id: 6,
@@ -997,6 +1014,7 @@ function initdata() {
         isPack: false,
         flights: [2, 4],
         miles: 700,
+        reviews: [],
       },
       {
         id: 7,
@@ -1008,6 +1026,10 @@ function initdata() {
         isPack: true,
         flights: [5, 6, 7], // BCN→ROM→ATH→IST
         miles: 1540,
+        reviews: [
+          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
+          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+        ],
       },
       {
         id: 8,
@@ -1020,8 +1042,12 @@ function initdata() {
         flights: [9, 10, 11],
         miles: 1675,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 4 },
+          {
+            name: "Alice",
+            message: "Super fácil de comprar e a melhor experiência :)",
+            rating: 5,
+          },
         ],
       },
     ];

@@ -54,6 +54,8 @@ window.addEventListener("load", () => {
         const image =
           data.photos[0]?.src.medium || "../img/images/fallback.jpg";
 
+        let ratingValue = Trips.calculateRating(pack.id);
+        let rating = generateStars(ratingValue);
         // Adiciona o slide ao swiper mobile
         swiperPacks.insertAdjacentHTML(
           "beforeend",
@@ -69,6 +71,7 @@ window.addEventListener("load", () => {
         <p class="text-sm">${Helper.formatDateToLabel(
           pack.startDate
         )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
+        <p>${rating}</p>
       </div>
       <div class="color-primary font-light">${pack.price}€</div>
     </div>
@@ -89,6 +92,7 @@ window.addEventListener("load", () => {
                     <p class="font-space font-light text-sm">${Helper.formatDateToLabel(
                       pack.startDate
                     )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
+                    <p>${rating}</p>
                   </div>
                   <div class="text-sm font-light">
                     <ul id="locationCardText-${pack.id}">
@@ -195,7 +199,30 @@ window.addEventListener("load", () => {
     });
   });
 });
+// Função para gerar estrelas de avaliação
+function generateStars(rating) {
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 !== 0;
+  let stars = "";
 
+  // Estrelas cheias
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<span class="text-yellow-400">★</span>';
+  }
+
+  // Meia estrela
+  if (hasHalfStar) {
+    stars += '<span class="text-yellow-400">☆</span>';
+  }
+
+  // Estrelas vazias
+  const emptyStars = 5 - Math.ceil(rating);
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<span class="text-gray-300">★</span>';
+  }
+
+  return stars;
+}
 // Função para renderizar o grid de favoritos no modal
 function renderFavoritesGrid() {
   const favoritesModalGrid = document.getElementById("favoritesModalGrid");

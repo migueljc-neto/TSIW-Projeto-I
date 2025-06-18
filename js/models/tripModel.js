@@ -29,10 +29,6 @@ export function saveReview(id, newReview) {
       throw new Error(`Trip with ID ${id} not found`);
     }
 
-    if (!trip.reviews) {
-      trip.reviews = [];
-    }
-
     // Add the new review to the trip
     trip.reviews.push(newReview);
 
@@ -87,6 +83,19 @@ export function setTrip(id) {
 export function getSingleTripById(id) {
   let trips = getAllTrips();
   return trips.find((trip) => id == trip.id);
+}
+
+export function calculateRating(id) {
+  let trip = getSingleTripById(id);
+  if (trip.reviews === 0) {
+    return 0;
+  }
+  let counter = 0;
+  trip.reviews.forEach((review) => {
+    counter += review.rating;
+  });
+  console.log(counter);
+  return Math.floor(counter / trip.reviews.length);
 }
 
 // Remove o estado de pacote de uma viagem pelo ID
