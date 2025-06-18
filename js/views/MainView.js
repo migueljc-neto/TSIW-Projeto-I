@@ -154,6 +154,7 @@ window.addEventListener("load", () => {
   // Só inicializa o Swiper depois de todas as imagens estarem carregadas
   Promise.all(fetchSlides).then(() => {
     var swiper = new Swiper(".mobileFeatures", {
+      effect: "coverflow",
       pagination: {
         el: ".swiper-pagination",
       },
