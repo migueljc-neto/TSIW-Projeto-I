@@ -37,7 +37,7 @@ let iconGroup;
 let pathGroup;
 let poiGroup;
 
-const user = User.getUserLogged();
+let user = User.getUserLogged();
 let tourismTypeId;
 let departureDate;
 /* Origin Obj */
@@ -158,9 +158,11 @@ new Sortable(tripList, {
       let item = cell.item;
       let itemValue = item.getAttribute("value");
       const child = item.querySelector("p");
+      const favIcon = item.querySelector(".favoriteBtn");
 
       if (item && item.classList) {
         item.removeChild(child);
+        item.removeChild(favIcon);
         item.classList.remove("bg-white", "px-4", "rounded", "h-fit", "py-2");
         item.classList.add(
           "px-2",
@@ -255,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
   originName = Flight.getOriginName(userQuery.origin);
 
   document.getElementById("origin").textContent = userQuery.origin;
+  console.log(user.favorites);
 });
 
 const createMap = function (origin) {
@@ -288,6 +291,9 @@ const createMap = function (origin) {
 };
 
 function loadMap(origin) {
+  console.log(user);
+  user = User.getUserLogged();
+
   const flightList = Flight.getFlightsByOrigin(origin);
   const miles = calculateActiveTripMiles();
   Flight.filterByTourismId(flightList, tourismTypeId);
@@ -301,6 +307,10 @@ function loadMap(origin) {
 
   /* flight loop */
   flightList.forEach((flight) => {
+    let favoriteSrc = user.favorites.includes(flight.destinationName)
+      ? "../img/icons/blue/heartFilled.svg"
+      : "../img/icons/blue/heart.svg";
+
     let formatedDepartureTime = Date.parse(
       flight.departureTime.split("T")[0].split("-").join(",")
     );
@@ -312,8 +322,18 @@ function loadMap(origin) {
       /* populate listView */
       destinationList.insertAdjacentHTML(
         "beforeend",
-        `<li id="${flight.id}"class="border-2 border-blue-800 bg-white px-4 py-2 rounded shadow-lg h-fit" value="${flight.destinationName}" id="${flight.id}">
+        `<li id="${flight.id}"class="flex items-center justify-between border-2 border-blue-800 bg-white px-4 py-2 rounded shadow-lg h-fit" value="${flight.destinationName}" id="${flight.id}">
         <p class="truncate">${flight.destinationName} <span class="opacity-60 text-xs">${flight.destination}</span></p>
+        <div
+                  data-id="${flight.id}"
+                  class="cursor-pointer favoriteBtn"
+                >
+                  <img
+                    src=${favoriteSrc}
+                    alt="favIcon"
+                    class="h-5"
+                  />
+                </div>
       </li>`
       );
 
@@ -411,13 +431,24 @@ function loadMap(origin) {
     }
     mapLine();
   });
+  let btnList = document.querySelectorAll(".favoriteBtn");
+  console.log(btnList);
+
+  btnList.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const flightId = parseInt(this.getAttribute("data-id"));
+      const destinationName = Flight.getFlightById(flightId).destinationName;
+      console.log(destinationName);
+      User.toggleFavorite(destinationName);
+
+      loadMap(Flight.getFlightById(flightId).origin);
+      console.log(user.favorites);
+    });
+  });
 }
 
 function addToList(id) {
   const flight = Flight.getFlightById(id);
-  let favoriteSrc = user.favorites.includes(flight.destinationName)
-    ? "../img/icons/white/heart.svg"
-    : "../img/icons/white/wallet.svg";
   const itemHTML = `
     <li id="${flight.id}" tabindex="1" class="px-2 py-2 lg:pr-10 lg:pl-5 bg-[#39578A]  text-white lg:h-20 lg:min-h-20 lg:w-full h-full w-25 min-w-25 flex items-center lg:justify-between justify-center rounded-lg">
         <div class="flex gap-5 inline-flex">
@@ -429,16 +460,7 @@ function addToList(id) {
                 <p id="destinationName" class="truncate">${flight.destinationName}</p>
               </div>
               <div class="flex hide gap-5">
-              <div
-                  id="favoriteBtn"
-                  class="cursor-pointer hidden lg:flex"
-                >
-                  <img
-                    src=${favoriteSrc}
-                    alt="trashIcon"
-                    class="h-5"
-                  />
-                </div>
+              
                 <div
                   id="drag"
                   class="cursor-pointer hidden lg:flex"
@@ -454,16 +476,6 @@ function addToList(id) {
   `;
 
   tripList.insertAdjacentHTML("beforeend", itemHTML);
-  let favoriteBtn = document.getElementById("favoriteBtn");
-  favoriteBtn.addEventListener("click", () => {
-    if (user.favorites.includes(flight.destinationName)) {
-      User.removeFavorite(flight.destinationName);
-      favoriteBtn.classList.add("hidden");
-    } else {
-      User.addFavorite(flight.destinationName);
-    }
-    updateMap();
-  });
 
   loadMap(flight.destination);
   tripList.scrollTop = tripList.scrollHeight;
@@ -537,7 +549,7 @@ function calculateActiveTripMiles() {
   let tripItems = Array.from(tripList.getElementsByTagName("li"));
 
   let totalMiles = Flight.calculateMiles(tripItems);
-  console.log(totalMiles);
+
   return totalMiles;
 }
 
