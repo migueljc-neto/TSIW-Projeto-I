@@ -294,6 +294,24 @@ export function addTripToUser(userId, tripId) {
   }
 }
 
+export function removeFavorite(destination) {
+  let currentUser = getUserLogged();
+  console.log(currentUser.favorites);
+  currentUser.favorites = currentUser.favorites.filter(
+    (fav) => fav !== destination
+  );
+  updateUserByObject(currentUser);
+  console.log(currentUser.favorites);
+}
+
+export function addFavorite(destination) {
+  let currentUser = getUserLogged();
+  console.log(currentUser.favorites);
+  currentUser.favorites.push(destination);
+  updateUserByObject(currentUser);
+  console.log(currentUser.favorites);
+}
+
 export function addBadgestoUser(userId, flightBadges) {
   const user = getUserById(userId);
 
