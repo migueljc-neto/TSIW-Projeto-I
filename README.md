@@ -73,7 +73,7 @@ cd compass-viagens
 
 ---
 
-## Utilização
+## ▶️ Utilização
 
 ### Páginas principais
 
@@ -101,7 +101,7 @@ cd compass-viagens
 
 ---
 
-## Dependências e tecnologias
+## 📦 Dependências e tecnologias
 
 - TailwindCSS: Estilização.
 
@@ -123,13 +123,14 @@ cd compass-viagens
 
 ---
 
-## Contribuidores
+## 👥 Contribuidores
 
-[![GitHub - joaoliveira6704](https://img.shields.io/badge/GitHub-joaoliveira6704-181717?style=flat&logo=github&logoColor=white)](https://github.com/joaoliveira6704)
-[![GitHub - migueljc-neto](https://img.shields.io/badge/GitHub-migueljc--neto-181717?style=flat&logo=github&logoColor=white)](https://github.com/migueljc-neto)
+- 🧑‍💻 [João Oliveira] [![GitHub - joaoliveira6704](https://img.shields.io/badge/GitHub-joaoliveira6704-181717?style=flat&logo=github&logoColor=white)](https://github.com/joaoliveira6704)
+
+- 🧑‍💻 [Miguel Neto] [![GitHub - migueljc-neto](https://img.shields.io/badge/GitHub-migueljc--neto-181717?style=flat&logo=github&logoColor=white)](https://github.com/migueljc-neto)
 
 ---
 
-## Licença
+## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT. Consulta o ficheiro LICENSE.md para mais detalhes.
