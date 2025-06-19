@@ -135,4 +135,4 @@ http://127.0.0.1:5500
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT. Consulta o ficheiro LICENSE.md para mais detalhes.
+Este projeto está licenciado sob a Licença GPL-3.0. Consulta o ficheiro LICENSE.md para mais detalhes.
