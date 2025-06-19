@@ -126,7 +126,7 @@ cd compass-viagens
 ## Contribuidores
 
 [![GitHub - joaoliveira6704](https://img.shields.io/badge/GitHub-joaoliveira6704-181717?style=flat&logo=github&logoColor=white)](https://github.com/joaoliveira6704)
-[![GitHub - migueljc-neto](https://img.shields.io/badge/GitHub-migueljc-neto-181717?style=flat&logo=github&logoColor=white)](https://github.com/migueljc-neto)
+[![GitHub - migueljc-neto](https://img.shields.io/badge/GitHub-migueljc--neto-181717?style=flat&logo=github&logoColor=white)](https://github.com/migueljc-neto)
 
 ---
 
