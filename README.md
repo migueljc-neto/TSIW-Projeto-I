@@ -11,9 +11,6 @@ Uma aplicação web moderna e responsiva para descobrir, reservar e gerir experi
 - [Instalação](#instalação)
 - [Utilização](#utilização)
 - [Dependências](#dependências)
-- [Configuração](#configuração)
-- [Exemplos](#exemplos)
-- [Resolução de Problemas](#resolução-de-problemas)
 - [Contribuidores](#contribuidores)
 - [Licença](#licença)
 
