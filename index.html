@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./img/logos/logoDarkmode_logo darkmode.png"
+      type="image/x-icon"
+    />
+    <title>Compass - Página Inicial</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src=" https://cdn.jsdelivr.net/npm/scratchcard-js@1.5.5/build/scratchcard.min.js "></script>
+    <!-- SwiperJS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <!-- Choices.js CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+    />
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body
+    class="h-screen bg-slate-50 text-white dark:bg-blue-950 dark:text-white"
+  >
+    <header class="fixed top-0 left-0 w-full bg-transparent z-50">
+      <div
+        class="max-w-[1530px] mx-0 flex lg:mx-auto justify-between items-center py-4 px-6"
+      >
+        <!-- Logo -->
+        <div id="logo" class="h-[60px] w-fit hidden lg:block">
+          <img
+            id="logoLight"
+            src="./img/logos/logo-11.png"
+            class="block dark:hidden h-[60px] w-auto"
+            alt="Light mode logo"
+          />
+          <img
+            id="logoDark"
+            src="./img/logos/logoDarkmode_logotipo darkmode.png"
+            class="hidden dark:block h-[60px] w-auto"
+            alt="Dark mode logo"
+          />
+        </div>
+        <div id="formNavContainer" class="hidden lg:flex"></div>
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex gap-4 items-center">
+          <!-- Passport -->
+          <button
+            data-modal-target="passport-modal"
+            data-modal-toggle="passport-modal"
+            id="passportBtn"
+            class="group cursor-pointer rounded-full border border-white hover:border-blue-500 px-4 py-2 flex items-center gap-2 backdrop-blur transition"
+          >
+            <p id="passportText">Passaporte</p>
+            <img
+              id="walletIcon"
+              src="./img/icons/white/wallet.svg"
+              alt="walletIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Favorites -->
+          <button
+            id="favoritesBtn"
+            class="group cursor-pointer rounded-full border border-white hover:border-blue-500 px-4 py-2 flex items-center gap-2 backdrop-blur transition"
+            data-modal-target="favorites-modal"
+            data-modal-toggle="favorites-modal"
+          >
+            <p id="favoritesText">Favoritos</p>
+            <img
+              id="favoritesIcon"
+              src="./img/icons/white/heart.svg"
+              alt="heartIcon"
+              class="w-4"
+            />
+          </button>
+
+          <!-- Scratch-off -->
+          <!-- <button
+            class="group cursor-pointer rounded-full border border-white hover:border-blue-500 p-3 flex backdrop-blur transition"
+          >
+            <img
+              src="./img/icons/white/coins.svg"
+              alt="coinsIcon"
+              class="w-4 h-4"
+            />
+          </button> -->
+
+          <div class="relative inline-block">
+            <!-- Login Button -->
+            <button
+              id="openLoginModalBtn"
+              class="group cursor-pointer rounded-full border border-white hover:border-blue-500 p-3 flex backdrop-blur transition"
+            >
+              <img
+                id="profileIcon"
+                src="./img/icons/white/profile.svg"
+                alt="profileIcon"
+                class="w-4 h-4"
+              />
+            </button>
+
+            <!-- Logged-in dropdown -->
+            <div
+              id="loggedModal"
+              class="hidden absolute right-0 top-12 mt-2 w-max rounded-xl border-2 bg-white shadow-lg text-sm z-50"
+            >
+              <ul id="loggedModalList">
+                <li
+                  class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl"
+                >
+                  <button
+                    id="profileBtn"
+                    class="flex cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                  >
+                    <span>Perfil</span>
+                    <img
+                      src="./img/icons/blue/profile.svg"
+                      alt="Perfil"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    id="packsOffersBtn"
+                    class="flex hover:bg-gray-300 cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                  >
+                    <span>Ofertas</span>
+                    <img
+                      src="./img/icons/blue/coins.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    id="aboutBtn"
+                    class="flex hover:bg-gray-300 cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                  >
+                    <span>Sobre Nós</span>
+                    <img
+                      src="./img/icons/blue/globe.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    id="contactsBtn"
+                    class="flex hover:bg-gray-300 cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                  >
+                    <span>Contactos</span>
+                    <img
+                      src="./img/icons/blue/phone.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+                <li
+                  id="logoutListSection"
+                  class="hover:bg-gray-300 first:rounded-t-xl last:rounded-b-xl"
+                >
+                  <button
+                    id="logoutBtn"
+                    class="flex cursor-pointer gap-2 w-full items-center justify-between px-4 py-2"
+                  >
+                    <span>Terminar Sessão</span>
+                    <img
+                      src="./img/icons/blue/log-out.svg"
+                      alt="Log Out"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Logo -->
+        <div id="mobileLogo" class="flex block lg:hidden items-center">
+          <img
+            src="./img/logos/logo-11.png"
+            class="block dark:hidden h-[60px] w-auto"
+            alt="Light mode image"
+          />
+          <img
+            src="./img/logos/logoDarkmode_logo darkmode.png"
+            class="hidden dark:block h-[60px] w-auto"
+            alt="Dark mode image"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar Mobile -->
+    <section
+      class="fixed lg:hidden inset-0 z-50 w-fit flex items-start justify-end transition-opacity duration-300"
+    >
+      <section
+        id="navButtons"
+        class="fixed top-10 right-0 flex flex-col gap-2 z-50 transition-all duration-300"
+      >
+        <button
+          id="profileSidebar"
+          class="bg-white p-3 rounded-l-xl cursor-pointer drop-shadow-sm"
+        >
+          <img src="./img/icons/blue/profile.svg" alt="profileIcon" />
+        </button>
+        <button
+          id="formSidebar"
+          class="bg-white p-3 rounded-l-xl cursor-pointer drop-shadow-sm"
+        >
+          <img src="./img/icons/blue/plane.svg" alt="formIcon" />
+        </button>
+      </section>
+      <div
+        id="sidebarBackdrop"
+        class="hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-30 transition-opacity duration-300 pointer-events-auto"
+      ></div>
+      <section
+        id="sidebar"
+        class="fixed top-0 right-0 h-full w-56 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40"
+      ></section>
+    </section>
+
+    <main>
+      <section
+        id="landingSect"
+        class="h-screen snap-start flex flex-col justify-center items-center"
+      >
+        <div
+          class="hidden md:block video-docker absolute top-0 left-0 w-full h-full overflow-hidden"
+        >
+          <!-- <video
+            class="min-w-full min-h-full blur-sm absolute object-cover"
+            src="./img/media/lookat.mp4"
+            type="video/mp4"
+            autoplay
+            muted
+            loop
+          ></video> -->
+          <img
+            src="https://images.unsplash.com/photo-1489914169085-9b54fdd8f2a2?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            class="object-cover h-full w-full"
+            alt=""
+          />
+        </div>
+        <h1
+          class="space-y-2 z-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl p-6 text-center"
+        >
+          <span class="block text-white">
+            Your path<br />
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-tr to-blue-600 from-red-600"
+            >
+              Our compass
+            </span>
+          </span>
+        </h1>
+        <!-- Marquee -->
+        <div class="marquee-container block md:hidden">
+          <!-- First marquee (left direction) -->
+          <marquee
+            class="marquee-group py-12"
+            loop="infinite"
+            behavior="alternate"
+            direction="left"
+          >
+            <div
+              id="marquee1"
+              class="marquee-track animate-marquee-left whitespace-nowrap"
+            >
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+            </div>
+          </marquee>
+
+          <!-- Second marquee (right direction) -->
+          <div class="marquee-group">
+            <marquee
+              id="marquee2"
+              class="marquee-track animate-marquee-right whitespace-nowrap"
+              loop="infinite"
+              behavior="alternate"
+              direction="right"
+            >
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+            </marquee>
+          </div>
+          <marquee
+            class="marquee-group py-12"
+            loop="infinite"
+            behavior="alternate"
+            direction="left"
+          >
+            <div
+              id="marquee3"
+              class="marquee-track animate-marquee-left whitespace-nowrap"
+            >
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">PORTO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">BARCELONA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">TÓKIO</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">AUSTRÁLIA</span>
+              <span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">REINO UNIDO</span>
+            </div>
+          </marquee>
+        </div>
+      </section>
+
+      <section
+        id="packsOffers"
+        class="h-screen snap-start flex flex-col justify-center items-center"
+      >
+        <h2
+          class="text-2xl md:text-4xl mb-10 font-bold color-primary font-title leading-snug"
+        >
+          OFERTAS
+        </h2>
+
+        <!-- Mobile Swiper -->
+        <div class="block sm:hidden swiper mySwiper swiper-mobile">
+          <div id="swiperPacks" class="swiper-wrapper"></div>
+        </div>
+
+        <!-- Desktop Swiper -->
+        <div
+          class="hidden sm:block swiper-outer-container relative w-full max-w-[1500px] mx-auto"
+        >
+          <!-- Swiper -->
+          <div class="swiper packsDesktop w-full h-[450px] z-20">
+            <div id="swiperDesktopWrapper" class="swiper-wrapper"></div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div
+            class="swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 z-30"
+          ></div>
+          <div
+            class="swiper-button-next absolute right-0 top-1/2 -translate-y-1/2 z-30"
+          ></div>
+        </div>
+      </section>
+      <section
+        id="aboutSect"
+        class="h-screen bg-none bg-blue-950 snap-start flex flex-col justify-center items-center"
+      >
+        <div class="max-w-[1200px] max-h-full mt-5 sm:mt-0 text-center">
+          <div class="flex gap-10 text-center md:text-left px-0 md:px-4">
+            <!-- Left Content -->
+            <div class="flex-1">
+              <div class="flex flex-col justify-between h-full">
+                <h2
+                  class="text-xl sm:text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-bold leading-snug mb-2 sm:mb-5"
+                >
+                  A REVOLUCIONAR A TUA
+                  <br class="block sm:hidden lg:block" /><span class="underline"
+                    >FORMA DE VIAJAR</span
+                  >
+                </h2>
+                <p
+                  class="text-white text-justify px-5 md:px-0 md:text-justify text-sm md:text-base leading-relaxed mb-6 max-w-full"
+                >
+                  A Compass simplifica as tuas viagens, combinando tecnologia e
+                  paixão por explorar. Descobre destinos incríveis com total
+                  confiança e praticidade.
+                </p>
+                <!-- Stats -->
+                <div
+                  class="flex justify-around mb-6 md:text-center md:justify-between max-w-full md:max-w-xl"
+                >
+                  <div class="px-3">
+                    <p
+                      id="soldFlights"
+                      class="text-blue-500 font-bold text-sm sm:text-lg"
+                    >
+                      200+
+                    </p>
+                    <p class="text-gray-400 text-xs sm:text-sm">Destinos</p>
+                  </div>
+                  <div class="px-3">
+                    <p
+                      id="activeUsers"
+                      class="text-blue-500 font-bold text-sm sm:text-lg"
+                    >
+                      10+
+                    </p>
+                    <p class="text-gray-400 text-xs sm:text-sm">
+                      Utilizadores Ativos
+                    </p>
+                  </div>
+                  <div class="px-3">
+                    <p class="text-blue-500 font-bold text-sm sm:text-lg">
+                      4.9
+                    </p>
+                    <p class="text-gray-400 text-xs sm:text-sm">Rating</p>
+                  </div>
+                  <div class="px-3">
+                    <p
+                      id="soldTrips"
+                      class="text-blue-500 font-bold text-sm sm:text-lg"
+                    >
+                      10+
+                    </p>
+                    <p class="text-gray-400 text-xs sm:text-sm">
+                      Viagens Vendidas
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- <button
+                class="btn-std bg-white hover:outline hover:outline-red-500 hover:bg-gray-200 border-blue-500 text-blue-500"
+                onclick="location.href='#contactsSect'"
+              >
+                Contacta-nos
+              </button> -->
+            </div>
+            <!-- Right Image -->
+            <div class="flex-1 hidden md:block">
+              <img
+                src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Office"
+                class="rounded-xl w-auto h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Features Section -->
+          <div class="hidden md:grid mt-10 grid grid-cols-3 gap-6 px-0 md:px-4">
+            <div class="rounded-xl p-4 lg:p-6">
+              <div class="flex items-start gap-3 mb-3">
+                <h3 class="font-semibold text-base">
+                  Porquê escolher a Compass?
+                </h3>
+              </div>
+              <p class="text-sm leading-relaxed text-left">
+                Viajar deve ser simples e seguro. Na Compass, oferecemos packs
+                exclusivos, ferramentas inteligentes e apoio dedicado para que
+                planeies a tua aventura sem complicações.
+              </p>
+            </div>
+            <div class="p-4 lg:p-6">
+              <div class="flex items-start gap-3 mb-3">
+                <h3 class="font-semibold text-base">A nossa visão</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-left">
+                Queremos inspirar pessoas a explorar o mundo, criando memórias e
+                experiências únicas. Trabalhamos para tornar cada viagem mais
+                acessível, personalizada e inesquecível.
+              </p>
+            </div>
+            <div class="p-4 lg:p-6">
+              <div class="flex items-start gap-3 mb-3">
+                <h3 class="font-semibold text-base">A nossa equipa</h3>
+              </div>
+              <p class="text-sm leading-relaxed text-left">
+                Somos apaixonados por viagens e tecnologia. A nossa equipa une
+                experiência, criatividade e proximidade para te ajudar em cada
+                etapa da tua jornada.
+              </p>
+            </div>
+          </div>
+
+          <!-- Features Section Mobile -->
+          <!-- Swiper -->
+          <div
+            class="block md:hidden swiper mobileFeatures px-5 mt-5 w-[95vw] max-w-[500px] mx-auto h-fit"
+          >
+            <div class="swiper-wrapper">
+              <div class="swiper-slide rounded-xl p-6 pb-8">
+                <div class="flex items-start gap-3 mb-3">
+                  <h3 class="font-semibold text-base">
+                    Porquê escolher a Compass?
+                  </h3>
+                </div>
+                <p class="text-sm leading-relaxed text-left">
+                  Viajar deve ser simples e seguro. Na Compass, oferecemos packs
+                  exclusivos, ferramentas inteligentes e apoio dedicado para que
+                  planeies a tua aventura sem complicações.
+                </p>
+              </div>
+              <div class="swiper-slide rounded-xl p-6 pb-8">
+                <div class="flex items-start gap-3 mb-3">
+                  <h3 class="font-semibold text-base">A nossa visão</h3>
+                </div>
+                <p class="text-sm leading-relaxed text-left">
+                  Queremos inspirar pessoas a explorar o mundo, criando memórias
+                  e experiências únicas. Trabalhamos para tornar cada viagem
+                  mais acessível, personalizada e inesquecível.
+                </p>
+              </div>
+              <div class="swiper-slide p-6 pb-8">
+                <div class="flex items-start gap-3 mb-3">
+                  <h3 class="font-semibold text-base">A nossa equipa</h3>
+                </div>
+                <p class="text-sm leading-relaxed text-left">
+                  Somos apaixonados por viagens e tecnologia. A nossa equipa une
+                  experiência, criatividade e proximidade para te ajudar em cada
+                  etapa da tua jornada.
+                </p>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="contactsSect"
+        class="h-screen snap-start bg-blue-950 flex flex-col justify-center items-center"
+      >
+        <div class="p-4">
+          <div
+            class="block md:flex items-start gap-4 md:gap-12 p-0 mt-5 sm:mt-0 sm:p-4 md:p-8 mx-auto max-w-[1200px] rounded-md"
+          >
+            <div>
+              <div>
+                <h2 class="text-white text-xl md:text-3xl font-bold">
+                  FALA CONNOSCO
+                </h2>
+                <p
+                  class="text-xs xs:text-sm md:text-[15px] text-white text-justify mt-4 mb-4 leading-relaxed"
+                >
+                  Tens dúvidas, sugestões ou precisas de ajuda para planear a
+                  tua próxima viagem? <br />
+                  Fala connosco! A nossa equipa está pronta para responder às
+                  tuas questões e apoiar-te em tudo o que precisares para
+                  tornares a tua experiência de viagem ainda melhor.
+                </p>
+              </div>
+              <div class="hidden gap-4 md:block">
+                <div class="mt-5">
+                  <h2 class="text-white text-base font-semibold">
+                    Redes Sociais
+                  </h2>
+                  <ul class="flex mt-4 space-x-4">
+                    <li
+                      class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <a href="javascript:void(0)">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          fill="#000"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M6.812 13.937H9.33v9.312c0 .414.335.75.75.75l4.007.001a.75.75 0 0 0 .75-.75v-9.312h2.387a.75.75 0 0 0 .744-.657l.498-4a.75.75 0 0 0-.744-.843h-2.885c.113-2.471-.435-3.202 1.172-3.202 1.088-.13 2.804.421 2.804-.75V.909a.75.75 0 0 0-.648-.743A26.926 26.926 0 0 0 15.071 0c-7.01 0-5.567 7.772-5.74 8.437H6.812a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75zm.75-3.999h2.518a.75.75 0 0 0 .75-.75V6.037c0-2.883 1.545-4.536 4.24-4.536.878 0 1.686.043 2.242.087v2.149c-.402.205-3.976-.884-3.976 2.697v2.755c0 .414.336.75.75.75h2.786l-.312 2.5h-2.474a.75.75 0 0 0-.75.75V22.5h-2.505v-9.312a.75.75 0 0 0-.75-.75H7.562z"
+                            data-original="#000000"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                    <li
+                      class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <a href="javascript:void(0)">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          fill="#000"
+                          viewBox="0 0 511 512"
+                        >
+                          <path
+                            d="M111.898 160.664H15.5c-8.285 0-15 6.719-15 15V497c0 8.285 6.715 15 15 15h96.398c8.286 0 15-6.715 15-15V175.664c0-8.281-6.714-15-15-15zM96.898 482H30.5V190.664h66.398zM63.703 0C28.852 0 .5 28.352.5 63.195c0 34.852 28.352 63.2 63.203 63.2 34.848 0 63.195-28.352 63.195-63.2C126.898 28.352 98.551 0 63.703 0zm0 96.395c-18.308 0-33.203-14.891-33.203-33.2C30.5 44.891 45.395 30 63.703 30c18.305 0 33.195 14.89 33.195 33.195 0 18.309-14.89 33.2-33.195 33.2zm289.207 62.148c-22.8 0-45.273 5.496-65.398 15.777-.684-7.652-7.11-13.656-14.942-13.656h-96.406c-8.281 0-15 6.719-15 15V497c0 8.285 6.719 15 15 15h96.406c8.285 0 15-6.715 15-15V320.266c0-22.735 18.5-41.23 41.235-41.23 22.734 0 41.226 18.495 41.226 41.23V497c0 8.285 6.719 15 15 15h96.403c8.285 0 15-6.715 15-15V302.066c0-79.14-64.383-143.523-143.524-143.523zM466.434 482h-66.399V320.266c0-39.278-31.953-71.23-71.226-71.23-39.282 0-71.239 31.952-71.239 71.23V482h-66.402V190.664h66.402v11.082c0 5.77 3.309 11.027 8.512 13.524a15.01 15.01 0 0 0 15.875-1.82c20.313-16.294 44.852-24.907 70.953-24.907 62.598 0 113.524 50.926 113.524 113.523zm0 0"
+                            data-original="#000000"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                    <li
+                      class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <a href="javascript:void(0)">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          fill="#000"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 9.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm0-1.8a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm5.85-.225a1.125 1.125 0 1 1-2.25 0 1.125 1.125 0 0 1 2.25 0ZM12 4.8c-2.227 0-2.59.006-3.626.052-.706.034-1.18.128-1.618.299a2.59 2.59 0 0 0-.972.633 2.601 2.601 0 0 0-.634.972c-.17.44-.265.913-.298 1.618C4.805 9.367 4.8 9.714 4.8 12c0 2.227.006 2.59.052 3.626.034.705.128 1.18.298 1.617.153.392.333.674.632.972.303.303.585.484.972.633.445.172.918.267 1.62.3.993.047 1.34.052 3.626.052 2.227 0 2.59-.006 3.626-.052.704-.034 1.178-.128 1.617-.298.39-.152.674-.333.972-.632.304-.303.485-.585.634-.972.171-.444.266-.918.299-1.62.047-.993.052-1.34.052-3.626 0-2.227-.006-2.59-.052-3.626-.034-.704-.128-1.18-.299-1.618a2.619 2.619 0 0 0-.633-.972 2.595 2.595 0 0 0-.972-.634c-.44-.17-.914-.265-1.618-.298-.993-.047-1.34-.052-3.626-.052ZM12 3c2.445 0 2.75.009 3.71.054.958.045 1.61.195 2.185.419A4.388 4.388 0 0 1 19.49 4.51c.457.45.812.994 1.038 1.595.222.573.373 1.227.418 2.185.042.96.054 1.265.054 3.71 0 2.445-.009 2.75-.054 3.71-.045.958-.196 1.61-.419 2.185a4.395 4.395 0 0 1-1.037 1.595 4.44 4.44 0 0 1-1.595 1.038c-.573.222-1.227.373-2.185.418-.96.042-1.265.054-3.71.054-2.445 0-2.75-.009-3.71-.054-.958-.045-1.61-.196-2.185-.419A4.402 4.402 0 0 1 4.51 19.49a4.414 4.414 0 0 1-1.037-1.595c-.224-.573-.374-1.227-.419-2.185C3.012 14.75 3 14.445 3 12c0-2.445.009-2.75.054-3.71s.195-1.61.419-2.185A4.392 4.392 0 0 1 4.51 4.51c.45-.458.994-.812 1.595-1.037.574-.224 1.226-.374 2.185-.419C9.25 3.012 9.555 3 12 3Z"
+                          ></path>
+                        </svg>
+                      </a>
+                    </li>
+                    <li class="flex items-center">
+                      <div
+                        class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          fill="#000"
+                          viewBox="0 0 479.058 479.058"
+                        >
+                          <path
+                            d="M434.146 59.882H44.912C20.146 59.882 0 80.028 0 104.794v269.47c0 24.766 20.146 44.912 44.912 44.912h389.234c24.766 0 44.912-20.146 44.912-44.912v-269.47c0-24.766-20.146-44.912-44.912-44.912zm0 29.941c2.034 0 3.969.422 5.738 1.159L239.529 264.631 39.173 90.982a14.902 14.902 0 0 1 5.738-1.159zm0 299.411H44.912c-8.26 0-14.971-6.71-14.971-14.971V122.615l199.778 173.141c2.822 2.441 6.316 3.655 9.81 3.655s6.988-1.213 9.81-3.655l199.778-173.141v251.649c-.001 8.26-6.711 14.97-14.971 14.97z"
+                            data-original="#000000"
+                          />
+                        </svg>
+                      </div>
+                      <a
+                        href="mailto:support@compass.com"
+                        class="text-sm ml-4 hidden md:block"
+                      >
+                        <small class="block textwhite">Email</small>
+                        <span class="text-blue-600 font-medium"
+                          >support@compass.com</span
+                        >
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <form id="contactForm" class="space-y-3 md:space-y-4">
+              <input
+                type="text"
+                placeholder="Nome"
+                class="w-full text-slate-900 text-xs md:text-base rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 outline-0 focus:border-blue-500"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base outline-0 focus:border-blue-500"
+              />
+              <input
+                type="text"
+                placeholder="Assunto"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base outline-0 focus:border-blue-500"
+              />
+              <textarea
+                placeholder="Deixa aqui a tua mensagem..."
+                rows="4"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base pt-2.5 outline-0 focus:border-blue-500"
+              ></textarea>
+              <button
+                type="submit"
+                style="margin-top: 6px"
+                class="text-white text-xs md:text-base bg-blue-600 hover:bg-blue-700 rounded-md font-medium px-4 py-2.5 w-full cursor-pointer border-0"
+              >
+                Enviar Mensagem
+              </button>
+            </form>
+            <div class="flex gap-4 hidden">
+              <div class="mt-5">
+                <h2 class="text-white text-base font-semibold">
+                  Redes Sociais
+                </h2>
+                <ul class="flex mt-4 space-x-4">
+                  <li
+                    class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                  >
+                    <a href="javascript:void(0)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        height="20px"
+                        fill="#000"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M6.812 13.937H9.33v9.312c0 .414.335.75.75.75l4.007.001a.75.75 0 0 0 .75-.75v-9.312h2.387a.75.75 0 0 0 .744-.657l.498-4a.75.75 0 0 0-.744-.843h-2.885c.113-2.471-.435-3.202 1.172-3.202 1.088-.13 2.804.421 2.804-.75V.909a.75.75 0 0 0-.648-.743A26.926 26.926 0 0 0 15.071 0c-7.01 0-5.567 7.772-5.74 8.437H6.812a.75.75 0 0 0-.75.75v4c0 .414.336.75.75.75zm.75-3.999h2.518a.75.75 0 0 0 .75-.75V6.037c0-2.883 1.545-4.536 4.24-4.536.878 0 1.686.043 2.242.087v2.149c-.402.205-3.976-.884-3.976 2.697v2.755c0 .414.336.75.75.75h2.786l-.312 2.5h-2.474a.75.75 0 0 0-.75.75V22.5h-2.505v-9.312a.75.75 0 0 0-.75-.75H7.562z"
+                          data-original="#000000"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                  <li
+                    class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                  >
+                    <a href="javascript:void(0)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        height="20px"
+                        fill="#000"
+                        viewBox="0 0 511 512"
+                      >
+                        <path
+                          d="M111.898 160.664H15.5c-8.285 0-15 6.719-15 15V497c0 8.285 6.715 15 15 15h96.398c8.286 0 15-6.715 15-15V175.664c0-8.281-6.714-15-15-15zM96.898 482H30.5V190.664h66.398zM63.703 0C28.852 0 .5 28.352.5 63.195c0 34.852 28.352 63.2 63.203 63.2 34.848 0 63.195-28.352 63.195-63.2C126.898 28.352 98.551 0 63.703 0zm0 96.395c-18.308 0-33.203-14.891-33.203-33.2C30.5 44.891 45.395 30 63.703 30c18.305 0 33.195 14.89 33.195 33.195 0 18.309-14.89 33.2-33.195 33.2zm289.207 62.148c-22.8 0-45.273 5.496-65.398 15.777-.684-7.652-7.11-13.656-14.942-13.656h-96.406c-8.281 0-15 6.719-15 15V497c0 8.285 6.719 15 15 15h96.406c8.285 0 15-6.715 15-15V320.266c0-22.735 18.5-41.23 41.235-41.23 22.734 0 41.226 18.495 41.226 41.23V497c0 8.285 6.719 15 15 15h96.403c8.285 0 15-6.715 15-15V302.066c0-79.14-64.383-143.523-143.524-143.523zM466.434 482h-66.399V320.266c0-39.278-31.953-71.23-71.226-71.23-39.282 0-71.239 31.952-71.239 71.23V482h-66.402V190.664h66.402v11.082c0 5.77 3.309 11.027 8.512 13.524a15.01 15.01 0 0 0 15.875-1.82c20.313-16.294 44.852-24.907 70.953-24.907 62.598 0 113.524 50.926 113.524 113.523zm0 0"
+                          data-original="#000000"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                  <li
+                    class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                  >
+                    <a href="javascript:void(0)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        height="20px"
+                        fill="#000"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 9.3a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm0-1.8a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm5.85-.225a1.125 1.125 0 1 1-2.25 0 1.125 1.125 0 0 1 2.25 0ZM12 4.8c-2.227 0-2.59.006-3.626.052-.706.034-1.18.128-1.618.299a2.59 2.59 0 0 0-.972.633 2.601 2.601 0 0 0-.634.972c-.17.44-.265.913-.298 1.618C4.805 9.367 4.8 9.714 4.8 12c0 2.227.006 2.59.052 3.626.034.705.128 1.18.298 1.617.153.392.333.674.632.972.303.303.585.484.972.633.445.172.918.267 1.62.3.993.047 1.34.052 3.626.052 2.227 0 2.59-.006 3.626-.052.704-.034 1.178-.128 1.617-.298.39-.152.674-.333.972-.632.304-.303.485-.585.634-.972.171-.444.266-.918.299-1.62.047-.993.052-1.34.052-3.626 0-2.227-.006-2.59-.052-3.626-.034-.704-.128-1.18-.299-1.618a2.619 2.619 0 0 0-.633-.972 2.595 2.595 0 0 0-.972-.634c-.44-.17-.914-.265-1.618-.298-.993-.047-1.34-.052-3.626-.052ZM12 3c2.445 0 2.75.009 3.71.054.958.045 1.61.195 2.185.419A4.388 4.388 0 0 1 19.49 4.51c.457.45.812.994 1.038 1.595.222.573.373 1.227.418 2.185.042.96.054 1.265.054 3.71 0 2.445-.009 2.75-.054 3.71-.045.958-.196 1.61-.419 2.185a4.395 4.395 0 0 1-1.037 1.595 4.44 4.44 0 0 1-1.595 1.038c-.573.222-1.227.373-2.185.418-.96.042-1.265.054-3.71.054-2.445 0-2.75-.009-3.71-.054-.958-.045-1.61-.196-2.185-.419A4.402 4.402 0 0 1 4.51 19.49a4.414 4.414 0 0 1-1.037-1.595c-.224-.573-.374-1.227-.419-2.185C3.012 14.75 3 14.445 3 12c0-2.445.009-2.75.054-3.71s.195-1.61.419-2.185A4.392 4.392 0 0 1 4.51 4.51c.45-.458.994-.812 1.595-1.037.574-.224 1.226-.374 2.185-.419C9.25 3.012 9.555 3 12 3Z"
+                        ></path>
+                      </svg>
+                    </a>
+                  </li>
+                  <li class="flex items-center">
+                    <div
+                      class="bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center shrink-0"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        height="20px"
+                        fill="#000"
+                        viewBox="0 0 479.058 479.058"
+                      >
+                        <path
+                          d="M434.146 59.882H44.912C20.146 59.882 0 80.028 0 104.794v269.47c0 24.766 20.146 44.912 44.912 44.912h389.234c24.766 0 44.912-20.146 44.912-44.912v-269.47c0-24.766-20.146-44.912-44.912-44.912zm0 29.941c2.034 0 3.969.422 5.738 1.159L239.529 264.631 39.173 90.982a14.902 14.902 0 0 1 5.738-1.159zm0 299.411H44.912c-8.26 0-14.971-6.71-14.971-14.971V122.615l199.778 173.141c2.822 2.441 6.316 3.655 9.81 3.655s6.988-1.213 9.81-3.655l199.778-173.141v251.649c-.001 8.26-6.711 14.97-14.971 14.97z"
+                          data-original="#000000"
+                        />
+                      </svg>
+                    </div>
+                    <a
+                      href="javascript:void(0)"
+                      class="text-sm ml-4 hidden md:block"
+                    >
+                      <small class="block textwhite">Email</small>
+                      <span class="text-blue-600 font-medium"
+                        >support@compass.com</span
+                      >
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modals -->
+
+      <!-- Modal Login -->
+      <section>
+        <div
+          id="loginModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="loginLabel" class="text-2xl text-gray-800 mb-6">Login</h2>
+
+            <form id="loginForm">
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="emailLogin"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="nome@exemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordLogin"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  type="checkbox"
+                  id="keepSigned"
+                  name="keepSigned"
+                  value="keep"
+                />
+                <label for="keepSigned" class="text-gray-500 text-sm"
+                  >Manter sessão iniciada</label
+                >
+              </div>
+              <button
+                id="loginBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Login
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Não tem uma conta?
+              <button
+                id="signUpText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Criar Conta
+              </button>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal Register -->
+      <section>
+        <div
+          id="registerModal"
+          class="hidden fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30 z-50 transition-opacity duration-300"
+        >
+          <!-- Modal box -->
+          <div
+            id="modalRegisterContent"
+            class="opacity-0 scale-95 transform transition-all duration-300 bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative"
+          >
+            <!-- Close button -->
+            <button
+              id="closeRegisterModalBtn"
+              class="absolute top-3 right-4 cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              &times;
+            </button>
+
+            <h2 id="registerLabel" class="text-2xl text-gray-800 mb-6">
+              Registo
+            </h2>
+
+            <form id="registerForm">
+              <div class="mb-4">
+                <label class="block text-gray-700 mb-2" for="email">Nome</label>
+                <input
+                  type="text"
+                  id="nameRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="O seu nome..."
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="emailRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="nome@exemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordRegister"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2" for="password"
+                  >Confirmar Password</label
+                >
+                <input
+                  type="password"
+                  id="passwordConfirm"
+                  class="w-full px-4 py-2 border rounded-lg text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="********"
+                  required
+                />
+              </div>
+
+              <button
+                id="registerBtn"
+                type="submit"
+                class="w-full text-white py-3 rounded-lg cursor-pointer transition"
+              >
+                Registar
+              </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600 mt-4">
+              Já tem uma conta?
+              <button
+                id="signInText"
+                href="#"
+                class="hover:underline cursor-pointer"
+              >
+                Login
+              </button>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Passaport -->
+    <div
+      id="passport-modal"
+      tabindex="-1"
+      aria-hidden="true"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full backdrop-blur-sm h-[calc(100%-1rem)] max-h-full"
+    >
+      <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-sm">
+          <!-- Modal header -->
+          <div
+            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200"
+          >
+            <h3 class="text-xl font-semibold text-blue-950">Passaporte</h3>
+            <button
+              type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="passport-modal"
+            >
+              <svg
+                class="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal body -->
+          <select id="continentFilter" class="p-2 text-black rounded border">
+            <option value="">Todos os continentes</option>
+            <option value="Europe">Europa</option>
+            <option value="Asia">Ásia</option>
+            <option value="Africa">África</option>
+            <option value="North America">América do Norte</option>
+            <option value="South America">América do Sul</option>
+            <option value="Oceania">Oceania</option>
+            <option value="Antarctica">Antártida</option>
+          </select>
+          <div
+            id="passportModalGrid"
+            class="p-4 md:p-5 grid grid-cols-12 col-span-fit gap-2"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Favoritos -->
+    <div
+      id="favorites-modal"
+      tabindex="-1"
+      aria-hidden="true"
+      class="hidden flex overflow-y-auto backdrop-blur-sm overflow-x-hidden fixed items-center top-0 right-0 left-0 z-50 w-full h-screen"
+    >
+      <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div
+          class="relative bg-white rounded-lg shadow-sm -translate-y-1/2 z-50"
+        >
+          <!-- Modal header -->
+          <div
+            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200"
+          >
+            <h3 class="text-xl font-semibold text-blue-950">Favoritos</h3>
+            <button
+              type="button"
+              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="favorites-modal"
+            >
+              <svg
+                class="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div
+            id="favoritesModalGrid"
+            class="p-4 md:p-5 grid grid-cols-4 col-span-fit gap-2"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="w-screen h-fit z-20 py-20 bottom-0 fixed">
+      <!-- Flight search Form -->
+      <div
+        id="mainForm"
+        class="group hidden lg:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
+      >
+        <!-- Home Airport -->
+        <button
+          id="dropdownTopButton"
+          data-dropdown-toggle="airportDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <input
+            type="text"
+            id="inputOriginSearch"
+            class="w-[8ch]"
+            maxlength="3"
+            minlength="3"
+            placeholder="Partida"
+            autocomplete="off"
+          />
+          <img src="./img/icons/blue/pin.svg" alt="turismIcon" class="w-5" />
+        </button>
+
+        <!-- Airport Selector Dropdown -->
+        <div
+          id="airportDropdown"
+          class="hidden bg-white rounded-md w-fit border-1 border-blue-900"
+        >
+          <ul
+            id="airportsUl"
+            class="rounded-md z-10 max-h-[180px] overflow-y-auto"
+            aria-labelledby="dropdownTopButton"
+          ></ul>
+        </div>
+
+        <!-- Turism Dropdown -->
+        <button
+          id="tourismDropdownBtn"
+          data-dropdown-toggle="tourismDropdown"
+          data-dropdown-placement="top"
+          class="bg-white px-5 h-full py-3 gap-2 text-center inline-flex items-center hover:outline-blue-600 hover:outline-3 cursor-pointer"
+          type="button"
+        >
+          <p id="tourismText">Turismo</p>
+          <img src="./img/icons/blue/turism.svg" alt="turismIcon" class="w-5" />
+        </button>
+
+        <div
+          id="tourismDropdown"
+          class="z-10 hidden bg-white rounded-md w-44 border-1 border-blue-900"
+        >
+          <ul
+            id="tourismsUl"
+            class="rounded-md"
+            aria-labelledby="tourismDropdownBtn"
+          ></ul>
+        </div>
+
+        <!-- Nº Passengers -->
+        <div class="h-fit flex flex-col gap-2">
+          <div
+            class="group flex gap-5 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
+          >
+            <div class="flex items-center justify-center">
+              <button
+                type="button"
+                id="decrementBtn"
+                data-input-counter-decrement="counter-input"
+                class="cursor-pointer bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg hover:bg-gray-200 inline-flex items-center justify-center rounded-md h-fit w-fit p-1"
+              >
+                <img
+                  src="./img/icons/blue/minus.svg"
+                  alt="minuesIcon"
+                  class="w-4"
+                />
+              </button>
+              <input
+                type="text"
+                id="counter-input"
+                data-input-counter
+                data-input-counter-max="10"
+                data-input-counter-min="1"
+                class="shrink-0 color-primary border-0 bg-transparent max-w-[2.5rem] text-center"
+                value="1"
+                required
+              />
+              <button
+                type="button"
+                id="incrementBtn"
+                data-input-counter-increment="counter-input"
+                class="cursor-pointer bg-gray-100 dark:bg-gray-100 dark:hover:shadow-lg hover:bg-gray-200 inline-flex items-center justify-center rounded-md h-fit w-fit p-1"
+              >
+                <img
+                  src="./img/icons/blue/plus.svg"
+                  alt="plusIcon"
+                  class="w-4"
+                />
+              </button>
+            </div>
+            <img
+              src="./img/icons/blue/users.svg"
+              alt="passengersIcon"
+              class="w-4"
+            />
+          </div>
+        </div>
+        <button
+          type="submit"
+          id="searchFlightBtn"
+          class="group bg-blue-500 h-[48px] hover:outline-white hover:outline-2 flex justify-center px-5 min-w-fit py-3 rounded-r-full hover:shadow-lg cursor-pointer transition"
+        >
+          <img src="./img/icons/white/plane.svg" alt="planeIcon" class="w-4" />
+        </button>
+      </div>
+    </footer>
+
+    <!-- Scratch modal -->
+    <div
+      id="scratchModal"
+      class="flex fixed top-0 left-0 right-0 bottom-0 text-center z-50 justify-center items-center w-screen h-screen overscroll-none backdrop-blur-sm max-h-screen"
+    >
+      <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-sm">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 md:p-5">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Raspa para ganhares milhas!
+            </h3>
+          </div>
+          <!-- Modal body -->
+          <div id="canvas-test" class="sc__container"></div>
+          <!-- Modal footer -->
+          <div class="flex gap-4 items-center w-full justify-end p-4 md:p-5">
+            <button
+              id="cancelMilesBtn"
+              type="button"
+              class="w-full cursor-pointer btn-std font-bold border-2 border-[#D12127] text-[#D12127] hover:bg-[#D12127] hover:bg-opacity-10"
+            >
+              Fechar
+            </button>
+            <button
+              id="applyMilesBtn"
+              type="button"
+              class="w-full cursor-pointer btn-std font-bold border-2"
+            >
+              Resgatar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Flowbite -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Script de inicialização de dados -->
+    <script src="./js/init.js"></script>
+
+    <!-- Models -->
+    <script type="module" src="./js/models/UserModel.js"></script>
+    <script type="module" src="./js/models/TourismtypeModel.js"></script>
+    <script type="module" src="./js/models/ModelHelper.js"></script>
+
+    <!-- Views -->
+    <script type="module" src="./js/views/AuthView.js"></script>
+    <script type="module" src="./js/views/FormView.js"></script>
+    <script type="module" src="./js/views/NavbarView.js"></script>
+    <script type="module" src="./js/views/mainView.js"></script>
+
+    <!-- Tradutor -->
+    <script>
+      window.gtranslateSettings = {
+        default_language: "pt",
+        languages: ["en", "es", "fr", "de", "pt"],
+        wrapper_selector: ".gtranslate_wrapper",
+      };
+    </script>
+    <script
+      src="https://cdn.gtranslate.net/widgets/latest/float.js"
+      defer
+    ></script>
+    <div class="gtranslate_wrapper"></div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+.color-primary,
+#navbar-datepicker {
+  color: #39578a !important;
+}
+
+#navbar-datepicker {
+  border-color: #39578a;
+}
+
+#profileSidebar,
+#formSidebar {
+  border: 2px, solid, #39578a;
+}
+
+.activeSideBar {
+  border: 2px, solid, #39578a;
+  border-right: 0 !important;
+}
