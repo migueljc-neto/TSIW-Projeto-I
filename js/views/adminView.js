@@ -845,7 +845,7 @@ function closeModalAndReopen() {
     if (flightOpenBtn) {
       flightOpenBtn.click();
     }
-  }, 100); // Small delay to ensure modal is fully closed
+  }, 100);
 }
 
 // Backdrop click handler
@@ -855,6 +855,4 @@ backdrop.addEventListener("click", closeModalAndReopen);
 closeFlightModal.addEventListener("click", closeModalAndReopen);
 
 // Inicializa o setup do formulário de voo quando o DOM está pronto
-document.addEventListener("DOMContentLoaded", function () {
-  setupFlightFormView();
-});
+document.addEventListener("DOMContentLoaded", function () {});
