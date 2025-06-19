@@ -28,7 +28,6 @@ export function saveReview(id, newReview) {
       (review) => review.userId && review.userId === newReview.userId
     )
   ) {
-    console.log("utilizador já comentou!");
     return false;
   }
 
@@ -38,7 +37,6 @@ export function saveReview(id, newReview) {
   // Save the updated trips array to localStorage
   saveTrips(trips);
 
-  console.log(`Review added successfully to trip ${id}:`, newReview);
   return true;
 }
 
@@ -93,7 +91,6 @@ export function calculateRating(id) {
   trip.reviews.forEach((review) => {
     counter += review.rating;
   });
-  console.log(counter);
   return Math.floor(counter / trip.reviews.length);
 }
 
@@ -127,7 +124,6 @@ export function getFilteredPacks(user) {
   } else {
     filteredPacks = packs;
   }
-  console.log(packs, filteredPacks);
   return filteredPacks.filter(
     (pack) => pack.startDate > new Date().toISOString().split("T")[0]
   );
@@ -201,21 +197,15 @@ export function addTrip(flightObjects, flightsTrip, tripName, miles) {
     // Guarda o array atualizado no storage
     saveTrips(trips);
 
-    console.log("Trip added successfully:", newTrip);
     return newTrip;
   } catch (error) {
-    console.error("Error in addTrip:", error);
     throw error;
   }
 }
 
 // Guarda as viagens no localStorage
 export function saveTrips(trips) {
-  try {
-    localStorage.setItem("trips", JSON.stringify(trips));
-  } catch (error) {
-    console.error("Error saving trips to localStorage:", error);
-  }
+  localStorage.setItem("trips", JSON.stringify(trips));
 }
 
 // Classe que representa uma viagem

@@ -29,10 +29,9 @@ const user = Users.getUserLogged();
 
 // Verifica se o utilizador está autenticado
 if (!user) {
-  console.error("User not logged in");
   window.location.href = "../index.html";
   // Termina a execução do script
-  throw new Error("User not authenticated");
+  throw new Error("Utilizador não autenticado");
 }
 
 // Variáveis para guardar a viagem e os voos associados
@@ -49,19 +48,14 @@ if (id) {
     try {
       trip = JSON.parse(currentTripData);
     } catch (error) {
-      console.error("Erro ao converter currentTrip do sessionStorage:", error);
       trip = null;
     }
   }
 }
 
-console.log(trip);
-
 // Se não houver dados da viagem, redireciona para o perfil
 if (!trip) {
-  console.error("No trip data available");
   window.location.href = "./profile.html";
-  throw new Error("No trip data available");
 }
 
 // Guarda os voos da viagem
@@ -87,7 +81,6 @@ function populatePayment() {
 
     checkValue();
   } else {
-    console.error("User miles data not available");
     milesLabel.innerText = "Aplicar Milhas (0 disponíveis)";
   }
   milesLabel.insertAdjacentHTML(
@@ -152,7 +145,6 @@ function checkValue() {
       // Se não tem milhas, desmarca o checkbox e exibe preço normal
       milesCheckbox.checked = false;
       populatePrice(finalPrice);
-      alert("Não tem milhas disponíveis para aplicar.");
     }
   } else {
     // Exibe o preço normal
@@ -169,22 +161,11 @@ form.addEventListener("submit", (e) => {
 
   // Valida os campos do formulário
   if (!cardNumber || cardNumber.replace(/\s/g, "").length < 16) {
-    alert("Por favor, preencha todos os campos obrigatórios.");
+    document
+      .getElementById("cardNumber")
+      .classList.add("border-red-300", "border-2");
     return;
   }
-
-  // Simula processamento do pagamento
-  const paymentData = {
-    tripId: trip.id,
-    userId: user.id,
-    amount: milesCheckbox.checked
-      ? Helper.calculateDiscount(user.miles.available, finalPrice)
-      : finalPrice,
-    cardNumber: cardNumber,
-    milesUsed: milesCheckbox.checked ? user.miles.available : 0,
-  };
-
-  console.log("Dados do pagamento:", paymentData);
 
   // Calcula milhas a serem descontadas
   let milesToDraw = milesCheckbox.checked ? user.miles.available : 0;
@@ -209,13 +190,11 @@ form.addEventListener("submit", (e) => {
         accumMiles
       );
 
-      console.log("Nova viagem criada:", newTrip);
       Users.addTripToUser(user.id, newTrip.id);
 
       // Atualiza as milhas
       Users.updateUserMiles(user.id, milesToDraw, acummulatingMiles);
     } catch (error) {
-      console.error("Erro ao criar viagem:", error);
       Swal.fire({
         icon: "error",
         title: "Oops...",

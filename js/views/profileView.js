@@ -149,9 +149,6 @@ function renderFavorites() {
             </div>
           </div>`
         );
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar imagem:", err);
       });
   });
 }
@@ -201,7 +198,7 @@ function renderFavoritesGrid() {
               <p class="font-bold text-gray-800">${favorite}</p>
             </div>
             <button 
-              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              class="absolute cursor-pointer top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-30 group-hover:opacity-100 transition-opacity duration-200"
               data-action="remove-favorite"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -210,9 +207,6 @@ function renderFavoritesGrid() {
             </button>
           </div>`
         );
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar imagem:", err);
       });
   });
 }
@@ -469,7 +463,6 @@ function renderTrips(filter = "all") {
         );
       })
       .catch((error) => {
-        console.error("Error fetching image:", error);
         tripsWrapper.insertAdjacentHTML(
           "beforeend",
           `<button onclick="location.href='./resume.html?id=${

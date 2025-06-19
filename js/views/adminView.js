@@ -639,7 +639,6 @@ function getTourismTypesFromForm() {
   const tourismSelect = document.getElementById("tourismTypeSelect");
   const selectedOptions = Array.from(tourismSelect.selectedOptions);
   const tourismTypes = selectedOptions.map((option) => parseInt(option.value));
-  console.log("Multiple select - extracted tourism types:", tourismTypes);
   return tourismTypes;
 }
 
@@ -662,13 +661,6 @@ function getPoisFromForm() {
       container.querySelector(`[name="poiLong${index}"]`) ||
       container.querySelector(`[name*="poiLong"]`);
 
-    // Debug logging
-    console.log(`POI ${index}:`, {
-      name: nameInput?.value,
-      lat: latInput?.value,
-      long: longInput?.value,
-    });
-
     if (
       nameInput &&
       latInput &&
@@ -685,7 +677,6 @@ function getPoisFromForm() {
     }
   });
 
-  console.log("Extracted POIs:", pois);
   return pois;
 }
 
@@ -784,17 +775,13 @@ function handleFormSubmission(e) {
   e.preventDefault();
 
   try {
-    console.log("Form submission started...");
-
     // Extrai os dados do formulário
     const formData = extractFormData();
-    console.log("Extracted form data:", formData);
 
     // Valida os dados
     const validationErrors = validateFormData(formData);
 
     if (validationErrors.length > 0) {
-      console.log("Validation errors:", validationErrors);
       displayMessage(flightForm, validationErrors, "flight");
       return;
     }
@@ -805,15 +792,12 @@ function handleFormSubmission(e) {
     }
 
     // Guarda o voo através do modelo
-    console.log("Saving flight...");
     const savedFlight = Flights.saveFlightFromData(formData);
-    console.log("Flight saved:", savedFlight);
 
     // Mostra sucesso e faz reset ao formulário
     showSuccessMessage(savedFlight);
     resetFormAndCloseModal();
   } catch (error) {
-    console.error("Form submission error:", error);
     displayMessage(flightForm, [error.message || error.toString()], "flight");
   }
 }
@@ -822,8 +806,6 @@ function handleFormSubmission(e) {
 export function setupFlightFormView() {
   if (flightForm) {
     flightForm.addEventListener("submit", handleFormSubmission);
-  } else {
-    console.error("Flight form not found");
   }
 }
 

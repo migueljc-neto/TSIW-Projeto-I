@@ -107,7 +107,6 @@ export function getAllUniqueOrigins() {
   const origins = flights.map((flight) => flight.origin);
 
   const uniqueOrigins = [...new Set(origins)];
-  console.log(uniqueOrigins);
 
   return uniqueOrigins;
 }
@@ -241,7 +240,7 @@ export function createFlightFromFormData(formData) {
     originLong: parseFloat(formData.originLong) || 0,
     destinationLat: parseFloat(formData.destinLat) || 0,
     destinationLong: parseFloat(formData.destinLong) || 0,
-    pois: formData.pois || [],
+    poi: formData.pois || [],
     tourismTypes: formData.tourismTypes || [],
     badge: formData.badge.toLowerCase(),
   };
@@ -259,7 +258,7 @@ export function createFlightFromFormData(formData) {
     flightData.duration,
     flightData.company,
     flightData.distance,
-    flightData.pois,
+    flightData.poi,
     flightData.originLat,
     flightData.originLong,
     flightData.destinationLat,

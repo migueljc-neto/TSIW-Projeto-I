@@ -273,10 +273,6 @@ export function updateUserMiles(userId, milesUsed, milesEarned) {
     }
   }
 
-  console.log(
-    `Milhas atualizadas para utilizador ${userId}: -${milesUsed} usadas, +${milesEarned} ganhas`
-  );
-
   return user.miles;
 }
 
@@ -289,7 +285,6 @@ export function addTripToUser(userId, tripId) {
     if (!user.trips.includes(tripId)) {
       user.trips.push(tripId);
       localStorage.setItem("users", JSON.stringify(users));
-      console.log(`Trip ${tripId} added to user ${userId}`);
 
       updateLoggedUser(userId);
     }
@@ -308,7 +303,6 @@ export function getSoldTrips() {
   let users = getAllUsers();
   let tripsArray = [];
   users.forEach((user) => {
-    console.log(user.trips);
     tripsArray.push(user.trips.length);
   });
 
@@ -339,7 +333,6 @@ export function addBadgestoUser(userId, flightBadges) {
       if (!user.badges.includes(badge)) {
         user.badges.push(badge);
         localStorage.setItem("users", JSON.stringify(users));
-        console.log(`Badge ${badge} added to user ${userId}`);
 
         updateLoggedUser(userId);
       }
@@ -349,12 +342,8 @@ export function addBadgestoUser(userId, flightBadges) {
 
 // Guarda o array de utilizadores no localStorage
 export function saveUsers(updatedUsers) {
-  try {
-    users = updatedUsers; // Atualiza a variável global users
-    localStorage.setItem("users", JSON.stringify(users));
-  } catch (error) {
-    console.error("Erro ao guardar utilizadores no localStorage:", error);
-  }
+  users = updatedUsers; // Atualiza a variável global users
+  localStorage.setItem("users", JSON.stringify(users));
 }
 
 /**

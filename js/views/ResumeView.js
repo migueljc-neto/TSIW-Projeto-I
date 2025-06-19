@@ -35,10 +35,6 @@ window.addEventListener("DOMContentLoaded", () => {
       try {
         trip = JSON.parse(currentTripData);
       } catch (error) {
-        console.error(
-          "Erro ao converter currentTrip do sessionStorage:",
-          error
-        );
         trip = null;
       }
     }
@@ -46,7 +42,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (!trip) {
     // Se não houver dados da viagem, redireciona para o perfil
-    console.error("Sem dados da viagem");
     window.location.href = "./profile.html";
     return;
   }
@@ -64,7 +59,6 @@ const flightResume = document.getElementById("flightResume");
 // Função principal para preencher o resumo da viagem
 async function populateData() {
   if (!trip) {
-    console.error("Dados da viagem não disponíveis em populateData");
     return;
   }
 
@@ -93,45 +87,44 @@ async function populateData() {
 
 // Função para processar cada cartão de voo
 async function processFlightCard(flight, index) {
-  try {
-    let flightData = Flights.getFlightById(flight); // Dados do voo atual
+  let flightData = Flights.getFlightById(flight); // Dados do voo atual
 
-    // Pega o próximo voo, se existir, para calcular a data de chegada
-    let nextFlightData = null;
-    let arrivalDate = "";
-    if (index < flightsTrip.length - 1) {
-      nextFlightData = Flights.getFlightById(flightsTrip[index + 1]);
-      arrivalDate = Helper.formatDate(nextFlightData.departureTime);
-    } else {
-      // Se for o último voo, usa a data de partida dele próprio
-      arrivalDate = Helper.formatDate(flightData.departureTime);
-    }
+  // Pega o próximo voo, se existir, para calcular a data de chegada
+  let nextFlightData = null;
+  let arrivalDate = "";
+  if (index < flightsTrip.length - 1) {
+    nextFlightData = Flights.getFlightById(flightsTrip[index + 1]);
+    arrivalDate = Helper.formatDate(nextFlightData.departureTime);
+  } else {
+    // Se for o último voo, usa a data de partida dele próprio
+    arrivalDate = Helper.formatDate(flightData.departureTime);
+  }
 
-    // Formata as datas e horas de partida/chegada
-    let departureDate = Helper.formatDate(flightData.arrivalTime);
-    let arrivalTime = Helper.formatTime(flightData.arrivalTime);
-    let departureTime = Helper.formatTime(flightData.departureTime);
+  // Formata as datas e horas de partida/chegada
+  let departureDate = Helper.formatDate(flightData.arrivalTime);
+  let arrivalTime = Helper.formatTime(flightData.arrivalTime);
+  let departureTime = Helper.formatTime(flightData.departureTime);
 
-    // Cria a string de datas para mostrar no cartão
-    let dateString;
-    if (departureDate == arrivalDate) {
-      dateString = departureDate;
-    } else {
-      dateString = departureDate + " - " + arrivalDate;
-    }
+  // Cria a string de datas para mostrar no cartão
+  let dateString;
+  if (departureDate == arrivalDate) {
+    dateString = departureDate;
+  } else {
+    dateString = departureDate + " - " + arrivalDate;
+  }
 
-    // Usa o código IATA para mostrar o logo da companhia aérea
-    const iata = Helper.getIata(flightData.company);
-    const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
+  // Usa o código IATA para mostrar o logo da companhia aérea
+  const iata = Helper.getIata(flightData.company);
+  const logoUrl = `https://images.daisycon.io/airline/?width=100&height=40&color=ffffff&iata=${iata}`;
 
-    // Aguarda os nomes dos aeroportos (origem e destino)
-    const [departureName, arrivalName] = await getFlightNames(flightData);
-    let duration = Helper.calculateDuration(flightData.duration);
+  // Aguarda os nomes dos aeroportos (origem e destino)
+  const [departureName, arrivalName] = await getFlightNames(flightData);
+  let duration = Helper.calculateDuration(flightData.duration);
 
-    // Insere o cartão do voo no resumo
-    flightResume.insertAdjacentHTML(
-      "beforeend",
-      `<div class="mb-2" id="legCard">
+  // Insere o cartão do voo no resumo
+  flightResume.insertAdjacentHTML(
+    "beforeend",
+    `<div class="mb-2" id="legCard">
         <div
           class="bg-[#39578A] flex justify-between shadow-xl text-white items-center px-4 sm:px-7 py-5 sm:py-7 rounded-lg mb-2"
         >
@@ -215,10 +208,7 @@ async function processFlightCard(flight, index) {
           </div>
         </div>
       </div>`
-    );
-  } catch (error) {
-    console.error("Erro ao processar voo:", error);
-  }
+  );
 }
 
 // Função para adicionar o cartão de destino final
@@ -286,14 +276,11 @@ function addActionButtons() {
     );
   }
 
-  // Se a viagem tem reviews e é um pack, mostra secção de reviews
-  if (trip.reviews && trip.isPack) {
-    flightResume.insertAdjacentHTML(
-      "beforeend",
-      `<h3 class="text-xl mt-10 mb-4 font-bold print:hidden">Reviews</h3><div id="reviewSection" class="print:hidden"></div>`
-    );
-    renderReviews();
-  }
+  flightResume.insertAdjacentHTML(
+    "beforeend",
+    `<h3 class="text-xl mt-10 mb-4 font-bold print:hidden">Reviews</h3><div id="reviewSection" class="print:hidden"></div>`
+  );
+  renderReviews();
 }
 
 // Função que retorna ambos os nomes dos aeroportos usando Promise.all

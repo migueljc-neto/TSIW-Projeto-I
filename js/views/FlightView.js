@@ -289,7 +289,6 @@ function populateView() {
           flightIds.push(selectedFlights[i]);
         }
       }
-      console.log("Selected flights:", flightIds);
       const currentTrip = {
         name: name,
         flights: flightIds,

@@ -70,14 +70,7 @@ registerForm.addEventListener("submit", (event) => {
     setTimeout(() => {
       registerFormClose();
       // Also fix the auto-login after registration
-      User.login(email, password, false)
-        .then(() => {
-          // Login successful after registration
-          console.log("Auto-login successful");
-        })
-        .catch((error) => {
-          console.error("Auto-login failed:", error);
-        });
+      User.login(email, password, false);
     }, 1000);
   } catch (error) {
     // Mostra mensagem de erro se falhar o registo

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=s"en">
+<html lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,23 +25,28 @@
 
     <!-- sortableJS -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="dark:bg-gray-800! bg-none! px-10 minw-[450px]">
     <header class="pt-2 top-0 w-full bg-transparent z-50">
       <div class="max-w-[1530px] flex gap-2 md:gap-10 items-center py-4">
         <!-- LightMode Logo -->
         <div id="logo" class="h-[60px] w-fit dark:hidden">
+          <button></button>
           <img
             id="logotypeLight"
             src="../img/logos/logo-11.png"
-            class="hidden lg:block h-[60px] w-auto"
+            class="hidden lg:block h-[60px] w-auto cursor-pointer"
             alt="Light mode logotype"
           />
           <img
             id="logoLight"
             src="../img/logos/logo-12.png"
-            class="block lg:hidden h-[60px] w-auto"
+            class="block lg:hidden h-[60px] w-auto cursor-pointer"
             alt="Light mode logo"
+            onClick="location.href='../index.html'"
           />
         </div>
 
@@ -50,14 +55,16 @@
           <img
             id="logotypeLight"
             src="../img/logos/logoDarkmode_logotipo darkmode.png"
-            class="hidden lg:block h-[60px]"
+            class="hidden lg:block h-[60px] cursor-pointer"
             alt="Darkmode logotype"
+            onClick="location.href='../index.html'"
           />
           <img
             id="logoLight"
             src="../img/logos/logoDarkmode_logo darkmode.png"
-            class="block lg:hidden h-[60px] w-auto"
+            class="block lg:hidden h-[60px] w-auto cursor-pointer"
             alt="Darkmode logo"
+            onClick="location.href='../index.html'"
           />
         </div>
         <h1 id="pagetitle" class="text-4xl dark:text-white">
@@ -201,16 +208,6 @@
         <!-- Submit Panel -->
         <div class="w-full h-full flex flex-col p-2 gap-4 dark:text-white">
           <div class="flex flex-row lg:flex-col gap-10 lg:gap-5">
-            <div id="returnTripRadio" class="flex gap-3 w-fit">
-              <div class="flex items-center gap-2">
-                <label for="return" class="select-none"> Ida e Volta</label>
-                <input type="radio" id="return" name="tripRadio" />
-              </div>
-              <div class="flex items-center gap-2">
-                <label for="oneWay" class="select-none"> Ida</label>
-                <input checked type="radio" id="oneWay" name="tripRadio" />
-              </div>
-            </div>
             <p>Milhas: <span id="miles"></span></p>
           </div>
           <div class="flex gap-3 my-auto">

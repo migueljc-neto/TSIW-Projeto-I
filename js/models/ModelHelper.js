@@ -166,7 +166,6 @@ export function fetchAirportName(iataCode) {
       return data.name;
     })
     .catch((error) => {
-      console.error("Erro ao obter informação do aeroporto:", error);
       return null;
     });
 }
@@ -358,8 +357,6 @@ export function getTurismTypeId(tourismType) {
   let tourismTypesArray = JSON.parse(localStorage.getItem("tourismTypes"));
   for (const [id, type] of Object.entries(tourismTypesArray)) {
     if (tourismType === type) {
-      console.log(id);
-
       return id;
     }
   }
