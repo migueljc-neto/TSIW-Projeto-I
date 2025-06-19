@@ -46,6 +46,8 @@ let originName;
 
 /* Map */
 var map;
+let outOfBounds = document.getElementById("outOfBoundsAlert");
+let iconArray = [];
 
 /* Map Icons */
 const mapOriginIcon = L.icon({
@@ -60,8 +62,8 @@ const destinIcon = L.icon({
 });
 const favIcon = L.icon({
   iconUrl: "/img/icons/other/favIcon.png",
-  iconSize: [20, 20],
-  iconAnchor: [10, 10],
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
 });
 const pathIcon = L.icon({
   iconUrl: "/img/icons/other/pathLastPoint.png",
@@ -75,8 +77,8 @@ const ballIcon = L.icon({
 });
 const poiIcon = L.icon({
   iconUrl: "/img/icons/other/poiPin.png",
-  iconSize: [10, 15],
-  iconAnchor: [5, 7.5],
+  iconSize: [20, 25],
+  iconAnchor: [10, 12.5],
 });
 
 /* Map and list view toggle */
@@ -257,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
   originName = Flight.getOriginName(userQuery.origin);
 
   document.getElementById("origin").textContent = userQuery.origin;
-  console.log(user.favorites);
 });
 
 const createMap = function (origin) {
@@ -291,7 +292,7 @@ const createMap = function (origin) {
 };
 
 function loadMap(origin) {
-  console.log(user);
+  iconArray = [];
   user = User.getUserLogged();
 
   const flightList = Flight.getFlightsByOrigin(origin);
@@ -347,6 +348,9 @@ function loadMap(origin) {
         zIndexOffset: 900,
       }).addTo(iconGroup);
 
+      iconArray.push(marker);
+      console.log(iconArray);
+
       const apiKey = "NpYuyyJzclnrvUUkVK1ISyi2FGnrw4p9sNg9CCODQGsiFc0nWvuUJJMN";
       fetch(
         `https://api.pexels.com/v1/search?query=${flight.destinationName}&per_page=2`,
@@ -362,8 +366,18 @@ function loadMap(origin) {
             data.photos[1]?.src.medium || "../img/images/fallback.jpg";
           marker.bindPopup(
             `
-            <div class="flex justify-center backdrop-blur-sm h-10 rounded-t-lg">
+            <div class="flex justify-center items-center gap-3 backdrop-blur-sm h-10 rounded-t-lg">
              <p class="">${flight.destinationName}</p>
+             <div
+                  data-id="${flight.id}"
+                  class="cursor-pointer favoriteBtn h-fit"
+                >
+                  <img
+                    src=${favoriteSrc}
+                    alt="favIcon"
+                    class="h-5"
+                  />
+                </div>
             </div>
             <div class="w-40 h-30 bg-[url(${image})] bg-cover bg-center flex flex-col justify-between">
               
@@ -386,14 +400,20 @@ function loadMap(origin) {
             addToList(flightId);
           });
         }, 100);
+      });
 
-        /* flight.poi.forEach((poi) => {
-      const html = `<img />`;
-      const poiMarker = L.marker([poi.latitude, poi.long], {
-        icon: poiIcon,
-        zIndexOffset: 200,
-      }).addTo(poiGroup);
-    }); */
+      marker.on("popupopen", (e) => {
+        setTimeout(() => {
+          const favBtn = e.popup._contentNode.querySelector(".favoriteBtn");
+
+          favBtn.addEventListener("click", function (e) {
+            const flightId = parseInt(this.getAttribute("data-id"));
+            const destinationName =
+              Flight.getFlightById(flightId).destinationName;
+            User.toggleFavorite(destinationName);
+            loadMap(Flight.getFlightById(flightId).origin);
+          });
+        }, 100);
       });
 
       marker.on("mouseover", function () {
@@ -428,22 +448,67 @@ function loadMap(origin) {
             });
         });
       });
+
+      flight.poi.forEach((poi) => {
+        const poiMarker = L.marker([poi.latitude, poi.long], {
+          icon: poiIcon,
+          zIndexOffset: 200,
+        }).addTo(poiGroup);
+
+        poiMarker.bindTooltip(`${poi.name}`, {
+          permanent: false,
+          direction: "top",
+          offset: [0, -10],
+        });
+      });
+    }
+    let mapBounds = map.getBounds();
+    let inView = iconArray.every((icon) => {
+      let iconCoord = icon.getLatLng();
+      return mapBounds.contains(iconCoord);
+    });
+
+    if (inView) {
+      if (outOfBounds.classList.contains("hidden")) {
+      } else {
+        outOfBounds.classList.add("hidden");
+      }
+    } else {
+      if (outOfBounds.classList.contains("hidden")) {
+        outOfBounds.classList.remove("hidden");
+      }
     }
     mapLine();
   });
-  let btnList = document.querySelectorAll(".favoriteBtn");
-  console.log(btnList);
 
+  let btnList = document.querySelectorAll(".favoriteBtn");
   btnList.forEach((btn) => {
     btn.addEventListener("click", function () {
       const flightId = parseInt(this.getAttribute("data-id"));
       const destinationName = Flight.getFlightById(flightId).destinationName;
-      console.log(destinationName);
       User.toggleFavorite(destinationName);
 
       loadMap(Flight.getFlightById(flightId).origin);
-      console.log(user.favorites);
     });
+  });
+
+  map.addEventListener("drag zoom", function () {
+    let mapBounds = map.getBounds();
+    let inView = iconArray.every((icon) => {
+      let iconCoord = icon.getLatLng();
+      return mapBounds.contains(iconCoord);
+    });
+
+    if (inView) {
+      if (outOfBounds.classList.contains("hidden")) {
+      } else {
+        outOfBounds.classList.add("hidden");
+      }
+    } else {
+      if (outOfBounds.classList.contains("hidden")) {
+        outOfBounds.classList.remove("hidden");
+      }
+    }
   });
 }
 
@@ -494,7 +559,7 @@ function mapLine() {
     }
   };
 
-  const createTripPoi = function (obj, index, arrLeng) {
+  /*  const createTripPoi = function (obj, index, arrLeng) {
     console.log(obj.pois);
 
     if (index != 0) {
@@ -503,7 +568,7 @@ function mapLine() {
       }).addTo(pathGroup);
     }
   };
-
+ */
   const createMapLines = function (obj, index, arr) {
     if (index != 0) {
       const flightLine = L.polyline(
@@ -557,7 +622,6 @@ function updateMap() {
   mapLine();
 
   let tripItems = Array.from(tripList.getElementsByTagName("li"));
-  console.log(tripItems);
   const activeTripMiles = calculateActiveTripMiles();
   milesText.textContent = activeTripMiles > 0 ? `${activeTripMiles}` : `0`;
 

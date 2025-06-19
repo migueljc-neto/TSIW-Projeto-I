@@ -130,7 +130,15 @@
         <div
           id="map"
           class="h-75 lg:h-100 w-full rounded-lg lg:border-2 border-blue-900 overflow-show"
-        ></div>
+        >
+          <div
+            id="outOfBoundsAlert"
+            class="hidden absolute left-1/2 -translate-x-1/2 top-4 z-[1000] bg-white py-2 px-4 rounded-md flex items-center gap-4"
+          >
+            <img src="/img/icons/blue/alert-triangle.svg" alt="alertIcon" />
+            <p>Zoom out / Pan para ver todos os destinos sugeridos</p>
+          </div>
+        </div>
         <!-- list view -->
         <div
           id="mapListView"
