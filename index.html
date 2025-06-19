@@ -21,11 +21,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <!-- Choices.js CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
-    />
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
@@ -1058,11 +1053,9 @@
       class="hidden flex overflow-y-auto backdrop-blur-sm overflow-x-hidden fixed items-center top-0 right-0 left-0 z-50 w-full h-screen"
     >
       <div class="relative p-4 w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
         <div
           class="relative bg-white rounded-lg shadow-sm -translate-y-1/2 z-50"
         >
-          <!-- Modal header -->
           <div
             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200"
           >
@@ -1099,12 +1092,11 @@
     </div>
 
     <footer class="w-screen h-fit z-20 py-20 bottom-0 fixed">
-      <!-- Flight search Form -->
+      <!-- Form Pesquisa voos -->
       <div
         id="mainForm"
         class="group hidden lg:flex items-end text-blue-900 gap-1 truncate overflow-ellipsis sm:px-2 mx-auto w-fit min-w-fit h-fit overflow-visible"
       >
-        <!-- Home Airport -->
         <button
           id="dropdownTopButton"
           data-dropdown-toggle="airportDropdown"
@@ -1124,7 +1116,7 @@
           <img src="./img/icons/blue/pin.svg" alt="turismIcon" class="w-5" />
         </button>
 
-        <!-- Airport Selector Dropdown -->
+        <!-- Dropdown aeroporto -->
         <div
           id="airportDropdown"
           class="hidden bg-white rounded-md w-fit border-1 border-blue-900"
@@ -1136,7 +1128,7 @@
           ></ul>
         </div>
 
-        <!-- Turism Dropdown -->
+        <!-- Tipo de turismo -->
         <button
           id="tourismDropdownBtn"
           data-dropdown-toggle="tourismDropdown"
@@ -1159,7 +1151,7 @@
           ></ul>
         </div>
 
-        <!-- Nº Passengers -->
+        <!-- Nº Passageiros -->
         <div class="h-fit flex flex-col gap-2">
           <div
             class="group flex gap-5 min-w-fit h-fit bg-white hover:outline-blue-600 hover:outline-3 px-4 py-3 transition"
@@ -1223,17 +1215,13 @@
       class="flex fixed top-0 left-0 right-0 bottom-0 text-center z-50 justify-center items-center w-screen h-screen overscroll-none backdrop-blur-sm max-h-screen"
     >
       <div class="relative p-4 w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm">
-          <!-- Modal header -->
           <div class="flex items-center justify-between p-4 md:p-5">
             <h3 class="text-xl font-semibold text-gray-900">
               Raspa para ganhares milhas!
             </h3>
           </div>
-          <!-- Modal body -->
           <div id="canvas-test" class="sc__container"></div>
-          <!-- Modal footer -->
           <div class="flex gap-4 items-center w-full justify-end p-4 md:p-5">
             <button
               id="cancelMilesBtn"
