@@ -18,29 +18,28 @@ export function getAllNonPacks() {
 }
 
 export function saveReview(id, newReview) {
-  try {
-    // Convert id to number if it's a string
-    const tripId = typeof id === "string" ? Number(id) : id;
+  let trip = getSingleTripById(id);
 
-    // Find the trip by ID
-    const trip = trips.find((trip) => trip.id === tripId);
-
-    if (!trip) {
-      throw new Error(`Trip with ID ${id} not found`);
-    }
-
-    // Add the new review to the trip
-    trip.reviews.push(newReview);
-
-    // Save the updated trips array to localStorage
-    saveTrips(trips);
-
-    console.log(`Review added successfully to trip ${tripId}:`, newReview);
-    return newReview;
-  } catch (error) {
-    console.error("Error saving review:", error);
-    throw error;
+  if (!trip) {
+    throw new Error(`Trip with ID ${id} not found`);
   }
+  if (
+    trip.reviews.find(
+      (review) => review.userId && review.userId === newReview.userId
+    )
+  ) {
+    console.log("utilizador já comentou!");
+    return false;
+  }
+
+  // Add the new review to the trip
+  trip.reviews.push(newReview);
+
+  // Save the updated trips array to localStorage
+  saveTrips(trips);
+
+  console.log(`Review added successfully to trip ${id}:`, newReview);
+  return true;
 }
 
 // Função de administração: define uma viagem como pacote e atribui preço

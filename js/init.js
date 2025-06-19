@@ -7,10 +7,9 @@ function initdata() {
       {
         id: 1,
         name: "Alice",
-        email: "alice@teste.com",
+        email: "alice@compass.com",
         password: "Iv2mJg5C99wWDBEFHvktDKSlnqcV8x5ldNtBbkFR/gU=",
         isAdmin: false,
-        homeAirport: "OPO",
         miles: {
           available: 236,
           total: 4300,
@@ -23,10 +22,9 @@ function initdata() {
       {
         id: 2,
         name: "Bob",
-        email: "bob@teste.com",
+        email: "bob@compass.com",
         password: "doj2kmjCoFbaRTTgL17Qm6h9BvhI9krOnzlF7O9tRXc=",
         isAdmin: true,
-        homeAirport: "LAX",
         miles: {
           available: 465,
           total: 2020,
@@ -39,10 +37,9 @@ function initdata() {
       {
         id: 3,
         name: "Charlie",
-        email: "charlie@teste.com",
+        email: "charlie@compass.com",
         password: "T1seFreOPCHSRHhB/+briZwYHvkvnNuAZzzcnZCUIfM=",
         isAdmin: false,
-        homeAirport: "LIS",
         miles: {
           available: 200,
           total: 1300,
@@ -54,11 +51,10 @@ function initdata() {
       },
       {
         id: 4,
-        name: "teste",
-        email: "boba@teste.com",
+        name: "John",
+        email: "john@compass.com",
         password: "JPjElV6dkZO6hqE9ccWLJqJ1UXqbTl+WjlWH7x9uS9Q=",
         isAdmin: false,
-        homeAirport: "SFO",
         miles: {
           available: 10,
           total: 1240,
@@ -105,7 +101,18 @@ function initdata() {
         company: "TAP",
         distance: 313,
         tourismTypes: [1, 2],
-        poi: [],
+        poi: [
+          {
+            name: "Torre de Belém",
+            latitude: 38.6916,
+            long: -9.2159,
+          },
+          {
+            name: "Mosteiro dos Jerónimos",
+            latitude: 38.6979,
+            long: -9.2061,
+          },
+        ],
         badge: "pt",
       },
       {
@@ -125,7 +132,18 @@ function initdata() {
         company: "Iberia",
         distance: 438,
         tourismTypes: [1, 3],
-        poi: [],
+        poi: [
+          {
+            name: "Museo del Prado",
+            latitude: 40.4138,
+            long: -3.6921,
+          },
+          {
+            name: "Parque del Retiro",
+            latitude: 40.4153,
+            long: -3.6844,
+          },
+        ],
         badge: "es",
       },
       {
@@ -145,7 +163,18 @@ function initdata() {
         company: "Vueling",
         distance: 1006,
         tourismTypes: [2, 3],
-        poi: [],
+        poi: [
+          {
+            name: "Sagrada Família",
+            latitude: 41.4036,
+            long: 2.1744,
+          },
+          {
+            name: "Casa Batlló",
+            latitude: 41.3916,
+            long: 2.1649,
+          },
+        ],
         badge: "pt",
       },
       {
@@ -165,7 +194,18 @@ function initdata() {
         company: "Air France",
         distance: 1052,
         tourismTypes: [1, 4],
-        poi: [],
+        poi: [
+          {
+            name: "Torre Eiffel",
+            latitude: 48.8584,
+            long: 2.2945,
+          },
+          {
+            name: "Louvre",
+            latitude: 48.8606,
+            long: 2.3376,
+          },
+        ],
         badge: "fr",
       },
       {
@@ -185,7 +225,18 @@ function initdata() {
         company: "ITA Airways",
         distance: 859,
         tourismTypes: [2, 5],
-        poi: [],
+        poi: [
+          {
+            name: "Coliseu",
+            latitude: 41.8902,
+            long: 12.4922,
+          },
+          {
+            name: "Fontana di Trevi",
+            latitude: 41.9009,
+            long: 12.4833,
+          },
+        ],
         badge: "es",
       },
       {
@@ -205,7 +256,18 @@ function initdata() {
         company: "Aegean",
         distance: 1050,
         tourismTypes: [2, 6],
-        poi: [],
+        poi: [
+          {
+            name: "Acrópole",
+            latitude: 37.9715,
+            long: 23.7267,
+          },
+          {
+            name: "Partenon",
+            latitude: 37.9715,
+            long: 23.7267,
+          },
+        ],
         badge: "it",
       },
       {
@@ -225,7 +287,18 @@ function initdata() {
         company: "Turkish Airlines",
         distance: 563,
         tourismTypes: [6, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Hagia Sophia",
+            latitude: 41.0086,
+            long: 28.9802,
+          },
+          {
+            name: "Blue Mosque",
+            latitude: 41.0054,
+            long: 28.9768,
+          },
+        ],
         badge: "tr",
       },
       {
@@ -245,7 +318,13 @@ function initdata() {
         company: "Turkish Airlines",
         distance: 563,
         tourismTypes: [6, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Grand Bazaar",
+            latitude: 41.0106,
+            long: 28.9681,
+          },
+        ],
         badge: "tr",
       },
       {
@@ -265,7 +344,13 @@ function initdata() {
         company: "Turkish Airlines",
         distance: 563,
         tourismTypes: [6, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Ancient Agora",
+            latitude: 37.9753,
+            long: 23.7215,
+          },
+        ],
         badge: "tr",
       },
       {
@@ -285,7 +370,18 @@ function initdata() {
         company: "British Airways",
         distance: 344,
         tourismTypes: [4, 5],
-        poi: [],
+        poi: [
+          {
+            name: "Big Ben",
+            latitude: 51.4994,
+            long: -0.1245,
+          },
+          {
+            name: "Tower Bridge",
+            latitude: 51.5055,
+            long: -0.0754,
+          },
+        ],
         badge: "gb",
       },
       {
@@ -305,7 +401,18 @@ function initdata() {
         company: "Ryanair",
         distance: 1313,
         tourismTypes: [1, 2],
-        poi: [],
+        poi: [
+          {
+            name: "Torre dos Clérigos",
+            latitude: 41.1458,
+            long: -8.6145,
+          },
+          {
+            name: "Livraria Lello",
+            latitude: 41.1469,
+            long: -8.615,
+          },
+        ],
         badge: "pt",
       },
       {
@@ -325,7 +432,18 @@ function initdata() {
         company: "TAP",
         distance: 1196,
         tourismTypes: [8],
-        poi: [],
+        poi: [
+          {
+            name: "Cabo Girão",
+            latitude: 32.6581,
+            long: -17.0078,
+          },
+          {
+            name: "Mercado dos Lavradores",
+            latitude: 32.6496,
+            long: -16.9069,
+          },
+        ],
         badge: "pt",
       },
       {
@@ -347,8 +465,13 @@ function initdata() {
         poi: [
           {
             name: "Brandenburg Gate",
-            latitude: 52.5,
-            long: 13.4,
+            latitude: 52.5163,
+            long: 13.3777,
+          },
+          {
+            name: "Checkpoint Charlie",
+            latitude: 52.5075,
+            long: 13.3903,
           },
         ],
         tourismTypes: [1, 5],
@@ -373,8 +496,13 @@ function initdata() {
         poi: [
           {
             name: "Charles Bridge",
-            latitude: 50.1,
-            long: 14.4,
+            latitude: 50.0865,
+            long: 14.4114,
+          },
+          {
+            name: "Prague Castle",
+            latitude: 50.091,
+            long: 14.4016,
           },
         ],
         tourismTypes: [1, 3],
@@ -399,14 +527,18 @@ function initdata() {
         poi: [
           {
             name: "Schönbrunn Palace",
-            latitude: 48.2,
-            long: 16.4,
+            latitude: 48.1847,
+            long: 16.3122,
+          },
+          {
+            name: "St. Stephen's Cathedral",
+            latitude: 48.2084,
+            long: 16.3731,
           },
         ],
         tourismTypes: [3, 4],
         badge: "it",
       },
-
       {
         id: 14,
         origin: "VIE",
@@ -426,8 +558,13 @@ function initdata() {
         poi: [
           {
             name: "Lake Zurich",
-            latitude: 47.4,
-            long: 8.5,
+            latitude: 47.3667,
+            long: 8.55,
+          },
+          {
+            name: "Grossmünster",
+            latitude: 47.37,
+            long: 8.5441,
           },
         ],
         tourismTypes: [4, 7],
@@ -452,8 +589,13 @@ function initdata() {
         poi: [
           {
             name: "Marienplatz",
-            latitude: 48.1,
-            long: 11.6,
+            latitude: 48.1374,
+            long: 11.5755,
+          },
+          {
+            name: "Neuschwanstein Castle",
+            latitude: 47.5576,
+            long: 10.7498,
           },
         ],
         tourismTypes: [1, 4],
@@ -478,8 +620,13 @@ function initdata() {
         poi: [
           {
             name: "Ribeira",
-            latitude: 41.2,
-            long: -8.6,
+            latitude: 41.1408,
+            long: -8.6156,
+          },
+          {
+            name: "Palácio da Bolsa",
+            latitude: 41.1421,
+            long: -8.615,
           },
         ],
         tourismTypes: [3],
@@ -504,8 +651,13 @@ function initdata() {
         poi: [
           {
             name: "Praia de Faro",
-            latitude: 37.0,
-            long: -7.9,
+            latitude: 37.0194,
+            long: -7.9655,
+          },
+          {
+            name: "Ria Formosa",
+            latitude: 37.0267,
+            long: -7.8319,
           },
         ],
         tourismTypes: [2, 8],
@@ -527,8 +679,14 @@ function initdata() {
         duration: 60,
         company: "Ryanair",
         distance: 173,
-        poi: [],
-        tourismTypes: [],
+        poi: [
+          {
+            name: "Castelo de São Jorge",
+            latitude: 38.7139,
+            long: -9.1334,
+          },
+        ],
+        tourismTypes: [1, 2],
         badge: "pt",
       },
       {
@@ -550,8 +708,13 @@ function initdata() {
         poi: [
           {
             name: "Trinity College",
-            latitude: 53.3,
-            long: -6.2,
+            latitude: 53.3438,
+            long: -6.2546,
+          },
+          {
+            name: "Temple Bar",
+            latitude: 53.3456,
+            long: -6.2649,
           },
         ],
         tourismTypes: [1, 3],
@@ -573,7 +736,13 @@ function initdata() {
         duration: 120,
         company: "Ryanair",
         distance: 1135,
-        poi: [],
+        poi: [
+          {
+            name: "Casa da Guitarra",
+            latitude: 41.145,
+            long: -8.6108,
+          },
+        ],
         tourismTypes: [1],
         badge: "pt",
       },
@@ -594,7 +763,18 @@ function initdata() {
         company: "Transavia",
         distance: 1600,
         tourismTypes: [1, 4],
-        poi: [],
+        poi: [
+          {
+            name: "Anne Frank House",
+            latitude: 52.3752,
+            long: 4.884,
+          },
+          {
+            name: "Rijksmuseum",
+            latitude: 52.36,
+            long: 4.8852,
+          },
+        ],
         badge: "nl",
       },
       {
@@ -614,7 +794,18 @@ function initdata() {
         company: "Norwegian",
         distance: 960,
         tourismTypes: [1, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Vigeland Park",
+            latitude: 59.9267,
+            long: 10.7005,
+          },
+          {
+            name: "Opera House",
+            latitude: 59.9075,
+            long: 10.7537,
+          },
+        ],
         badge: "no",
       },
       {
@@ -634,7 +825,18 @@ function initdata() {
         company: "Finnair",
         distance: 780,
         tourismTypes: [6, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Helsinki Cathedral",
+            latitude: 60.1707,
+            long: 24.9519,
+          },
+          {
+            name: "Suomenlinna",
+            latitude: 60.1459,
+            long: 24.9882,
+          },
+        ],
         badge: "fi",
       },
       {
@@ -654,7 +856,13 @@ function initdata() {
         company: "TAP",
         distance: 2850,
         tourismTypes: [4],
-        poi: [],
+        poi: [
+          {
+            name: "Serralves Museum",
+            latitude: 41.159,
+            long: -8.6596,
+          },
+        ],
         badge: "fi",
       },
       {
@@ -674,7 +882,18 @@ function initdata() {
         company: "ITA Airways",
         distance: 1450,
         tourismTypes: [4, 6],
-        poi: [],
+        poi: [
+          {
+            name: "Duomo di Milano",
+            latitude: 45.4642,
+            long: 9.19,
+          },
+          {
+            name: "La Scala",
+            latitude: 45.4669,
+            long: 9.1898,
+          },
+        ],
         badge: "it",
       },
       {
@@ -697,8 +916,13 @@ function initdata() {
         poi: [
           {
             name: "St. Mark's Square",
-            latitude: 45.5,
-            long: 12.3,
+            latitude: 45.4342,
+            long: 12.338,
+          },
+          {
+            name: "Doge's Palace",
+            latitude: 45.434,
+            long: 12.3404,
           },
         ],
         badge: "it",
@@ -720,7 +944,18 @@ function initdata() {
         company: "Vueling",
         distance: 205,
         tourismTypes: [5, 6],
-        poi: [],
+        poi: [
+          {
+            name: "Uffizi Gallery",
+            latitude: 43.7687,
+            long: 11.256,
+          },
+          {
+            name: "Ponte Vecchio",
+            latitude: 43.7679,
+            long: 11.253,
+          },
+        ],
         badge: "it",
       },
       {
@@ -740,7 +975,18 @@ function initdata() {
         company: "ITA Airways",
         distance: 295,
         tourismTypes: [2, 4],
-        poi: [],
+        poi: [
+          {
+            name: "Pompeia",
+            latitude: 40.7489,
+            long: 14.4897,
+          },
+          {
+            name: "Vesúvio",
+            latitude: 40.8202,
+            long: 14.4289,
+          },
+        ],
         badge: "it",
       },
       {
@@ -760,7 +1006,18 @@ function initdata() {
         company: "Alitalia",
         distance: 305,
         tourismTypes: [2, 4],
-        poi: [],
+        poi: [
+          {
+            name: "Teatro Massimo",
+            latitude: 38.1198,
+            long: 13.3583,
+          },
+          {
+            name: "Cattedrale di Palermo",
+            latitude: 38.1137,
+            long: 13.3564,
+          },
+        ],
         badge: "it",
       },
       {
@@ -779,8 +1036,30 @@ function initdata() {
         duration: 150,
         company: "TAP",
         distance: 1380,
-        tourismTypes: [],
-        poi: [],
+        tourismTypes: [1, 2],
+        poi: [
+          {
+            name: "Ponte D. Luís I",
+            latitude: 41.140944,
+            longitude: -8.611389,
+            description: "Icónica ponte de ferro sobre o Rio Douro",
+            category: "Arquitetura",
+          },
+          {
+            name: "Torre dos Clérigos",
+            latitude: 41.145556,
+            longitude: -8.614167,
+            description: "Torre barroca símbolo da cidade do Porto",
+            category: "Monumento",
+          },
+          {
+            name: "Livraria Lello",
+            latitude: 41.146944,
+            longitude: -8.614722,
+            description: "Uma das livrarias mais bonitas do mundo",
+            category: "Cultura",
+          },
+        ],
         badge: "pt",
       },
       {
@@ -800,7 +1079,30 @@ function initdata() {
         company: "LOT",
         distance: 2100,
         tourismTypes: [1, 5],
-        poi: [],
+        poi: [
+          {
+            name: "Centro Histórico de Varsóvia",
+            latitude: 52.249167,
+            longitude: 21.012222,
+            description:
+              "Centro histórico reconstruído após a Segunda Guerra Mundial",
+            category: "Património UNESCO",
+          },
+          {
+            name: "Palácio da Cultura e Ciência",
+            latitude: 52.231944,
+            longitude: 21.006111,
+            description: "Arranha-céus histórico e símbolo de Varsóvia",
+            category: "Arquitetura",
+          },
+          {
+            name: "Castelo Real",
+            latitude: 52.247778,
+            longitude: 21.014167,
+            description: "Residência histórica dos reis polacos",
+            category: "Monumento",
+          },
+        ],
         badge: "pl",
       },
       {
@@ -820,7 +1122,29 @@ function initdata() {
         company: "Wizz Air",
         distance: 395,
         tourismTypes: [3, 4],
-        poi: [],
+        poi: [
+          {
+            name: "Parlamento Húngaro",
+            latitude: 47.507222,
+            longitude: 19.045556,
+            description: "Edifício gótico neogótico às margens do Danúbio",
+            category: "Arquitetura",
+          },
+          {
+            name: "Termas Széchenyi",
+            latitude: 47.518611,
+            longitude: 19.081944,
+            description: "Complexo termal histórico no Parque da Cidade",
+            category: "Bem-estar",
+          },
+          {
+            name: "Bastião dos Pescadores",
+            latitude: 47.502222,
+            longitude: 19.034444,
+            description: "Terraço neogótico com vista panorâmica",
+            category: "Miradouro",
+          },
+        ],
         badge: "hu",
       },
       {
@@ -840,7 +1164,29 @@ function initdata() {
         company: "TAROM",
         distance: 395,
         tourismTypes: [5, 6],
-        poi: [],
+        poi: [
+          {
+            name: "Palácio do Parlamento",
+            latitude: 44.427222,
+            longitude: 26.087222,
+            description: "Um dos maiores edifícios administrativos do mundo",
+            category: "Arquitetura",
+          },
+          {
+            name: "Centro Histórico",
+            latitude: 44.430556,
+            longitude: 26.102778,
+            description: "Área histórica com arquitetura tradicional romena",
+            category: "Património",
+          },
+          {
+            name: "Arco do Triunfo",
+            latitude: 44.467778,
+            longitude: 26.078056,
+            description: "Monumento comemorativo no centro da cidade",
+            category: "Monumento",
+          },
+        ],
         badge: "ro",
       },
       {
@@ -857,11 +1203,33 @@ function initdata() {
         arrivalTime: "2025-08-08T10:00",
         price: 65,
         duration: 60,
-        company: "Bulgaria Air",
+        company: "Wizzair",
         distance: 180,
         tourismTypes: [3, 5],
-        poi: [],
-        badge: "hu",
+        poi: [
+          {
+            name: "Catedral Alexandre Nevsky",
+            latitude: 42.696111,
+            longitude: 23.332778,
+            description: "Catedral ortodoxa búlgara neo-bizantina",
+            category: "Religioso",
+          },
+          {
+            name: "Igreja de Santa Sofia",
+            latitude: 42.696944,
+            longitude: 23.331389,
+            description: "Igreja bizantina que deu nome à cidade",
+            category: "Religioso",
+          },
+          {
+            name: "Teatro Nacional Ivan Vazov",
+            latitude: 42.695556,
+            longitude: 23.326667,
+            description: "Principal teatro de ópera e ballet da Bulgária",
+            category: "Cultura",
+          },
+        ],
+        badge: "bg",
       },
       {
         id: 35,
@@ -880,7 +1248,29 @@ function initdata() {
         company: "TAP",
         distance: 1750,
         tourismTypes: [],
-        poi: [],
+        poi: [
+          {
+            name: "Estação de São Bento",
+            latitude: 41.145833,
+            longitude: -8.610556,
+            description: "Estação ferroviária famosa pelos seus azulejos",
+            category: "Arquitetura",
+          },
+          {
+            name: "Mercado do Bolhão",
+            latitude: 41.148889,
+            longitude: -8.608056,
+            description: "Mercado tradicional do Porto",
+            category: "Comércio",
+          },
+          {
+            name: "Casa da Música",
+            latitude: 41.159444,
+            longitude: -8.630556,
+            description: "Sala de concertos de arquitetura contemporânea",
+            category: "Cultura",
+          },
+        ],
         badge: "pt",
       },
       {
@@ -900,7 +1290,29 @@ function initdata() {
         company: "SAS",
         distance: 305,
         tourismTypes: [6, 7],
-        poi: [],
+        poi: [
+          {
+            name: "Gamla Stan",
+            latitude: 59.325278,
+            longitude: 18.070833,
+            description: "Centro histórico medieval de Estocolmo",
+            category: "Património",
+          },
+          {
+            name: "Museu Vasa",
+            latitude: 59.328056,
+            longitude: 18.091389,
+            description: "Museu com navio de guerra do século XVII",
+            category: "Museu",
+          },
+          {
+            name: "Palácio Real",
+            latitude: 59.326667,
+            longitude: 18.071944,
+            description: "Residência oficial da família real sueca",
+            category: "Monumento",
+          },
+        ],
         badge: "se",
       },
       {
@@ -920,7 +1332,30 @@ function initdata() {
         company: "SAS",
         distance: 330,
         tourismTypes: [4, 6],
-        poi: [],
+        poi: [
+          {
+            name: "Nyhavn",
+            latitude: 55.679722,
+            longitude: 12.591389,
+            description: "Canal histórico com casas coloridas do século XVII",
+            category: "Património",
+          },
+          {
+            name: "Tivoli Gardens",
+            latitude: 55.673611,
+            longitude: 12.568056,
+            description: "Parque de diversões histórico no centro da cidade",
+            category: "Entretenimento",
+          },
+          {
+            name: "Pequena Sereia",
+            latitude: 55.692778,
+            longitude: 12.599444,
+            description:
+              "Estátua icónica inspirada no conto de Hans Christian Andersen",
+            category: "Monumento",
+          },
+        ],
         badge: "dk",
       },
     ];
@@ -943,8 +1378,20 @@ function initdata() {
         flights: [1, 3, 5, 6, 7], // OPO→LIS→BCN→ROM→ATH→IST
         miles: 4320,
         reviews: [
-          { name: "Ana", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "José", message: "Gostei! :(", rating: 4 },
+          {
+            userId: 6,
+            name: "Ana",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 5,
+            date: "17-06-2025",
+          },
+          {
+            userId: 7,
+            name: "José",
+            message: "Gostei! :(",
+            rating: 4,
+            date: "19-06-2025",
+          },
         ],
       },
       {
@@ -958,8 +1405,20 @@ function initdata() {
         flights: [8, 9, 10, 11, 12, 13], // OPO→CDG→LHR→AMS→BER→PRG→VIE
         miles: 5430,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+          {
+            userId: 2,
+            name: "Bob",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 5,
+            date: "13-05-2025",
+          },
+          {
+            userId: 1,
+            name: "Alice",
+            message: "Não gostei muito :(",
+            rating: 2,
+            date: "14-06-2025",
+          },
         ],
       },
       {
@@ -985,8 +1444,20 @@ function initdata() {
         flights: [17, 18],
         miles: 300,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+          {
+            userId: 2,
+            name: "Bob",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 5,
+            date: "02-05-2025",
+          },
+          {
+            userId: 4,
+            name: "John",
+            message: "Não gostei muito :(",
+            rating: 2,
+            date: "04-05-2025",
+          },
         ],
       },
       {
@@ -1000,8 +1471,20 @@ function initdata() {
         flights: [19, 20],
         miles: 900,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+          {
+            userId: 2,
+            name: "Bob",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 5,
+            date: "02-05-2025",
+          },
+          {
+            userId: 4,
+            name: "John",
+            message: "Fantástico! 5 estrelas!",
+            rating: 5,
+            date: "10-05-2025",
+          },
         ],
       },
       {
@@ -1027,8 +1510,20 @@ function initdata() {
         flights: [5, 6, 7], // BCN→ROM→ATH→IST
         miles: 1540,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 5 },
-          { name: "Alice", message: "Não gostei muito :(", rating: 2 },
+          {
+            userId: 2,
+            name: "Bob",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 5,
+            date: "07-06-2025",
+          },
+          {
+            userId: 1,
+            name: "Alice",
+            message: "Não gostei muito :(",
+            rating: 2,
+            date: "07-06-2025",
+          },
         ],
       },
       {
@@ -1042,11 +1537,19 @@ function initdata() {
         flights: [9, 10, 11],
         miles: 1675,
         reviews: [
-          { name: "Bob", message: "Adorei a viagem! Recomendo!", rating: 4 },
           {
+            userId: 4,
+            name: "Charlie",
+            message: "Adorei a viagem! Recomendo!",
+            rating: 4,
+            date: "07-06-2025",
+          },
+          {
+            userId: 1,
             name: "Alice",
             message: "Super fácil de comprar e a melhor experiência :)",
             rating: 5,
+            date: "03-06-2025",
           },
         ],
       },

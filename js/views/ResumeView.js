@@ -6,6 +6,7 @@ import * as Users from "../models/userModel.js";
 
 // Inicializa os dados de voos e viagens
 Flights.init();
+Users.init();
 Trips.init();
 
 // Variáveis para guardar a viagem e os voos associados
@@ -132,34 +133,34 @@ async function processFlightCard(flight, index) {
       "beforeend",
       `<div class="mb-2" id="legCard">
         <div
-          class="bg-[#39578A] flex justify-between text-white items-center px-7 py-7 rounded-lg mb-2"
+          class="bg-[#39578A] flex justify-between shadow-xl text-white items-center px-4 sm:px-7 py-5 sm:py-7 rounded-lg mb-2"
         >
-          <div class="text-xl font-semibold items-center flex gap-5">
+          <div class="text-xl font-semibold items-center flex gap-2 sm:gap-5">
             <img
               src="../img/icons/white/startTrip.svg"
               alt="startpointIcon"
               width="15"
               height="10"
             />
-            <p class="text-lg md:text-xl">${flightData.originName}</p>
+            <p class="text-base sm:text-lg md:text-xl">${flightData.originName}</p>
           </div>
           <p class="text-xs sm:text-sm md:text-base">${dateString}</p>
         </div>
-        <div class="bg-white rounded-lg shadow-lg text-white rounded-lg">
-          <div class="bg-[#6C6EA0] px-6 py-4 text-white rounded-t-lg">
+        <div class="bg-white rounded-lg shadow-xl text-white rounded-lg">
+          <div class="bg-[#6C6EA0] px-4 sm:px-6 py-4 text-white rounded-t-lg">
             <div class="flex justify-between items-center">
               <p class="text-sm md:text-md md:text-lg">
-                ${flightData.originName} - ${flightData.destinationName}<span class="font-light text-sm">: ${duration}</span>
+                ${flightData.originName} - ${flightData.destinationName}<span class="text-xs sm:text-sm md:text-base">: ${duration}</span>
               </p>
-              <p class="text-sm">${departureDate}</p>
+              <p class="text-xs sm:text-sm md:text-base">${departureDate}</p>
             </div>
           </div>
 
-          <div class="py-4 px-3 xs:px-5 sm:px-10">
+          <div class="py-4 px-3 xs:px-5 sm:px-10 shadow-xl">
             <div class="flex justify-between items-center">
             <div class="flex gap-3">
                 <p class="flex text-base md:text-lg text-[#39578A]">${flightData.origin}</p>
-                <img src="../img/icons/blue/plane.svg" alt="Flight Icon" />
+                <img src="../img/icons/blue/plane.svg" alt="Flight Icon" class="w-5 sm:w-auto"/>
                 <p class="flex text-base md:text-lg text-[#39578A]">${flightData.destination}</p></div>
               <div class="fitems-center">
                 <img
@@ -235,7 +236,7 @@ async function addFinalDestinationCard() {
     "beforeend",
     `<div class="mb-2" id="legCard">
       <div
-        class="bg-[#39578A] flex justify-between text-white px-7 py-7 rounded-lg mb-2"
+        class="bg-[#39578A] flex justify-between text-white px-4 sm:px-7 py-5 sm:py-7 rounded-lg mb-2"
       >
         <div class="text-xl font-semibold items-center flex gap-5">
           <img
@@ -244,9 +245,9 @@ async function addFinalDestinationCard() {
             width="15"
             height="10"
           />
-          <p class="text-xl">${lastFlight.destinationName}</p>
+          <p class="text-base sm:text-lg md:text-xl">${lastFlight.destinationName}</p>
         </div>
-        <p>${lastDateString}</p>
+        <p class="text-xs sm:text-sm md:text-base">${lastDateString}</p>
       </div>
     </div>
     <div>
@@ -289,7 +290,7 @@ function addActionButtons() {
   if (trip.reviews && trip.isPack) {
     flightResume.insertAdjacentHTML(
       "beforeend",
-      `<h3 class="text-xl mt-10 mb-4 font-bold">Reviews</h3><div id="reviewSection"></div>`
+      `<h3 class="text-xl mt-10 mb-4 font-bold print:hidden">Reviews</h3><div id="reviewSection" class="print:hidden"></div>`
     );
     renderReviews();
   }
@@ -313,8 +314,8 @@ function renderReviews() {
       "beforeend",
       `<form id="reviewForm" class="mb-4">
         <div class="flex flex-col space-y-5 mb-6">
-          <label for="reviewInput">Deixa a tua avaliação</label>
-          <textarea id="reviewInput" class="p-3 rounded-xl" name="reviewText" required placeholder="Escreve a tua opinião aqui..."></textarea>
+          <label for="reviewInput">Deixa a tua avaliação e ganha 50 milhas: </label>
+          <textarea id="reviewInput" class="p-3 rounded-md text-sm sm:text-base" name="reviewText" required placeholder="Escreve a tua opinião aqui..."></textarea>
           
           <!-- Star Rating Input -->
           <div class="flex flex-col space-y-2">
@@ -400,14 +401,65 @@ function renderReviews() {
       } else {
         ratingError.classList.add("hidden");
       }
+      const date = new Date();
 
+      let day = date.getDate();
+      let month = (date.getMonth() + 1).toString();
+      if (month.length == 1) {
+        month = "0" + month;
+      }
+      let year = date.getFullYear();
+      let currentDate = `${day}-${month}-${year}`;
       const newReview = {
+        userId: Users.getUserLogged().id,
         name: Users.getUserLogged().name,
         message: reviewText,
         rating: rating,
+        date: currentDate,
       };
 
-      Trips.saveReview(id, newReview);
+      let canComment = Trips.saveReview(id, newReview);
+
+      if (!canComment) {
+        let timerInterval;
+        Swal.fire({
+          title: "Já comentaste uma vez",
+          icon: "error",
+          html: "Para manter uma secção mais fidedígna,<br/>apenas permitimos um comentário por utilizador.",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        });
+      } else {
+        Users.updateUserMiles(Users.getUserLogged().id, 0, 50);
+        let timerInterval;
+        Swal.fire({
+          title: "Obrigado pela tua avaliação",
+          icon: "success",
+          html: "Agradecemos a tua avaliação. Para te recompensar oferecemos-te 50 milhas. Aproveita-as bem.",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        });
+      }
 
       trip = Trips.getSingleTripById(id);
 
@@ -422,31 +474,6 @@ function renderReviews() {
     });
   }
 
-  // Função para gerar estrelas de avaliação
-  function generateStars(rating) {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    let stars = "";
-
-    // Estrelas cheias
-    for (let i = 0; i < fullStars; i++) {
-      stars += '<span class="text-yellow-400">★</span>';
-    }
-
-    // Meia estrela
-    if (hasHalfStar) {
-      stars += '<span class="text-yellow-400">☆</span>';
-    }
-
-    // Estrelas vazias
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars += '<span class="text-gray-300">★</span>';
-    }
-
-    return stars;
-  }
-
   // Mostra reviews existentes, se houver
   if (trip.reviews && trip.reviews.length > 0) {
     reviewSection.insertAdjacentHTML(
@@ -459,16 +486,19 @@ function renderReviews() {
     // Mostra cada review com estrelas
     trip.reviews.forEach((review) => {
       existingReviewsContainer.insertAdjacentHTML(
-        "beforeend",
+        "afterbegin",
         `<div class="mb-6">
-          <p class="font-semibold">${review.name}</p>
-          <div class="flex gap-x-5 p-6 bg-gray-100 rounded-xl justify-between items-start">
-            <p class="flex-1">${review.message}</p>
+          
+          <div class=" flex gap-x-5 p-6 bg-gray-200 rounded-md shadow-lg justify-between items-start">
+          <div class="flex flex-col"><p class="font-semibold mb-2">${
+            review.name
+          }</p>
+            <p class="flex-1 text-sm sm:text-base">${review.message}</p></div>
             <div class="flex flex-col items-end">
               <div class="flex text-lg mb-1">
-                ${generateStars(review.rating)}
+                ${Helper.generateStars(review.rating)}
               </div>
-              <p class="text-sm text-gray-600">${review.rating}/5</p>
+              <p class="text-xs opacity-50">${review.date}</p>
             </div>
           </div>
         </div>`

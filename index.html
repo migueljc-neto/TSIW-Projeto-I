@@ -262,7 +262,7 @@
           />
         </div>
         <h1
-          class="space-y-2 z-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl p-6"
+          class="space-y-2 z-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl p-6 text-center"
         >
           <span class="block text-white">
             Your path<br />
@@ -282,7 +282,10 @@
             behavior="alternate"
             direction="left"
           >
-            <div class="marquee-track animate-marquee-left whitespace-nowrap">
+            <div
+              id="marquee1"
+              class="marquee-track animate-marquee-left whitespace-nowrap"
+            >
               <span class="text-4xl mx-4">•</span>
               <span class="text-4xl mx-4">PORTO</span>
               <span class="text-4xl mx-4">•</span>
@@ -309,6 +312,7 @@
           <!-- Second marquee (right direction) -->
           <div class="marquee-group">
             <marquee
+              id="marquee2"
               class="marquee-track animate-marquee-right whitespace-nowrap"
               loop="infinite"
               behavior="alternate"
@@ -342,7 +346,10 @@
             behavior="alternate"
             direction="left"
           >
-            <div class="marquee-track animate-marquee-left whitespace-nowrap">
+            <div
+              id="marquee3"
+              class="marquee-track animate-marquee-left whitespace-nowrap"
+            >
               <span class="text-4xl mx-4">•</span>
               <span class="text-4xl mx-4">PORTO</span>
               <span class="text-4xl mx-4">•</span>
@@ -405,7 +412,7 @@
         id="aboutSect"
         class="h-screen bg-none bg-blue-950 snap-start flex flex-col justify-center items-center"
       >
-        <div class="max-w-[1200px] max-h-full text-center">
+        <div class="max-w-[1200px] max-h-full mt-5 sm:mt-0 text-center">
           <div class="flex gap-10 text-center md:text-left px-0 md:px-4">
             <!-- Left Content -->
             <div class="flex-1">
@@ -413,8 +420,8 @@
                 <h2
                   class="text-xl sm:text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white font-bold leading-snug mb-2 sm:mb-5"
                 >
-                  A REVOLUCIONAR A TUA <br class="hidden lg:block" /><span
-                    class="underline"
+                  A REVOLUCIONAR A TUA
+                  <br class="block sm:hidden lg:block" /><span class="underline"
                     >FORMA DE VIAJAR</span
                   >
                 </h2>
@@ -570,7 +577,7 @@
       >
         <div class="p-4">
           <div
-            class="block md:flex items-start gap-4 md:gap-12 p-0 sm:p-4 md:p-8 mx-auto max-w-[1200px] rounded-md"
+            class="block md:flex items-start gap-4 md:gap-12 p-0 mt-5 sm:mt-0 sm:p-4 md:p-8 mx-auto max-w-[1200px] rounded-md"
           >
             <div>
               <div>
@@ -678,35 +685,36 @@
               </div>
             </div>
 
-            <form id="contactForm" class="space-y-4">
+            <form id="contactForm" class="space-y-3 md:space-y-4">
               <input
                 type="text"
                 placeholder="Nome"
-                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-sm outline-0 focus:border-blue-500"
+                class="w-full text-slate-900 text-xs md:text-base rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 outline-0 focus:border-blue-500"
               />
               <input
                 type="email"
                 placeholder="Email"
-                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-sm outline-0 focus:border-blue-500"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base outline-0 focus:border-blue-500"
               />
               <input
                 type="text"
                 placeholder="Assunto"
-                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-sm outline-0 focus:border-blue-500"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base outline-0 focus:border-blue-500"
               />
               <textarea
                 placeholder="Deixa aqui a tua mensagem..."
                 rows="4"
-                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-sm pt-2.5 outline-0 focus:border-blue-500"
+                class="w-full text-slate-900 rounded-md py-1.5 md:py-2.5 px-2 md:px-4 border border-gray-300 text-xs md:text-base pt-2.5 outline-0 focus:border-blue-500"
               ></textarea>
               <button
                 type="submit"
-                class="text-white bg-blue-600 hover:bg-blue-700 rounded-md text-sm font-medium px-4 py-2.5 w-full cursor-pointer border-0 mt-2"
+                style="margin-top: 6px"
+                class="text-white text-xs md:text-base bg-blue-600 hover:bg-blue-700 rounded-md font-medium px-4 py-2.5 w-full cursor-pointer border-0"
               >
                 Enviar Mensagem
               </button>
             </form>
-            <div class="flex gap-4 md:hidden">
+            <div class="flex gap-4 hidden">
               <div class="mt-5">
                 <h2 class="text-white text-base font-semibold">
                   Redes Sociais

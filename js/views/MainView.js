@@ -61,16 +61,16 @@ window.addEventListener("load", () => {
           "beforeend",
           `<div id="packBtn" 
         data-id="${pack.id}" 
-        class="swiper-slide relative cursor-pointer"
+        class="swiper-slide shadow-lg relative cursor-pointer"
         role="button" 
         tabindex="0">
     <img src="${image}" alt="${pack.name}" class="w-full h-auto rounded-t-lg" />
     <div class="absolute backdrop-blur-sm bottom-0 left-0 p-5 w-full h-30 bg-white color-primary p-2">
-      <div class="flex gap-6 items-center font-space font-light mb-3">
-        <p class="text-lg">${pack.name}</p>
+      <div class="flex gap-6 justify-between font-space font-light mb-3">
+        <p class="text-md">${pack.name}</p>
         <p class="text-sm">${Helper.formatDateToLabel(
           pack.startDate
-        )} - ${Helper.formatDateToLabel(pack.endDate)}</p>
+        )}<br/>${Helper.formatDateToLabel(pack.endDate)}</p>
         
       </div>
       <p>${rating}</p>
@@ -186,7 +186,7 @@ window.addEventListener("load", () => {
       },
       autoplay: true,
       loop: true,
-      spaceBetween: 30,
+      spaceBetween: 0,
       setWrapperSize: true,
     });
 
@@ -219,6 +219,74 @@ window.addEventListener("load", () => {
         },
       },
     });
+  });
+
+  let marquee1 = document.getElementById("marquee1");
+  let marquee2 = document.getElementById("marquee2");
+  let marquee3 = document.getElementById("marquee3");
+
+  const uniqueDestinations = Flights.getAllUniqueDestinationNames();
+  marquee1.innerHTML = "";
+  marquee2.innerHTML = "";
+  marquee3.innerHTML = "";
+
+  uniqueDestinations.forEach(() => {
+    marquee1.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
+    marquee2.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
+    marquee3.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
+  });
+  uniqueDestinations.forEach(() => {
+    marquee1.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
+    marquee2.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
+    marquee3.insertAdjacentHTML(
+      "beforeend",
+      `<span class="text-4xl mx-4">•</span>
+              <span class="text-4xl mx-4">${
+                uniqueDestinations[
+                  Math.floor(Math.random() * uniqueDestinations.length)
+                ]
+              }</span>`
+    );
   });
 });
 // Função para gerar estrelas de avaliação

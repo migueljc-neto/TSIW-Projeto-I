@@ -44,22 +44,22 @@ export function getIata(company) {
     "British Airways": "BA",
     Lufthansa: "LH",
     Ryanair: "FR",
-    KLM: "KL",
-    "Swiss Air": "LX",
+    Swiss: "LX",
     "Austrian Airlines": "OS",
     SAS: "SK",
     Norwegian: "DY",
     "Aer Lingus": "EI",
-    "Aegean Airlines": "A3",
+    Aegean: "A3",
     "Turkish Airlines": "TK",
-    "Brussels Airlines": "SN",
-    "Czech Airlines": "OK",
     Finnair: "AY",
     "ITA Airways": "AZ",
-    Icelandair: "FI",
-    "Air Europa": "UX",
-    EasyJet: "U2",
-    Delta: "DL",
+    easyJet: "U2",
+    Alitalia: "AZ",
+    LOT: "LO",
+    "Wizz Air": "W6",
+    TAROM: "RO",
+    Eurowings: "EW",
+    Transavia: "HV",
   };
   return IATA_CODES[company] || company;
 }
@@ -181,6 +181,30 @@ export function createDestinObj(destinName, latitude, longitude, poi) {
   };
 
   return obj;
+}
+
+export function generateStars(rating) {
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 !== 0;
+  let stars = "";
+
+  // Estrelas cheias
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<span class="text-yellow-400">★</span>';
+  }
+
+  // Meia estrela
+  if (hasHalfStar) {
+    stars += '<span class="text-yellow-400">☆</span>';
+  }
+
+  // Estrelas vazias
+  const emptyStars = 5 - Math.ceil(rating);
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<span class="text-gray-300">★</span>';
+  }
+
+  return stars;
 }
 
 // Formata uma data para o formato YYYY-MM-DD

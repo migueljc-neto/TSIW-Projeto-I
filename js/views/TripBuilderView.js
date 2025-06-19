@@ -244,7 +244,10 @@ function simulateFlights(tripStrings) {
   for (let i = 0; i < tripStrings.length - 1; i++) {
     const currentLocation = tripStrings[i];
     const nextLocation = tripStrings[i + 1];
-
+    if (currentLocation === nextLocation) {
+      restoreOldTrip();
+      return false;
+    }
     console.log(`A verificar voos de ${currentLocation} para ${nextLocation}`);
     const flightsForLeg = Flight.getAllFlightsByLeg(
       currentLocation,
@@ -256,7 +259,6 @@ function simulateFlights(tripStrings) {
         `Sem voos diretos de ${currentLocation} para ${nextLocation}`
       );
       console.log(`A procurar rota alternativa...`);
-
       let newFlights = Flight.findAlternateLeg(
         currentLocation,
         nextLocation,
@@ -327,11 +329,29 @@ function simulateFlights(tripStrings) {
 function restoreOldTrip() {
   if (oldTrip && oldTrip.length > 0) {
     tripList.innerHTML = "";
+
+    // Remove duplicates based on element ID
+    const seenIds = new Set();
+    const uniqueTrip = [];
+
     oldTrip.forEach((node) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
-        tripList.appendChild(node);
+        const nodeId = node.id;
+        if (nodeId && !seenIds.has(nodeId)) {
+          seenIds.add(nodeId);
+          uniqueTrip.push(node);
+        } else if (!nodeId) {
+          // Handle elements without ID (keep them as they can't be duplicated by ID)
+          uniqueTrip.push(node);
+        }
       }
     });
+
+    // Append unique elements to the trip list
+    uniqueTrip.forEach((node) => {
+      tripList.appendChild(node);
+    });
+
     updateMap();
     console.log("Configuração anterior da viagem reposta");
   }
